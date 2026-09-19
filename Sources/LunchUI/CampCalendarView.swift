@@ -1,4 +1,7 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 
 struct CampCalendarView: View {
     @ObservedObject var store: CampSettingsStore
@@ -74,6 +77,7 @@ struct CampCalendarView: View {
 private struct CampDayTimeline: View {
     @ObservedObject var calendar: MacLunchCalendar
     let day: DateInterval
+    @State private var calendarActive = false
     private let hourHeight: CGFloat = 64
     private var hours: Int { Int(day.duration / 3600) }
     private var height: CGFloat { CGFloat(day.duration / 3600) * hourHeight }
@@ -127,8 +131,25 @@ private struct CampDayTimeline: View {
                             }
                         }
                     }.frame(height: height).padding(.vertical, 8)
-                }.frame(height: 440).background(.white).clipShape(RoundedRectangle(cornerRadius: 12))
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(CampPalette.border))
+                }.frame(height: 340).background(.white)
+                    .overlay {
+                        if !calendarActive { CalendarScrollShield { calendarActive = true } }
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        if calendarActive {
+                            Button("Done with calendar") { calendarActive = false }
+                                .buttonStyle(CampActionStyle(primary: false)).padding(10)
+                        }
+                    }
+                    .overlay(alignment: .bottom) {
+                        Text(calendarActive ? "Move the pointer off the calendar to scroll the page" : "Click to scroll calendar")
+                            .font(.caption.weight(.medium)).padding(9).background(.regularMaterial)
+                            .clipShape(Capsule()).padding(10).allowsHitTesting(false)
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(CampPalette.border).allowsHitTesting(false))
+                    .onHover { inside in if !inside { calendarActive = false } }
+                    .onDisappear { calendarActive = false }
                     .onAppear { scroll(proxy) }
                     .onChange(of: day.start) { _ in scroll(proxy) }
             }
@@ -155,4 +176,21 @@ private struct CampDayTimeline: View {
         proxy.scrollTo("hour-\(hour)", anchor: .top)
     }
 }
+/// Sits above the inner timeline while inactive, forwarding wheel input to the page.
+private struct CalendarScrollShield: NSViewRepresentable {
+    let activate: () -> Void
+    func makeNSView(context: Context) -> Shield {
+        let view = Shield(); view.activate = activate; return view
+    }
+    func updateNSView(_ view: Shield, context: Context) { view.activate = activate }
+    final class Shield: NSView {
+        var activate: (() -> Void)?
+        override func mouseDown(with event: NSEvent) { activate?() }
+        override func scrollWheel(with event: NSEvent) {
+            if let page = enclosingScrollView { page.scrollWheel(with: event) }
+            else { nextResponder?.scrollWheel(with: event) }
+        }
+    }
+}
+
 #endif

@@ -94,3 +94,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 
 - Mac release build succeeded with the map scroll gate, calendar dropdown multiselector, hourly busy timeline and exact-duration suggested lunch block.
 - No interactive or automated tests were run for this update.
+
+
+## Calendar scroll focus
+
+- Calendar viewport now matches the map at 340 points and requires a click before consuming scrolling. Pointer exit or Done returns control to the page.
+- Mac release build completed; no interactive or automated tests were run.

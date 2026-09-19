@@ -35,3 +35,5 @@ Mac release build succeeded. No automated tests or live calendar permission/read
 Apple references: [Accessing the event store](https://developer.apple.com/documentation/eventkit/accessing-the-event-store), [full-access request](https://developer.apple.com/documentation/eventkit/ekeventstore/requestfullaccesstoevents(completion:)), [EventKit API migration](https://developer.apple.com/documentation/technotes/tn3153-adopting-api-changes-for-eventkit-in-ios-macos-and-watchos).
 
 The timeline uses the office timezone and actual day length, including daylight-saving transitions. Blockers are labelled Busy without meeting titles. A red line indicates the last refresh time.
+
+The calendar viewport is 340 points high, matching the map. It forwards scrolling to the page until clicked. Moving the pointer outside or clicking **Done with calendar** returns to page scrolling.
