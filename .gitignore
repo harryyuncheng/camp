@@ -1,0 +1,13 @@
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.DS_Store
+dist/
+.env
+.env.*
+!.env.example
+.state/
+__pycache__/
+*.pyc

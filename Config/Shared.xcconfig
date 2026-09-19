@@ -1,0 +1,12 @@
+// Set the same team on both targets in Xcode's Signing & Capabilities tab.
+// Change this prefix once to give both targets unique bundle identifiers.
+BUNDLE_ID_PREFIX = com.example.camp
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+SWIFT_VERSION = 5.0
+SWIFT_STRICT_CONCURRENCY = targeted
+CODE_SIGN_STYLE = Automatic
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+TARGETED_DEVICE_FAMILY = 1
+SUPPORTS_MACCATALYST = NO
+SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO
