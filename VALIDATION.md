@@ -76,3 +76,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Mac release app compiled and packaged with the Core Location service and UI.
 - No automated tests or live location permission/movement checks were run. User must enable Location Services and configure the actual office for an on-device walkthrough.
 - iPhone tracking remains explicitly unavailable; the shared UI compiles its Mac implementation conditionally.
+
+
+## Map office picker update
+
+- Replaced the coordinate form with an AppKit MapKit map, place search, current-Mac marker, click-to-place circle, radius slider and one-step boundary save/confirmation.
+- Mac release build succeeded. No automated or interactive UI tests were run for this update.

@@ -3,12 +3,12 @@
 ## Enable it
 
 1. Run the rebuilt `dist/camp.app` (quit an older running copy first).
-2. Open **Office** or **Connections → Office presence** and click **Enable location**. Allow camp in the macOS location prompt. If denied, use **Open Location Services settings**.
-3. In **Office**, enter your office latitude, longitude and radius. Or, while at the office, wait for an accurate fix and click **Use current location for office**.
-4. Click **Save changes**, then **Confirm saved office boundary**. Default demo coordinates are never silently treated as your office.
-5. **Today** shows the live Mac state; Office/Connections show accuracy, distance, last reading and arrival/departure times.
+2. Open **Office** or **Connections**. The office card contains a real Apple map.
+3. **Search** for a place/address or click **Find me** and allow the location prompt. Your Mac appears as a blue marker. Finding yourself moves the camera, not the office boundary.
+4. Click the map to place the office circle. Drag the map to pan, use its zoom controls, and adjust the **radius** slider.
+5. Click **Confirm office**. This saves and activates the selected boundary in one step, without saving unrelated draft settings. It enables tracking and requests permission if needed.
 
-The address text is not geocoded. The entered coordinates define the boundary. Changing saved coordinates or radius requires confirmation again. Unsaved edits do not affect tracking. Office editing uses the existing demo-admin toggle; it is not server authorization.
+The old latitude/longitude form and separate save/confirm sequence have been removed. Search suggestions come from MapKit; choosing a result places the circle. Office name, delivery address and timezone remain ordinary settings. **Location details** holds permission, accuracy, arrival time, pause/resume and the system-settings shortcut. Map rendering and place search use Apple services; camp does not upload location to its backend. Office editing uses the existing demo-admin toggle.
 
 ## Behavior
 
@@ -17,7 +17,7 @@ The address text is not geocoded. The entered coordinates define the boundary. C
 - Readings older than two minutes produce unknown. A 15-second watchdog expires stale state. Location updates restart every minute for a fresh fix and on wake/activation.
 - Initial presence sets in-office or away without inventing an arrival. Later transitions need two qualifying fixes at least eight seconds apart. A boundary-overlapping reading cancels a pending transition. Sleep, stale data, errors and lost permission invalidate the stable state.
 - Arrival/departure publish `Notification.Name.campOfficeArrived` / `.campOfficeDeparted` on the main actor. `userInfo` contains only `officeID` and `observedAt`. These are app events for future orchestration; they do not order food or display a Notification Center alert.
-- Latest coordinates exist only in memory. Explicitly setting the office from the current fix stores that office coordinate when settings are saved. No movement history is stored or sent to the backend.
+- Latest coordinates exist only in memory. Confirming a map circle stores its office coordinate. No movement history is stored or sent to the backend. Map display and search use Apple MapKit services.
 - Mac positioning can be imprecise; keep Wi-Fi enabled. The detected position is the laptop's, not proof that its owner is present.
 
 The bundled Mac app is not App Sandbox-enabled. `NSLocationUsageDescription` and `NSLocationWhenInUseUsageDescription` are supplied. If enabling App Sandbox later, add the location entitlement (`com.apple.security.personal-information.location`). iPhone tracking remains unimplemented and is labelled accordingly.

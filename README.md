@@ -16,7 +16,7 @@ Open camp → Connections → **Connect / refresh sandbox**. Choose the company 
 
 ## Mac office location
 
-Office and Connections now use macOS Location Services. Click **Enable location**, allow the system prompt, then set your office coordinates/radius (or **Use current location for office**), **Save changes**, and **Confirm saved office boundary**. Today shows in-office/away/unknown; the location card shows arrivals and departures. Tracking runs while camp is open and awake. See [location setup and behavior](docs/LOCATION.md).
+Office and Connections now use macOS Location Services. Use **Search** or **Find me** on the map, click to place your office circle, adjust its radius, and click **Confirm office**. Today shows in-office/away/unknown; the location card shows arrivals and departures. Tracking runs while camp is open and awake. See [location setup and behavior](docs/LOCATION.md).
 
 ## Configuration workspace
 

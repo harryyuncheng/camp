@@ -52,6 +52,30 @@ public final class CampSettingsStore: ObservableObject {
         #endif
     }
 
+    public var savedOffice: OfficePolicy { saved.office }
+    #if os(macOS)
+    @discardableResult
+    public func confirmOfficeBoundary(latitude: Double, longitude: Double, radius: Int) -> Bool {
+        guard isDemoAdmin else { saveError = "Enable demo admin to change the office."; return false }
+        var updated = saved
+        updated.office.latitude = latitude
+        updated.office.longitude = longitude
+        updated.office.radiusMeters = radius
+        guard updated.validationErrors.isEmpty else { saveError = updated.validationErrors.joined(separator: "\n"); return false }
+        do {
+            try file.save(updated)
+            saved = updated
+            draft.office.latitude = latitude
+            draft.office.longitude = longitude
+            draft.office.radiusMeters = radius
+            location.configure(updated.office)
+            location.confirmOffice()
+            saveError = nil; statusMessage = "Office location saved"
+            return true
+        } catch { saveError = "Couldn’t save office: \(error.localizedDescription)"; return false }
+    }
+    #endif
+
     public var hasChanges: Bool { draft != saved }
     public var group: DemoGroupSummary { DemoGroupSummary(selectedMeal: selectedMeal, stage: groupStage) }
     public var validationErrors: [String] {

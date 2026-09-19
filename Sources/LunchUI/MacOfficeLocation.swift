@@ -68,6 +68,10 @@ public final class MacOfficeLocation: NSObject, ObservableObject, CLLocationMana
         guard let latest else { return false }
         return Date().timeIntervalSince(latest.timestamp) < 120 && latest.horizontalAccuracy >= 0 && latest.horizontalAccuracy <= 100
     }
+    public var mapCoordinate: CLLocationCoordinate2D? {
+        guard let latest, Date().timeIntervalSince(latest.timestamp) < 120 else { return nil }
+        return latest.coordinate
+    }
     public var currentCoordinate: (latitude: Double, longitude: Double)? {
         guard canUseCurrentLocation, let latest else { return nil }
         return (latest.coordinate.latitude, latest.coordinate.longitude)
@@ -169,7 +173,7 @@ public final class MacOfficeLocation: NSObject, ObservableObject, CLLocationMana
             clear("Waiting for a fresh location. Keep Wi-Fi enabled."); return
         }
         guard officeConfirmed else {
-            presence = "Unknown"; detail = "Location is available. Confirm your saved office boundary below."; return
+            presence = "Unknown"; detail = "Location is available. Place your office circle on the map and confirm it."; return
         }
         let distance = fix.distance(from: CLLocation(latitude: office.latitude, longitude: office.longitude))
         distanceMeters = distance

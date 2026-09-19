@@ -53,21 +53,9 @@ struct CampOfficePage: View {
     }
     private var policy: some View {
         VStack(spacing: 20) {
-            CampCard("Where we gather", subtitle: "Save these coordinates and radius, then confirm the boundary above.") {
+            CampCard("Office details") {
                 CampTextField(title: "Office name", text: $store.draft.office.name)
                 CampTextField(title: "Delivery address", text: $store.draft.office.address)
-                ZStack {
-                    RoundedRectangle(cornerRadius: 16).fill(CampPalette.background)
-                    Circle().fill(CampPalette.lime.opacity(0.3)).frame(width: 140, height: 140)
-                    Circle().stroke(CampPalette.green.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [5])).frame(width: 140, height: 140)
-                    VStack(spacing: 8) { Image(systemName: "building.2.fill").font(.title); Text("\(store.draft.office.radiusMeters) m boundary").font(.caption) }
-                }.frame(height: 170).accessibilityLabel("Illustrative office boundary")
-                Text("Boundary illustration · live status is shown above").font(.caption).foregroundStyle(CampPalette.muted)
-                CampPair(compact: compact) {
-                    CampField("Latitude") { TextField("Latitude", value: $store.draft.office.latitude, format: .number).textFieldStyle(.roundedBorder) }
-                    CampField("Longitude") { TextField("Longitude", value: $store.draft.office.longitude, format: .number).textFieldStyle(.roundedBorder) }
-                }
-                CampNumberStepper(label: "Office radius", value: $store.draft.office.radiusMeters, range: 50...5000, step: 50, suffix: " m")
                 CampField("Office timezone") { CampTextField(title: "America/New_York", text: $store.draft.office.timezone) }
             }
             CampCard("One delivery. More people.", subtitle: "Rules for finding a useful group before opening another cart.") {
