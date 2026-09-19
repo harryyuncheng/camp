@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 #if SWIFT_PACKAGE
 import LunchCore
 #endif
@@ -26,6 +27,17 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var selectedMeal: LunchOption?
     @Published public var groupStage = DemoGroupStage.collecting
     @Published public var previewConnections: Set<String> = []
+    #if os(macOS)
+    public let location = MacOfficeLocation()
+    private var locationSubscription: AnyCancellable?
+    #endif
+    public var officePresenceLabel: String {
+        #if os(macOS)
+        return location.presence + " · " + (location.enabled ? "Mac location" : "tracking paused")
+        #else
+        return "Not connected on iPhone"
+        #endif
+    }
     private var saved = CampConfiguration()
     private let file: ConfigurationFile
 
@@ -34,6 +46,10 @@ public final class CampSettingsStore: ObservableObject {
         do {
             if let config = try file.load() { draft = config; saved = config }
         } catch { saveError = "Couldn’t restore settings. Your existing file has not been replaced. \(error.localizedDescription)" }
+        #if os(macOS)
+        location.configure(saved.office)
+        locationSubscription = location.objectWillChange.sink { [weak self] _ in self?.objectWillChange.send() }
+        #endif
     }
 
     public var hasChanges: Bool { draft != saved }
@@ -49,6 +65,9 @@ public final class CampSettingsStore: ObservableObject {
         do {
             try file.save(draft)
             saved = draft
+            #if os(macOS)
+            location.configure(saved.office)
+            #endif
             saveError = nil
             statusMessage = "Saved on this device"
         } catch { saveError = "Couldn’t save settings: \(error.localizedDescription)" }

@@ -27,6 +27,10 @@
 	</dict>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>NSLocationUsageDescription</key>
+	<string>camp uses this Mac’s location to detect arrival at your office and time lunch invitations.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>camp uses this Mac’s location to detect arrival at your office and time lunch invitations.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

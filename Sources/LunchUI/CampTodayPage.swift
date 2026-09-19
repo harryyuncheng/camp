@@ -43,7 +43,7 @@ struct CampTodayPage: View {
                 }
             }
             CampCard("A little context", subtitle: "These signals will eventually help camp time your invitation.") {
-                contextRow("Office presence", detail: store.draft.personal.presencePreview.rawValue, symbol: "location")
+                contextRow("Office presence", detail: store.officePresenceLabel, symbol: "location")
                 Divider()
                 contextRow("Your lunch window", detail: "\(CampTimePicker.label(store.draft.personal.lunchStart)) – \(CampTimePicker.label(store.draft.personal.lunchEnd))", symbol: "calendar")
                 Divider()

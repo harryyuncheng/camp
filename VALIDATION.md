@@ -69,3 +69,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Mac release build succeeded after wiring the shared Ramp view into app target memberships.
 - Fund creation, issuer enforcement and checkout have not been exercised. No automated tests were added or run for this update.
 - iPhone build remains blocked by installed Xcode 14.3.1; localhost bridge supports the Mac or simulator, not a physical phone.
+
+
+## Mac location update
+
+- Mac release app compiled and packaged with the Core Location service and UI.
+- No automated tests or live location permission/movement checks were run. User must enable Location Services and configure the actual office for an on-device walkthrough.
+- iPhone tracking remains explicitly unavailable; the shared UI compiles its Mac implementation conditionally.

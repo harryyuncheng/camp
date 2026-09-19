@@ -71,3 +71,8 @@ Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fe
 ## Ramp bridge
 
 `backend/server.py` owns Ramp OAuth, read projections and durable sandbox allocation attempts. `CampRampView`/`CampRampModel` connect through a loopback camp endpoint and persist only the non-sensitive pending request in UserDefaults. The server enforces its own allocation cap and active employee lookup; demo office policy is not an authorization source. This local service is not suitable for remote deployment until camp authentication and office membership exist. See `backend/README.md` for its contract and limitations.
+
+
+## Mac location
+
+`MacOfficeLocation` owns a main-actor Core Location manager for the lifetime of `CampSettingsStore`. OS delegate callbacks hop to the main actor; UI reads published state. A confirmed saved geofence is independent of editable draft coordinates. Accuracy bounds, a 20m margin, freshness expiry and a two-fix transition rule avoid turning uncertain positions into arrivals. Sleep/wake and authorization changes clear stale presence. Arrival/departure app notifications carry only office ID and observation time; meal orchestration can subscribe later. See `docs/LOCATION.md`.

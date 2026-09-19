@@ -33,10 +33,7 @@ struct CampPersonalPage: View {
                 CampToggle(title: "Order updates", detail: "Cutoff, delivery and arrival updates", value: $store.draft.personal.orderUpdates)
                 CampToggle(title: "Coffee invitations", detail: "Join a nearby coffee run", value: $store.draft.personal.coffeeInvitations)
                 CampField("Snooze for") { CampNumberStepper(label: "Snooze", value: $store.draft.personal.snoozeMinutes, range: 5...60, step: 5, suffix: " min") }
-                Picker("Office presence preview", selection: $store.draft.personal.presencePreview) {
-                    ForEach(PresencePreview.allCases) { Text($0.rawValue).tag($0) }
-                }
-                Text("These controls do not schedule notifications or access your location yet.").font(.caption).foregroundStyle(CampPalette.muted)
+                Text("These controls do not schedule notifications yet. Manage live Mac location under Connections.").font(.caption).foregroundStyle(CampPalette.muted)
             }
         }
     }
@@ -50,12 +47,13 @@ struct CampOfficePage: View {
             CampCard("Office controls", subtitle: "A demo role switch, available on both devices. Real roles will be enforced by the backend.") {
                 CampToggle(title: "Demo admin", detail: store.isDemoAdmin ? "Office policy is editable" : "Office policy is read-only", value: $store.isDemoAdmin)
             }
+            CampLocationView(store: store)
             policy.disabled(!store.isDemoAdmin)
         }
     }
     private var policy: some View {
         VStack(spacing: 20) {
-            CampCard("Where we gather", subtitle: "Office details and the boundary for future presence checks.") {
+            CampCard("Where we gather", subtitle: "Save these coordinates and radius, then confirm the boundary above.") {
                 CampTextField(title: "Office name", text: $store.draft.office.name)
                 CampTextField(title: "Delivery address", text: $store.draft.office.address)
                 ZStack {
@@ -64,7 +62,7 @@ struct CampOfficePage: View {
                     Circle().stroke(CampPalette.green.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [5])).frame(width: 140, height: 140)
                     VStack(spacing: 8) { Image(systemName: "building.2.fill").font(.title); Text("\(store.draft.office.radiusMeters) m boundary").font(.caption) }
                 }.frame(height: 170).accessibilityLabel("Illustrative office boundary")
-                Text("Illustration only · no location has been detected").font(.caption).foregroundStyle(CampPalette.muted)
+                Text("Boundary illustration · live status is shown above").font(.caption).foregroundStyle(CampPalette.muted)
                 CampPair(compact: compact) {
                     CampField("Latitude") { TextField("Latitude", value: $store.draft.office.latitude, format: .number).textFieldStyle(.roundedBorder) }
                     CampField("Longitude") { TextField("Longitude", value: $store.draft.office.longitude, format: .number).textFieldStyle(.roundedBorder) }
@@ -100,9 +98,8 @@ struct CampConnectionsPage: View {
         VStack(spacing: 20) {
             CampCard("Your connections", subtitle: "Configuration placeholders. Preview buttons only change the demo status on this device.") {
                 connection("Calendar", symbol: "calendar", detail: "Find a lunch window around your meetings.")
-                Divider()
-                connection("Location", symbol: "location", detail: "Check whether you are inside the office boundary.")
             }
+            CampLocationView(store: store)
             CampRampView(store: store)
             CampCard("Recommendation service", subtitle: "A place for your partner’s model to plug in.") {
                 CampTextField(title: "https://recommendations.example.com", text: $store.draft.connections.recommendationURL)
@@ -120,7 +117,7 @@ struct CampConnectionsPage: View {
             CampCard("camp backend", subtitle: "One home for group carts, office policy and future integrations.") {
                 CampTextField(title: "http://127.0.0.1:8787", text: $store.draft.connections.backendURL)
                 CampBadge(text: "Not connected")
-                Text("Ramp uses this URL through the local bridge. Other integrations remain placeholders. Mac and iPhone settings do not sync yet.").font(.caption).foregroundStyle(CampPalette.muted)
+                Text("Ramp uses this URL through the local bridge. Location runs on-device. Other integrations remain placeholders. Mac and iPhone settings do not sync yet.").font(.caption).foregroundStyle(CampPalette.muted)
             }
         }
     }
