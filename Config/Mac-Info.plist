@@ -25,6 +25,10 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>camp reads your selected calendars to find a lunch window around meetings. It never changes calendar events.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>camp reads your selected calendars to find a lunch window around meetings. It never changes calendar events.</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSLocationUsageDescription</key>

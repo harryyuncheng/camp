@@ -29,6 +29,8 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var previewConnections: Set<String> = []
     #if os(macOS)
     public let location = MacOfficeLocation()
+    public let lunchCalendar = MacLunchCalendar()
+    private var calendarSubscription: AnyCancellable?
     private var locationSubscription: AnyCancellable?
     #endif
     public var officePresenceLabel: String {
@@ -36,6 +38,13 @@ public final class CampSettingsStore: ObservableObject {
         return location.presence + " · " + (location.enabled ? "Mac location" : "tracking paused")
         #else
         return "Not connected on iPhone"
+        #endif
+    }
+    public var lunchAvailabilityLabel: String {
+        #if os(macOS)
+        return lunchCalendar.summary
+        #else
+        return "Calendar not connected on iPhone"
         #endif
     }
     private var saved = CampConfiguration()
@@ -47,8 +56,10 @@ public final class CampSettingsStore: ObservableObject {
             if let config = try file.load() { draft = config; saved = config }
         } catch { saveError = "Couldn’t restore settings. Your existing file has not been replaced. \(error.localizedDescription)" }
         #if os(macOS)
+        lunchCalendar.configure(saved.personal, timezone: saved.office.timezone)
         location.configure(saved.office)
         locationSubscription = location.objectWillChange.sink { [weak self] _ in self?.objectWillChange.send() }
+        calendarSubscription = lunchCalendar.objectWillChange.sink { [weak self] _ in self?.objectWillChange.send() }
         #endif
     }
 
@@ -90,6 +101,7 @@ public final class CampSettingsStore: ObservableObject {
             try file.save(draft)
             saved = draft
             #if os(macOS)
+            lunchCalendar.configure(saved.personal, timezone: saved.office.timezone)
             location.configure(saved.office)
             #endif
             saveError = nil

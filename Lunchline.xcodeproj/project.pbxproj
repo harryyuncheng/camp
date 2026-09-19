@@ -13,7 +13,7 @@
 		"DCC1B620DEE03B35E7CF2E74" = {
 			"isa" = "PBXGroup";
 			"name" = "Shared UI";
-			"children" = ( "F73FC003BE3E8B8FE00C022C", "E79433541AC79D859BE6A6D7", "27E0BECA3D08637C07220DA0", "8E9B14129C271C243D1FD4DF", "0464AF5238C6985DD7EFE878", "085F49884B2E24F4A5F8CF66", "3D9C7E6CE75D776F66843ABA", "AA9AFA62E521BB23D4A22F0F", "0DC199CC655D0B90792C25FB", "6A6AA6A83B3FA5C8D86A1969" );
+			"children" = ( "F73FC003BE3E8B8FE00C022C", "E79433541AC79D859BE6A6D7", "27E0BECA3D08637C07220DA0", "8E9B14129C271C243D1FD4DF", "0464AF5238C6985DD7EFE878", "085F49884B2E24F4A5F8CF66", "3D9C7E6CE75D776F66843ABA", "AA9AFA62E521BB23D4A22F0F", "0DC199CC655D0B90792C25FB", "6A6AA6A83B3FA5C8D86A1969", "573F80616DE11E7436BF60A1", "244E8CE46AB5991AF5BC98E2" );
 			"sourceTree" = "<group>";
 		};
 		"C1C0345F7A51240D5683CAED" = {
@@ -71,6 +71,10 @@
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "text.plist.xml";
 			"sourceTree" = "<group>";
+		};
+		"2D7DF6816EE45C94177CADCE" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
 		};
 		"E8C7F4CE3CE32A9342E056AB" = {
 			"isa" = "PBXBuildFile";
@@ -213,6 +217,12 @@
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "<group>";
 		};
+		"0DC199CC655D0B90792C25FB" = {
+			"path" = "Sources/LunchUI/MacOfficeLocation.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
+		};
 		"FBDC4F23F93125BBEEAE800C" = {
 			"isa" = "PBXGroup";
 			"name" = "Products";
@@ -235,11 +245,11 @@
 			"isa" = "PBXCopyFilesBuildPhase";
 			"runOnlyForDeploymentPostprocessing" = "0";
 			"dstPath" = "";
-			"name" = "Embed App Extensions";
 			"files" = ( "265BC4FD28C528304F1AC67C" );
+			"name" = "Embed App Extensions";
 		};
-		"085F49884B2E24F4A5F8CF66" = {
-			"path" = "Sources/LunchUI/CampSettingsPages.swift";
+		"AA9AFA62E521BB23D4A22F0F" = {
+			"path" = "Sources/LunchUI/CampRampView.swift";
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "<group>";
@@ -259,9 +269,11 @@
 			"isa" = "PBXBuildFile";
 			"fileRef" = "07960C32B791871E30231B4A";
 		};
-		"0521A5F43F49DCBEBFD4063E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "8E9B14129C271C243D1FD4DF";
+		"085F49884B2E24F4A5F8CF66" = {
+			"path" = "Sources/LunchUI/CampSettingsPages.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
 		};
 		"990AA5F8AA1D633656FEEC5F" = {
 			"path" = "iOS/Lunchline/LunchlineApp.swift";
@@ -269,17 +281,19 @@
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "<group>";
 		};
+		"0521A5F43F49DCBEBFD4063E" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "8E9B14129C271C243D1FD4DF";
+		};
 		"451EA8BF70963E7682491A3F" = {
 			"isa" = "XCConfigurationList";
 			"defaultConfigurationIsVisible" = "0";
 			"defaultConfigurationName" = "Release";
 			"buildConfigurations" = ( "E3A6A7AF4978F5AEBB56C651", "897E2A5236ED94266684172E" );
 		};
-		"AA9AFA62E521BB23D4A22F0F" = {
-			"path" = "Sources/LunchUI/CampRampView.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+		"165D3E9AFD93955249CC0C09" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
 		};
 		"3D9C7E6CE75D776F66843ABA" = {
 			"path" = "Sources/LunchUI/CampSettingsStore.swift";
@@ -287,15 +301,15 @@
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "<group>";
 		};
-		"165D3E9AFD93955249CC0C09" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
-		};
 		"1F6D2E8FCAC3D9F321F16066" = {
 			"isa" = "PBXResourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = (  );
 			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"6F451A906F4777AAE1E9FB10" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0DC199CC655D0B90792C25FB";
 		};
 		"454ED271AE78F0A6BD930947" = {
 			"isa" = "PBXBuildFile";
@@ -322,7 +336,7 @@
 		"B0BEDC9F63F601F12AFAAD4E" = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ( "57D1B32069E00B37F1D86247", "D09951732E04E924B5E4436A", "18F9734F4BBA5E34E5D87C3E", "F88349834F8DBF4194B573CB", "A265BFFF63667E8DCC32D510", "E8C7F4CE3CE32A9342E056AB", "E70178078CD52B8140684DB4", "A4C01EBC144440E7AD392B0A", "5EF3B6A558443AA4E5D4D0C6", "AF603027CCD2CA6E46E47AA6", "0521A5F43F49DCBEBFD4063E", "084EB0A92AD93CBA356E561A", "33DE390D3BE97859D1A17E59", "240063B556F9E11B2F978981", "165D3E9AFD93955249CC0C09", "EDAD23BA0F6BB767403393D1", "2D7DF6816EE45C94177CADCE" );
+			"files" = ( "57D1B32069E00B37F1D86247", "D09951732E04E924B5E4436A", "18F9734F4BBA5E34E5D87C3E", "F88349834F8DBF4194B573CB", "A265BFFF63667E8DCC32D510", "E8C7F4CE3CE32A9342E056AB", "E70178078CD52B8140684DB4", "A4C01EBC144440E7AD392B0A", "5EF3B6A558443AA4E5D4D0C6", "AF603027CCD2CA6E46E47AA6", "0521A5F43F49DCBEBFD4063E", "084EB0A92AD93CBA356E561A", "33DE390D3BE97859D1A17E59", "240063B556F9E11B2F978981", "165D3E9AFD93955249CC0C09", "EDAD23BA0F6BB767403393D1", "2D7DF6816EE45C94177CADCE", "351A36C57D9D91F2EAE5B5B8", "1E4189726F3CD230B9F8F5BD" );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		"F73FC003BE3E8B8FE00C022C" = {
@@ -375,8 +389,8 @@
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
 				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
 				"CLANG_ENABLE_OBJC_ARC" = "YES";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
 				"SWIFT_VERSION" = "5.0";
 				"CLANG_ENABLE_MODULES" = "YES";
 				"DEBUG_INFORMATION_FORMAT" = "dwarf";
@@ -469,15 +483,19 @@
 			"name" = "LunchlineActivity";
 			"buildRules" = (  );
 		};
+		"2711671EEDCA8A5EAACA74C0" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
+		};
 		"364ED9C0A99D1DB68070A265" = {
 			"isa" = "XCConfigurationList";
 			"defaultConfigurationIsVisible" = "0";
 			"defaultConfigurationName" = "Release";
 			"buildConfigurations" = ( "4DDD73B1B9F814279097EF97", "5823EF385173CCDE0A7BFB3C" );
 		};
-		"2711671EEDCA8A5EAACA74C0" = {
+		"790F8993B353F73215A1A047" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
+			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
 		};
 		"3D154C116223506B677623D8" = {
 			"path" = "ARCHITECTURE.md";
@@ -510,6 +528,12 @@
 			"buildActionMask" = "2147483647";
 			"files" = (  );
 			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		"6A6AA6A83B3FA5C8D86A1969" = {
+			"path" = "Sources/LunchUI/CampLocationView.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
 		};
 		"8E9B14129C271C243D1FD4DF" = {
 			"path" = "Sources/LunchUI/CampTodayPage.swift";
@@ -559,6 +583,10 @@
 			"files" = (  );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
+		"EDAD23BA0F6BB767403393D1" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "0DC199CC655D0B90792C25FB";
+		};
 		"33DE390D3BE97859D1A17E59" = {
 			"isa" = "PBXBuildFile";
 			"fileRef" = "085F49884B2E24F4A5F8CF66";
@@ -566,7 +594,7 @@
 		"0915AB262380B81A5D8ECA36" = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ( "3285E0170E562511E3DAEC8F", "426E20D9197D9964D65EDDBD", "52327E969F7FFF5A3CD652BB", "2382BA36E46D60D304F23A4B", "765BDC8D5F2C61A76F445D2F", "34A3E5CBD07A4E1CE41ED3C2", "A9DE95356B439FB451D9337C", "DDEF661AB9289151461CFA2A", "579F35FB959BE87E23E04983", "D392204FCB670BE1B4CCB69F", "6F0BFE163AEB89E3E80B8606", "2D2E5B1E11A740622E56B89E", "BCBFC11BB9E33315BFCFD6A2", "2711671EEDCA8A5EAACA74C0", "6F451A906F4777AAE1E9FB10", "790F8993B353F73215A1A047" );
+			"files" = ( "3285E0170E562511E3DAEC8F", "426E20D9197D9964D65EDDBD", "52327E969F7FFF5A3CD652BB", "2382BA36E46D60D304F23A4B", "765BDC8D5F2C61A76F445D2F", "34A3E5CBD07A4E1CE41ED3C2", "A9DE95356B439FB451D9337C", "DDEF661AB9289151461CFA2A", "579F35FB959BE87E23E04983", "D392204FCB670BE1B4CCB69F", "6F0BFE163AEB89E3E80B8606", "2D2E5B1E11A740622E56B89E", "BCBFC11BB9E33315BFCFD6A2", "2711671EEDCA8A5EAACA74C0", "6F451A906F4777AAE1E9FB10", "790F8993B353F73215A1A047", "D9BDC7E9D7457A31DC0085DC", "83B6D8C6688A94F2EC6D74E5" );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		"5EF3B6A558443AA4E5D4D0C6" = {
@@ -685,33 +713,33 @@
 			"explicitFileType" = "wrapper.application";
 			"sourceTree" = "BUILT_PRODUCTS_DIR";
 		};
-		"0DC199CC655D0B90792C25FB" = {
+		"573F80616DE11E7436BF60A1" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/MacOfficeLocation.swift";
+			"path" = "Sources/LunchUI/MacLunchCalendar.swift";
 			"sourceTree" = "<group>";
 		};
-		"6F451A906F4777AAE1E9FB10" = {
+		"D9BDC7E9D7457A31DC0085DC" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "0DC199CC655D0B90792C25FB";
+			"fileRef" = "573F80616DE11E7436BF60A1";
 		};
-		"EDAD23BA0F6BB767403393D1" = {
+		"351A36C57D9D91F2EAE5B5B8" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "0DC199CC655D0B90792C25FB";
+			"fileRef" = "573F80616DE11E7436BF60A1";
 		};
-		"6A6AA6A83B3FA5C8D86A1969" = {
+		"244E8CE46AB5991AF5BC98E2" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/CampLocationView.swift";
+			"path" = "Sources/LunchUI/CampCalendarView.swift";
 			"sourceTree" = "<group>";
 		};
-		"790F8993B353F73215A1A047" = {
+		"83B6D8C6688A94F2EC6D74E5" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
+			"fileRef" = "244E8CE46AB5991AF5BC98E2";
 		};
-		"2D7DF6816EE45C94177CADCE" = {
+		"1E4189726F3CD230B9F8F5BD" = {
 			"isa" = "PBXBuildFile";
-			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
+			"fileRef" = "244E8CE46AB5991AF5BC98E2";
 		};
 	};
 	"rootObject" = "98F54143AB4E86B28C3AFEE0";

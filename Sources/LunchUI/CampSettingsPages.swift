@@ -24,10 +24,9 @@ struct CampPersonalPage: View {
                 }
                 CampField("Time to eat") { CampNumberStepper(label: "Time to eat", value: $store.draft.personal.lunchDuration, range: 15...120, step: 5, suffix: " min") }
                 CampField("Meeting buffer") { CampNumberStepper(label: "Meeting buffer", value: $store.draft.personal.meetingBuffer, range: 0...60, step: 5, suffix: " min") }
-                CampToggle(title: "Work calendar", detail: "Demo calendar selection", value: $store.draft.personal.workCalendar)
-                CampToggle(title: "Personal calendar", detail: "Demo calendar selection", value: $store.draft.personal.personalCalendar)
-                CampToggle(title: "Holidays", detail: "Demo calendar selection", value: $store.draft.personal.holidayCalendar)
+
             }
+            CampCalendarView(store: store)
             CampCard("A well-timed nudge") {
                 CampToggle(title: "Lunch invitations", detail: "An invitation when a compatible group is collecting", value: $store.draft.personal.lunchInvitations)
                 CampToggle(title: "Order updates", detail: "Cutoff, delivery and arrival updates", value: $store.draft.personal.orderUpdates)
@@ -84,9 +83,7 @@ struct CampConnectionsPage: View {
     let compact: Bool
     var body: some View {
         VStack(spacing: 20) {
-            CampCard("Your connections", subtitle: "Configuration placeholders. Preview buttons only change the demo status on this device.") {
-                connection("Calendar", symbol: "calendar", detail: "Find a lunch window around your meetings.")
-            }
+            CampCalendarView(store: store)
             CampLocationView(store: store)
             CampRampView(store: store)
             CampCard("Recommendation service", subtitle: "A place for your partner’s model to plug in.") {

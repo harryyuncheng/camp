@@ -47,8 +47,9 @@ struct CampTodayPage: View {
                 Divider()
                 contextRow("Your lunch window", detail: "\(CampTimePicker.label(store.draft.personal.lunchStart)) – \(CampTimePicker.label(store.draft.personal.lunchEnd))", symbol: "calendar")
                 Divider()
-                contextRow("Calendar availability", detail: store.previewConnections.contains("Calendar") ? "Demo: a free lunch window" : "Calendar not connected", symbol: "clock")
+                contextRow("Calendar availability", detail: store.lunchAvailabilityLabel, symbol: "clock")
             }
+            CampCalendarView(store: store)
             CampCard("Where the savings come from", subtitle: "Illustrative delivery-fee comparison for the same meals. Not a live quote.") {
                 costRow("Separate deliveries · \(store.group.participantCount) × $6", cents: store.group.separateDeliveryCents)
                 costRow("One shared delivery", cents: store.group.sharedDeliveryCents)

@@ -82,3 +82,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 
 - Replaced the coordinate form with an AppKit MapKit map, place search, current-Mac marker, click-to-place circle, radius slider and one-step boundary save/confirmation.
 - Mac release build succeeded. No automated or interactive UI tests were run for this update.
+
+## Calendar integration update
+
+- Mac release build succeeds with EventKit, the public modern full-access selector compatibility path, calendar selection and free-window calculation.
+- No tests or live permission/event reads were run. Actual account permissions and availability require an on-device walkthrough.
+- Only Mac calendar access is implemented; iPhone shows an explicit unsupported message.
