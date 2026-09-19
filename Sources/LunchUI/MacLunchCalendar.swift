@@ -24,6 +24,12 @@ public final class MacLunchCalendar: ObservableObject {
     @Published public private(set) var summary = "Calendar not connected"
     @Published public private(set) var detail = "Connect your Mac calendars to find time for lunch."
     @Published public private(set) var freeWindows: [DateInterval] = []
+    @Published public private(set) var busyBlocks: [DateInterval] = []
+    @Published public private(set) var timelineDay: DateInterval?
+    public var suggestedLunch: DateInterval? {
+        guard let window = freeWindows.first else { return nil }
+        return DateInterval(start: window.start, duration: Double(preferences.lunchDuration * 60))
+    }
     @Published public private(set) var busyNow: Bool?
     @Published public private(set) var checkedAt: Date?
     @Published public private(set) var timezone = "America/New_York"
@@ -102,7 +108,7 @@ public final class MacLunchCalendar: ObservableObject {
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars") { NSWorkspace.shared.open(url) }
     }
     private func clear(_ title: String, _ reason: String) {
-        summary = title; detail = reason; freeWindows = []; busyNow = nil; checkedAt = nil
+        summary = title; detail = reason; freeWindows = []; busyBlocks = []; timelineDay = nil; busyNow = nil; checkedAt = nil
     }
     public func refresh() {
         guard !sleeping else { return }
@@ -149,6 +155,11 @@ public final class MacLunchCalendar: ObservableObject {
             if let last = merged.last, interval.start <= last.end {
                 merged[merged.count - 1] = DateInterval(start: last.start, end: max(last.end, interval.end))
             } else { merged.append(interval) }
+        }
+        timelineDay = DateInterval(start: day, end: tomorrow)
+        busyBlocks = merged.compactMap { block in
+            let from = max(day, block.start), until = min(tomorrow, block.end)
+            return until > from ? DateInterval(start: from, end: until) : nil
         }
         busyNow = merged.contains { $0.start <= now && now < $0.end }
         var cursor = max(start, now)

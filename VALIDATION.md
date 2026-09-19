@@ -88,3 +88,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Mac release build succeeds with EventKit, the public modern full-access selector compatibility path, calendar selection and free-window calculation.
 - No tests or live permission/event reads were run. Actual account permissions and availability require an on-device walkthrough.
 - Only Mac calendar access is implemented; iPhone shows an explicit unsupported message.
+
+
+## Map scroll focus and day calendar UI
+
+- Mac release build succeeded with the map scroll gate, calendar dropdown multiselector, hourly busy timeline and exact-duration suggested lunch block.
+- No interactive or automated tests were run for this update.

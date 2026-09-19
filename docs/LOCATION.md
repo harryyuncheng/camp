@@ -5,7 +5,7 @@
 1. Run the rebuilt `dist/camp.app` (quit an older running copy first).
 2. Open **Office** or **Connections**. The office card contains a real Apple map.
 3. **Search** for a place/address or click **Find me** and allow the location prompt. Your Mac appears as a blue marker. Finding yourself moves the camera, not the office boundary.
-4. Click the map to place the office circle. Drag the map to pan, use its zoom controls, and adjust the **radius** slider.
+4. Click once to activate the map, then click to place the office circle. Drag the map to pan, use its zoom controls, and adjust the **radius** slider. Before activation, scrolling over the map scrolls the page. Move the pointer off the map or click **Done with map** to return to page scrolling.
 5. Click **Confirm office**. This saves and activates the selected boundary in one step, without saving unrelated draft settings. It enables tracking and requests permission if needed.
 
 The old latitude/longitude form and separate save/confirm sequence have been removed. Search suggestions come from MapKit; choosing a result places the circle. Office name, delivery address and timezone remain ordinary settings. **Location details** holds permission, accuracy, arrival time, pause/resume and the system-settings shortcut. Map rendering and place search use Apple services; camp does not upload location to its backend. Office editing uses the existing demo-admin toggle.

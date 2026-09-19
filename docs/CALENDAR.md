@@ -4,9 +4,9 @@
 
 1. Quit an older camp copy and open the rebuilt `dist/camp.app`.
 2. Open **Connections → Connect calendars** and allow full calendar access. macOS calls this full/read-write access; camp only reads events and contains no event-writing operations.
-3. Select the calendars that should block lunch. Names include the calendar's account/source. Selections save immediately on this Mac. None are selected automatically.
+3. Open the **Select calendars** dropdown and check the calendars that should block lunch. The dropdown stays open for multiple selections. Names include the calendar's account/source. Selections save immediately on this Mac. None are selected automatically.
 4. In **You**, set the lunch window, time to eat and meeting buffer, then **Save changes**. Computation uses saved preferences and the saved office timezone.
-5. View today's remaining lunch windows and current busy/free status in Today, You or Connections. Use **Refresh**, **Pause** or **Calendar settings** as needed.
+5. View today’s hourly timeline below the selector. Blue-gray blocks represent merged busy time including your buffer. A light-green block marks the earliest remaining gap for exactly your saved lunch duration. This is a suggestion, not a booked event; no lunch block appears if no gap fits. Use **Refresh** or the **…** menu for settings and pause.
 
 This reads calendars already present in the Mac Calendar app, including synced Google, Microsoft and iCloud accounts. It does not implement direct Google/Microsoft OAuth. If no calendars appear, add/sync the account in Calendar first. It sees locally synced events, not an independently refreshed server calendar. iPhone calendar integration is not implemented.
 
@@ -33,3 +33,5 @@ The installed Xcode 14.3.1 SDK does not declare the modern calendar-access metho
 Mac release build succeeded. No automated tests or live calendar permission/read checks were run during implementation. Grant permission and select your actual calendars for an on-device walkthrough. iPhone builds remain subject to the existing newer-Xcode requirement.
 
 Apple references: [Accessing the event store](https://developer.apple.com/documentation/eventkit/accessing-the-event-store), [full-access request](https://developer.apple.com/documentation/eventkit/ekeventstore/requestfullaccesstoevents(completion:)), [EventKit API migration](https://developer.apple.com/documentation/technotes/tn3153-adopting-api-changes-for-eventkit-in-ios-macos-and-watchos).
+
+The timeline uses the office timezone and actual day length, including daylight-saving transitions. Blockers are labelled Busy without meeting titles. A red line indicates the last refresh time.

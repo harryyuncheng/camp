@@ -9,6 +9,7 @@ struct CampLocationView: View {
     @State private var radius: Double
     @State private var placed: Bool
     @State private var focus = UUID()
+    @State private var mapActive = false
     @State private var query = ""
     @State private var results: [MKMapItem] = []
     @State private var searching = false
@@ -49,8 +50,18 @@ struct CampLocationView: View {
                 }
             }
             OfficeBoundaryMap(latitude: latitude, longitude: longitude, radius: radius, placed: placed,
-                              userCoordinate: store.location.mapCoordinate, focus: focus, focusPoint: mapFocusPoint, editable: store.isDemoAdmin) { point in place(point, recenter: false) }
-                .frame(height: 340).clipShape(RoundedRectangle(cornerRadius: 14))
+                              userCoordinate: store.location.mapCoordinate, focus: focus, focusPoint: mapFocusPoint, active: $mapActive, editable: store.isDemoAdmin) { point in place(point, recenter: false) }
+                .frame(height: 340)
+                .overlay(alignment: .topTrailing) {
+                    if mapActive {
+                        Button("Done with map") { mapActive = false }.buttonStyle(CampActionStyle(primary: false)).padding(10)
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    Text(mapActive ? "Click to place your office · Move the pointer off the map to scroll the page" : "Click to interact with map")
+                        .font(.caption.weight(.medium)).padding(9).background(.regularMaterial).clipShape(Capsule()).padding(10).allowsHitTesting(false)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 14))
                 .accessibilityLabel("Office map. Click to place the office boundary; drag to pan and use plus or minus to zoom.")
             HStack {
                 Button { locateMe() } label: { Label(waitingForLocation ? "Locating…" : "Find me", systemImage: "location.fill") }
@@ -137,21 +148,26 @@ private struct OfficeBoundaryMap: NSViewRepresentable {
     let userCoordinate: CLLocationCoordinate2D?
     let focus: UUID
     var focusPoint: CLLocationCoordinate2D? = nil
+    @Binding var active: Bool
     let editable: Bool
     let onPlace: (CLLocationCoordinate2D) -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
-    func makeNSView(context: Context) -> MKMapView {
-        let map = MKMapView()
+    func makeNSView(context: Context) -> OfficeMapContainer {
+        let container = OfficeMapContainer()
+        let map = container.map
+        container.onActivation = { value in context.coordinator.parent.active = value }
         map.delegate = context.coordinator
         map.showsZoomControls = true; map.showsCompass = true
         map.isRotateEnabled = false; map.isPitchEnabled = false
         let click = NSClickGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.clicked(_:)))
         click.numberOfClicksRequired = 1
         map.addGestureRecognizer(click)
-        return map
+        return container
     }
-    func updateNSView(_ map: MKMapView, context: Context) {
+    func updateNSView(_ container: OfficeMapContainer, context: Context) {
+        let map = container.map
+        container.active = active
         let coordinator = context.coordinator; coordinator.parent = self
         if coordinator.focus != focus {
             coordinator.focus = focus
@@ -198,6 +214,35 @@ private struct OfficeBoundaryMap: NSViewRepresentable {
         }
     }
 }
+/// Inactive maps route wheel events to the page before MapKit can consume them.
+private final class OfficeMapContainer: NSView {
+    let map = MKMapView()
+    var active = false
+    var onActivation: ((Bool) -> Void)?
+    private var area: NSTrackingArea?
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        map.frame = bounds; map.autoresizingMask = [.width, .height]; addSubview(map)
+    }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        guard bounds.contains(convert(point, from: superview)) else { return nil }
+        return active ? super.hitTest(point) : self
+    }
+    override func mouseDown(with event: NSEvent) { active = true; onActivation?(true) }
+    override func scrollWheel(with event: NSEvent) {
+        if let scroll = enclosingScrollView { scroll.scrollWheel(with: event) }
+        else { nextResponder?.scrollWheel(with: event) }
+    }
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let area { removeTrackingArea(area) }
+        let next = NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect], owner: self)
+        addTrackingArea(next); area = next
+    }
+    override func mouseExited(with event: NSEvent) { active = false; onActivation?(false) }
+}
+
 #else
 struct CampLocationView: View {
     @ObservedObject var store: CampSettingsStore
