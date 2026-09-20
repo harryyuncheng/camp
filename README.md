@@ -36,7 +36,7 @@ The shared workspace has five SwiftUI screens:
 
 Use **Save** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders and other connections are simulated; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
 
-The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. The installed Xcode 14.3.1 cannot build this project's iOS 17 Live Activity target; use Xcode 15 or newer with an appropriate device SDK and signing team.
+The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. Xcode 16.2 is now selected on this machine; complete its first-launch license/setup and install an iOS Simulator runtime before building.
 
 ## Today demo and editable timing
 
@@ -130,7 +130,7 @@ The iPhone app can also supply Apple's mirrored Live Activity on macOS Tahoe 26+
 
 - Thirteen domain/geometry/timing tests cover state transitions, persistence, notch placement, and confirmation deadlines. Three AppKit lifecycle tests also check view identity, fixed top edge, actual window hiding, explicit reopening, and cancellation when a new offer arrives. AppKit tests require a macOS desktop session and skip without one.
 - Mac build and interaction results are recorded in `VALIDATION.md`.
-- iOS 17 compilation and physical-device Live Activity interactions need a newer Xcode than the 14.3.1 installed on this machine. The iOS portion is scaffolded, not device-validated.
+- Xcode 16.2 is installed, but its license/setup currently blocks iOS builds. The iOS portion is not yet simulator- or device-validated.
 - Meals, coffee history, spending transactions, savings and arrival windows are demo fixtures. Ramp sandbox, Mac location and Mac calendar access are implemented separately. Recommendations, provider checkout and real payments are not connected.
 - The Mac panel is a normal floating utility window, not a system notification; Focus mode does not automatically suppress it. Add your own quiet-hours/Focus policy before real reminders.
 

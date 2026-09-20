@@ -170,3 +170,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Added unsigned simulator build helper and ignored local signing overrides.
 - Invoked `scripts/build-ios.sh`: stopped at explicit preflight because installed Xcode is 14.3.1; iOS 17 APIs require Xcode 15+. No successful iOS build, simulator/device interaction or automated tests claimed.
 - Mac app was not restarted. Automatic cross-device delivery/APNs remains future work; see `docs/IOS.md`.
+
+
+## Xcode 16.2 setup — 2026-09-19
+
+- Confirmed selected Xcode is 16.2 (16C5032a) at `/Applications/Xcode_16.2.app`.
+- Fixed iOS build helper to respect `xcode-select` instead of defaulting to the old Xcode.app. Explicit DEVELOPER_DIR overrides still work.
+- Retried iOS build: exit 69, Xcode license not accepted. No compilation or simulator run occurred. User must complete Xcode first-launch setup.

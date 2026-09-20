@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
-export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
+export DEVELOPER_DIR="${DEVELOPER_DIR:-$(xcode-select -p)}"
 if [[ ! -x "$DEVELOPER_DIR/usr/bin/xcodebuild" ]]; then
   echo 'Install Xcode with an iOS 17+ SDK, or set DEVELOPER_DIR to your Xcode installation.' >&2
   exit 1

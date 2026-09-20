@@ -4,9 +4,9 @@ The native iPhone app and embedded WidgetKit extension share camp’s existing w
 
 ## Develop on this Mac
 
-1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. This machine currently has Xcode 14.3.1, which cannot compile these APIs. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
+1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. This machine now has Xcode 16.2 selected; complete its first-launch setup and license agreement before building. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
 2. Open `Lunchline.xcodeproj`. Choose the **Lunchline** scheme (the app displays as **camp**), then an iPhone simulator. Run the app; Xcode embeds **LunchlineActivity** automatically.
-3. An unsigned simulator build is also available through `bash scripts/build-ios.sh`. It uses `/Applications/Xcode.app` without changing the machine’s selected developer directory. Override `DEVELOPER_DIR` if the newer Xcode has a different location.
+3. An unsigned simulator build is also available through `bash scripts/build-ios.sh`. It uses the machine’s selected Xcode without changing that selection. Override `DEVELOPER_DIR` if the newer Xcode has a different location.
 4. Today → a group’s **View menu** starts that group’s Live Activity and opens the existing lunch sheet. Select, review and confirm either in the app or on the activity. Create group → Create & join also starts a confirmed activity. Leave ends the current activity.
 5. **Preview lunch invitation** opens the existing demo controls. **Start demo lunch** starts a fresh sample. Close the sheet, background camp and lock the simulator to inspect the Lock Screen. On a Dynamic Island simulator, long-press the island for meal controls. Apple controls when the island expands; camp cannot force it open.
 6. **Simulate arrival** completes the activity. **End lunch** dismisses it. Tapping the activity body opens the lunch sheet through `camp://lunch/<session-id>`; legacy `lunchline://` links still work.
@@ -33,7 +33,7 @@ Automatic invitations while the phone app is closed are a separate integration: 
 
 ## Current verification limit
 
-The local build helper was invoked and stopped at its Xcode version preflight (14.3.1 installed). No successful iOS compilation, simulator launch or device interaction is claimed. Device signing, final layout and intent execution still need checking once a supported Xcode is installed.
+The initial build stopped at the Xcode 14.3.1 version preflight. After upgrading, Xcode 16.2 is selected, but SDK/build commands are blocked until its license agreement is accepted. No successful iOS compilation, simulator launch or device interaction is claimed. Device signing, final layout and intent execution still need checking once a supported Xcode is installed.
 
 ## Apple references
 
