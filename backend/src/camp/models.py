@@ -121,6 +121,7 @@ class User(BaseModel):
     id: str = Field(default_factory=lambda: new_id("u"))
     name: str
     office_id: str
+    synthetic: bool = False
     home: LatLng
     budget_cents: dict[str, int] = Field(default_factory=lambda: {"lunch": 2000, "dinner": 2500})
     restrictions: list[Restriction] = Field(default_factory=list)
@@ -153,11 +154,11 @@ class User(BaseModel):
 # ---------------------------------------------------------------- restaurants & menu
 
 class FeeSchedule(BaseModel):
-    delivery_fee_cents: int = 499          # fixed per order: SHARED across a batch
-    service_fee_pct: float = 0.10          # percentage of item price: NOT shared
-    tax_pct: float = 0.0875
-    tip_pct: float = 0.15
-    min_order_cents: int = 1500
+    delivery_fee_cents: int = Field(default=499, ge=0)          # fixed per order: SHARED across a batch
+    service_fee_pct: float = Field(default=0.10, ge=0, allow_inf_nan=False)  # percentage of item price: NOT shared
+    tax_pct: float = Field(default=0.0875, ge=0, allow_inf_nan=False)
+    tip_pct: float = Field(default=0.15, ge=0, allow_inf_nan=False)
+    min_order_cents: int = Field(default=1500, ge=0)
 
     def per_item_overhead(self, price_cents: int) -> int:
         return round(price_cents * (self.service_fee_pct + self.tax_pct + self.tip_pct))
@@ -221,7 +222,7 @@ class MenuItem(BaseModel):
     name: str
     description: str = ""
     ingredients: list[str] = Field(default_factory=list)
-    price_cents: int
+    price_cents: int = Field(ge=0)
     modifiers: list[str] = Field(default_factory=list)            # what the ordering system allows
     modifier_prices: dict[str, int] = Field(default_factory=dict)  # modifier -> cents
     platform: str = "mock"
@@ -260,7 +261,7 @@ class Recommendation(BaseModel):
 class OrderLine(BaseModel):
     item_id: str
     restaurant_id: str
-    price_cents: int
+    price_cents: int = Field(ge=0)
     removed_ingredients: list[str] = Field(default_factory=list)
     addons: list[str] = Field(default_factory=list)
 
@@ -274,8 +275,14 @@ class Order(BaseModel):
     line: OrderLine
     default_line: OrderLine                # what we pre-selected
     shown_item_ids: list[str] = Field(default_factory=list)    # for pairwise training
-    fee_share_cents: int = 0               # frozen at optimization time
-    total_cents: int = 0
+    fee_share_cents: int = Field(default=0, ge=0)               # frozen at optimization time
+    total_cents: int = Field(default=0, ge=0)
+    baseline_cents: Optional[int] = Field(default=None, ge=0)
+    item_name: Optional[str] = None
+    restaurant_name: Optional[str] = None
+    item_symbol: Optional[str] = None
+    office_id: Optional[str] = None
+    office_name: Optional[str] = None
     batch_id: Optional[str] = None
     status: Literal["proposed", "confirmed", "manual", "cancelled"] = "proposed"
     novel: bool = False
@@ -364,6 +371,7 @@ class LunchGroup(BaseModel):
     membership; every join/leave also upserts the member's Order so spending history stays consistent."""
     id: str = Field(default_factory=lambda: new_id("g"))
     office_id: str
+    office_name: str = ""
     date: str                              # ISO date
     meal: Meal = "lunch"
     category: OrderCategory = "meal"
@@ -444,4 +452,5 @@ class ScheduledOrder(BaseModel):
     weekdays: list[int] = Field(default_factory=lambda: [0, 1, 2, 3, 4])   # 0 = Monday
     active: bool = True
     calendar_event_id: Optional[str] = None   # EventKit identifier on the device that created the event
+    materialized_dates: list[str] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=utcnow)
