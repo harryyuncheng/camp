@@ -8,8 +8,8 @@ The native iPhone app and embedded WidgetKit extension share camp’s existing w
 2. Open `Lunchline.xcodeproj`. Choose the **Lunchline** scheme (the app displays as **camp**), then an iPhone simulator. Run the app; Xcode embeds **LunchlineActivity** automatically.
 3. An unsigned simulator build is also available through `bash scripts/build-ios.sh`. It uses the machine’s selected Xcode without changing that selection. Override `DEVELOPER_DIR` if the newer Xcode has a different location.
 4. Today → a group’s **View menu** opens its full menu. Choose one or more items and join; a successful backend response starts a confirmed activity. Existing activity controls also support selection, review and confirmation. Create group → Create & join starts a confirmed activity. Leave removes that group's shared session.
-5. **Preview lunch invitation** opens the existing demo controls. **Start demo lunch** starts a fresh sample. Close the sheet, background camp and lock the simulator to inspect the Lock Screen. On a Dynamic Island simulator, long-press the island for meal controls. Apple controls when the island expands; camp cannot force it open.
-6. **Simulate arrival** completes the activity. **End lunch** dismisses it. Tapping the activity body opens the lunch sheet through `camp://lunch/<session-id>`; legacy `lunchline://` links still work.
+5. After joining or creating an order in Today, background camp and lock the simulator to inspect the Lock Screen. On a Dynamic Island simulator, long-press the island for order controls. Apple controls when the island expands; camp cannot force it open.
+6. Tapping the activity body returns to Today through `camp://lunch/<session-id>`; legacy `lunchline://` links still work. Manage the order with **Change order** or **Leave** in Today. The iPhone has no separate demo/activity control screen; **Simulate arrival** remains available in the Mac notch for demoing delivery.
 
 No Apple account, push certificate or Ramp credentials are needed for local simulator development. The build helper exits with an actionable message when Xcode is too old. It does not install Xcode or run tests.
 
@@ -23,7 +23,7 @@ No Apple account, push certificate or Ramp credentials are needed for local simu
 
 ## Lifecycle and integration boundary
 
-`LunchController.present(_:group:)` is the main-actor entry point for an incoming invitation. It requires a fresh choosing session with unique options, publishes it through the backend, then displays it locally. The ActivityKit projection checks the combined payload size against 4 KB. An activity failure leaves the acknowledged session visible in the app with an error. `presentConfirmed(_:office:)` preserves all item IDs from an acknowledged group join.
+`LunchController.present(_:group:)` is the main-actor entry point for an incoming invitation. It requires a fresh choosing session with unique options, publishes it through the backend, then displays it locally. The ActivityKit projection checks the combined payload size against 4 KB. Activity and sync failures appear in Today; acknowledged group membership remains visible there. `presentConfirmed(_:office:)` preserves all item IDs from an acknowledged group join.
 
 The controller waits for membership and session acknowledgements before advancing local confirmation state, then persists the session and group context in `SessionFile`. Revision checks reject outdated buttons. App Intents execute in the containing app process; the extension renders ActivityKit state without accessing the app’s files. Static activity attributes carry the session ID; group context is restored from the app's cache and backend. Groups, multi-item orders and historical receipts persist in the database and are refreshed through the API after launch.
 
@@ -44,7 +44,7 @@ For a partner to continue:
 1. Pull `main` from the camp repository and open `Lunchline.xcodeproj` at the repository root.
 2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`, and fill in their team and unique bundle prefix. Never commit the local file.
 3. Select the **Lunchline** scheme and their trusted, unlocked phone with Developer Mode enabled. Let Xcode prepare the device and resolve automatic signing for both targets.
-4. Run, open Today → View menu, then lock the phone. Select a meal in the activity, confirm, reopen camp and check Today. Also try Create group, Leave and Simulate arrival.
+4. Run, open Today → View menu, select items and confirm, then lock the phone to inspect the activity. Tap the activity to reopen Today. Also try New order, Change order and Leave; use the Mac notch's Simulate arrival for the delivery demo.
 5. Follow the [USB-C demo runbook](DEMO.md) to establish an actual network interface, start a token-protected backend and configure both devices. Keep camp open on the phone when choosing a group in the Mac notch. Background delivery still needs APNs push-to-update.
 
 The first sandboxed attempt could not access CoreDevice/Simulator services or compiler preview plugins; repeating outside that sandbox allowed both builds to succeed. This is distinct from an Xcode compatibility failure.

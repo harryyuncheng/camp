@@ -16,7 +16,6 @@ final class LunchController: ObservableObject {
     /// Shared session through the backend: local offers/transitions are published, and the Mac's arrive
     /// through `applyRemote`. The app shell configures it from saved settings and runs it while foregrounded.
     let sync = LunchSyncCoordinator(device: "iphone")
-    /// A lunch started on the Mac just arrived; the shell opens the lunch sheet so it is visible immediately.
     var onRemoteLunch: (() -> Void)?
     var onConfirm: (([LunchOption], DemoLunchGroup) async throws -> DemoLunchGroup)?
 
@@ -214,6 +213,7 @@ final class LunchController: ObservableObject {
         try store.save(next, group: group)
         self.session = next
         self.group = group
+        errorMessage = nil
         if next.isFinished || !ActivityAuthorizationInfo().areActivitiesEnabled {
             for existing in Activity<LunchAttributes>.activities { await existing.end(nil, dismissalPolicy: .immediate) }
             hasLiveActivity = false

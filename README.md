@@ -38,7 +38,7 @@ Everything camp coordinates is an **order** in one of two categories: **Coffee &
 
 ## Configuration workspace
 
-The Mac app now opens a light camp workspace with lime accents. The dark notch panel remains available through the menu-bar icon or **Preview lunch invitation**. Right-click the camp menu-bar icon for **Open camp**, **Settings**, and **iPhone layout preview**.
+The Mac app now opens a light camp workspace with lime accents. The dark notch panel remains available through the menu-bar icon or **Preview order invitation**. Right-click the camp menu-bar icon for **Open camp**, **Settings**, and **iPhone layout preview**.
 
 The shared workspace has six SwiftUI sections. On iPhone, Today, You and Spending are bottom tabs;
 Office, Connections and Demo are under More.
@@ -130,7 +130,7 @@ For a future meal-only integration, pass a session to **`MacLunchModel.offer(_:)
 
 ## Native iPhone companion
 
-The native iPhone app + WidgetKit extension use the existing workspace, shared domain and camp styling. Group joins start Live Activities, and the shared backend synchronizes sessions with the Mac while the apps are active. See [iPhone development and device setup](docs/IOS.md) for the simulator workflow, local signing configuration and push-delivery boundary.
+The native iPhone app + WidgetKit extension use the existing workspace, shared domain and camp styling. Today is the phone's order hub: create, join, change and leave orders there. Group joins start Live Activities, and tapping an activity returns to Today. The shared backend synchronizes sessions with the Mac while the apps are active. See [iPhone development and device setup](docs/IOS.md) for the simulator workflow, local signing configuration and push-delivery boundary.
 
 Build for Simulator with `bash scripts/build-ios.sh` after installing Xcode 15 or newer.
 
@@ -139,7 +139,7 @@ Build for Simulator with `bash scripts/build-ios.sh` after installing Xcode 15 o
 3. Copy `Config/Local.xcconfig.example` to ignored `Config/Local.xcconfig`; set your team and unique bundle prefix.
 4. Select the same signing team for **Lunchline** and **LunchlineActivity**. Enable automatic signing.
 5. Connect your iPhone, enable Developer Mode if prompted, and run.
-6. Tap a lunch group’s **View menu** (or **Preview lunch invitation → Start demo lunch**), then open the Lock Screen or expand the Dynamic Island.
+6. In **Today**, open a group's **View menu**, choose items and confirm the order, then open the Lock Screen or expand the Dynamic Island.
 
 `NSSupportsLiveActivities`, extension embedding, intents, and the `camp://` URL scheme (plus legacy `lunchline://`) are configured. No App Group or APNs entitlement is required for this local demo: `LiveActivityIntent` executes in the app process, and the extension renders ActivityKit content.
 

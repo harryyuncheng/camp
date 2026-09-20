@@ -6,12 +6,14 @@ import LunchCore
 public struct CampWorkspace: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
-    let previewActivity: () -> Void
+    let activityError: String?
+    let previewActivity: (() -> Void)?
     private let phoneSections: [CampSection] = [.today, .you, .spending]
     private let moreSections: [CampSection] = [.office, .connections, .demo]
 
-    public init(store: CampSettingsStore, compact: Bool = false, previewActivity: @escaping () -> Void) {
-        self.store = store; self.compact = compact; self.previewActivity = previewActivity
+    public init(store: CampSettingsStore, compact: Bool = false, activityError: String? = nil,
+                previewActivity: (() -> Void)? = nil) {
+        self.store = store; self.compact = compact; self.activityError = activityError; self.previewActivity = previewActivity
     }
 
     public var body: some View {
@@ -23,7 +25,12 @@ public struct CampWorkspace: View {
                     VStack(alignment: .leading, spacing: 22) {
                         pageHeader
                         switch store.section {
-                        case .today: CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
+                        case .today:
+                            if let activityError {
+                                Label(activityError, systemImage: "exclamationmark.circle")
+                                    .font(.callout).foregroundStyle(.red)
+                            }
+                            CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
                         case .spending: CampSpendingPage(store: store, compact: compact)
@@ -94,7 +101,7 @@ public struct CampWorkspace: View {
             Spacer()
             Menu {
                 Toggle("Demo admin", isOn: $store.isDemoAdmin)
-                Button("Preview activity", action: previewActivity)
+                if let previewActivity { Button("Preview activity", action: previewActivity) }
             } label: {
                 CampBadge(text: store.isDemoAdmin ? "Demo admin" : "Member", active: store.isDemoAdmin)
             }

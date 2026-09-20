@@ -8,7 +8,7 @@ import LunchCore
 struct CampTodayPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
-    let previewActivity: () -> Void
+    let previewActivity: (() -> Void)?
     @State private var creatingGroup = false
     @State private var choosingGroup: DemoLunchGroup?
     @State private var filter: OrderCategory?
@@ -102,7 +102,9 @@ struct CampTodayPage: View {
                 Text(store.groupsSummary == nil ? "Orders and prices come from the camp backend." : "Live from the camp database · all-in price estimates. No purchases.")
                     .font(.caption).foregroundStyle(CampPalette.muted)
                 Spacer()
-                Button("Preview order invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
+                if let previewActivity {
+                    Button("Preview order invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
+                }
             }
             CampPair(compact: compact) {
                 summaryCard("Total savings", value: LunchStyle.money(store.totalSavingsCents), symbol: "arrow.down.right")
