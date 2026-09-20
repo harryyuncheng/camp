@@ -20,8 +20,67 @@ final class MacLunchModel: ObservableObject {
     @Published private(set) var demoGroup: DemoLunchGroup?
     var officeName = "HackMIT HQ"
     var onJoin: ((LunchOption, DemoLunchGroup) -> Void)?
+
+    // MARK: looking for something else
+    /// What was typed into the notch when none of today's orders appeal ("I want tacos", "iced oat latte"). The
+    /// search itself runs on the backend through the settings store; the results land in `cravingResult`.
+    @Published var cravingText = ""
+    @Published var cravingBusy = false
+    @Published var cravingResult: LunchCravingResult?
+    @Published var cravingError: String?
+    @Published var cravingOpen = false
+    /// What the card is showing after a search ("Matches for “I want tacos”"), so it is obvious the options on the
+    /// card are no longer the group's.
+    @Published var cravingHeadline: String?
+    /// Where each option on a searched card comes from, keyed by option id: the place, and the untouched option to
+    /// send back to the backend (the displayed one carries the place's name in its detail line).
+    private var cravingItems: [String: (place: LunchRestaurant, option: LunchOption)] = [:]
+    private var cravingArrivalMinutes = OrderCategory.meal.defaultMinutes
+    private var cravingCategory = OrderCategory.meal
+    var onCravingSearch: ((String, OrderCategory) async -> Void)?
+    var onCravingOrder: ((LunchRestaurant, LunchOption, Int, OrderCategory) -> Void)?
+
+    /// Searches the catalog and puts what came back on the card, in place of whatever was there. The panel stays
+    /// open throughout: a search replaces the order on screen, it does not start a separate one.
+    func searchCraving() async {
+        let text = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty, !cravingBusy else { return }
+        await onCravingSearch?(text, choosingGroup ? .meal : session.kind)
+        if let result = cravingResult { applyCraving(result, text: text) }
+    }
+
+    private func applyCraving(_ result: LunchCravingResult, text: String) {
+        var options: [LunchOption] = []
+        var items: [String: (place: LunchRestaurant, option: LunchOption)] = [:]
+        for match in result.matches {
+            guard let dish = match.restaurant.options.first, items[dish.id] == nil else { continue }
+            let detail = dish.detail.isEmpty ? match.restaurant.name : "\(match.restaurant.name) · \(dish.detail)"
+            options.append(LunchOption(id: dish.id, name: dish.name, detail: detail, symbol: dish.symbol,
+                                       priceCents: dish.priceCents, baselineCents: dish.baselineCents))
+            items[dish.id] = (match.restaurant, dish)
+        }
+        guard let first = options.first, let place = items[first.id]?.place else {
+            cravingHeadline = "Nothing on the catalog’s menus matches that."
+            return
+        }
+        scheduledLunch?.cancel(); scheduled = false
+        cravingItems = items
+        cravingCategory = place.serves(.meal) ? .meal : .coffee
+        cravingArrivalMinutes = demoGroup?.arrivalMinutes ?? cravingCategory.defaultMinutes
+        cravingHeadline = "Matches for “\(text)”"
+        demoGroup = nil
+        choosingGroup = false
+        let now = Date()
+        let arrival = Calendar.current.date(bySettingHour: cravingArrivalMinutes / 60, minute: cravingArrivalMinutes % 60,
+                                            second: 0, of: now) ?? now.addingTimeInterval(35 * 60)
+        // Kept on this Mac until it is confirmed: a search is a look around, not an order the phone should show.
+        offer(LunchSession(office: officeName, options: options, closesAt: now.addingTimeInterval(8 * 60),
+                           arrivesAt: arrival, category: cravingCategory), shared: false)
+    }
+
     func chooseGroup(_ group: DemoLunchGroup) {
         scheduledLunch?.cancel(); scheduled = false
+        clearCraving()
         demoGroup = group; choosingGroup = false
         let now = Date()
         offer(LunchSession(office: officeName, options: group.options,
@@ -74,7 +133,14 @@ final class MacLunchModel: ObservableObject {
         scheduledLunch?.cancel()
         scheduled = false
         choosingGroup = true; demoGroup = nil
+        clearCraving()
         offer(DemoLunch.make(), shared: false)
+    }
+
+    private func clearCraving() {
+        cravingItems = [:]
+        cravingHeadline = nil
+        cravingOpen = false
     }
 
     func triggerAfterDelay() {
@@ -160,8 +226,12 @@ final class MacLunchModel: ObservableObject {
     }
 
     private func didTransition(_ next: LunchSession) {
-        if next.phase == .confirmed, let option = next.selectedOption, let group = demoGroup {
-            onJoin?(option, group)
+        if next.phase == .confirmed, let option = next.selectedOption {
+            if let found = cravingItems[option.id] {
+                onCravingOrder?(found.place, found.option, cravingArrivalMinutes, cravingCategory)
+            } else if let group = demoGroup {
+                onJoin?(option, group)
+            }
         }
         onTransition?(next)
     }

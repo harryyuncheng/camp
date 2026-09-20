@@ -162,6 +162,11 @@ public struct DemoLunchGroup: Codable, Identifiable, Hashable, Sendable {
     public var status: String?
     public var seeded: Bool?
     public var myOptionId: String?
+    /// Every item the current user ordered here (a main plus sides/drinks). `myOptionId` is the first of them and
+    /// is all that older builds wrote, so read this through `myOptionIdList`.
+    public var myOptionIds: [String]?
+    /// The user's per-order cap as the backend holds it, so the menu can grey out what no longer fits.
+    public var budgetCents: Int?
     /// The backend's id for the requesting user; set on join/create so a first-time user learns their row id.
     public var userId: String?
 
@@ -172,6 +177,7 @@ public struct DemoLunchGroup: Codable, Identifiable, Hashable, Sendable {
         self.arrivalMinutes = arrivalMinutes ?? 750
         self.category = category.rawValue
     }
+    public var myOptionIdList: [String] { myOptionIds ?? myOptionId.map { [$0] } ?? [] }
     /// Delivery-fee savings from sharing one delivery, as the backend computed them from real membership.
     public var deliverySavingsCents: Int { savingsCents ?? max(0, people - 1) * (deliveryFeeCents ?? 600) }
     public func arrival(on date: Date = .now) -> Date {

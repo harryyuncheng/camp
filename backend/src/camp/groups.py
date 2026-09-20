@@ -19,6 +19,8 @@ from .contracts import OfficeRef, Wire
 from .models import (ORDER_CATEGORIES, GroupMember, GroupOption, LatLng, LunchGroup, MenuItem, Order, OrderLine, OrderCategory,
                      Restaurant, ScheduledOrder, User)
 
+MAX_ITEMS_PER_MEMBER = 8               # one person's group order: a main plus sides/drinks, not a catering run
+
 _COFFEE_WORDS = ("coffee", "latte", "espresso", "cappuccino", "americano", "cortado", "macchiato", "mocha", "cold brew",
                  "matcha", "chai", "tea", "hot chocolate", "flat white", "drip", "brew")
 _SYMBOL = {"salad": "leaf.fill", "bowl": "takeoutbag.and.cup.and.straw.fill", "soup": "cup.and.saucer.fill", "pizza": "circle.grid.cross.fill",
@@ -82,7 +84,8 @@ class GroupOptionWire(Wire):
 class GroupMemberWire(Wire):
     user_id: str
     display_name: str
-    option_id: str
+    option_id: str                         # the first item, for clients written before multi-item orders
+    option_ids: list[str] = []
 
 
 class LunchGroupWire(Wire):
@@ -103,7 +106,9 @@ class LunchGroupWire(Wire):
     seeded: bool
     total_cents: int                       # what the whole group costs all-in right now (sum of members' meals)
     members: list[GroupMemberWire]
-    my_option_id: Optional[str] = None
+    my_option_id: Optional[str] = None     # the first of `my_option_ids`
+    my_option_ids: list[str] = []          # everything the requesting user ordered here
+    budget_cents: int = 0                  # the requesting user's per-order cap, so the menu can grey out what no longer fits
     user_id: Optional[str] = None          # the requesting user as the backend resolved (or created) it
 
 
@@ -185,7 +190,8 @@ class CreateGroupReq(Wire):
     office: OfficeRef
     restaurant_id: str
     delivery_minutes: int
-    option_id: str
+    option_id: Optional[str] = None         # one item; `option_ids` orders several at once
+    option_ids: list[str] = []
     category: Optional[OrderCategory] = None    # default: the restaurant's primary category
     user_id: Optional[str] = None
     display_name: str = "You"
@@ -193,7 +199,8 @@ class CreateGroupReq(Wire):
 
 class JoinGroupReq(Wire):
     office: OfficeRef
-    option_id: str                          # any item on the restaurant's menu; the group's options grow to include it
+    option_id: Optional[str] = None         # any item on the restaurant's menu; the group's options grow to include it
+    option_ids: list[str] = []              # several items at once; the whole selection replaces the member's last one
     user_id: Optional[str] = None
     display_name: str = "You"
 
@@ -249,30 +256,44 @@ class GroupService:
         return g.delivery_fee_cents // max(1, g.participants)
 
     def _sync_orders(self, g: LunchGroup, items: dict[str, MenuItem], rests: dict[str, Restaurant]) -> None:
-        """Every member has one confirmed Order whose fee share reflects the current headcount."""
+        """One confirmed Order per item a member ordered, with the fee share (which reflects the current headcount)
+        charged once per member, on their first item. Orders left over from a larger previous selection are cancelled."""
         share = self._share(g)
         r = rests.get(g.restaurant_id)
+        if not r:
+            return
         for m in g.members:
-            item = items.get(m.option_id)
-            if not item or not r:
+            chosen = [items[i] for i in m.items() if i in items]
+            if not chosen:
                 continue
-            line = OrderLine(item_id=item.id, restaurant_id=r.id, price_cents=item.price_cents)
-            o = self.store.get(Order, m.order_id) if m.order_id else None
-            if o is None:
-                o = Order(user_id=m.user_id, date=g.date, meal=g.meal, location="office", line=line, default_line=line,
-                          shown_item_ids=[x.id for x in g.options], source="group", group_id=g.id)
-                m.order_id = o.id
-            o.line = line
-            o.fee_share_cents = share
-            o.total_cents = filters.total_cost_cents(item, r, share)
-            o.status = "confirmed"
-            self.store.put(o)
+            existing = m.order_ids or ([m.order_id] if m.order_id else [])
+            written: list[str] = []
+            for k, item in enumerate(chosen):
+                line = OrderLine(item_id=item.id, restaurant_id=r.id, price_cents=item.price_cents)
+                o = self.store.get(Order, existing[k]) if k < len(existing) else None
+                if o is None:
+                    o = Order(user_id=m.user_id, date=g.date, meal=g.meal, location="office", line=line, default_line=line,
+                              shown_item_ids=[x.id for x in g.options], source="group", group_id=g.id)
+                fee = share if k == 0 else 0          # one delivery share per person, however many items they ordered
+                o.line = line
+                o.fee_share_cents = fee
+                o.total_cents = filters.total_cost_cents(item, r, fee)
+                o.status = "confirmed"
+                self.store.put(o)
+                written.append(o.id)
+            for stale in existing[len(chosen):]:
+                if (o := self.store.get(Order, stale)) is not None:
+                    o.status = "cancelled"
+                    self.store.put(o)
+            m.order_ids = written
+            m.order_id = written[0]
 
     def wire(self, g: LunchGroup, user_id: Optional[str]) -> LunchGroupWire:
         share, fee = self._share(g), g.delivery_fee_cents
         mine = next((m for m in g.members if m.user_id == user_id), None)
         subtotal = {o.id: o.subtotal_cents for o in g.options}
-        total = sum(subtotal.get(m.option_id, 0) + share for m in g.members)
+        total = sum(sum(subtotal.get(i, 0) for i in m.items()) + share for m in g.members)
+        u = self.store.get(User, user_id) if user_id else None
         return LunchGroupWire(id=g.id, name=g.name, category=g.category, cuisine=g.cuisine, symbol=g.symbol, total_cents=total,
                               people=sum(1 for m in g.members if m.user_id != user_id),
                               delivery=window_label(g.delivery_minutes), arrival_minutes=g.delivery_minutes,
@@ -280,8 +301,10 @@ class GroupService:
                                                        baseline_cents=o.subtotal_cents + fee, item_price_cents=o.item_cents) for o in g.options],
                               restaurant_id=g.restaurant_id, participants=g.participants, savings_cents=g.savings_cents,
                               delivery_fee_cents=fee, status=g.status, seeded=g.seeded,
-                              members=[GroupMemberWire(user_id=m.user_id, display_name=m.display_name, option_id=m.option_id) for m in g.members],
-                              my_option_id=mine.option_id if mine else None, user_id=user_id)
+                              members=[GroupMemberWire(user_id=m.user_id, display_name=m.display_name, option_id=m.option_id,
+                                                       option_ids=m.items()) for m in g.members],
+                              my_option_id=mine.option_id if mine else None, my_option_ids=mine.items() if mine else [],
+                              budget_cents=u.budget(g.meal) if u else 0, user_id=user_id)
 
     # ---- queries
     def restaurants(self, limit: int = 12, category: Optional[str] = None) -> list[RestaurantWire]:
@@ -364,16 +387,21 @@ class GroupService:
         if not 360 <= req.delivery_minutes <= 1260:
             raise ValueError("delivery time must be between 6 AM and 9 PM")
         mine = [i for i in items.values() if i.restaurant_id == r.id]
+        chosen = self._requested(req.option_ids, req.option_id)
         opts = self._options(r, mine)
-        opts = self._with_option(opts, r, mine, req.option_id)
+        opts = self._with_options(opts, r, mine, chosen)
         category = req.category or (r.categories[0] if r.categories else "meal")
         if category not in r.categories:
             raise ValueError(f"{r.name} does not take {category_label(category).lower()} orders")
         u = self.resolve_user(req.user_id, req.display_name, req.office)
-        self._leave_all(u.id, req.office.id, day, items, rests, category=category)
         g = LunchGroup(office_id=req.office.id, date=day, restaurant_id=r.id, name=r.name, cuisine="Started by you · " + cuisine_label(r),
                        category=category, symbol=opts[0].symbol, delivery_minutes=req.delivery_minutes, delivery_fee_cents=r.fees.delivery_fee_cents,
-                       options=opts, created_by=u.id, members=[GroupMember(user_id=u.id, display_name=u.name, option_id=req.option_id)])
+                       options=opts, created_by=u.id)
+        member = GroupMember(user_id=u.id, display_name=u.name, option_id=chosen[0])
+        member.set_items(chosen)
+        self._check_budget(u, g.meal, r, chosen, items, r.fees.delivery_fee_cents)
+        self._leave_all(u.id, req.office.id, day, items, rests, category=category)
+        g.members = [member]
         self._sync_orders(g, items, rests)
         self.store.put(g)
         return self.wire(g, u.id)
@@ -388,14 +416,20 @@ class GroupService:
         r = rests.get(g.restaurant_id)
         if not r:
             raise ValueError("this group's restaurant is no longer in the catalog")
-        g.options = self._with_option(g.options, r, [i for i in items.values() if i.restaurant_id == r.id], req.option_id)
+        chosen = self._requested(req.option_ids, req.option_id)
+        g.options = self._with_options(g.options, r, [i for i in items.values() if i.restaurant_id == r.id], chosen)
         u = self.resolve_user(req.user_id, req.display_name, req.office)
-        self._leave_all(u.id, g.office_id, g.date, items, rests, keep=g.id, category=g.category)
         mine = next((m for m in g.members if m.user_id == u.id), None)
+        # the share this person will pay once they are in (joining adds a head, which spreads the fee further)
+        share = g.delivery_fee_cents // max(1, g.participants + (0 if mine else 1))
+        self._check_budget(u, g.meal, r, chosen, items, share)
+        self._leave_all(u.id, g.office_id, g.date, items, rests, keep=g.id, category=g.category)
         if mine:
-            mine.option_id = req.option_id
+            mine.set_items(chosen)
         else:
-            g.members.append(GroupMember(user_id=u.id, display_name=u.name, option_id=req.option_id))
+            member = GroupMember(user_id=u.id, display_name=u.name, option_id=chosen[0])
+            member.set_items(chosen)
+            g.members.append(member)
         self._sync_orders(g, items, rests)
         self.store.put(g)
         return self.wire(g, u.id)
@@ -413,9 +447,10 @@ class GroupService:
         if not mine:
             return
         g.members = [m for m in g.members if m.user_id != user_id]
-        if mine.order_id and (o := self.store.get(Order, mine.order_id)):
-            o.status = "cancelled"
-            self.store.put(o)
+        for order_id in (mine.order_ids or ([mine.order_id] if mine.order_id else [])):
+            if (o := self.store.get(Order, order_id)) is not None:
+                o.status = "cancelled"
+                self.store.put(o)
         if not g.members and not g.seeded:
             g.status = "cancelled"          # a group you started and left disappears from Today
         self._sync_orders(g, items, rests)
@@ -430,16 +465,48 @@ class GroupService:
                 self._remove(g, user_id, items, rests)
 
     @staticmethod
-    def _with_option(opts: list[GroupOption], r: Restaurant, menu: list[MenuItem], option_id: str) -> list[GroupOption]:
-        """The group's option list plus `option_id` from the full menu, so anyone can order off-list."""
-        if any(o.id == option_id for o in opts):
-            return opts
-        item = next((i for i in menu if i.id == option_id), None)
-        if item is None:
-            raise ValueError("choose something from this restaurant's menu")
-        extra = GroupOption(id=item.id, name=item.name, detail=(item.description or ", ".join(item.ingredients[:3]))[:60], symbol=symbol_for(item),
-                            item_cents=item.price_cents, subtotal_cents=item.price_cents + r.fees.per_item_overhead(item.price_cents))
-        return [*opts, extra]
+    def _with_options(opts: list[GroupOption], r: Restaurant, menu: list[MenuItem], option_ids: list[str]) -> list[GroupOption]:
+        """The group's option list plus every requested item from the full menu, so anyone can order off-list."""
+        out = list(opts)
+        for option_id in option_ids:
+            if any(o.id == option_id for o in out):
+                continue
+            item = next((i for i in menu if i.id == option_id), None)
+            if item is None:
+                raise ValueError("choose something from this restaurant's menu")
+            out.append(GroupOption(id=item.id, name=item.name, detail=(item.description or ", ".join(item.ingredients[:3]))[:60],
+                                   symbol=symbol_for(item), item_cents=item.price_cents,
+                                   subtotal_cents=item.price_cents + r.fees.per_item_overhead(item.price_cents)))
+        return out
+
+    @staticmethod
+    def _requested(option_ids: list[str], option_id: Optional[str]) -> list[str]:
+        """What the caller asked for, de-duplicated and in order. `option_id` alone is the single-item form."""
+        wanted = list(option_ids) or ([option_id] if option_id else [])
+        out: list[str] = []
+        for i in wanted:
+            if i and i not in out:
+                out.append(i)
+        if not out:
+            raise ValueError("choose at least one item")
+        if len(out) > MAX_ITEMS_PER_MEMBER:
+            raise ValueError(f"you can order at most {MAX_ITEMS_PER_MEMBER} items in one group order")
+        return out
+
+    def _check_budget(self, u: User, meal: str, r: Restaurant, option_ids: list[str], items: dict[str, MenuItem], share: int) -> None:
+        """A person's first item always goes through, however expensive; every extra has to fit the per-order cap.
+        This is the same rule the menu applies when it greys options out, enforced where the data actually lives."""
+        cap = u.budget_cents.get(meal, 0)
+        if cap <= 0 or len(option_ids) <= 1:
+            return
+        running = 0
+        for k, option_id in enumerate(option_ids):
+            item = items.get(option_id)
+            if item is None:
+                continue
+            running += filters.total_cost_cents(item, r, share if k == 0 else 0)
+            if k and running > cap:
+                raise ValueError(f"{item.name} takes this order to ${running / 100:.2f}, over your ${cap / 100:.2f} budget")
 
     # ---- full menu with the user's top picks
     def menu(self, restaurant_id: str, user_id: Optional[str], group_id: Optional[str] = None, top_n: int = 3) -> MenuWire:
@@ -551,14 +618,14 @@ class GroupService:
             if not opts:
                 continue
             option_id = s.option_id if s.option_id and any(i.id == s.option_id for i in menu) else opts[0].id
-            opts = self._with_option(opts, r, menu, option_id)
+            opts = self._with_options(opts, r, menu, [option_id])
             u = self.store.get(User, user_id)
             if u is None:
                 continue
             existing = next((g for g in groups if g.restaurant_id == r.id and g.category == s.category and g.status == "collecting"
                              and abs(g.delivery_minutes - s.time_minutes) <= 15), None)
             if existing:
-                existing.options = self._with_option(existing.options, r, menu, option_id)
+                existing.options = self._with_options(existing.options, r, menu, [option_id])
                 existing.members.append(GroupMember(user_id=u.id, display_name=u.name, option_id=option_id))
                 self._sync_orders(existing, items, rests)
                 self.store.put(existing)

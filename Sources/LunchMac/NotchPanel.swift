@@ -7,7 +7,10 @@ import LunchUI
 #endif
 
 final class LunchPanel: NSPanel {
-    override var canBecomeKey: Bool { false }
+    /// The panel only takes keyboard focus while the "looking for something else" field is being typed into;
+    /// the rest of the time it stays a non-key overlay that never steals focus from the app in front.
+    var acceptsKey = false
+    override var canBecomeKey: Bool { acceptsKey }
     override var canBecomeMain: Bool { false }
     override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect { frameRect }
 }
@@ -69,7 +72,8 @@ final class NotchPanelController {
             expand: { [weak self] in self?.show() },
             collapse: { [weak self] in self?.collapse() },
             hide: { [weak self] in self?.hide() },
-            measured: { [weak self] height in self?.contentHeightChanged(height) }))
+            measured: { [weak self] height in self?.contentHeightChanged(height) },
+            typing: { [weak self] on in self?.allowTyping(on) }))
         host.sizingOptions = []
         panel.contentView = host
 
@@ -100,12 +104,21 @@ final class NotchPanelController {
 
     func collapse() {
         confirmationRetraction?.cancel()
+        allowTyping(false)
         transition(to: .compact)
     }
 
     func hide() {
         confirmationRetraction?.cancel()
+        allowTyping(false)
         transition(to: .hidden)
+    }
+
+    /// Keyboard focus follows the craving field: on while it is focused, off as soon as it is not, so typing works
+    /// without the overlay holding the keyboard for the rest of the session.
+    private func allowTyping(_ on: Bool) {
+        panel.acceptsKey = on
+        if on { panel.makeKeyAndOrderFront(nil) } else { panel.makeFirstResponder(nil) }
     }
 
     private func chooseScreen() {
@@ -235,9 +248,13 @@ private struct NotchContent: View {
     let collapse: () -> Void
     let hide: () -> Void
     let measured: (CGFloat) -> Void
+    let typing: (Bool) -> Void
     @State private var stageHeights: [String: CGFloat] = [:]
+    @FocusState private var cravingFocused: Bool
 
-    private var stageKey: String { model.choosingGroup ? "groups" : "meal-\(model.session.phase)" }
+    private var stageKey: String {
+        (model.choosingGroup ? "groups" : "meal-\(model.session.phase)") + (model.cravingOpen ? "-craving" : "")
+    }
 
     var body: some View {
         // Both presentations remain mounted. Opacity changes and the shell's
@@ -298,12 +315,14 @@ private struct NotchContent: View {
             .onPreferenceChange(StageHeightKey.self) { stageHeights.merge($0) { $1 } }
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.choosingGroup)
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.session.phase)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.cravingOpen)
+            .onChange(of: cravingFocused) { typing($0) }
             if let error = model.error {
                 Text(error).font(.caption).foregroundStyle(.orange).padding(.horizontal, 20).padding(.top, 8)
             }
             HStack {
                 Text(model.session.phase == .confirmed ? "Saved · available in the menu bar" :
-                     model.scheduled ? "Next demo arrives in 5 seconds" : "\(model.session.office) · sample prices")
+                     model.scheduled ? "Next order arrives in 5 seconds" : "All-in price estimates")
                     .font(.system(size: 10)).foregroundStyle(.white.opacity(0.45))
                 Spacer()
                 if let next = model.others.first {
@@ -333,7 +352,6 @@ private struct NotchContent: View {
             HStack {
                 Text("Join an order?").font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
-                Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
             }
             ScrollView {
             VStack(spacing: 8) {
@@ -352,21 +370,64 @@ private struct NotchContent: View {
             }
             }
             }.frame(height: min(CGFloat(model.groups.count) * 52 + CGFloat(max(0, model.groups.count - 1)) * 8, 172))
+            cravingSearch
         }.foregroundStyle(.white).padding(.horizontal, 24).padding(.top, 16).padding(.bottom, 12)
+    }
+
+    /// "Looking for something else": type a place or a dish and the backend searches the whole catalog for it,
+    /// the same search the Today page's new-order sheet uses. Picking a result puts that place on the card, so
+    /// confirming it starts a group order there.
+    private var cravingSearch: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button {
+                model.cravingOpen.toggle()
+                if model.cravingOpen { cravingFocused = true }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "magnifyingglass").font(.system(size: 10, weight: .semibold))
+                    Text("Looking for something else?").font(.system(size: 11, weight: .medium))
+                    Image(systemName: model.cravingOpen ? "chevron.up" : "chevron.down").font(.system(size: 8, weight: .bold))
+                    Spacer()
+                }.foregroundStyle(LunchStyle.lime).contentShape(Rectangle())
+            }.buttonStyle(.plain).accessibilityLabel("Search for another place or dish")
+            if model.cravingOpen {
+                HStack(spacing: 8) {
+                    TextField("Another place, or a dish: \"I want tacos\"", text: $model.cravingText)
+                        .textFieldStyle(.plain).font(.system(size: 12)).foregroundStyle(.white)
+                        .padding(.horizontal, 10).padding(.vertical, 7)
+                        .background(Color.white.opacity(0.08)).clipShape(RoundedRectangle(cornerRadius: 9))
+                        .focused($cravingFocused)
+                        .onSubmit { Task { await model.searchCraving() } }
+                    Button(model.cravingBusy ? "Searching…" : "Find it") { Task { await model.searchCraving() } }
+                        .font(.system(size: 11, weight: .semibold)).buttonStyle(MealButtonStyle())
+                        .disabled(model.cravingBusy || model.cravingText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+                if let error = model.cravingError {
+                    Text(error).font(.system(size: 10)).foregroundStyle(.orange)
+                }
+                if let headline = model.cravingHeadline {
+                    Text(headline).font(.system(size: 10)).foregroundStyle(LunchStyle.muted)
+                }
+            }
+        }
     }
 
     private var mealContent: some View {
         VStack(spacing: 0) {
-            if let group = model.demoGroup, model.session.phase == .choosing || model.session.phase == .reviewing {
+            if model.session.phase == .choosing || model.session.phase == .reviewing,
+               let title = model.demoGroup?.name ?? model.cravingHeadline {
                 HStack {
                     Button("‹ Groups") { model.triggerDemo() }.buttonStyle(.plain)
                     Spacer()
-                    Text(group.name)
+                    Text(title)
                 }.font(.caption).foregroundStyle(LunchStyle.lime).padding(.horizontal, 24).padding(.top, 12)
             }
             LocalLunchCard(session: model.session, embedded: true) { event in
                 model.send(event, revision: model.session.revision)
             }.padding(.horizontal, 8).padding(.top, 4)
+            if model.session.phase == .choosing, !model.session.isExpired() {
+                cravingSearch.padding(.horizontal, 24).padding(.bottom, 4)
+            }
         }
     }
 

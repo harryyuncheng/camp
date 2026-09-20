@@ -431,3 +431,37 @@ async def ramp_allocate(request: Request):
         return ramp.allocate(body)
     except Problem as e:
         raise HTTPException(e.status, str(e))
+
+
+@app.get("/v1/ramp/limits/{user_id}")
+def ramp_limits(user_id: str, request: Request):
+    """The employee's real Ramp limits, so the app stops showing a local demo budget."""
+    _ramp_guard(request)
+    try:
+        return ramp.spend_limits(user_id)
+    except Problem as e:
+        raise HTTPException(e.status, str(e))
+
+
+@app.post("/v1/ramp/overages")
+async def ramp_request_overage(request: Request):
+    _ramp_guard(request)
+    body = await request.json()
+    if not isinstance(body, dict):
+        raise HTTPException(400, "Expected a JSON object.")
+    try:
+        return ramp.request_overage(body)
+    except Problem as e:
+        raise HTTPException(e.status, str(e))
+
+
+@app.post("/v1/ramp/overages/{request_id}/decision")
+async def ramp_decide_overage(request_id: str, request: Request):
+    _ramp_guard(request)
+    body = await request.json()
+    if not isinstance(body, dict):
+        raise HTTPException(400, "Expected a JSON object.")
+    try:
+        return ramp.decide_overage(request_id, body)
+    except Problem as e:
+        raise HTTPException(e.status, str(e))

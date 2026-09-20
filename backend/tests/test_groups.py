@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from camp import synth
 from camp.contracts import OfficeRef
 from camp.groups import CreateGroupReq, GroupService, JoinGroupReq
-from camp.models import LunchGroup, Order, RampAttempt
+from camp.models import LunchGroup, Order, RampAttempt, User
 from camp.store import Store
 
 OFFICE = OfficeRef(id="hq", name="HQ", latitude=40.7424, longitude=-73.9913)
@@ -105,3 +105,38 @@ def test_ramp_attempt_ledger_survives_restart(tmp_path, monkeypatch):
     store.put(RampAttempt(id="a" * 32, fingerprint="f", payload={}, state="submitting"))
     RampService(Store(str(tmp_path / "camp.db")))
     assert Store(str(tmp_path / "camp.db")).get(RampAttempt, "a" * 32).state == "unknown"   # interrupted → never blindly re-issued
+
+
+def test_multi_item_orders_share_one_delivery_fee_and_respect_the_budget():
+    store = world()
+    svc = GroupService(store)
+    today = svc.today(OFFICE, None, "2026-09-21")
+    g = today.groups[0]
+    picks = [o.id for o in g.options[:2]]
+    me = svc.join(g.id, JoinGroupReq(office=OFFICE, option_id=picks[0], display_name="Harry")).user_id
+    u = store.get(User, me)
+    u.budget_cents["lunch"] = 10_000          # room for two items; the cap is checked below
+    store.put(u)
+    joined = svc.join(g.id, JoinGroupReq(office=OFFICE, option_ids=picks, user_id=me))
+    assert joined.my_option_ids == picks and joined.my_option_id == picks[0]
+    assert joined.participants == g.participants + 1        # two items, still one person
+
+    mine = [o for o in store.orders_for(me) if o.status == "confirmed"]
+    assert sorted(o.line.item_id for o in mine) == sorted(picks)
+    assert sum(o.fee_share_cents for o in mine) == joined.delivery_fee_cents // joined.participants   # charged once
+    assert len(svc.ledger(me, "HQ", "2026-09").entries) == 2
+
+    # dropping back to one item cancels the extra order
+    svc.join(g.id, JoinGroupReq(office=OFFICE, option_ids=[picks[1]], user_id=me))
+    assert sorted(o.status for o in store.orders_for(me)) == ["cancelled", "confirmed"]
+
+    # the first item always goes through; extras have to fit the per-order cap
+    u = store.get(User, me)
+    u.budget_cents["lunch"] = 1
+    store.put(u)
+    assert svc.join(g.id, JoinGroupReq(office=OFFICE, option_ids=[picks[0]], user_id=me)).my_option_ids == [picks[0]]
+    try:
+        svc.join(g.id, JoinGroupReq(office=OFFICE, option_ids=picks, user_id=me))
+        raise AssertionError("expected the second item to be refused")
+    except ValueError as e:
+        assert "budget" in str(e)

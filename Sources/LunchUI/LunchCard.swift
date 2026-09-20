@@ -37,7 +37,6 @@ public struct LunchCard<Actions: View>: View {
                     CampLogo().fill(LunchStyle.lime).frame(width: 30, height: 18).accessibilityHidden(true)
                     Text("camp").font(.system(size: 22, weight: .bold, design: .rounded)).tracking(-0.8)
                     Spacer(minLength: 4)
-                    Text("DEMO").font(.system(size: 9, weight: .bold)).foregroundStyle(LunchStyle.muted)
                     if !expired && (session.phase == .choosing || session.phase == .reviewing) {
                         Text(timerInterval: min(Date.now, session.closesAt)...session.closesAt, countsDown: true)
                             .monospacedDigit().font(.caption.weight(.semibold)).frame(width: 42)
@@ -62,7 +61,7 @@ public struct LunchCard<Actions: View>: View {
                             MealLabel(option: option)
                         }
                         HStack {
-                            Text("Save \(LunchStyle.money(option.savingsCents)) in this demo")
+                            Text("Save \(LunchStyle.money(option.savingsCents)) on delivery")
                                 .foregroundStyle(LunchStyle.lime)
                             Spacer(minLength: 4)
                             arrival
@@ -72,7 +71,7 @@ public struct LunchCard<Actions: View>: View {
                 case .confirmed:
                     status("You're on the list.", detail: session.selectedOption?.name ?? "Order confirmed", symbol: "checkmark.circle.fill")
                     HStack {
-                        Text("Demo choice saved · no order placed")
+                        Text("Saved · no purchase made")
                         Spacer(minLength: 4)
                         arrival
                     }.font(.caption2).foregroundStyle(LunchStyle.muted)

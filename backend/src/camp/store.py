@@ -16,20 +16,22 @@ from pydantic import BaseModel
 
 import threading
 
-from .models import Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, Restaurant, ScheduledOrder, SyncState, User
+from .models import (Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, RampOverageRequest, Restaurant,
+                     ScheduledOrder, SyncState, User)
 
 T = TypeVar("T", bound=BaseModel)
 
 TABLES: dict[type[BaseModel], str] = {
     User: "users", Restaurant: "restaurants", MenuItem: "items",
     Order: "orders", Batch: "batches", FeedbackEvent: "events",
-    LunchGroup: "groups", RampAttempt: "ramp_attempts", SyncState: "sync", ScheduledOrder: "schedules",
+    LunchGroup: "groups", RampAttempt: "ramp_attempts", RampOverageRequest: "ramp_overages",
+    SyncState: "sync", ScheduledOrder: "schedules",
 }
 # JSON keys promoted to indexed columns per table (used by the convenience queries)
 INDEXED: dict[str, list[str]] = {
     "users": ["office_id"], "items": ["restaurant_id"], "orders": ["user_id", "date"],
     "events": ["user_id"], "batches": ["office_id", "date"], "restaurants": [],
-    "groups": ["office_id", "date"], "ramp_attempts": [], "sync": [], "schedules": ["user_id"],
+    "groups": ["office_id", "date"], "ramp_attempts": [], "ramp_overages": ["ramp_user_id"], "sync": [], "schedules": ["user_id"],
 }
 
 DEFAULT_SQLITE = "camp.db"
@@ -146,6 +148,11 @@ class Store:
     def schedules_for(self, user_id: str) -> list[ScheduledOrder]:
         return sorted(self._rows(ScheduledOrder, f"SELECT data FROM schedules WHERE {self._where('schedules', 'user_id')}", (user_id,)),
                       key=lambda s: (s.time_minutes, s.created_at))
+
+    def overages_for(self, ramp_user_id: str) -> list[RampOverageRequest]:
+        rows = self._rows(RampOverageRequest,
+                          f"SELECT data FROM ramp_overages WHERE {self._where('ramp_overages', 'ramp_user_id')}", (ramp_user_id,))
+        return sorted(rows, key=lambda r: r.created_at, reverse=True)
 
     def groups_for(self, office_id: str, date: str) -> list[LunchGroup]:
         rows = self._rows(LunchGroup, f"SELECT data FROM groups WHERE {self._where('groups', 'office_id')} AND {self._where('groups', 'date')}",

@@ -81,7 +81,6 @@ public struct CampWorkspace: View {
                 Image(systemName: section.symbol).frame(width: 20)
                 Text(section.rawValue).font(.system(size: 13, weight: store.section == section ? .semibold : .regular)).lineLimit(1)
                 Spacer()
-                if store.section == section { Circle().fill(CampPalette.green).frame(width: 5, height: 5) }
             }.frame(maxWidth: .infinity, minHeight: 20, alignment: .leading).padding(13).contentShape(Rectangle()).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 11))
         }.buttonStyle(.plain)
