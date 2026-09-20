@@ -68,23 +68,21 @@ struct LunchlineApp: App {
             .task {
                 settings.requestDemoGroup = { group in
                     showingActivity = true
-                    run { try await model.start(group: group, office: settings.draft.office.name) }
+                    run { try await model.start(group: group, office: settings.savedOffice.name) }
                 }
-                settings.requestConfirmedDemoGroup = { group, meal in
+                settings.requestConfirmedDemoGroup = { group, _ in
                     showingActivity = true
                     run {
-                        try await model.start(group: group, office: settings.draft.office.name)
-                        guard let session = model.session else { return }
-                        try await model.handle(.select(meal.id), sessionID: session.id.uuidString, revision: session.revision)
-                        guard let review = model.session else { return }
-                        try await model.handle(.confirm, sessionID: review.id.uuidString, revision: review.revision)
+                        try await model.presentConfirmed(group, office: settings.savedOffice.name)
                     }
                 }
                 settings.requestEndDemoGroup = {
                     guard let session = model.session, !session.isFinished else { return }
                     run { try await model.handle(.end, sessionID: session.id.uuidString, revision: session.revision) }
                 }
+                settings.requestLeftGroup = { groupID in run { try await model.forgetGroup(groupID) } }
                 model.onRemoteLunch = { showingActivity = true }
+                model.onConfirm = { options, group in try await settings.joinConfirmed(options, group: group) }
                 model.sync.onStatus = { status in settings.syncStatus = status }
                 settings.onConnectionsChanged = { connections in
                     model.sync.configure(urlString: connections.recommendationURL, token: connections.recommendationToken)
@@ -115,13 +113,7 @@ struct LunchlineApp: App {
     }
 
     private func syncMembership() {
-        guard let session = model.session, let group = model.group else { return }
-        if session.phase == .confirmed || session.phase == .delivered, let option = session.selectedOption {
-            if !settings.lunchGroups.contains(where: { $0.id == group.id }) { settings.lunchGroups.append(group) }
-            settings.join(option, group: group)
-        } else if session.phase == .ended, settings.selectedGroupID == group.id {
-            settings.resetGroup()
-        }
+        Task { await settings.refreshGroups(); await settings.refreshLedger() }
     }
 
     private func run(_ action: @escaping @MainActor () async throws -> Void) {
