@@ -65,6 +65,7 @@ The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the
 ## Today demo and editable timing
 
 - **New order** picks a category, a place from the catalog (`GET /v1/restaurants?category=`), an arrival time and an item, then `POST /v1/groups` creates and joins it. One order per person per category per day: joining a different group in the same category leaves the previous one server-side. New groups start with just you and zero delivery savings.
+- **Craving something else?** in the create-order sheet takes free text ("I want tacos", "something spicy and Thai"). `POST /v1/craving` has OpenAI turn the sentence into typed search terms (cuisine, dish format, keywords, diet, price cap) and then scores the catalog's menus against them, so the model never invents a place or a price. The matched dishes come back as the restaurant's options: pick one and the usual create-and-join path takes over. Without `OPENAI_API_KEY` a keyword reader produces the same search terms offline, so the demo still works.
 - **Total savings** and **People ordering** are computed by the backend from real membership: each group shares one delivery fee (the restaurant's own fee), so savings are `(participants − 1) × fee`. Prices are all-in estimates, not live quotes.
 - A day with no groups is seeded by the backend from the catalog with synthetic colleagues (flagged `seeded`), so the office is never empty on first run.
 - The notch lists the same groups, including newly created ones. **Preview order invitation** opens group selection; confirmation updates Today and retracts to the menu bar after three seconds.
@@ -224,7 +225,7 @@ Contracts: `backend/src/camp/contracts.py` ↔ `Sources/LunchCore/Recommendation
 `backend/src/camp/groups.py` ↔ `Sources/LunchCore/LunchSession.swift` (`DemoLunchGroup`, `LunchLedgerResponse`).
 
 Endpoints the app uses: `GET /v1/health`, `PUT /v1/profile`, `GET|PUT /v1/onboarding`, `DELETE /v1/onboarding/{user}`, `GET /v1/groups`, `GET /v1/restaurants`, `POST /v1/groups`,
-`POST /v1/groups/{id}/join`, `DELETE /v1/groups/{id}/members/{user}`, `GET /v1/ledger/{user}`, `POST /v1/meal-offers`,
+`POST /v1/craving`, `POST /v1/groups/{id}/join`, `DELETE /v1/groups/{id}/members/{user}`, `GET /v1/ledger/{user}`, `POST /v1/meal-offers`,
 `POST /v1/lunch-events`, `GET|PUT|DELETE /v1/lunch-session`, `GET /v1/ramp`, `POST /v1/ramp/allocations`, `/v1/debug/*`.
 Change a row in Postgres (e.g. a group's members) and the Today page shows it on its next refresh.
 

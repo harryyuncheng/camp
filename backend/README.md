@@ -34,6 +34,7 @@ database instead of each keeping their own.
 
 - `GET /v1/restaurants?category=coffee|meal&limit=` best-rated catalog places serving that category (rating shrunk towards 4.2 by review count).
 - `GET /v1/restaurants/{id}/menu?userId=&groupId=` the whole menu priced with that group's delivery share, the public rating (`rating`, `reviewCount`, per-source `ratings`) and `top`: the user's three best items by recommender score.
+- `POST /v1/craving` (`text`, optional `category`, `userId`, `limit`) free text such as "I want tacos": OpenAI (`OPENAI_API_KEY`; an offline keyword reader otherwise) extracts cuisine, dish format, keywords, diet and price cap, and the catalog's menus are scored against them. Each match is a `RestaurantWire` whose `options` are the dishes that matched, ready for `POST /v1/groups`; `backend` says whether the sentence was read by `llm` or `keywords`.
 - `POST /v1/groups` (`category` optional, defaults to the place's primary one), `POST /v1/groups/{id}/join` with any menu item, `DELETE /v1/groups/{id}/members/{user}`. One order per person per category per day.
 - `GET /v1/schedules/{user}`, `POST /v1/schedules` (`category`, `label`, `timeMinutes`, `weekdays` 0 = Monday, optional `restaurantId`/`optionId`), `PUT /v1/schedules/{id}/event` (store the device's calendar event id), `DELETE /v1/schedules/{id}?userId=`. `GET /v1/groups?userId=` materialises due schedules into groups.
 - `GET/PUT/DELETE /v1/lunch-session`: the shared list of active orders (`records`) with `record` = the nearest; `DELETE ?sessionId=` forgets one.

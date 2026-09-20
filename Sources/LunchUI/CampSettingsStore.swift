@@ -35,6 +35,10 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var groupsBusy = false
     /// Places the create-order sheet and the scheduler can start an order at (`GET /v1/restaurants`, both categories).
     @Published public var restaurants: [LunchRestaurant] = []
+    /// The last free-text craving search (`POST /v1/craving`): for when none of today's places appeal.
+    @Published public var craving: LunchCravingResult?
+    @Published public var cravingBusy = false
+    @Published public var cravingError: String?
     /// Full menus by "restaurantId|groupId" (`GET /v1/restaurants/{id}/menu`).
     @Published public var menus: [String: LunchMenu] = [:]
     @Published public var menuError: String?
@@ -79,6 +83,24 @@ public final class CampSettingsStore: ObservableObject {
             restaurants = (try await cafes + meals).filter { seen.insert($0.id).inserted }
         } catch { groupsError = "Couldn’t load restaurants: \(error.localizedDescription)" }
     }
+
+    /// "I want tacos" → places from the catalog that serve it, read by the backend's OpenAI model. The matched
+    /// dishes come back as the restaurant's options, so picking one starts a group order on the usual path.
+    public func searchCraving(_ text: String, category: OrderCategory?) async {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty, !cravingBusy else { return }
+        cravingBusy = true
+        defer { cravingBusy = false }
+        do {
+            craving = try await client().craving(text: query, category: category, userId: recommenderUserID)
+            cravingError = nil
+        } catch {
+            craving = nil
+            cravingError = "Couldn’t search that craving: \(error.localizedDescription)"
+        }
+    }
+
+    public func clearCraving() { craving = nil; cravingError = nil }
 
     /// The full menu for a group's restaurant, priced with that group's delivery share and ranked for this user.
     public func menu(for group: DemoLunchGroup) -> LunchMenu? { group.restaurantId.flatMap { menus["\($0)|\(group.id)"] } }

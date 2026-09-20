@@ -203,6 +203,27 @@ public struct LunchRestaurant: Codable, Identifiable, Hashable, Sendable {
     public func serves(_ category: OrderCategory) -> Bool { (categories ?? ["meal"]).contains(category.rawValue) }
 }
 
+/// One place that serves what the person said they were craving (`POST /v1/craving`). `options` are the dishes
+/// that matched, best first.
+public struct LunchCravingMatch: Codable, Identifiable, Hashable, Sendable {
+    public let restaurant: LunchRestaurant
+    public let reason: String
+    public let score: Double
+    public var id: String { restaurant.id }
+}
+
+/// `POST /v1/craving`: free text ("I want tacos") read by the backend's OpenAI model, answered from the catalog.
+public struct LunchCravingResult: Codable, Hashable, Sendable {
+    public let text: String
+    public let summary: String
+    public let interpretation: String
+    public let backend: String
+    public let matches: [LunchCravingMatch]
+    public var note: String?
+    /// The sentence was read by OpenAI rather than the offline keyword reader the backend falls back to.
+    public var readByLLM: Bool { backend == "llm" }
+}
+
 /// One line of a full menu (`GET /v1/restaurants/{id}/menu`). Prices are all-in with the group's delivery share.
 public struct LunchMenuItem: Codable, Identifiable, Hashable, Sendable {
     public let id: String
