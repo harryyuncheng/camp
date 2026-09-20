@@ -54,12 +54,12 @@ public struct CampWorkspace: View {
 
     private var sidebar: some View {
         VStack(alignment: .leading, spacing: 28) {
-            VStack(alignment: .leading, spacing: 7) {
-                HStack(spacing: 8) {
-                    CampLogo().fill(CampPalette.green).frame(width: 36, height: 22).accessibilityHidden(true)
-                    Text("camp").font(.system(size: 32, weight: .bold, design: .rounded)).tracking(-1.5)
-                }
-            }.padding(.top, 8)
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                CampLogo().fill(CampPalette.green).frame(width: 32, height: 18)
+                    .alignmentGuide(.firstTextBaseline) { $0[.bottom] - 1 }
+                    .accessibilityHidden(true)
+                Text("camp").font(.system(size: 32, weight: .bold, design: .rounded)).tracking(-1.5)
+            }.padding(.leading, 6).padding(.top, 8)
             VStack(spacing: 7) {
                 ForEach(CampSection.allCases) { section in
                     Button { store.section = section } label: {
