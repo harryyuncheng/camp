@@ -400,6 +400,21 @@ class SyncState(BaseModel):
     records: list[dict] = Field(default_factory=list)
 
 
+class OnboardingProfile(BaseModel):
+    """The once-per-person setup (diet, meal window, office, calendar and notification choices) as the app saved it,
+    keyed by user id. `settings` is the native app's whole configuration document and is opaque to the backend; the
+    recommender-relevant parts of it are applied to the `User` row at the same time. Either device writes this row,
+    so the phone and the Mac start from the same answers."""
+    id: str                                # user id
+    office_id: str
+    display_name: str = ""
+    settings: dict = Field(default_factory=dict)
+    completed: bool = False
+    completed_at: Optional[datetime] = None
+    device: str = "unknown"                # which device last ran onboarding
+    updated_at: datetime = Field(default_factory=utcnow)
+
+
 class ScheduledOrder(BaseModel):
     """A standing order the user asked camp to put on their calendar: e.g. coffee at 9:00 on weekdays, or a meal at
     12:30 Mon/Wed/Fri. Each matching day, `GroupService.today` makes sure a group exists at that restaurant and time

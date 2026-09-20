@@ -13,6 +13,14 @@ public struct CampWorkspace: View {
     }
 
     public var body: some View {
+        workspace.overlay {
+            if store.showOnboarding {
+                CampOnboardingFlow(store: store, compact: compact).transition(.opacity)
+            }
+        }.animation(.easeInOut(duration: 0.2), value: store.showOnboarding)
+    }
+
+    private var workspace: some View {
         HStack(spacing: 0) {
             if !compact { sidebar }
             VStack(spacing: 0) {

@@ -15,6 +15,10 @@
 		18F9734F4BBA5E34E5D87C3E /* Sources/LunchUI/LunchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */; };
 		1C4A41E9B7351BF4031D2FA6 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC89544F8613FA89FB2E696 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift */; };
 		1E4189726F3CD230B9F8F5BD /* Sources/LunchUI/CampCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */; };
+		A1B2C3D40E1F2A3B4C5D6E72 /* Sources/LunchCore/OnboardingContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E1F2A3B4C5D6E70 /* Sources/LunchCore/OnboardingContracts.swift */; };
+		A1B2C3D40E1F2A3B4C5D6E73 /* Sources/LunchUI/CampOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E1F2A3B4C5D6E71 /* Sources/LunchUI/CampOnboardingFlow.swift */; };
+		A1B2C3D40E1F2A3B4C5D6E74 /* Sources/LunchCore/OnboardingContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E1F2A3B4C5D6E70 /* Sources/LunchCore/OnboardingContracts.swift */; };
+		A1B2C3D40E1F2A3B4C5D6E75 /* Sources/LunchUI/CampOnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E1F2A3B4C5D6E71 /* Sources/LunchUI/CampOnboardingFlow.swift */; };
 		2382BA36E46D60D304F23A4B /* Sources/LunchMac/LunchMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07960C32B791871E30231B4A /* Sources/LunchMac/LunchMacApp.swift */; };
 		240063B556F9E11B2F978981 /* Sources/LunchUI/CampSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C7E6CE75D776F66843ABA /* Sources/LunchUI/CampSettingsStore.swift */; };
 		2401BF6CC6E2F5E7E69150BC /* Sources/LunchCore/LunchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */; };
@@ -94,6 +98,8 @@
 		0DC199CC655D0B90792C25FB /* Sources/LunchUI/MacOfficeLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/MacOfficeLocation.swift; sourceTree = "<group>"; };
 		1E606B4FF8F8C5090B04EAFA /* iOS/Lunchline/LunchIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/Lunchline/LunchIntents.swift; sourceTree = "<group>"; };
 		244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampCalendarView.swift; sourceTree = "<group>"; };
+		A1B2C3D40E1F2A3B4C5D6E70 /* Sources/LunchCore/OnboardingContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/OnboardingContracts.swift; sourceTree = "<group>"; };
+		A1B2C3D40E1F2A3B4C5D6E71 /* Sources/LunchUI/CampOnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampOnboardingFlow.swift; sourceTree = "<group>"; };
 		27E0BECA3D08637C07220DA0 /* Sources/LunchUI/CampWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampWorkspace.swift; sourceTree = "<group>"; };
 		282EC74C271C2C9D68B9D3D2 /* camp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = camp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/RecommendationContracts.swift; sourceTree = "<group>"; };
@@ -234,6 +240,8 @@
 				F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */,
 				FEED9762D4AB10E29B61A08B /* Sources/LunchUI/CampRecommendationView.swift */,
 				4C9DF5E3380E8E33D7117F8A /* Sources/LunchUI/CampDemoPage.swift */,
+				A1B2C3D40E1F2A3B4C5D6E70 /* Sources/LunchCore/OnboardingContracts.swift */,
+				A1B2C3D40E1F2A3B4C5D6E71 /* Sources/LunchUI/CampOnboardingFlow.swift */,
 			);
 			name = "Shared UI";
 			sourceTree = "<group>";
@@ -394,6 +402,8 @@
 				46DDCE5532D5270EB2CA571D /* Sources/LunchCore/RecommendationClient.swift in Sources */,
 				D5DF6D00BED2E1C7F2A31E61 /* Sources/LunchUI/CampRecommendationView.swift in Sources */,
 				4F8BBA4C1CEF4D571502C32A /* Sources/LunchUI/CampDemoPage.swift in Sources */,
+				A1B2C3D40E1F2A3B4C5D6E72 /* Sources/LunchCore/OnboardingContracts.swift in Sources */,
+				A1B2C3D40E1F2A3B4C5D6E73 /* Sources/LunchUI/CampOnboardingFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +434,8 @@
 				06BA6B0F22EF2FCD81A68C02 /* Sources/LunchCore/RecommendationClient.swift in Sources */,
 				C89A8BF92E99EC8E174D0A2C /* Sources/LunchUI/CampRecommendationView.swift in Sources */,
 				3DD2D2F172EBF4D72CFF6EEB /* Sources/LunchUI/CampDemoPage.swift in Sources */,
+				A1B2C3D40E1F2A3B4C5D6E74 /* Sources/LunchCore/OnboardingContracts.swift in Sources */,
+				A1B2C3D40E1F2A3B4C5D6E75 /* Sources/LunchUI/CampOnboardingFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

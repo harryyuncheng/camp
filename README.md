@@ -33,7 +33,19 @@ The shared workspace has five SwiftUI screens:
 - **Office:** demo-admin toggle, address/geofence coordinates and radius, budgets, timing, fee sharing and group rules.
 - **Spending:** a credit-card-shaped preview over your confirmed orders in the backend (`/v1/ledger`); no live card connection.
 - **Connections:** Mac calendars and location.
-- **Demo:** recommendation service, live offer and recommender debug views, Ramp sandbox bridge, and the DoorDash ordering placeholder.
+- **Demo:** onboarding launcher, recommendation service, live offer and recommender debug views, Ramp sandbox bridge, and the DoorDash ordering placeholder.
+
+### Onboarding
+
+The once-per-person setup — name and diet, meal window, calendars, office policy, and the backend address this device
+uses — is a separate flow shared by the Mac and the iPhone. It never appears on its own: a first launch lands on Today,
+and **Demo → Launch onboarding** is the only way in, so a demo shows it deliberately. Finishing writes the answers to
+the laptop's database (`PUT /v1/onboarding`, which also applies the recommender-relevant parts to the user row the way
+`PUT /v1/profile` does) as well as to this device's settings file. Opening the flow reads that row back
+(`GET /v1/onboarding`), so whichever device goes second starts from the answers the first one gave; each device keeps
+its own backend address, since the phone reaches the laptop over the cable's network rather than loopback. Everything
+stays editable afterwards in You / Office / Connections. **Mark unfinished** clears the completed flag but keeps the
+answers, so the flow can be shown again.
 
 Use **Save** to persist settings on this device and sync your profile to the backend (`PUT /v1/profile`), or **Discard** to revert. Office settings become read-only when demo admin is off. Ramp makes sandbox API requests through the backend's `/v1/ramp` endpoints. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders live in the backend's `groups` and `orders` tables; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
 
@@ -200,7 +212,7 @@ panel through `MacLunchModel.offer(_:)`; on both platforms it also appears on th
 Contracts: `backend/src/camp/contracts.py` ↔ `Sources/LunchCore/RecommendationContracts.swift`; groups and ledger:
 `backend/src/camp/groups.py` ↔ `Sources/LunchCore/LunchSession.swift` (`DemoLunchGroup`, `LunchLedgerResponse`).
 
-Endpoints the app uses: `GET /v1/health`, `PUT /v1/profile`, `GET /v1/groups`, `GET /v1/restaurants`, `POST /v1/groups`,
+Endpoints the app uses: `GET /v1/health`, `PUT /v1/profile`, `GET|PUT /v1/onboarding`, `DELETE /v1/onboarding/{user}`, `GET /v1/groups`, `GET /v1/restaurants`, `POST /v1/groups`,
 `POST /v1/groups/{id}/join`, `DELETE /v1/groups/{id}/members/{user}`, `GET /v1/ledger/{user}`, `POST /v1/meal-offers`,
 `POST /v1/lunch-events`, `GET|PUT|DELETE /v1/lunch-session`, `GET /v1/ramp`, `POST /v1/ramp/allocations`, `/v1/debug/*`.
 Change a row in Postgres (e.g. a group's members) and the Today page shows it on its next refresh.

@@ -17,6 +17,13 @@ public struct RecommendationClient {
 
     private struct ErrorBody: Decodable { let detail: String? }
 
+    /// A non-2xx reply, carrying the status so callers can tell "nothing saved yet" (404) from a real failure.
+    public struct ServiceError: LocalizedError {
+        public let status: Int
+        public let message: String
+        public var errorDescription: String? { message }
+    }
+
     private func send<T: Decodable>(_ path: String, method: String? = nil, body: Data? = nil, query: [String: String] = [:],
                                     decoder: JSONDecoder = JSONDecoder()) async throws -> T {
         var components = URLComponents(url: base.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
@@ -29,9 +36,10 @@ public struct RecommendationClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         CampBackendURL.applyToken(token, to: &request)
         let (data, response) = try await session.data(for: request)
-        guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+        let http = response as? HTTPURLResponse
+        guard let status = http?.statusCode, (200..<300).contains(status) else {
             let message = (try? JSONDecoder().decode(ErrorBody.self, from: data))?.detail ?? "The recommender returned an error."
-            throw NSError(domain: "camp", code: 11, userInfo: [NSLocalizedDescriptionKey: message])
+            throw ServiceError(status: http?.statusCode ?? 0, message: message)
         }
         return try decoder.decode(T.self, from: data)
     }
@@ -56,6 +64,26 @@ public struct RecommendationClient {
     public func putProfile(_ context: MealContext) async throws -> ProfileSyncResponse {
         try await send("v1/profile", method: "PUT", body: JSONEncoder().encode(context))
     }
+
+    // MARK: onboarding (the once-per-person setup, shared by both devices)
+
+    public func putOnboarding(_ request: OnboardingRequest) async throws -> OnboardingRecord {
+        try await send("v1/onboarding", method: "PUT", body: JSONEncoder().encode(request))
+    }
+    /// The setup this device should start from, or nil when nobody has run onboarding against this database yet.
+    public func onboarding(userId: String?, displayName: String?, officeId: String?) async throws -> OnboardingRecord? {
+        var query: [String: String] = [:]
+        if let userId { query["userId"] = userId }
+        if let displayName, !displayName.isEmpty { query["displayName"] = displayName }
+        if let officeId { query["officeId"] = officeId }
+        do { return try await send("v1/onboarding", query: query) as OnboardingRecord }
+        catch let error as ServiceError where error.status == 404 { return nil }
+    }
+    /// Clears the finished flag so the flow can be shown again; the answers are kept as the starting point.
+    public func resetOnboarding(userId: String) async throws -> OnboardingRecord {
+        try await send("v1/onboarding/\(userId)", method: "DELETE")
+    }
+
     public func groups(office: OfficeRef, userId: String?) async throws -> LunchGroupsResponse {
         var query = ["officeId": office.id, "officeName": office.name, "deliveryStart": String(office.deliveryStart),
                      "latitude": String(office.latitude), "longitude": String(office.longitude)]

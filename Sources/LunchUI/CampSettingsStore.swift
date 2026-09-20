@@ -104,7 +104,7 @@ public final class CampSettingsStore: ObservableObject {
         syncOrderEvents()
     }
 
-    private func remember(userId: String) {
+    func remember(userId: String) {
         guard recommenderUserID != userId else { return }
         recommenderUserID = userId
         UserDefaults.standard.set(userId, forKey: "camp.recommender.userID")
@@ -248,6 +248,13 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var selectedMeal: LunchOption?
     @Published public var groupStage = DemoGroupStage.collecting
     @Published public var previewConnections: Set<String> = []
+    /// First-run setup. Never shown automatically: `CampDemoPage` opens it, so a demo starts on Today.
+    @Published public var showOnboarding = false
+    @Published public var onboardingStep = 0
+    @Published public var onboardingBusy = false
+    @Published public var onboardingStatus: String?
+    /// The setup row in the laptop's database, whichever device wrote it.
+    @Published public var onboardingRecord: OnboardingRecord?
     /// Live recommendation state from the Python recommender. Ephemeral; the backend is the authority.
     @Published public var recommenderHealth: JSONValue?
     @Published public var recommenderError: String?

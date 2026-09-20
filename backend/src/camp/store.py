@@ -16,7 +16,8 @@ from pydantic import BaseModel
 
 import threading
 
-from .models import Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, Restaurant, ScheduledOrder, SyncState, User
+from .models import (Batch, FeedbackEvent, LunchGroup, MenuItem, OnboardingProfile, Order, RampAttempt, Restaurant, ScheduledOrder,
+                     SyncState, User)
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -24,12 +25,14 @@ TABLES: dict[type[BaseModel], str] = {
     User: "users", Restaurant: "restaurants", MenuItem: "items",
     Order: "orders", Batch: "batches", FeedbackEvent: "events",
     LunchGroup: "groups", RampAttempt: "ramp_attempts", SyncState: "sync", ScheduledOrder: "schedules",
+    OnboardingProfile: "onboarding",
 }
 # JSON keys promoted to indexed columns per table (used by the convenience queries)
 INDEXED: dict[str, list[str]] = {
     "users": ["office_id"], "items": ["restaurant_id"], "orders": ["user_id", "date"],
     "events": ["user_id"], "batches": ["office_id", "date"], "restaurants": [],
     "groups": ["office_id", "date"], "ramp_attempts": [], "sync": [], "schedules": ["user_id"],
+    "onboarding": ["office_id"],
 }
 
 DEFAULT_SQLITE = "camp.db"

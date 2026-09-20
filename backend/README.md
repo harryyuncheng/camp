@@ -18,6 +18,18 @@ uv run uvicorn camp.api:app --port 8788
 `camp.db` SQLite file. Tables are created on startup. In the app, Demo → Recommendation service → `http://127.0.0.1:8788`
 → Save; the same URL and token also serve the Ramp card.
 
+## Onboarding (`/v1/onboarding`)
+
+The once-per-person setup lives in the `onboarding` table so the Mac and the phone share one answer set through this
+database instead of each keeping their own.
+
+- `PUT /v1/onboarding`: `{ context, settings, completed, device }`. `context` is the usual `MealContext`, applied to
+  the `User` row exactly as `PUT /v1/profile` applies it (diet and allergy restrictions, budget, meal window).
+  `settings` is the native app's whole configuration document, stored verbatim and never interpreted here.
+- `GET /v1/onboarding?userId=&displayName=&officeId=`: the row for that user, else the newest row with that display
+  name in the office, else the office's newest completed row. `404` when nobody has set up yet.
+- `DELETE /v1/onboarding/{user_id}`: clears `completed` and keeps the answers, so the flow can be demoed again.
+
 ## Ramp sandbox (`/v1/ramp`)
 
 Enable the client-credentials grant and `business:read`, `users:read`, `funds:read`, `funds:write` in the Ramp sandbox
