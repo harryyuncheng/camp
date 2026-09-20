@@ -130,7 +130,7 @@ For a future meal-only integration, pass a session to **`MacLunchModel.offer(_:)
 
 ## Native iPhone companion
 
-The native iPhone app + WidgetKit extension use the existing workspace, shared domain and camp styling. Group menus start Live Activities with select/review/confirm controls. Mac and iPhone keep independent local sessions; they do not sync yet. See [iPhone development and device setup](docs/IOS.md) for the simulator workflow, local signing configuration and push-delivery boundary.
+The native iPhone app + WidgetKit extension use the existing workspace, shared domain and camp styling. Group joins start Live Activities, and the shared backend synchronizes sessions with the Mac while the apps are active. See [iPhone development and device setup](docs/IOS.md) for the simulator workflow, local signing configuration and push-delivery boundary.
 
 Build for Simulator with `bash scripts/build-ios.sh` after installing Xcode 15 or newer.
 
@@ -177,7 +177,7 @@ or the shell; local default `postgresql://localhost/camp`, e.g. Postgres.app), o
 `CAMP_DB` (default `camp.db`). Tables (`backend/src/camp/store.py`, one JSONB document table each with generated index
 columns): `users` (profile + learned preferences + the app's saved settings), `restaurants`, `items`, `orders`, `batches`,
 `events` (feedback), `groups` (Today's group orders and membership), `schedules` (standing orders), `ramp_attempts`
-(idempotent sandbox fund issuance) and `sync` (the active Mac ↔ iPhone orders). Tests use in-memory SQLite plus one Postgres round-trip test that skips
+(idempotent sandbox fund issuance), `offers` (durable offer snapshots/lifecycle) and `sync` (the active Mac ↔ iPhone orders). Tests use SQLite and optional PostgreSQL integration coverage. The catalog PostgreSQL smoke test skips
 when no server is reachable. `uv run camp migrate --source camp.db` copies an old SQLite file into `CAMP_DATABASE_URL`.
 What stays on the device on purpose: OS permissions and their choices (calendar selection, the confirmed geofence),
 connection URLs, the locally cached order session, and the ids of the calendar blocks camp wrote.

@@ -68,7 +68,7 @@ struct CampScheduleCard: View {
                     Image(systemName: schedule.kind.symbol).foregroundStyle(CampPalette.green).frame(width: 20)
                     VStack(alignment: .leading, spacing: 3) {
                         Text("\(schedule.label) · \(CampTimePicker.label(schedule.timeMinutes))").font(.callout.weight(.semibold))
-                        Text("\(schedule.weekdayLabel) · \(schedule.restaurantName?.isEmpty == false ? schedule.restaurantName! : "camp picks the place")\(schedule.calendarEventId == nil ? "" : " · on your calendar")")
+                        Text("\(schedule.weekdayLabel) · \(schedule.restaurantName?.isEmpty == false ? schedule.restaurantName! : "camp picks the place")")
                             .font(.caption).foregroundStyle(CampPalette.muted)
                     }
                     Spacer()

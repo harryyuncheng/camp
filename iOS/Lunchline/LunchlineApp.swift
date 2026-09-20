@@ -56,7 +56,7 @@ struct LunchlineApp: App {
                             Label(error, systemImage: "exclamationmark.circle")
                                 .font(.callout).foregroundStyle(.red)
                         }
-                        Text("Demo meals, prices, savings, and arrival times. Confirm saves your selection locally; it doesn't place an order.")
+                        Text("Demo meals, prices, savings, and arrival times. Confirm records your selection in camp; no purchase is made.")
                             .font(.footnote).foregroundStyle(.secondary)
                     }.padding(24)
                 }
