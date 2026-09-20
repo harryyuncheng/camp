@@ -10,7 +10,7 @@ struct CampTodayPage: View {
     @State private var choosingMeal = false
 
     var body: some View {
-        LazyVStack(spacing: 20) {
+        VStack(spacing: 20) {
             groupHero
             HStack(spacing: 12) {
                 metric("Delivery saved", value: LunchStyle.money(store.group.deliverySavingsCents), note: "fixture comparison", symbol: "arrow.down.right")

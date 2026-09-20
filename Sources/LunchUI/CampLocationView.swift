@@ -275,11 +275,15 @@ private final class OfficeMapContainer: NSView {
     }
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
-        if let area { removeTrackingArea(area) }
+        // inVisibleRect follows clipping automatically; keep this area across scroll layouts.
+        guard area == nil else { return }
         let next = NSTrackingArea(rect: .zero, options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect], owner: self)
         addTrackingArea(next); area = next
     }
-    override func mouseExited(with event: NSEvent) { active = false; onActivation?(false) }
+    override func mouseExited(with event: NSEvent) {
+        guard active else { return }
+        active = false; onActivation?(false)
+    }
 }
 
 #else

@@ -1,4 +1,7 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 #if SWIFT_PACKAGE
 import LunchCore
 #endif
@@ -39,7 +42,7 @@ struct CampCard<Content: View>: View {
             }
             content
         }.frame(maxWidth: .infinity, alignment: .leading).padding(22)
-            .background(.white).clipShape(RoundedRectangle(cornerRadius: 20))
+            .background(RoundedRectangle(cornerRadius: 20).fill(.white))
             .overlay(RoundedRectangle(cornerRadius: 20).stroke(CampPalette.border, lineWidth: 1))
     }
 }
@@ -99,12 +102,18 @@ struct CampTimePicker: View {
     let label: String
     @Binding var minutes: Int
     var body: some View {
+        #if os(macOS)
+        CampNativeTimePicker(label: label, minutes: $minutes)
+            .frame(height: 24)
+        #else
         Picker(label, selection: $minutes) {
-            ForEach(Array(stride(from: 360, through: 1260, by: 5)), id: \.self) { value in
+            ForEach(Self.options, id: \.self) { value in
                 Text(Self.label(value)).tag(value)
             }
         }.labelsHidden().accessibilityLabel(label)
+        #endif
     }
+    private static let options = Array(stride(from: 360, through: 1260, by: 5))
     static func label(_ minutes: Int) -> String {
         let hour = minutes / 60
         return "\(hour % 12 == 0 ? 12 : hour % 12):\(String(format: "%02d", minutes % 60)) \(hour >= 12 ? "PM" : "AM")"
@@ -138,3 +147,37 @@ struct CampPair<Content: View>: View {
         else { HStack(alignment: .top, spacing: 22) { content } }
     }
 }
+
+#if os(macOS)
+/// Build the menu once per native control, rather than 181 SwiftUI labels per layout.
+private struct CampNativeTimePicker: NSViewRepresentable {
+    let label: String
+    @Binding var minutes: Int
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeNSView(context: Context) -> NSPopUpButton {
+        let button = NSPopUpButton(frame: .zero, pullsDown: false)
+        for value in stride(from: 360, through: 1260, by: 5) {
+            button.addItem(withTitle: CampTimePicker.label(value))
+            button.lastItem?.tag = value
+        }
+        button.target = context.coordinator
+        button.action = #selector(Coordinator.selectTime(_:))
+        button.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        return button
+    }
+    @Environment(\.isEnabled) private var isEnabled
+    func updateNSView(_ button: NSPopUpButton, context: Context) {
+        context.coordinator.parent = self
+        button.setAccessibilityLabel(label)
+        button.isEnabled = isEnabled
+        if button.selectedItem?.tag != minutes { button.selectItem(withTag: minutes) }
+    }
+    final class Coordinator: NSObject {
+        var parent: CampNativeTimePicker
+        init(_ parent: CampNativeTimePicker) { self.parent = parent }
+        @objc func selectTime(_ sender: NSPopUpButton) {
+            if let item = sender.selectedItem { parent.minutes = item.tag }
+        }
+    }
+}
+#endif

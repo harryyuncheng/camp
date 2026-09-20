@@ -109,3 +109,12 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Office/Connections recycle up to two detached native map views, clearing delegates, gestures, overlays and annotations between owners. First map construction is deferred until after navigation begins; page cards are lazy.
 - macOS build succeeded. Relaunched the built app and opened Office then Connections; both rendered their office map and controls.
 - No automated tests were added or run. End-to-end latency has not been quantified. Coordinate-based sidebar verification was unavailable through UI automation; accessibility navigation worked. Calendar access needs reconnecting in the rebuilt copy, so the live calendar path was not rechecked.
+
+## Scrolling layout — September 19
+
+- Captured a process sample while scrolling Office down and back. It contains SwiftUI layout/text work and accessibility sampling overhead; it does not provide a reliable frame-rate benchmark.
+- Replaced lazy stacks on the finite workspace pages with stable stacks to avoid deferred card layout while scrolling. Map initialization remains deferred and pooled.
+- macOS time pickers now construct native menu entries once per control instead of contributing 181 SwiftUI labels per picker. Values, five-minute increments, accessibility labels and disabled admin state are preserved.
+- Card backgrounds draw a rounded shape without masking all child views. The map keeps its in-visible-rect tracking area rather than removing/recreating it on each layout; inactive pointer exits no longer publish redundant state.
+- Release build succeeded and the rebuilt app was relaunched. Repeated Office down/up scrolling reached both ends with the map, policy cards and selected time values present.
+- No automated tests were added or run. Smoothness improvement is not quantified; iOS and the permission-gated live calendar were not exercised.
