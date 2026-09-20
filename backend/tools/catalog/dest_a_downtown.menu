@@ -325,6 +325,7 @@ platforms: uber, doordash
 *Tie-Dye Pizza | 30.00 | Thin crust with vodka sauce, tomato, pesto, fresh mozzarella | pizza | none | v
 *Vodka Pizza | 28.00 | Thin crust with vodka sauce and mozzarella | pizza | none | v
 Classic Pizza | 26.00 | Thin crust with tomato and mozzarella | pizza | none | v
+Gluten-Free Vodka Pizza | 32.00 | Gluten-free crust with vodka sauce and mozzarella | pizza | none | v gf
 Supreme Pizza | 32.00 | Sausage, pepperoni, mushroom, onion, peppers | pizza | pork
 Fresh Clam Pizza | 34.00 | Clams, garlic, parsley | pizza | shrimp
 Rigatoni alla Vodka | 26.00 | Rigatoni in vodka cream sauce | noodles | none | v
@@ -497,7 +498,7 @@ Soy Sauce Chicken over Rice | 11.95 | Poached soy chicken over rice | rice | chi
 Salt-Baked Shrimp | 22.95 | Salt-baked shrimp with garlic | other | shrimp | gf
 Salt-Baked Squid | 19.95 | Salt-baked squid | other | shrimp | gf
 Beef Chow Fun | 13.95 | Wide rice noodles with beef | noodles | beef | gf
-Ginger Scallion Lo Mein | 9.95 | Egg noodles with ginger and scallion | noodles | none | vg
+Ginger Scallion Lo Mein | 9.95 | Egg noodles with ginger and scallion | noodles | none | v
 Roast Duck Lo Mein | 13.95 | Egg noodles with roast duck | noodles | chicken
 Congee with Pork & Preserved Egg | 8.95 | Rice porridge | soup | pork | gf
 Sautéed Pea Shoots | 14.95 | Pea shoots with garlic | other | none | vg gf
@@ -636,7 +637,7 @@ categories: coffee
 *Italian Cheesecake | 7.50 | Ricotta cheesecake slice | other | egg | v
 New York Cheesecake | 7.50 | Cream cheese cheesecake slice | other | egg | v
 Sfogliatella | 5.00 | Layered ricotta pastry | other | egg | v
-Lobster Tail | 6.50 | Cream-filled flaky pastry | other | egg | v
+Lobster Tail | 6.50 | Cream-filled flaky pastry (sfogliatella) | other | egg | v +egg -shellfish -fish
 Tiramisù | 8.00 | Classic tiramisù | other | none | v
 Napoleon | 6.50 | Layered puff pastry with cream | other | egg | v
 Rainbow Cookies (1/2 lb) | 12.00 | Almond layer cookies with chocolate | other | none | v

@@ -28211,7 +28211,7 @@
    {
     "id": "d4",
     "name": "Lobster Tail",
-    "description": "Cream-filled flaky pastry",
+    "description": "Cream-filled flaky pastry (sfogliatella)",
     "price_cents": 650,
     "price_estimated": true,
     "ingredients": [
@@ -28227,8 +28227,8 @@
     "gluten_free": false,
     "halal": null,
     "allergens": [
-     "shellfish",
      "dairy",
+     "egg",
      "gluten"
     ],
     "popular": false,

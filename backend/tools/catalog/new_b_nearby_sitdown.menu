@@ -274,7 +274,7 @@ platforms: uber, doordash
 *Shojin Bento | 32.00 | Assorted seasonal vegan small plates with rice | other | none | vg
 *Vegetable Tempura | 18.00 | Seasonal vegetable tempura | other | none | vg
 Goma Dofu | 12.00 | Sesame tofu with wasabi soy | other | tofu | vg gf
-Yuba Sashimi | 16.00 | Fresh tofu skin sashimi | other | tofu | vg gf
+Yuba Sashimi | 16.00 | Fresh tofu skin sashimi | other | tofu | vg gf -fish -shellfish
 Mushroom Sushi Roll | 18.00 | Roasted mushroom, avocado roll | rice | none | vg gf
 Nasu Dengaku | 14.00 | Miso-glazed eggplant | other | none | vg
 Vegan Ramen | 22.00 | Shoyu vegetable broth, noodles, tofu | noodles | tofu | vg
@@ -823,7 +823,7 @@ Kimchi | 5.00 | House kimchi | other | none | s2 nv
 Kkakdugi | 5.00 | Radish kimchi | other | none | s2 nv
 Extra Rice | 3.00 | Steamed rice | rice | none | vg gf
 Extra Pork | 8.00 | Additional sliced pork | other | pork | gf
-Boricha | 3.00 | Barley tea | other | none | vg gf
+Boricha | 3.00 | Barley tea | other | none | vg
 Sikhye | 5.00 | Sweet rice drink | other | none | vg gf
 
 @ maialino-vicino

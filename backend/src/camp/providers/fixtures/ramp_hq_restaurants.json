@@ -11226,7 +11226,7 @@
    {
     "id": "d15",
     "name": "Spicy Tuna Crispy Rice",
-    "description": "Tomato tuna on crispy rice with spicy mayo",
+    "description": "Tomato 'tuna' on crispy rice with vegan spicy mayo",
     "price_cents": 1900,
     "price_estimated": true,
     "ingredients": [
@@ -11242,9 +11242,7 @@
     "vegan": true,
     "gluten_free": true,
     "halal": null,
-    "allergens": [
-     "fish"
-    ],
+    "allergens": [],
     "popular": false,
     "kcal": null
    },
@@ -11422,9 +11420,7 @@
     "vegan": true,
     "gluten_free": true,
     "halal": null,
-    "allergens": [
-     "fish"
-    ],
+    "allergens": [],
     "popular": false,
     "kcal": null
    },
@@ -94843,7 +94839,6 @@
     "gluten_free": true,
     "halal": null,
     "allergens": [
-     "fish",
      "soy"
     ],
     "popular": false,
@@ -105736,7 +105731,6 @@
     "gluten_free": true,
     "halal": null,
     "allergens": [
-     "fish",
      "soy",
      "sesame"
     ],
@@ -106626,9 +106620,11 @@
     "spice": 0,
     "vegetarian": true,
     "vegan": true,
-    "gluten_free": true,
+    "gluten_free": false,
     "halal": null,
-    "allergens": [],
+    "allergens": [
+     "gluten"
+    ],
     "popular": false,
     "kcal": null
    },
@@ -120753,6 +120749,30 @@
    },
    {
     "id": "d3",
+    "name": "Gluten-Free Vodka Pizza",
+    "description": "Gluten-free crust with vodka sauce and mozzarella",
+    "price_cents": 3200,
+    "price_estimated": true,
+    "ingredients": [
+     "crust",
+     "vodka sauce",
+     "mozzarella"
+    ],
+    "dish_type": "pizza",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
     "name": "Supreme Pizza",
     "description": "Sausage, pepperoni, mushroom, onion, peppers",
     "price_cents": 3200,
@@ -120779,7 +120799,7 @@
     "kcal": null
    },
    {
-    "id": "d4",
+    "id": "d5",
     "name": "Fresh Clam Pizza",
     "description": "Clams, garlic, parsley",
     "price_cents": 3400,
@@ -120806,7 +120826,7 @@
     "kcal": null
    },
    {
-    "id": "d5",
+    "id": "d6",
     "name": "Rigatoni alla Vodka",
     "description": "Rigatoni in vodka cream sauce",
     "price_cents": 2600,
@@ -120830,7 +120850,7 @@
     "kcal": null
    },
    {
-    "id": "d6",
+    "id": "d7",
     "name": "Cavatelli with Sausage",
     "description": "Cavatelli, sausage, broccoli rabe",
     "price_cents": 2700,
@@ -120855,7 +120875,7 @@
     "kcal": null
    },
    {
-    "id": "d7",
+    "id": "d8",
     "name": "Chicken Parmigiana",
     "description": "Breaded chicken, tomato, mozzarella with spaghetti",
     "price_cents": 3200,
@@ -120881,7 +120901,7 @@
     "kcal": null
    },
    {
-    "id": "d8",
+    "id": "d9",
     "name": "Meatballs",
     "description": "Beef and pork meatballs, ricotta",
     "price_cents": 1800,
@@ -120906,7 +120926,7 @@
     "kcal": null
    },
    {
-    "id": "d9",
+    "id": "d10",
     "name": "Eggplant Parmigiana",
     "description": "Layered eggplant, tomato, mozzarella",
     "price_cents": 2600,
@@ -120930,7 +120950,7 @@
     "kcal": null
    },
    {
-    "id": "d10",
+    "id": "d11",
     "name": "Arancini",
     "description": "Fried risotto balls",
     "price_cents": 1400,
@@ -120948,7 +120968,7 @@
     "kcal": null
    },
    {
-    "id": "d11",
+    "id": "d12",
     "name": "Caesar Salad",
     "description": "Romaine, parmesan, croutons",
     "price_cents": 1600,
@@ -120973,7 +120993,7 @@
     "kcal": null
    },
    {
-    "id": "d12",
+    "id": "d13",
     "name": "Tricolore Salad",
     "description": "Arugula, endive, radicchio, parmigiano",
     "price_cents": 1600,
@@ -120998,7 +121018,7 @@
     "kcal": null
    },
    {
-    "id": "d13",
+    "id": "d14",
     "name": "Tiramisù",
     "description": "Classic tiramisù",
     "price_cents": 1200,
@@ -121016,7 +121036,7 @@
     "kcal": null
    },
    {
-    "id": "d14",
+    "id": "d15",
     "name": "Cannoli",
     "description": "Ricotta cannoli",
     "price_cents": 1000,
@@ -127267,10 +127287,11 @@
     "protein": "none",
     "spice": 0,
     "vegetarian": true,
-    "vegan": true,
+    "vegan": false,
     "gluten_free": false,
     "halal": null,
     "allergens": [
+     "egg",
      "gluten",
      "soy"
     ],

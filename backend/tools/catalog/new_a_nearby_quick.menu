@@ -657,7 +657,7 @@ chain: yes
 *Tuna Poke Bowl | 16.00 | Ahi tuna, sushi rice, seaweed salad, avocado, shoyu | bowl | fish
 Spicy Tuna Bowl | 16.00 | Spicy tuna, rice, cucumber, crispy onions | bowl | fish | s2
 Shrimp Poke Bowl | 15.00 | Poached shrimp, rice, mango, edamame | bowl | shrimp
-Tofu Poke Bowl | 13.00 | Marinated tofu, brown rice, edamame, avocado | bowl | tofu | vg
+Tofu Poke Bowl | 13.00 | Marinated tofu, brown rice, edamame, avocado | bowl | tofu | vg -fish -shellfish
 Chicken Teriyaki Bowl | 14.00 | Grilled chicken, teriyaki, rice, vegetables | bowl | chicken
 Salmon Avocado Salad Bowl | 15.00 | Salmon, avocado over mixed greens | salad | fish | gf
 Hawaiian Classic | 16.00 | Tuna, sweet onion, seaweed, sesame, shoyu | bowl | fish
