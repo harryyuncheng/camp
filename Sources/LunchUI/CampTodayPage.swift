@@ -8,7 +8,7 @@ import LunchCore
 struct CampTodayPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
-    let previewActivity: () -> Void
+    let previewActivity: (() -> Void)?
     @State private var creatingGroup = false
     @State private var choosingGroup: DemoLunchGroup?
     @State private var filter: OrderCategory?
@@ -45,7 +45,7 @@ struct CampTodayPage: View {
                 Button { creatingGroup = true } label: {
                     Label("New order", systemImage: "plus").labelStyle(.titleAndIcon)
                 }.buttonStyle(CampActionStyle())
-                    .disabled(store.restaurants.isEmpty)
+                    .disabled(store.restaurants.isEmpty || store.groupMutationBusy)
                     .accessibilityLabel("Start a new group order")
             }.padding(.top, 6)
             categoryFilter
@@ -61,6 +61,7 @@ struct CampTodayPage: View {
                         }
                         Spacer()
                         Button("Leave") { store.leave(group) }.buttonStyle(.plain).font(.caption)
+                            .disabled(store.groupMutationBusy)
                     }.padding(18).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 14))
                 }
             }
@@ -101,7 +102,9 @@ struct CampTodayPage: View {
                 Text(store.groupsSummary == nil ? "Orders and prices come from the camp backend." : "Live from the camp database · all-in price estimates. No purchases.")
                     .font(.caption).foregroundStyle(CampPalette.muted)
                 Spacer()
-                Button("Preview order invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
+                if let previewActivity {
+                    Button("Preview order invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
+                }
             }
             CampPair(compact: compact) {
                 summaryCard("Total savings", value: LunchStyle.money(store.totalSavingsCents), symbol: "arrow.down.right")
@@ -149,6 +152,7 @@ private struct CampGroupMenuSheet: View {
     @ObservedObject var store: CampSettingsStore
     let group: DemoLunchGroup
     @State private var selection: [LunchOption] = []
+    @State private var confirmationError: String?
     @Environment(\.dismiss) private var dismiss
     private var menu: LunchMenu? { store.menu(for: group) }
     private var topIDs: Set<String> { Set(menu?.top.map(\.id) ?? []) }
@@ -166,7 +170,7 @@ private struct CampGroupMenuSheet: View {
                     }
                 }
                 Spacer()
-                Button("Done") { dismiss() }.buttonStyle(.plain)
+                Button("Done") { dismiss() }.buttonStyle(.plain).disabled(store.groupMutationBusy)
             }
             if let sources = menu?.ratings, !sources.isEmpty {
                 Text(sources.sorted { $0.key < $1.key }.map { "\($0.key.capitalized) \(String(format: "%.1f", $0.value))" }.joined(separator: " · "))
@@ -190,10 +194,19 @@ private struct CampGroupMenuSheet: View {
             budgetBar
             Text("Public rating from review sites · all-in estimate with the delivery fee shared once, however many items you pick. No purchase.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
+            if let confirmationError { Text(confirmationError).font(.callout).foregroundStyle(.red) }
             Button(confirmTitle) {
-                store.join(selection, group: group); dismiss()
-            }.buttonStyle(CampActionStyle()).disabled(selection.isEmpty)
+                confirmationError = nil
+                Task {
+                    do {
+                        let updated = try await store.joinConfirmed(selection, group: group)
+                        if let first = store.myOptions(in: updated).first { store.requestConfirmedDemoGroup?(updated, first) }
+                        dismiss()
+                    } catch { confirmationError = error.localizedDescription }
+                }
+            }.buttonStyle(CampActionStyle()).disabled(selection.isEmpty || store.groupMutationBusy)
         }.padding(24).frame(idealWidth: 460, maxWidth: 520).foregroundStyle(CampPalette.ink).background(.white)
+            .interactiveDismissDisabled(store.groupMutationBusy)
             .onAppear { selection = store.myOptions(in: group) }
             .task { await store.loadMenu(for: group) }
     }
@@ -271,6 +284,7 @@ private struct CampCreateGroupSheet: View {
     @State private var delivery: String
     @State private var mealIDs: [String] = []
     @State private var working = false
+    @State private var creationError: String?
     @State private var cravingText = ""
     @State private var cravingPick: LunchCravingMatch?
     init(store: CampSettingsStore, category: OrderCategory) {
@@ -291,12 +305,12 @@ private struct CampCreateGroupSheet: View {
             HStack {
                 Text("New group order").font(.title2.weight(.semibold))
                 Spacer()
-                Button("Cancel") { dismiss() }.buttonStyle(.plain)
+                Button("Cancel") { dismiss() }.buttonStyle(.plain).disabled(working)
             }
             CampField("Order") {
                 Picker("Order", selection: $category) {
                     ForEach(OrderCategory.allCases) { Text($0.label).tag($0) }
-                }.pickerStyle(.segmented).labelsHidden()
+                }.pickerStyle(.segmented).labelsHidden().disabled(store.cravingBusy)
             }
             cravingSearch
             if let pick = cravingPick {
@@ -355,16 +369,23 @@ private struct CampCreateGroupSheet: View {
             }
             Text("Saved to the camp database and visible to the office. This replaces your current \(category.label.lowercased()) order. Added to your camp calendar on Mac. No purchase.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
+            if let creationError { Text(creationError).font(.callout).foregroundStyle(.red) }
             Button(working ? "Creating…" : "Create & join") {
-                guard let restaurant, !meals.isEmpty, let minutes = deliveryMinutes else { return }
+                guard !working, let restaurant, !meals.isEmpty, let minutes = deliveryMinutes else { return }
                 working = true
+                creationError = nil
                 Task {
-                    if await store.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meals: meals, category: category) { dismiss() }
+                    if await store.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meals: meals, category: category) {
+                        dismiss()
+                    } else {
+                        creationError = store.groupsError ?? "The order could not be created. Check your selection and try again."
+                    }
                     working = false
                 }
-            }.buttonStyle(CampActionStyle()).disabled(meals.isEmpty || deliveryMinutes == nil || working)
+            }.buttonStyle(CampActionStyle()).disabled(meals.isEmpty || deliveryMinutes == nil || working || store.cravingBusy || store.groupMutationBusy)
         }.padding(24).frame(idealWidth: 440, maxWidth: 480)
             .foregroundStyle(CampPalette.ink).background(.white)
+            .interactiveDismissDisabled(working)
             .onAppear {
                 if restaurantID.isEmpty { restaurantID = choices.first?.id ?? "" }
                 store.clearCraving()
@@ -372,6 +393,7 @@ private struct CampCreateGroupSheet: View {
             .onChange(of: restaurantID) { _ in mealIDs = [] }
             .onChange(of: category) { next in
                 cravingPick = nil
+                store.clearCraving()
                 restaurantID = store.restaurants(for: next).first?.id ?? ""; mealIDs = []
                 delivery = CampTimePicker.label(next.defaultMinutes)
             }
@@ -416,8 +438,12 @@ private struct CampCreateGroupSheet: View {
     }
 
     private func search() {
+        guard !store.cravingBusy else { return }
+        let query = cravingText
+        let requestedCategory = category
         Task {
-            await store.searchCraving(cravingText, category: category)
+            await store.searchCraving(query, category: requestedCategory)
+            guard query == cravingText, requestedCategory == category else { return }
             if let first = store.craving?.matches.first { choose(first) }
         }
     }

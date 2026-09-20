@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import re
+from decimal import Decimal
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -34,7 +35,7 @@ class CravingQuery(BaseModel):
     vegan: bool = Field(default=False, description="Did they ask for vegan food?")
     gluten_free: bool = Field(default=False, description="Did they ask for gluten-free food?")
     spicy: bool = Field(default=False, description="Did they ask for something spicy?")
-    max_price_cents: int = Field(default=0, description="Spending limit in cents if they gave one ('under $15' → 1500), otherwise 0.")
+    max_price_cents: int = Field(default=0, ge=0, description="All-in spending limit in cents if they gave one ('under $15' → 1500), otherwise 0.")
     summary: str = Field(default="", description="Their craving in three words or fewer, e.g. 'tacos'.")
 
     @property
@@ -85,17 +86,21 @@ _STOP = {"i", "want", "a", "an", "the", "some", "something", "im", "i'm", "feel"
 def keyword_query(text: str) -> CravingQuery:
     """Offline stand-in for the LLM: enough to demo 'I want tacos' with no API key configured."""
     low = f" {text.lower().strip()} "
-    cuisine = next((c for c, words in _CUISINE_WORDS.items() if any(w in low for w in words)), "any")
-    dish = next((d for d, words in _DISH_WORDS.items() if any(w in low for w in words)), "any")
-    avoid = [w for w in re.findall(r"(?:no|without|hate|dislike|not)\s+([a-z]{3,})", low) if w not in _STOP]
-    tokens = [t for t in re.findall(r"[a-z][a-z'-]{2,}", low) if t not in _STOP and t not in avoid]
-    price = re.search(r"(?:under|below|less than|max)\s*\$?\s*(\d{1,3})", low)
+    negatives = list(re.finditer(r"\b(?:no|without|hate|dislike|not)\s+(tree nuts|[a-z]{3,})\b", low))
+    avoid = [m.group(1) for m in negatives if m.group(1) not in _STOP]
+    positive = re.sub(r"\b(?:no|without|hate|dislike|not)\s+(tree nuts|[a-z]{3,})\b", " ", low)
+    price = re.search(r"(?:under|below|less than|max)\s*\$?\s*(\d+(?:\.\d{1,2})?)\b", positive)
+    if price:
+        positive = positive[:price.start()] + positive[price.end():]
+    cuisine = next((c for c, words in _CUISINE_WORDS.items() if any(w in positive for w in words)), "any")
+    dish = next((d for d, words in _DISH_WORDS.items() if any(w in positive for w in words)), "any")
+    tokens = [t for t in re.findall(r"[a-z][a-z'-]{2,}", positive) if t not in _STOP and t not in avoid]
     return CravingQuery(cuisine=cuisine, dish_type=dish, keywords=tokens[:5], avoid=avoid[:5],
-                        vegetarian=any(w in low for w in _DIET_WORDS["vegetarian"]),
-                        vegan=any(w in low for w in _DIET_WORDS["vegan"]),
-                        gluten_free=any(w in low for w in _DIET_WORDS["gluten_free"]),
-                        spicy=any(w in low for w in _SPICE_WORDS),
-                        max_price_cents=int(price.group(1)) * 100 if price else 0,
+                        vegetarian="no meat" in low or any(w in positive for w in _DIET_WORDS["vegetarian"]),
+                        vegan=any(w in positive for w in _DIET_WORDS["vegan"]),
+                        gluten_free="no gluten" in low or any(w in positive for w in _DIET_WORDS["gluten_free"]),
+                        spicy=any(w in positive for w in _SPICE_WORDS),
+                        max_price_cents=int(Decimal(price.group(1)) * 100) if price else 0,
                         summary=" ".join(tokens[:3]) or text.strip()[:40])
 
 

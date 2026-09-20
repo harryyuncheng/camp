@@ -12,7 +12,7 @@ from . import filters
 from .ai.craving import CravingQuery, parse_craving
 from .contracts import Wire
 from .groups import GroupOptionWire, RestaurantWire, cuisine_label, is_drink, shrunk_rating, symbol_for
-from .models import MenuItem, OrderCategory, Restaurant, User
+from .models import ALLERGENS, MenuItem, OrderCategory, Restaurant, Restriction, User
 
 NAME_HIT, TEXT_HIT = 3.0, 1.2          # a keyword in the dish name counts for more than in its description
 CUISINE_HIT, DISH_TYPE_HIT = 2.5, 2.0
@@ -52,7 +52,7 @@ def _interpretation(q: CravingQuery) -> str:
     parts += [f"no {a}" for a in q.avoid]
     parts += [d for d, on in (("vegetarian", q.vegetarian), ("vegan", q.vegan), ("gluten-free", q.gluten_free), ("spicy", q.spicy)) if on]
     if q.max_price_cents:
-        parts.append(f"under ${q.max_price_cents // 100}")
+        parts.append(f"under ${q.max_price_cents / 100:.2f}")
     return " · ".join(parts)
 
 
@@ -71,6 +71,9 @@ class CravingService:
         for item in self.store.all(MenuItem):
             by_restaurant.setdefault(item.restaurant_id, []).append(item)
         user = self.store.get(User, req.user_id) if req.user_id else None
+        if req.user_id and user is None:
+            return CravingResponse(text=req.text, summary=query.summary, interpretation=_interpretation(query),
+                                   backend=backend, matches=[], note="Unknown user; reload your profile before searching.")
 
         matches: list[CravingMatchWire] = []
         for r in rests.values():
@@ -94,15 +97,16 @@ class CravingService:
     def _item_score(self, q: CravingQuery, r: Restaurant, item: MenuItem, user: Optional[User]) -> float:
         haystack = " ".join([item.name, item.description, " ".join(item.ingredients)]).lower()
         name = item.name.lower()
-        if any(a and a in haystack for a in q.avoid):
+        if any(a.strip() and a.strip().lower() in haystack for a in q.avoid):
             return 0.0
-        if q.max_price_cents and item.price_cents > q.max_price_cents:
+        if q.max_price_cents and filters.total_cost_cents(item, r, r.fees.delivery_fee_cents) > q.max_price_cents:
             return 0.0
         if not self._diet_ok(q, item) or (user and not filters.passes_dietary(user, item)[0]):
             return 0.0
         tags = item.tags
-        score = 0.0
+        score = MIN_SCORE if q.is_empty and (q.vegan or q.vegetarian or q.gluten_free or q.avoid or q.max_price_cents) else 0.0
         for word in q.keywords:
+            word = word.strip().lower()
             if not word:
                 continue
             if word in name:
@@ -131,15 +135,15 @@ class CravingService:
 
     @staticmethod
     def _diet_ok(q: CravingQuery, item: MenuItem) -> bool:
-        tags = item.tags
-        if q.vegan and "vegan" not in item.verified_diets and not (tags and tags.vegan >= 0.9):
-            return False
-        if q.vegetarian and "vegetarian" not in item.verified_diets and not (tags and tags.vegetarian >= 0.9):
-            return False
-        if q.gluten_free and "gluten_free" not in item.verified_diets and not (
-                tags and tags.allergen_p.get("gluten", 1.0) <= filters.ALLERGEN_WARN_THRESHOLD):
-            return False
-        return True
+        restrictions = [Restriction(kind="diet", value=d) for d, requested in
+                        (("vegan", q.vegan), ("vegetarian", q.vegetarian), ("gluten_free", q.gluten_free)) if requested]
+        aliases = {"peanuts": "peanut", "nuts": "tree_nut", "tree nuts": "tree_nut", "milk": "dairy",
+                   "eggs": "egg", "wheat": "gluten", "shrimp": "shellfish"}
+        for avoid in q.avoid:
+            value = aliases.get(avoid.strip().lower(), avoid.strip().lower())
+            if value in ALLERGENS:
+                restrictions.append(Restriction(kind="allergen", value=value, severe=True))
+        return filters.passes_restrictions(restrictions, item)[0]
 
     # ---- wires
     @staticmethod

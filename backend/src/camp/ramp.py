@@ -12,6 +12,7 @@ import datetime as dt
 import hashlib
 import json
 import os
+import threading
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlencode, urlsplit
@@ -138,6 +139,7 @@ class RampService:
     def __init__(self, store: Store):
         self.store = store
         self.ramp = RampClient()
+        self._mutations = threading.RLock()
         self.cap = int(os.environ.get("CAMP_SANDBOX_GROUP_CAP_CENTS", "15000"))
         if not 100 <= self.cap <= 15000:
             raise SystemExit("CAMP_SANDBOX_GROUP_CAP_CENTS must be between 100 and 15000 ($1–$150).")
@@ -162,6 +164,10 @@ class RampService:
                 "funds": [fund_summary(f) for f in funds if (f.get("display_name") or "").startswith("camp · ")]}
 
     def allocate(self, body: dict) -> dict:
+        with self._mutations:
+            return self._allocate(body)
+
+    def _allocate(self, body: dict) -> dict:
         try:
             attempt_id = str(UUID(body["requestID"]))
             user_id = str(UUID(body["userID"]))
@@ -197,11 +203,11 @@ class RampService:
         self.store.put(row)
         try:
             fund = self.ramp.request("POST", "/funds", "funds:write", payload, "camp-" + attempt_id)
-            return self.finish(row, fund)
-        except Exception:
+        except Problem:
             row.state = "unknown"
             self.store.put(row)
             raise Problem("Ramp allocation could not be confirmed. Keep this attempt and use Reconcile; do not create a replacement.", 409) from None
+        return self.finish(row, fund)
 
     def finish(self, row: RampAttempt, fund: dict) -> dict:
         row.result = {"requestID": row.id, "fund": fund_summary(fund)}
@@ -222,6 +228,8 @@ class RampService:
         rows = self.ramp.list(f"/limits?user_id={user_id}", "limits:read")
         limits = [limit_summary(x) for x in rows
                   if x.get("state") == "ACTIVE" and not (x.get("display_name") or "").startswith(CAMP_FUND_PREFIX)]
+        if any(limit["currency"] != "USD" for limit in limits):
+            raise Problem("This local sandbox demo supports USD spending limits only.", 409)
         binding = min(limits, key=lambda x: x["perOrderCents"], default=None)
         requests = self.store.overages_for(user_id)
         return {"userID": user_id, "limits": limits, "limit": binding,
@@ -239,6 +247,10 @@ class RampService:
         """Ask for a higher ceiling on the employee's binding Ramp limit. Idempotent on `requestID`, so a retry after
         a dropped response returns the same request instead of filing a second one. Nothing changes in Ramp until
         someone approves it."""
+        with self._mutations:
+            return self._request_overage(body)
+
+    def _request_overage(self, body: dict) -> dict:
         try:
             request_id = str(UUID(body["requestID"]))
             user_id = self._employee(body["userID"])
@@ -251,6 +263,10 @@ class RampService:
             raise Problem("The requested ceiling must be between 100 and 100000 cents ($1–$1,000).", 400)
         existing = self.store.get(RampOverageRequest, request_id)
         if existing:
+            if (existing.ramp_user_id, existing.requested_cents, existing.reason, existing.requester) != (
+                user_id, amount, reason, requester
+            ):
+                raise Problem("This request already has a different employee, amount or explanation.", 409)
             return overage_wire(existing)
         snapshot = self.spend_limits(user_id)
         binding = snapshot["limit"]
@@ -269,6 +285,10 @@ class RampService:
     def decide_overage(self, request_id: str, body: dict) -> dict:
         """Approve or deny a pending request. Approving raises the limit in Ramp; `baseline_cents` on the row keeps
         the ceiling it had beforehand. Who may approve is the app's call — this endpoint trusts its caller."""
+        with self._mutations:
+            return self._decide_overage(request_id, body)
+
+    def _decide_overage(self, request_id: str, body: dict) -> dict:
         try:
             request_id = str(UUID(request_id))
         except (ValueError, TypeError, AttributeError):
@@ -281,17 +301,65 @@ class RampService:
         approve = body.get("approve")
         if type(approve) is not bool:
             raise Problem("Send approve: true or approve: false.", 400)
+        attempt_id = "overage:" + request_id
+        attempt = self.store.get(RampAttempt, attempt_id)
+        if attempt:
+            if not approve:
+                raise Problem("Approval may already have reached Ramp. Reconcile it before making another decision.", 409)
+            current = self.ramp.request("GET", "/limits/" + row.limit_id, "limits:read")
+            restrictions = current.get("restrictions") or {}
+            expected = attempt.payload["spending_restrictions"]
+            fields = ("limit", "transaction_amount_limit")
+            if (current.get("state") != "ACTIVE"
+                    or restrictions.get("interval", "TOTAL") != expected["interval"] or any(
+                field in expected and (
+                    _cents(restrictions.get(field)) != expected[field]["amount"]
+                    or (restrictions.get(field) or {}).get("currency_code", "USD") != expected[field]["currency_code"]
+                ) for field in fields
+            )):
+                raise Problem("Approval status is unknown. No second increase was sent. Check Ramp and retry this same decision.", 409)
+            return self._finish_overage(row, attempt)
         if approve:
             current = self.ramp.request("GET", "/limits/" + row.limit_id, "limits:read")
             restrictions = current.get("restrictions") or {}
+            if current.get("state") != "ACTIVE":
+                raise Problem("The requested spending limit is no longer active.", 409)
+            if any((restrictions.get(field) or {}).get("currency_code", "USD") != "USD"
+                   for field in ("limit", "transaction_amount_limit")):
+                raise Problem("This local sandbox demo supports USD spending limits only.", 409)
             spending: dict = {"interval": restrictions.get("interval", "TOTAL"),
-                              "limit": {"amount": row.requested_cents + _cents((current.get("balance") or {}).get("total")),
+                              "limit": {"amount": max(_cents(restrictions.get("limit")),
+                                                     row.requested_cents + _cents((current.get("balance") or {}).get("total"))),
                                         "currency_code": "USD"}}
             if restrictions.get("transaction_amount_limit"):
-                spending["transaction_amount_limit"] = {"amount": row.requested_cents, "currency_code": "USD"}
-            self.ramp.request("PATCH", "/funds/" + row.limit_id, "funds:write", {"spending_restrictions": spending})
-        row.state = "approved" if approve else "denied"
+                spending["transaction_amount_limit"] = {"amount": max(row.requested_cents, _cents(restrictions["transaction_amount_limit"])),
+                                                       "currency_code": "USD"}
+            attempt = RampAttempt(
+                id=attempt_id,
+                fingerprint=hashlib.sha256(f"{row.ramp_user_id}:{row.limit_id}:{row.requested_cents}".encode()).hexdigest(),
+                payload={"spending_restrictions": spending, "approver": str(body.get("approver") or "").strip()[:80]},
+            )
+            self.store.put(attempt)
+            try:
+                self.ramp.request("PATCH", "/funds/" + row.limit_id, "funds:write", {"spending_restrictions": spending})
+            except Problem:
+                attempt.state = "unknown"
+                self.store.put(attempt)
+                raise Problem("Ramp approval could not be confirmed. Retry this same decision to reconcile; no second increase will be sent.", 409) from None
+            return self._finish_overage(row, attempt)
+        row.state = "denied"
         row.decided_by = str(body.get("approver") or "").strip()[:80]
         row.decided_at = dt.datetime.now(dt.timezone.utc)
         self.store.put(row)
         return overage_wire(row)
+
+    def _finish_overage(self, row: RampOverageRequest, attempt: RampAttempt) -> dict:
+        row.state = "approved"
+        row.decided_by = attempt.payload["approver"]
+        row.decided_at = dt.datetime.now(dt.timezone.utc)
+        attempt.state = "ready"
+        attempt.result = overage_wire(row)
+        with self.store.transaction():
+            self.store.put(row)
+            self.store.put(attempt)
+        return attempt.result

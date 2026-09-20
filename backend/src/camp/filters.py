@@ -9,7 +9,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Callable
 
-from .models import Context, LatLng, LocationKind, MenuItem, Restaurant, User
+from .models import ALLERGENS, DIETS, Context, LatLng, LocationKind, MenuItem, Restaurant, Restriction, User
 
 ALLERGEN_WARN_THRESHOLD = 0.10   # §7.3: exclude if P(contains) > ~0.1
 BUFFER_BASE_MIN = 5
@@ -32,8 +32,14 @@ def eta_buffer_minutes(r: Restaurant) -> float:
 # ---------------------------------------------------------------- individual filters
 
 def passes_dietary(u: User, item: MenuItem) -> tuple[bool, str]:
+    return passes_restrictions(u.restrictions, item)
+
+
+def passes_restrictions(restrictions: list[Restriction], item: MenuItem) -> tuple[bool, str]:
     tags = item.tags
-    for rst in u.restrictions:
+    for rst in restrictions:
+        if rst.value not in (ALLERGENS if rst.kind == "allergen" else DIETS):
+            return False, f"{rst.kind}:{rst.value}:unsupported"
         if rst.kind == "allergen":
             a = rst.value
             # Jev tag may only EXCLUDE
@@ -45,19 +51,23 @@ def passes_dietary(u: User, item: MenuItem) -> tuple[bool, str]:
             elif rst.severe:
                 # severe allergy: only include with restaurant-verified data
                 return False, f"allergen:{a}:unverified"
-            elif tags is None:
-                return False, f"allergen:{a}:untagged"
+            elif tags is None or tags.needs_review or tags.confidence < 0.60 or a not in tags.allergen_p:
+                return False, f"allergen:{a}:unknown"
         else:  # diet
             d = rst.value
+            excluded = {"gluten_free": {"gluten"}, "dairy_free": {"dairy"}, "vegan": {"dairy", "egg", "fish", "shellfish"},
+                        "vegetarian": {"fish", "shellfish"}}.get(d, set())
+            if excluded & (item.verified_allergens or set()) or any(
+                    tags and tags.allergen_p.get(a, 0.0) > ALLERGEN_WARN_THRESHOLD for a in excluded):
+                return False, f"diet:{d}:allergen_conflict"
             if d in item.verified_diets:
                 continue
-            p = {"vegetarian": tags.vegetarian if tags else 0,
-                 "vegan": tags.vegan if tags else 0,
-                 "halal": tags.halal if tags else 0}.get(d)
+            trusted_tags = tags is not None and not tags.needs_review and tags.confidence >= 0.60
+            p = {"vegetarian": tags.vegetarian if trusted_tags else 0,
+                 "vegan": tags.vegan if trusted_tags else 0,
+                 "halal": tags.halal if trusted_tags else 0}.get(d)
             if p is None:  # kosher / gluten_free / dairy_free: need verified data or allergen tag
-                if d == "gluten_free" and tags and tags.allergen_p.get("gluten", 1.0) <= ALLERGEN_WARN_THRESHOLD:
-                    continue
-                if d == "dairy_free" and tags and tags.allergen_p.get("dairy", 1.0) <= ALLERGEN_WARN_THRESHOLD:
+                if d in ("gluten_free", "dairy_free") and item.verified_allergens is not None:
                     continue
                 return False, f"diet:{d}:unverified"
             if p < 0.9:
@@ -73,9 +83,11 @@ def passes_location(u: User, r: Restaurant, where: LocationKind, office_loc: Lat
 
 def passes_time(u: User, r: Restaurant, ctx: Context, n_items_at_restaurant: int = 1) -> tuple[bool, str]:
     w = u.windows[ctx.meal]
+    if w.end - w.start < w.min_eat_minutes or w.min_eat_minutes <= 0:
+        return False, "window:insufficient_eating_time"
     # pre-orders are allowed: prep starts at the later of order time and opening time
     prep_start = max(ctx.order_time_minutes, r.open_minutes[0])
-    if prep_start > r.open_minutes[1]:
+    if prep_start >= r.open_minutes[1]:
         return False, "closed"
     arrival = prep_start + r.prep_minutes(n_items_at_restaurant) + r.eta_mean_minutes + eta_buffer_minutes(r)
     if arrival > w.start and arrival + w.min_eat_minutes > w.end:
@@ -132,10 +144,5 @@ def feasible(users: list[User], restaurants: dict[str, Restaurant], items: list[
         if u.suggest_only or u.traits.autonomy > 0.8:
             out.suggest_only.add(u.id)
         elif u.has_severe_allergy() and not ok_items:
-            # relax: show Jev-screened but unverified items, but never auto-order
-            relaxed = [i for i in items if i.tags and all(
-                i.tags.allergen_p.get(rs.value, 1.0) <= ALLERGEN_WARN_THRESHOLD
-                for rs in u.restrictions if rs.kind == "allergen")]
-            out.pairs[u.id] = relaxed
             out.suggest_only.add(u.id)
     return out

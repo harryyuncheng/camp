@@ -1,10 +1,15 @@
 """CLI harness: synthetic world → run a batch → print what happened."""
 from __future__ import annotations
 
+import os
 import statistics
 from collections import Counter
+from contextlib import closing
+from ipaddress import ip_address
+from pathlib import Path
 
 import typer
+import uvicorn
 
 from . import synth
 from .models import MenuItem, Restaurant, User
@@ -14,11 +19,23 @@ from .store import Store
 app = typer.Typer(no_args_is_help=True)
 
 
+def _load_env_file(path: str | None = None) -> None:
+    """Load backend/.env without overriding the caller's environment."""
+    p = Path(path or os.getenv("CAMP_ENV_FILE") or Path(__file__).resolve().parents[2] / ".env")
+    if p.exists():
+        for line in p.read_text().splitlines():
+            if "=" in line and not line.lstrip().startswith("#"):
+                k, v = line.split("=", 1)
+                if k.strip():
+                    os.environ.setdefault(k.strip(), v.strip().strip("'\""))
+
+
 def _load(db: str, users: int, restaurants: int | None, seed: int) -> Store:
     store = Store(db)
     if not store.all(User):
         u, r, i = synth.make_world(users, restaurants, seed)
-        store.put_many(u); store.put_many(r); store.put_many(i)
+        with store.transaction():
+            store.put_many(u); store.put_many(r); store.put_many(i)
     return store
 
 
@@ -61,10 +78,6 @@ def run_home(db: str = ":memory:", seed: int = 0):
         typer.echo(f"{items[r.item_id].name:<24} score={r.score:.2f} {r.breakdown}")
 
 
-if __name__ == "__main__":
-    app()
-
-
 @app.command()
 def eval(n: int = 200, backends: str = "mock"):
     """Run the §8 evaluation harness. backends: comma list of mock,jev,llm (jev/llm need API keys)."""
@@ -104,21 +117,31 @@ def feedback_demo(seed: int = 0):
 @app.command()
 def serve(host: str = "127.0.0.1", port: int = 8788, reload: bool = True):
     """Run the one backend (recommender, groups, craving search, ledger, Ramp) on the port the app expects."""
-    import uvicorn
+    _load_env_file()
+    try:
+        loopback = ip_address(host).is_loopback
+    except ValueError:
+        loopback = host.lower() == "localhost"
+    if not loopback and not os.getenv("CAMP_TOKEN", "").strip():
+        raise typer.BadParameter("set CAMP_TOKEN before listening beyond loopback", param_hint="--host")
+    if not 1 <= port <= 65535:
+        raise typer.BadParameter("port must be between 1 and 65535", param_hint="--port")
     uvicorn.run("camp.api:app", host=host, port=port, reload=reload)
 
 
 @app.command()
 def migrate(source: str = "camp.db", target: str | None = None):
     """Copy every table from a SQLite file (or any store URL) into the target database (default: CAMP_DATABASE_URL)."""
-    import os
+    _load_env_file()
     dst_url = target or os.getenv("CAMP_DATABASE_URL")
     if not dst_url:
         raise typer.BadParameter("set CAMP_DATABASE_URL or pass --target postgresql://...")
-    src, dst = Store(source), Store(dst_url)
-    for table, n in dst.copy_from(src).items():
-        typer.echo(f"  {table:<12} {n} rows")
-    typer.echo(f"copied {source} → {dst_url}")
+    if not source.startswith(("postgres://", "postgresql://")) and not Path(source).is_file():
+        raise typer.BadParameter("source must be an existing database", param_hint="--source")
+    with closing(Store(source)) as src, closing(Store(dst_url)) as dst:
+        for table, n in dst.copy_from(src).items():
+            typer.echo(f"  {table:<12} {n} rows")
+    typer.echo("copy complete")
 
 
 @app.command()
@@ -141,3 +164,7 @@ def sync(db: str = "camp.db", radius_km: float = 6.0, tag: bool = True, fixtures
     typer.echo(f"restaurants: {rep.restaurants}  items: {rep.items}  skipped: {rep.skipped_providers}  errors: {len(rep.errors)}")
     for r in store.all(Restaurant)[:6]:
         typer.echo(f"  {r.name:<24} via {r.platform:<8} ids={list(r.platform_ids)} fee=${r.fees.delivery_fee_cents/100:.2f} eta={r.eta_mean_minutes}m verified_allergens={r.verified_allergen_data}")
+
+
+if __name__ == "__main__":
+    app()

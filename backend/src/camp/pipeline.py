@@ -27,14 +27,15 @@ def _remaining_kcal(store: Store, u: User, ctx: Context, items: dict[str, MenuIt
     """Daily carry-over: a heavy lunch shifts the dinner target (§3 health)."""
     if ctx.meal != "dinner":
         return None
-    lunch = [o for o in store.orders_for(u.id) if o.date == ctx.date and o.meal == "lunch" and o.status != "cancelled"]
+    lunch = [o for o in store.orders_for(u.id) if o.date == ctx.date and o.meal == "lunch" and o.status == "confirmed"]
     if not lunch:
         return None
-    it = items.get(lunch[0].line.item_id)
-    if not it or not it.tags or not it.tags.kcal_band:
+    meals = [items.get(o.line.item_id) for o in lunch]
+    if any(not it or (it.kcal is None and (not it.tags or not it.tags.kcal_band)) for it in meals):
         return None
     daily = 2 * u.health.kcal_per_meal
-    return max(300, daily - it.tags.kcal_band.midpoint)
+    consumed = sum(it.kcal if it.kcal is not None else it.tags.kcal_band.midpoint for it in meals)
+    return max(300, daily - consumed)
 
 
 def _rec(u: User, it: MenuItem, s: float, br: dict[str, float], h: scoring.History, rests: dict[str, Restaurant]) -> Recommendation:
@@ -66,19 +67,26 @@ def plan_office(store: Store, office_id: str, office_loc: LatLng, ctx: Context, 
     batch_users = {u.id: u for u in users if u.id not in feas.suggest_only}
     cand = batching.Candidate(users=batch_users, restaurants=rests, items=items,
                               scores={k: v for k, v in scores.items() if k in batch_users}, meal=ctx.meal)
-    R, a, solver = batching.solve(cand)
-    batching.update_fairness(cand, a)
-    store.put_many(batch_users.values())
+    while True:
+        R, a, solver = batching.solve(cand)
+        late = [(uid, rid) for uid, (rid, _) in a.assign.items()
+                if not filters.passes_time(batch_users[uid], rests[rid], ctx, a.n[rid])[0]]
+        if not late:
+            break
+        for uid, rid in late:
+            cand.scores[uid] = {iid: s for iid, s in cand.scores[uid].items() if items[iid].restaurant_id != rid}
     batch = batching.to_batch(cand, R, a, office_id, ctx.date)
     share = {br.restaurant_id: br.fee_share_cents for br in batch.restaurants}
 
     recs: dict[str, list[Recommendation]] = {}
     orders: list[Order] = []
     for u in users:
-        umap = {uid: u for uid in [u.id]}
         if u.id in feas.suggest_only or u.id not in a.assign:
             # suggest-only or stranded: show global top 3, no auto-order
-            top = sorted(breakdowns[u.id].items(), key=lambda kv: -kv[1][0])[:3]
+            top = [(iid, sb) for iid, sb in sorted(breakdowns[u.id].items(), key=lambda kv: -kv[1][0])
+                   if filters.passes_budget(u, items[iid], rests[items[iid].restaurant_id], ctx.meal,
+                                            share.get(items[iid].restaurant_id, rests[items[iid].restaurant_id].fees.delivery_fee_cents))[0]
+                   and filters.passes_time(u, rests[items[iid].restaurant_id], ctx, a.n.get(items[iid].restaurant_id, 0) + 1)[0]][:3]
             recs[u.id] = [_rec(u, items[iid], s, br, hist[u.id], rests) for iid, (s, br) in top]
             continue
         rid, iid = a.assign[u.id]
@@ -90,6 +98,8 @@ def plan_office(store: Store, office_id: str, office_loc: LatLng, ctx: Context, 
             if iid2 == iid or it2.restaurant_id not in share:
                 continue
             if filters.total_cost_cents(it2, rests[it2.restaurant_id], share[it2.restaurant_id]) > u.budget(ctx.meal):
+                continue
+            if not filters.passes_time(u, rests[it2.restaurant_id], ctx, a.n[it2.restaurant_id] + (it2.restaurant_id != rid))[0]:
                 continue
             alts.append(_rec(u, it2, s, br, hist[u.id], rests))
             if len(alts) == 2:
