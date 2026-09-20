@@ -90,6 +90,21 @@ group join. The Spending page reads `GET /v1/ledger/{user}` (monthly spend, deli
 budget = 20 × the user's per-meal budget, recent activity). Saving settings calls `PUT /v1/profile`, which stores the
 app's preferences on the user row and applies them the same way an offer request does. Nothing is charged.
 
+## Onboarding
+
+`CampOnboardingFlow` (LunchUI) is the once-per-person setup — diet, meal window, calendars, office policy and this
+device's backend address — and runs identically on the Mac and in the compact iPhone layout, on top of the same
+`CampSettingsStore.draft` the settings pages edit. Nothing presents it automatically; `CampWorkspace` only shows it
+while `store.showOnboarding` is set, and the Demo tab is the only thing that sets it.
+
+It is stored server-side, not per device: `PUT /v1/onboarding` (`backend/src/camp/onboarding.py`) applies the
+recommender-relevant answers to the `User` row through the same `OfferService.user_for` path `/v1/profile` uses, and
+keeps the app's whole `CampConfiguration` document in an `onboarding` row that the backend treats as opaque.
+`GET /v1/onboarding` resolves by user id, then by display name within an office, then the office's latest completed
+row, so the second device adopts the first one's answers (`CampConfiguration.adoptingSharedSetup(from:)`). Connection
+settings are deliberately not adopted: the Mac reaches the backend on loopback and the phone over the cable's network.
+`DELETE /v1/onboarding/{user}` clears only the completed flag, which is what the Demo tab's **Mark unfinished** uses.
+
 ## Mac location
 
 `MacOfficeLocation` owns a main-actor Core Location manager for the lifetime of `CampSettingsStore`. OS delegate callbacks hop to the main actor; UI reads published state. A confirmed saved geofence is independent of editable draft coordinates. Accuracy bounds, a 20m margin, freshness expiry and a two-fix transition rule avoid turning uncertain positions into arrivals. Sleep/wake and authorization changes clear stale presence. Arrival/departure app notifications carry only office ID and observation time; meal orchestration can subscribe later. See `docs/LOCATION.md`.

@@ -231,3 +231,16 @@ returned the same, so this is the sandbox application's scopes/credentials, not 
 - Replaced the fixed 260-point expanded stage with per-screen height measurement. Each screen (group picker, choosing, reviewing, confirmed, delivered, ended) reports its natural height; the stage adopts the incoming screen's height only, so the shell animates directly to the new size rather than growing to the taller of the two crossfading screens and settling afterwards.
 - Header and footer remain anchored; contents still crossfade over 0.24 seconds; Reduce Motion still disables the content animation. Group list keeps its capped scrolling height.
 - `swift build` and `swift test` pass (14 tests). Visual review on the notch pending relaunch.
+
+## 2026-09-20 · onboarding
+
+Backend: `cd backend && uv run pytest` → 39 passed, 1 skipped, including `tests/test_onboarding.py` (save applies diet,
+allergies, budget and the clamped meal window to the user row; a second device reads the same setup back; a phone
+update reuses the row; the row survives a new `Store` against the same database; name and office lookup; reset keeps
+the answers; the HTTP `PUT`/`GET`/`DELETE` contract).
+
+Swift: typechecked LunchCore on Linux with Swift 5.9.2 (`swiftc -typecheck Sources/LunchCore/*.swift`, with
+`FoundationNetworking` imported) — clean apart from `URLSession.data(for:)`, which corelibs-foundation lacks. The
+SwiftUI targets (`CampOnboardingFlow`, the Demo-tab launcher, the workspace overlay) and the `Lunchline.xcodeproj`
+wiring for the two new files were **not** compiled: no macOS/Xcode host was available. Build with
+`scripts/build-mac.sh` and `scripts/build-ios.sh` before demoing, and run the flow on both devices against one backend.

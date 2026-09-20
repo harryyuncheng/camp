@@ -18,6 +18,7 @@ struct CampDemoPage: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            onboardingCard
             CampRecommendationView(store: store)
             if let offer = store.latestOffer { liveOffer(offer) }
             CampCard("Recommender debug", subtitle: "GET /v1/health and /v1/debug/snapshot") {
@@ -51,6 +52,28 @@ struct CampDemoPage: View {
                 Text("Leave blank to use http://127.0.0.1:8787.").font(.caption).foregroundStyle(CampPalette.muted)
             }
         }.task { await refresh() }
+    }
+
+    /// Onboarding never appears by itself — a first launch lands on Today. This is the only way into it, so a demo
+    /// can show the first-run experience deliberately, on either device, against the same database.
+    private var onboardingCard: some View {
+        CampCard("Onboarding", subtitle: "The once-per-person setup: diet, meal window, calendars, office, and how this device reaches the laptop.") {
+            HStack {
+                Button(store.onboardingBusy ? "Opening…" : "Launch onboarding") { Task { await store.startOnboarding() } }
+                    .buttonStyle(CampActionStyle()).disabled(store.onboardingBusy)
+                Button("Mark unfinished") { Task { await store.replayOnboarding() } }
+                    .buttonStyle(CampActionStyle(primary: false)).disabled(store.onboardingBusy)
+                Spacer()
+                CampBadge(text: store.onboardingRecord?.completed == true ? "Set up · \(store.onboardingRecord!.summary)" : "Not set up",
+                          active: store.onboardingRecord?.completed == true)
+            }
+            if let status = store.onboardingStatus {
+                Text(status).font(.caption).foregroundStyle(CampPalette.muted).fixedSize(horizontal: false, vertical: true)
+            }
+            Text("Answers are stored in the laptop's database (`PUT /v1/onboarding`), so the phone and the Mac share one setup.")
+                .font(.caption).foregroundStyle(CampPalette.muted)
+        }
+        .task { if store.onboardingRecord == nil { await store.loadOnboarding() } }
     }
 
     private func liveOffer(_ offer: MealOffer) -> some View {

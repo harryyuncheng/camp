@@ -18,9 +18,13 @@ The Mac workspace has **Today**, **You**, **Office**, **Spending**, **Connection
 
 - **You** stores food preferences, meal timing, and standing orders. A standing order can specify its category, time, weekdays, and usual place or item. A due occurrence is created when Today refreshes; there is no background schedule runner.
 - **Office** holds demo-admin controls, office geofence, budgets, and group-order rules. Some policy settings are for the prototype UI and are not server authorization.
-- **Spending** shows the backend order ledger in a card-style view; it is not a live payment card. **Demo** contains recommendation setup and debug views, plus the Ramp sandbox bridge for inspecting employees and creating a bounded test fund.
+- **Spending** shows the backend order ledger in a card-style view; it is not a live payment card. **Demo** contains the onboarding launcher, recommendation setup and debug views, plus the Ramp sandbox bridge for inspecting employees and creating a bounded test fund.
 - **Connections** configures Mac location and calendars. Permissions and selections stay on the device. See [location setup](LOCATION.md) and [calendar setup](CALENDAR.md).
 - **Save** syncs supported profile preferences to the backend. Device permissions, geofence confirmation, calendar choices, and connection settings remain local.
+
+### Onboarding
+
+The once-per-person setup — name and diet, meal window, calendars, office policy, and the backend address this device uses — is a separate flow shared by the Mac and the iPhone. It never appears on its own: a first launch lands on Today, and **Demo → Launch onboarding** is the only way in, so a demo shows it deliberately. Finishing writes the answers to the laptop's database (`PUT /v1/onboarding`, which also applies the recommender-relevant parts to the user row the way `PUT /v1/profile` does) as well as to this device's settings file. Opening the flow reads that row back (`GET /v1/onboarding`), so whichever device goes second starts from the answers the first one gave; each device keeps its own backend address, since the phone reaches the laptop over the cable's network rather than loopback. Everything stays editable afterwards in You / Office / Connections. **Mark unfinished** clears the completed flag but keeps the answers, so the flow can be shown again.
 
 The Mac **iPhone layout preview** is a compact workspace preview, not an iOS simulator. Run the iPhone app to try actual ActivityKit behavior; see [iPhone development](IOS.md).
 

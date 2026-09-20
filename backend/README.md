@@ -23,6 +23,18 @@ is the symptom); stop it with `lsof -ti :8788 | xargs kill`.
 `camp.db` SQLite file. Tables are created on startup. In the app, Demo → Recommendation service → `http://127.0.0.1:8788`
 → Save; the same URL and token also serve the Ramp card.
 
+## Onboarding (`/v1/onboarding`)
+
+The once-per-person setup lives in the `onboarding` table so the Mac and the phone share one answer set through this
+database instead of each keeping their own.
+
+- `PUT /v1/onboarding`: `{ context, settings, completed, device }`. `context` is the usual `MealContext`, applied to
+  the `User` row exactly as `PUT /v1/profile` applies it (diet and allergy restrictions, budget, meal window).
+  `settings` is the native app's whole configuration document, stored verbatim and never interpreted here.
+- `GET /v1/onboarding?userId=&displayName=&officeId=`: the row for that user, else the newest row with that display
+  name in the office, else the office's newest completed row. `404` when nobody has set up yet.
+- `DELETE /v1/onboarding/{user_id}`: clears `completed` and keeps the answers, so the flow can be demoed again.
+
 ## Orders (`/v1/groups`, `/v1/restaurants`, `/v1/schedules`, `/v1/lunch-session`)
 
 - `GET /v1/restaurants?category=coffee|meal&limit=` best-rated catalog places serving that category (rating shrunk towards 4.2 by review count).

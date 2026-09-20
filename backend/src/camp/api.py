@@ -26,6 +26,7 @@ from .contracts import MealContext, MealOffer, OfficeRef, Wire
 from .groups import (CreateGroupReq, GroupService, GroupsResponse, JoinGroupReq, LedgerWire, LunchGroupWire, MenuWire, RestaurantWire,
                      ScheduleReq, ScheduleWire)
 from .offers import OfferService
+from .onboarding import OnboardingReq, OnboardingService, OnboardingWire
 from .ramp import Problem, RampService
 from .search import CravingReq, CravingResponse, CravingService
 from .store import Store
@@ -69,6 +70,7 @@ async def _push_live_activity(record: dict, device: str) -> None:
 
 lunch_sync.on_change = _push_live_activity
 groups = GroupService(store)
+onboarding = OnboardingService(store, offers)
 cravings = CravingService(store)
 ramp = RampService(store)
 
@@ -395,6 +397,31 @@ def profile_get(user_id: str):
         raise HTTPException(404, "unknown user")
     return dict(userId=u.id, name=u.name, officeId=u.office_id, settings=u.app_settings, learned=fb.learned_view(u),
                 restrictions=[r.model_dump() for r in u.restrictions], budgetCents=u.budget_cents, orders=len(store.orders_for(u.id)))
+
+
+# ---------------------------------------------------------------- onboarding (first-run setup, shared by both devices)
+
+@app.put("/v1/onboarding", response_model=OnboardingWire)
+def onboarding_put(req: OnboardingReq):
+    """Finishing (or revisiting) the setup flow on either device writes the answers here, never only on the device."""
+    return onboarding.save(req)
+
+
+@app.get("/v1/onboarding", response_model=OnboardingWire)
+def onboarding_get(userId: Optional[str] = None, displayName: Optional[str] = None, officeId: Optional[str] = None):
+    """What this device should start from. A phone with no user id of its own adopts the office's finished setup."""
+    found = onboarding.find(userId, displayName, officeId)
+    if found is None:
+        raise HTTPException(404, "no onboarding saved yet")
+    return found
+
+
+@app.delete("/v1/onboarding/{user_id}", response_model=OnboardingWire)
+def onboarding_reset(user_id: str):
+    try:
+        return onboarding.reset(user_id)
+    except LookupError as e:
+        raise HTTPException(404, str(e))
 
 
 # ---------------------------------------------------------------- lunch groups (Today page)
