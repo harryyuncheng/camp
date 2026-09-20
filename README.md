@@ -14,6 +14,14 @@ python3 backend/server.py
 
 Open camp → Connections → **Connect / refresh sandbox**. Choose the company payer and allocation before clicking **Create sandbox fund**. No food order or charge is placed.
 
+## Mac office location
+
+Office and Connections now use macOS Location Services. Use **Search** or **Find me** on the map, click to place your office circle, adjust its radius, and click **Confirm office**. Today shows in-office/away/unknown; the location card shows arrivals and departures. Tracking runs while camp is open and awake. See [location setup and behavior](docs/LOCATION.md).
+
+## Mac calendars
+
+Open **Connections → Connect calendars**, allow full calendar access, and select the calendars that should block lunch. Google, Outlook and iCloud calendars work when already synced in the Mac Calendar app. Available windows appear in Today, You and Connections. Your saved lunch duration, window and meeting buffer determine which gaps fit. camp does not create or edit events. See [calendar setup and behavior](docs/CALENDAR.md).
+
 ## Configuration workspace
 
 The Mac app now opens a light camp workspace with lime accents. The dark notch panel remains available through the menu-bar icon or **Preview activity**. Right-click the camp menu-bar icon for **Open camp**, **Settings**, and **iPhone layout preview**.
@@ -23,9 +31,9 @@ Both platforms share four SwiftUI screens:
 - **Today:** join/change/leave a simulated group order, see delivery-fee savings and preview order stages.
 - **You:** dietary preferences, allergies, lunch window, calendar choices, meeting buffer and notifications.
 - **Office:** demo-admin toggle, address/geofence coordinates and radius, budgets, timing, fee sharing and group rules.
-- **Connections:** live Ramp sandbox bridge, plus placeholders for calendar, location, recommendations and DoorDash.
+- **Connections:** live Ramp sandbox bridge, Mac location and calendars, plus placeholders for recommendations and DoorDash.
 
-Use **Save changes** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Group orders, other connections and presence are simulated; no food orders or payments are made. The existing notch/Live Activity demo remains separate from the workspace group cart.
+Use **Save changes** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders and other connections are simulated; no food orders or payments are made. The existing notch/Live Activity demo remains separate from the workspace group cart.
 
 The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. The installed Xcode 14.3.1 cannot build this project's iOS 17 Live Activity target; use Xcode 15 or newer with an appropriate device SDK and signing team.
 

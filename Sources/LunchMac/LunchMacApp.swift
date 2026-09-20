@@ -28,6 +28,12 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
     private var statusMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        model.onJoin = { [weak self] option, group in self?.settings.join(option, group: group) }
+        settings.requestDemoGroup = { [weak self] group in
+            guard let self else { return }
+            self.model.officeName = self.settings.draft.office.name
+            self.model.chooseGroup(group)
+        }
         panel = NotchPanelController(model: model)
         settings.onOffer = { [weak self] session in self?.model.offer(session) }
         model.onTransition = { [weak self] session in self?.settings.reportLunch(session) }
@@ -98,7 +104,7 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
             panel.toggle()
         }
     }
-    @objc private func trigger() { model.triggerDemo() }
+    @objc private func trigger() { model.officeName = settings.draft.office.name; model.triggerDemo() }
     @objc private func schedule() { panel.hide(); model.triggerAfterDelay() }
     @objc private func collapse() { panel.collapse() }
     @objc private func hide() { panel.hide() }

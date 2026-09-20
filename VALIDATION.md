@@ -77,3 +77,73 @@ TestClient. Swift changes (RecommendationContracts, RecommendationClient, CampRe
 store/workspace/Today/Mac-app edits, pbxproj wiring) compiled with Xcode 27.0: `swift build --product LunchMac` clean,
 `swift test` 13 passed, `scripts/build-mac.sh` produced `dist/camp.app`. The app was launched against the recommender on
 port 8788; the in-app flow (Connect → Request lunch offer → Developer page) was not exercised by automation.
+
+## Mac location update
+
+- Mac release app compiled and packaged with the Core Location service and UI.
+- No automated tests or live location permission/movement checks were run. User must enable Location Services and configure the actual office for an on-device walkthrough.
+- iPhone tracking remains explicitly unavailable; the shared UI compiles its Mac implementation conditionally.
+
+
+## Map office picker update
+
+- Replaced the coordinate form with an AppKit MapKit map, place search, current-Mac marker, click-to-place circle, radius slider and one-step boundary save/confirmation.
+- Mac release build succeeded. No automated or interactive UI tests were run for this update.
+
+## Calendar integration update
+
+- Mac release build succeeds with EventKit, the public modern full-access selector compatibility path, calendar selection and free-window calculation.
+- No tests or live permission/event reads were run. Actual account permissions and availability require an on-device walkthrough.
+- Only Mac calendar access is implemented; iPhone shows an explicit unsupported message.
+
+
+## Map scroll focus and day calendar UI
+
+- Mac release build succeeded with the map scroll gate, calendar dropdown multiselector, hourly busy timeline and exact-duration suggested lunch block.
+- No interactive or automated tests were run for this update.
+
+
+## Calendar scroll focus
+
+- Calendar viewport now matches the map at 340 points and requires a click before consuming scrolling. Pointer exit or Done returns control to the page.
+- Mac release build completed; no interactive or automated tests were run.
+
+## Navigation responsiveness — September 19
+
+- Reproduced the original sidebar padding click missing its action before editing.
+- Expanded sidebar/button content shapes; widened the sidebar so Connections fits.
+- A navigation process sample showed MapKit initialization and EventKit reads on the main thread. Calendar snapshots now run in a separate actor; service updates are observed by their own panels instead of invalidating the whole workspace.
+- Office/Connections recycle up to two detached native map views, clearing delegates, gestures, overlays and annotations between owners. First map construction is deferred until after navigation begins; page cards are lazy.
+- macOS build succeeded. Relaunched the built app and opened Office then Connections; both rendered their office map and controls.
+- No automated tests were added or run. End-to-end latency has not been quantified. Coordinate-based sidebar verification was unavailable through UI automation; accessibility navigation worked. Calendar access needs reconnecting in the rebuilt copy, so the live calendar path was not rechecked.
+
+## Scrolling layout — September 19
+
+- Captured a process sample while scrolling Office down and back. It contains SwiftUI layout/text work and accessibility sampling overhead; it does not provide a reliable frame-rate benchmark.
+- Replaced lazy stacks on the finite workspace pages with stable stacks to avoid deferred card layout while scrolling. Map initialization remains deferred and pooled.
+- macOS time pickers now construct native menu entries once per control instead of contributing 181 SwiftUI labels per picker. Values, five-minute increments, accessibility labels and disabled admin state are preserved.
+- Card backgrounds draw a rounded shape without masking all child views. The map keeps its in-visible-rect tracking area rather than removing/recreating it on each layout; inactive pointer exits no longer publish redundant state.
+- Release build succeeded and the rebuilt app was relaunched. Repeated Office down/up scrolling reached both ends with the map, policy cards and selected time values present.
+- No automated tests were added or run. Smoothness improvement is not quantified; iOS and the permission-gated live calendar were not exercised.
+
+## Workspace copy cleanup — September 19
+
+- Reviewed Today, You, Office, Spending and Connections plus shared map, calendar and Ramp cards.
+- Removed repeated header kickers/taglines, the global prototype badge, metric footnotes and redundant helper paragraphs. Simplified card titles and notification toggles; removed the explanatory-only spending card.
+- Kept actionable map/scroll instructions, permission and error messages, demo/live connection distinctions, dietary limitations and sandbox fund consequences. Backend setup retains the default URL without a hardcoded connection-status badge.
+- macOS release build succeeded. No automated tests were added or run; iPhone build is not supported by the installed Xcode version.
+
+## Editable lunch timing — September 19
+
+- Replaced the four controls in You → Lunch timing with text fields. Enter or leaving a field commits valid input and formats it as a clock time or minutes.
+- Clock parsing accepts AM/PM, 24-hour times and compact digits; unsuffixed hours use 24-hour interpretation. Duration stays within 15–120 minutes and buffer within 0–60 minutes. Invalid text remains visible with a hint and does not replace the last valid draft value. Escape restores the previous value on macOS.
+- Existing Save/Discard and cross-field lunch-window validation remain in use. Office time dropdowns are unchanged.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## Today group-order demo — September 19
+
+- Today now starts with a clickable completed coffee order and a demo receipt, followed by three lunch groups with distinct menus, participant counts and delivery windows.
+- Preview lunch invitation opens group choices in the notch. Choosing a group leads to meals, review and confirmation; confirmation updates Today through the shared settings store. Existing delayed trigger and confirmation retraction remain in use.
+- Today’s View menu opens the chosen group in the Mac notch. Other workspace hosts without the Mac callback use an in-app menu sheet with explicit confirmation. One lunch choice is active at a time; choosing another group replaces it. Leave clears it.
+- Fixture spending totals use the chosen group’s participants and sample food subtotal. Coffee, menus, delivery windows and prices are demo fixtures; no ordering or payments occur. Demo join state is in-memory, not synced or restored across launches.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.

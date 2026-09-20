@@ -24,6 +24,7 @@ public struct CampWorkspace: View {
                         case .today: CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
+                        case .spending: CampSpendingPage(compact: compact)
                         case .connections: CampConnectionsPage(store: store, compact: compact)
                         case .debug: CampDebugPage(store: store, compact: compact)
                         }
@@ -45,14 +46,7 @@ public struct CampWorkspace: View {
 
     private var pageHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(kicker).font(.system(size: 10, weight: .semibold)).tracking(1.5).foregroundStyle(CampPalette.muted)
-                Spacer()
-                CampBadge(text: "UI prototype")
-            }
             Text(title).font(.system(size: compact ? 29 : 34, weight: .semibold, design: .rounded)).tracking(-0.8)
-            Text(subtitle).font(.system(size: 13)).foregroundStyle(CampPalette.muted)
-                .fixedSize(horizontal: false, vertical: true)
             if !store.hasChanges, let status = store.statusMessage {
                 Label(status, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(CampPalette.green)
             }
@@ -66,17 +60,16 @@ public struct CampWorkspace: View {
                     Image(systemName: "tent.fill").foregroundStyle(CampPalette.green)
                     Text("camp").font(.system(size: 32, weight: .bold, design: .rounded)).tracking(-1.5)
                 }
-                Text("Corporate Autonomous\nMeal Protocol").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }.padding(.top, 8)
             VStack(spacing: 7) {
                 ForEach(store.sections) { section in
                     Button { store.section = section } label: {
                         HStack(spacing: 11) {
                             Image(systemName: section.symbol).frame(width: 20)
-                            Text(section.rawValue).font(.system(size: 13, weight: store.section == section ? .semibold : .regular))
+                            Text(section.rawValue).font(.system(size: 13, weight: store.section == section ? .semibold : .regular)).lineLimit(1)
                             Spacer()
                             if store.section == section { Circle().fill(CampPalette.green).frame(width: 5, height: 5) }
-                        }.padding(13).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
+                        }.frame(maxWidth: .infinity, minHeight: 20, alignment: .leading).padding(13).contentShape(Rectangle()).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: 11))
                     }.buttonStyle(.plain)
                 }
@@ -84,12 +77,10 @@ public struct CampWorkspace: View {
             Spacer()
             VStack(alignment: .leading, spacing: 12) {
                 Label(store.draft.office.name, systemImage: "building.2").font(.system(size: 12, weight: .medium))
-                Text("One office. Fewer delivery fees.").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
                 Divider()
                 Toggle("Demo admin", isOn: $store.isDemoAdmin).font(.system(size: 11)).toggleStyle(.switch).controlSize(.small)
-                Text("Preview role only").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }
-        }.padding(22).frame(width: 190).background(.white)
+        }.frame(width: 190).padding(22).background(.white)
             .overlay(alignment: .trailing) { CampPalette.border.frame(width: 1) }
     }
 
@@ -113,7 +104,7 @@ public struct CampWorkspace: View {
                     VStack(spacing: 5) {
                         Image(systemName: section.symbol).font(.system(size: 18))
                         Text(section.rawValue).font(.system(size: 10, weight: .medium))
-                    }.frame(maxWidth: .infinity).padding(.vertical, 12)
+                    }.frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
                         .foregroundStyle(store.section == section ? CampPalette.green : CampPalette.muted)
                 }.buttonStyle(.plain).accessibilityLabel(section.rawValue)
             }
@@ -134,31 +125,14 @@ public struct CampWorkspace: View {
             .overlay(alignment: .top) { CampPalette.border.frame(height: 1) }
     }
 
-    private var kicker: String {
-        switch store.section {
-        case .today: return "THE OFFICE LUNCH, TOGETHER"
-        case .you: return "ON YOUR TERMS"
-        case .office: return "THE WAY YOUR TEAM ORDERS"
-        case .connections: return "READY WHEN YOU ARE"
-        case .debug: return "UNDER THE HOOD"
-        }
-    }
     private var title: String {
         switch store.section {
         case .today: return "A better lunch break."
-        case .you: return "Make camp yours."
-        case .office: return "Your office, in sync."
-        case .connections: return "Connect the pieces."
-        case .debug: return "What the recommender is doing."
-        }
-    }
-    private var subtitle: String {
-        switch store.section {
-        case .today: return "Join your team’s order. Share the delivery, keep your own taste."
-        case .you: return "Your preferences help camp find the right meal and moment."
-        case .office: return "Set the boundaries for simpler, more economical group orders."
-        case .connections: return "Configure the experience now. Live integrations will come next."
-        case .debug: return "Live filters, scores, batches and feedback from the Python backend. Developer view; nothing here is shown to employees."
+        case .you: return "Your preferences"
+        case .office: return "Office"
+        case .spending: return "Spending"
+        case .connections: return "Connections"
+        case .debug: return "Developer"
         }
     }
 }
