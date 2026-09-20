@@ -223,13 +223,16 @@ private struct CampCreateGroupSheet: View {
     @State private var delivery: String
     @State private var mealID = ""
     @State private var working = false
+    @State private var cravingText = ""
+    @State private var cravingPick: LunchCravingMatch?
     init(store: CampSettingsStore, category: OrderCategory) {
         self.store = store
         _category = State(initialValue: category)
         _delivery = State(initialValue: CampTimePicker.label(category.defaultMinutes))
     }
     private var choices: [LunchRestaurant] { store.restaurants(for: category) }
-    private var restaurant: LunchRestaurant? { choices.first { $0.id == restaurantID } ?? choices.first }
+    /// A craving match wins over the picker: its options are the dishes that matched what was asked for.
+    private var restaurant: LunchRestaurant? { cravingPick?.restaurant ?? choices.first { $0.id == restaurantID } ?? choices.first }
     private var meal: LunchOption? { restaurant?.options.first { $0.id == mealID } }
     private var deliveryMinutes: Int? {
         guard let minutes = CampTimingField.Kind.time.parse(delivery), (300...1320).contains(minutes) else { return nil }
@@ -247,14 +250,29 @@ private struct CampCreateGroupSheet: View {
                     ForEach(OrderCategory.allCases) { Text($0.label).tag($0) }
                 }.pickerStyle(.segmented).labelsHidden()
             }
-            CampField(category == .coffee ? "Café" : "Restaurant") {
-                Picker("Place", selection: $restaurantID) {
-                    ForEach(choices) { r in
-                        Text(r.rating.map { "\(r.name) · \(String(format: "%.1f", $0))★" } ?? r.name).tag(r.id)
-                    }
-                }.labelsHidden()
-                if let restaurant { Text(restaurant.cuisine).font(.caption).foregroundStyle(CampPalette.muted) }
-                if choices.isEmpty { Text("No places for this category yet.").font(.caption).foregroundStyle(.red) }
+            cravingSearch
+            if let pick = cravingPick {
+                CampField("From your craving") {
+                    HStack(spacing: 12) {
+                        Image(systemName: pick.restaurant.symbol).foregroundStyle(CampPalette.green)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(pick.restaurant.name).font(.callout.weight(.semibold))
+                            Text(pick.reason).font(.caption).foregroundStyle(CampPalette.muted)
+                        }
+                        Spacer()
+                        Button("Browse all") { cravingPick = nil; mealID = "" }.buttonStyle(.plain).font(.caption)
+                    }.padding(12).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+            } else {
+                CampField(category == .coffee ? "Café" : "Restaurant") {
+                    Picker("Place", selection: $restaurantID) {
+                        ForEach(choices) { r in
+                            Text(r.rating.map { "\(r.name) · \(String(format: "%.1f", $0))★" } ?? r.name).tag(r.id)
+                        }
+                    }.labelsHidden()
+                    if let restaurant { Text(restaurant.cuisine).font(.caption).foregroundStyle(CampPalette.muted) }
+                    if choices.isEmpty { Text("No places for this category yet.").font(.caption).foregroundStyle(.red) }
+                }
             }
             CampField("Arrival time") {
                 CampTextField(title: "e.g. 12:30 PM", text: $delivery)
@@ -291,11 +309,66 @@ private struct CampCreateGroupSheet: View {
             }.buttonStyle(CampActionStyle()).disabled(meal == nil || deliveryMinutes == nil || working)
         }.padding(24).frame(idealWidth: 440, maxWidth: 480)
             .foregroundStyle(CampPalette.ink).background(.white)
-            .onAppear { if restaurantID.isEmpty { restaurantID = choices.first?.id ?? "" } }
+            .onAppear {
+                if restaurantID.isEmpty { restaurantID = choices.first?.id ?? "" }
+                store.clearCraving()
+            }
             .onChange(of: restaurantID) { _ in mealID = "" }
             .onChange(of: category) { next in
+                cravingPick = nil
                 restaurantID = store.restaurants(for: next).first?.id ?? ""; mealID = ""
                 delivery = CampTimePicker.label(next.defaultMinutes)
             }
+    }
+
+    /// None of the places appeal: say what you want instead ("I want tacos") and the backend's OpenAI model
+    /// searches the catalog's menus for it.
+    private var cravingSearch: some View {
+        CampField("Craving something else?") {
+            HStack(spacing: 8) {
+                CampTextField(title: category == .coffee ? "e.g. iced oat latte" : "e.g. I want tacos", text: $cravingText)
+                    .onSubmit { search() }
+                Button(store.cravingBusy ? "Searching…" : "Find it", action: search)
+                    .buttonStyle(CampActionStyle(primary: false))
+                    .disabled(store.cravingBusy || cravingText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+            if let error = store.cravingError { Text(error).font(.caption).foregroundStyle(.red) }
+            if let result = store.craving {
+                HStack(spacing: 8) {
+                    if !result.interpretation.isEmpty { CampBadge(text: result.interpretation, active: true) }
+                    CampBadge(text: result.readByLLM ? "Read by OpenAI" : "Offline match")
+                }
+                if let note = result.note, !note.isEmpty { Text(note).font(.caption).foregroundStyle(CampPalette.muted) }
+                VStack(spacing: 8) {
+                    ForEach(result.matches) { match in
+                        Button { choose(match) } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: cravingPick?.id == match.id ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(CampPalette.green)
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(match.restaurant.name).font(.callout.weight(.semibold))
+                                    Text(match.reason).font(.caption).foregroundStyle(CampPalette.muted).lineLimit(2)
+                                }
+                                Spacer()
+                                if let first = match.restaurant.options.first { Text(LunchStyle.money(first.priceCents)).font(.callout).monospacedDigit() }
+                            }.padding(12).background(CampPalette.background)
+                                .clipShape(RoundedRectangle(cornerRadius: 10)).contentShape(Rectangle())
+                        }.buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+    }
+
+    private func search() {
+        Task {
+            await store.searchCraving(cravingText, category: category)
+            if let first = store.craving?.matches.first { choose(first) }
+        }
+    }
+
+    private func choose(_ match: LunchCravingMatch) {
+        cravingPick = match
+        mealID = match.restaurant.options.first?.id ?? ""
     }
 }
