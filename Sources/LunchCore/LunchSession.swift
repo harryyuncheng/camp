@@ -128,9 +128,16 @@ public struct DemoLunchGroup: Identifiable, Hashable, Sendable {
     public let people: Int
     public let delivery: String
     public let options: [LunchOption]
-    public var deliverySavingsCents: Int { people * 600 - 600 }
+    public let arrivalMinutes: Int
+    public init(id: String, name: String, cuisine: String, symbol: String, people: Int,
+                delivery: String, options: [LunchOption], arrivalMinutes: Int? = nil) {
+        self.id = id; self.name = name; self.cuisine = cuisine; self.symbol = symbol
+        self.people = people; self.delivery = delivery; self.options = options
+        self.arrivalMinutes = arrivalMinutes ?? (id == "noodle-club" ? 765 : id == "sandwich-social" ? 780 : 750)
+    }
+    public var deliverySavingsCents: Int { max(0, people - 1) * 600 }
     public func arrival(on date: Date = .now) -> Date {
-        let minutes = id == "green-table" ? 750 : id == "noodle-club" ? 765 : 780
+        let minutes = arrivalMinutes
         return Calendar.current.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: date) ?? date
     }
 

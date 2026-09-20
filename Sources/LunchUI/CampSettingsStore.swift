@@ -25,11 +25,29 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var isDemoAdmin = true
     @Published public var statusMessage: String?
     @Published public var saveError: String?
+    @Published public var lunchGroups = DemoLunchGroup.all
+    public var peopleOrdering: Int { lunchGroups.reduce(0) { $0 + participantCount(for: $1) } }
+    public var totalSavingsCents: Int { lunchGroups.reduce(0) { $0 + savingsCents(for: $1) } }
+    public func participantCount(for group: DemoLunchGroup) -> Int {
+        group.people + (selectedGroupID == group.id && selectedMeal != nil ? 1 : 0)
+    }
+    public func savingsCents(for group: DemoLunchGroup) -> Int { max(0, participantCount(for: group) - 1) * 600 }
+    @discardableResult
+    public func createGroup(restaurant: DemoLunchGroup, arrivalMinutes: Int, meal: LunchOption) -> Bool {
+        guard restaurant.options.contains(meal), (360...1260).contains(arrivalMinutes) else { return false }
+        let group = DemoLunchGroup(id: UUID().uuidString, name: restaurant.name,
+                                  cuisine: "Started by you · " + restaurant.cuisine, symbol: restaurant.symbol,
+                                  people: 0, delivery: CampTimePicker.label(arrivalMinutes),
+                                  options: restaurant.options, arrivalMinutes: arrivalMinutes)
+        lunchGroups.append(group)
+        join(meal, group: group)
+        return true
+    }
     @Published public var selectedGroupID: String?
     public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
-    public var selectedGroup: DemoLunchGroup? { DemoLunchGroup.all.first { $0.id == selectedGroupID } }
+    public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
     public func join(_ option: LunchOption, group: DemoLunchGroup) {
-        guard group.options.contains(option) else { return }
+        guard lunchGroups.contains(where: { $0.id == group.id }), group.options.contains(option) else { return }
         selectedGroupID = group.id
         selectedMeal = option
         groupStage = .collecting

@@ -8,6 +8,7 @@ struct CampTodayPage: View {
     let compact: Bool
     let previewActivity: () -> Void
     @State private var showingCoffee = false
+    @State private var creatingGroup = false
     @State private var choosingGroup: DemoLunchGroup?
 
     var body: some View {
@@ -33,7 +34,7 @@ struct CampTodayPage: View {
             HStack {
                 Text("Lunch groups").font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
-                CampBadge(text: "Demo")
+                Button("Create group") { creatingGroup = true }.buttonStyle(CampActionStyle(primary: false))
             }.padding(.top, 6)
             if let group = store.selectedGroup, let meal = store.selectedMeal {
                 HStack(spacing: 12) {
@@ -46,15 +47,15 @@ struct CampTodayPage: View {
                     Button("Leave") { store.resetGroup() }.buttonStyle(.plain).font(.caption)
                 }.padding(18).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            ForEach(DemoLunchGroup.all) { group in
+            ForEach(store.lunchGroups) { group in
                 CampCard(group.name, subtitle: group.cuisine) {
                     HStack(spacing: 16) {
-                        Label("\(group.people + (store.selectedGroupID == group.id ? 1 : 0)) people", systemImage: "person.2")
+                        Label("\(store.participantCount(for: group)) people", systemImage: "person.2")
                         Spacer()
                         Label(group.delivery, systemImage: "bag")
                     }.font(.system(size: 12)).foregroundStyle(CampPalette.muted)
                     HStack {
-                        Text("\(LunchStyle.money(group.deliverySavingsCents)) shared delivery savings")
+                        Text("\(LunchStyle.money(store.savingsCents(for: group))) shared delivery savings")
                             .font(.system(size: 12, weight: .medium)).foregroundStyle(CampPalette.green)
                         Spacer(minLength: 12)
                         Button(store.selectedGroupID == group.id ? "Change meal" : "View menu") {
@@ -71,10 +72,26 @@ struct CampTodayPage: View {
                 Button("Preview lunch invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
                 #endif
             }
+            CampPair(compact: compact) {
+                summaryCard("Total savings", value: LunchStyle.money(store.totalSavingsCents), symbol: "arrow.down.right")
+                summaryCard("People ordering", value: "\(store.peopleOrdering)", symbol: "person.2.fill")
+            }
+            Text("Today’s lunch groups · demo delivery estimates").font(.caption).foregroundStyle(CampPalette.muted)
         }
+        .sheet(isPresented: $creatingGroup) { CampCreateGroupSheet(store: store) }
         .sheet(isPresented: $showingCoffee) { coffeeDetail }
         .sheet(item: $choosingGroup) { group in
             CampDemoGroupMenu(store: store, group: group)
+        }
+    }
+
+    private func summaryCard(_ title: String, value: String, symbol: String) -> some View {
+        CampCard(title) {
+            HStack {
+                Text(value).font(.system(size: 30, weight: .semibold, design: .rounded)).monospacedDigit()
+                Spacer()
+                Image(systemName: symbol).foregroundStyle(CampPalette.green)
+            }
         }
     }
 
@@ -137,5 +154,64 @@ private struct CampDemoGroupMenu: View {
                 if let selection { store.join(selection, group: group); dismiss() }
             }.buttonStyle(CampActionStyle()).disabled(selection == nil)
         }.padding(24).frame(idealWidth: 440, maxWidth: 480).foregroundStyle(CampPalette.ink).background(.white)
+    }
+}
+
+private struct CampCreateGroupSheet: View {
+    @ObservedObject var store: CampSettingsStore
+    @Environment(\.dismiss) private var dismiss
+    @State private var restaurantID = DemoLunchGroup.all[0].id
+    @State private var delivery = "12:30 PM"
+    @State private var mealID = ""
+    private var restaurant: DemoLunchGroup { DemoLunchGroup.all.first { $0.id == restaurantID } ?? DemoLunchGroup.all[0] }
+    private var meal: LunchOption? { restaurant.options.first { $0.id == mealID } }
+    private var deliveryMinutes: Int? {
+        guard let minutes = CampTimingField.Kind.time.parse(delivery), (360...1260).contains(minutes) else { return nil }
+        return minutes
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Text("Create a lunch group").font(.title2.weight(.semibold))
+                Spacer()
+                Button("Cancel") { dismiss() }.buttonStyle(.plain)
+            }
+            CampField("Restaurant") {
+                Picker("Restaurant", selection: $restaurantID) {
+                    ForEach(DemoLunchGroup.all) { Text($0.name).tag($0.id) }
+                }.labelsHidden()
+            }
+            CampField("Delivery time") {
+                CampTextField(title: "e.g. 12:30 PM", text: $delivery)
+                    .onSubmit { if let minutes = deliveryMinutes { delivery = CampTimePicker.label(minutes) } }
+                if deliveryMinutes == nil {
+                    Text("Enter a time between 6 AM and 9 PM.").font(.caption).foregroundStyle(.red)
+                }
+            }
+            CampField("Your meal") {
+                VStack(spacing: 8) {
+                    ForEach(restaurant.options) { option in
+                        Button { mealID = option.id } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: mealID == option.id ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(CampPalette.green)
+                                Text(option.name).font(.callout)
+                                Spacer()
+                                Text(LunchStyle.money(option.priceCents)).font(.callout)
+                            }.padding(14).background(CampPalette.background)
+                                .clipShape(RoundedRectangle(cornerRadius: 10)).contentShape(Rectangle())
+                        }.buttonStyle(.plain)
+                    }
+                }
+            }
+            Text("Demo group · no purchase. This replaces your current lunch choice.")
+                .font(.caption).foregroundStyle(CampPalette.muted)
+            Button("Create & join") {
+                if let meal, let minutes = deliveryMinutes,
+                   store.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meal: meal) { dismiss() }
+            }.buttonStyle(CampActionStyle()).disabled(meal == nil || deliveryMinutes == nil)
+        }.padding(24).frame(idealWidth: 440, maxWidth: 480)
+            .foregroundStyle(CampPalette.ink).background(.white)
+            .onChange(of: restaurantID) { _ in mealID = "" }
     }
 }

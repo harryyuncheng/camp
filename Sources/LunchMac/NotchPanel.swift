@@ -268,19 +268,23 @@ private struct NotchContent: View {
                         Spacer()
                         Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
                     }
-                    ForEach(DemoLunchGroup.all) { group in
+                    ScrollView {
+                    VStack(spacing: 8) {
+                    ForEach(model.groups) { group in
                         Button { model.chooseGroup(group) } label: {
                             HStack(spacing: 10) {
                                 Image(systemName: group.symbol).foregroundStyle(LunchStyle.lime).frame(width: 24)
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(group.name).font(.system(size: 13, weight: .semibold))
-                                    Text("\(group.people) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
+                                    Text("\(group.people + (model.joinedGroupID == group.id ? 1 : 0)) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.caption)
                             }.frame(maxWidth: .infinity)
                         }.buttonStyle(MealButtonStyle())
                     }
+                    }
+                    }.frame(height: min(CGFloat(model.groups.count) * 65, 260))
                 }.foregroundStyle(.white).padding(20)
             } else {
                 if let group = model.demoGroup, model.session.phase == .choosing || model.session.phase == .reviewing {

@@ -146,3 +146,11 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Preserved the supplied SVG in Branding/camp.svg. Its three vector paths are cached in CampLogo; the white background and surrounding whitespace are omitted for template-style use. The original file is unchanged.
 - Replaced the tent symbol in the sidebar, compact workspace header, shared lunch card, unconfirmed notch pill and macOS menu-bar icon. Kept the camp wordmark and confirmation checkmark. The menu-bar image is a system template for light/dark appearance.
 - macOS release build succeeded; relaunched and visually inspected the sidebar logo at its displayed size. Other surfaces share the vector but have not all been visually inspected. iOS was not built. No automated tests were run.
+
+## Today summaries and group creation — September 19
+
+- Added Total savings and People ordering cards at the bottom of Today. Values sum the lunch groups and update on join, leave and creation; savings use the demo $6 separate-delivery vs $6 shared-delivery model. Labels explicitly scope these estimates to lunch groups (coffee is excluded).
+- Create group opens a restaurant, editable delivery time and meal form. Valid submission adds a unique group and joins with the selected meal, replacing the user's previous lunch choice. Newly created groups have no simulated other members or savings until others join.
+- Group lists and the user's joined-group ID are shared with the notch. The notch group list has a bounded scroll area so adding groups does not make the panel grow indefinitely.
+- Groups remain local in-memory demo data and reset on relaunch. No ordering, invitations or payments are sent.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.

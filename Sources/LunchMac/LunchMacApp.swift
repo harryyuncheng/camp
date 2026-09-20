@@ -28,6 +28,8 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
     private var statusMenu: NSMenu!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        settings.$lunchGroups.assign(to: &model.$groups)
+        settings.$selectedGroupID.assign(to: &model.$joinedGroupID)
         model.onJoin = { [weak self] option, group in self?.settings.join(option, group: group) }
         settings.requestDemoGroup = { [weak self] group in
             guard let self else { return }

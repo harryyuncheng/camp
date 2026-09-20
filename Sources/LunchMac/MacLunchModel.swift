@@ -11,6 +11,8 @@ extension Notification.Name {
 @MainActor
 final class MacLunchModel: ObservableObject {
     @Published private(set) var session = DemoLunch.make()
+    @Published var groups = DemoLunchGroup.all
+    @Published var joinedGroupID: String?
     @Published var choosingGroup = true
     @Published private(set) var demoGroup: DemoLunchGroup?
     var officeName = "HackMIT HQ"

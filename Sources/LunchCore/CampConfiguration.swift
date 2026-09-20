@@ -152,7 +152,7 @@ public struct DemoGroupSummary {
     private let otherParticipants: Int
     private let otherFoodCents: Int
     public init(selectedMeal: LunchOption?, stage: DemoGroupStage, otherParticipants: Int = 3, otherFoodCents: Int = 3420) {
-        self.otherParticipants = max(1, otherParticipants)
+        self.otherParticipants = max(0, otherParticipants)
         self.otherFoodCents = max(0, otherFoodCents)
         self.selectedMeal = selectedMeal
         self.stage = stage
@@ -166,5 +166,5 @@ public struct DemoGroupSummary {
     public var serviceCents: Int { 300 }
     public var tipCents: Int { 500 }
     public var totalCents: Int { foodCents + taxCents + sharedDeliveryCents + serviceCents + tipCents }
-    public var deliveryShareCents: Int { sharedDeliveryCents / participantCount }
+    public var deliveryShareCents: Int { sharedDeliveryCents / max(1, participantCount) }
 }
