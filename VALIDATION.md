@@ -161,3 +161,12 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Corrected stale claims that calendar/location were disconnected, Today embedded their panels, or workspace membership survived restart. Marked the original settings brief/integration plan as historical.
 - User reported the latest sidebar logo alignment looks good. Its release build succeeded; the agent did not restart it after automatic approval blocked potential loss of in-memory demo state.
 - Documentation-only follow-up; no build or tests run.
+
+
+## Native iPhone companion — 2026-09-19
+
+- Connected Today group menus and create/join/leave to ActivityKit, restored group context from active activity attributes, and added activity deep-link routing.
+- Added a compact interactive Lock Screen/Dynamic Island layout and bounded incoming-offer entry point.
+- Added unsigned simulator build helper and ignored local signing overrides.
+- Invoked `scripts/build-ios.sh`: stopped at explicit preflight because installed Xcode is 14.3.1; iOS 17 APIs require Xcode 15+. No successful iOS build, simulator/device interaction or automated tests claimed.
+- Mac app was not restarted. Automatic cross-device delivery/APNs remains future work; see `docs/IOS.md`.

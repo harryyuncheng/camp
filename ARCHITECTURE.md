@@ -16,7 +16,7 @@ Expired choosing/reviewing sessions remain readable, but cannot be selected or c
 
 An incrementing revision prevents stale buttons from confirming a different meal after a newer selection. Repeated confirm cannot transition an already confirmed state. This is local protection; real order submission still requires a server-issued idempotency key and authoritative quote validation.
 
-`LunchUI` renders the shared card. `LunchCard` accepts an action view: ordinary buttons for Mac/iPhone, App Intent buttons for Live Activities. Platform shell details stay outside the reusable card.
+`LunchUI` renders the shared in-app card. The Live Activity uses a shorter composition of camp branding and confirmation controls to fit the Lock Screen, with App Intent buttons. Platform shell details stay outside reusable components.
 
 ## Mac event → panel
 
@@ -64,7 +64,7 @@ The two devices do not currently share state. A backend should become the author
 
 `CampConfiguration` holds separate personal, office and connection preferences, with validation and versioned atomic JSON persistence through `ConfigurationFile`. `CampSettingsStore` owns the editable draft, explicit save/discard, demo role and ephemeral group/connection previews. Mac settings are stored at Application Support/Camp/settings.json; iOS uses the app's Application Support container.
 
-`CampWorkspace` and its pages live in LunchUI and support desktop sidebar and compact bottom-tab layouts. The Mac delegate owns persistent workspace and phone-preview windows; status-item left click continues to toggle the existing notch panel. Both Mac preview windows share the same store. iOS uses the compact workspace and opens the original Live Activity controls in a sheet.
+`CampWorkspace` and its pages live in LunchUI and support desktop sidebar and compact bottom-tab layouts. The Mac delegate owns persistent workspace and phone-preview windows; status-item left click continues to toggle the existing notch panel. Both Mac preview windows share the same store. iOS uses the compact workspace and opens Live Activity controls in a sheet. Group-menu requests start ActivityKit sessions; confirmed meals reconcile into Today. Group creation and leaving have optional platform callbacks for starting a confirmed activity and ending it. See `docs/IOS.md` for lifecycle and delivery limitations.
 
 Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fee for each nonempty lunch group. Taxes, service and tip are shown separately; displayed savings do not claim a live quote. Office policies and dietary preferences are configuration only and are not enforced against fixture meals. Preview connection states are ephemeral and never represent authenticated services.
 

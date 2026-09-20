@@ -65,16 +65,52 @@ struct LunchlineApp: App {
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showingActivity = false } } }
             }
             }
-            .task { await model.refresh() }
+            .task {
+                settings.requestDemoGroup = { group in
+                    showingActivity = true
+                    run { try await model.start(group: group, office: settings.draft.office.name) }
+                }
+                settings.requestConfirmedDemoGroup = { group, meal in
+                    showingActivity = true
+                    run {
+                        try await model.start(group: group, office: settings.draft.office.name)
+                        guard let session = model.session else { return }
+                        try await model.handle(.select(meal.id), sessionID: session.id.uuidString, revision: session.revision)
+                        guard let review = model.session else { return }
+                        try await model.handle(.confirm, sessionID: review.id.uuidString, revision: review.revision)
+                    }
+                }
+                settings.requestEndDemoGroup = {
+                    guard let session = model.session, !session.isFinished else { return }
+                    run { try await model.handle(.end, sessionID: session.id.uuidString, revision: session.revision) }
+                }
+                await model.refresh()
+                syncMembership()
+            }
+            .onReceive(model.$session) { _ in
+                // @Published emits before the property changes; reconcile next turn.
+                Task { @MainActor in syncMembership() }
+            }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active { Task { await model.refresh() } }
+                if phase == .active { Task { await model.refresh(); syncMembership() } }
             }
             .onOpenURL { url in
-                guard url.scheme == "lunchline", url.host == "lunch" else { return }
+                guard ["camp", "lunchline"].contains(url.scheme ?? ""), url.host == "lunch" else { return }
+                showingActivity = true
                 // There is one session in this POC; refresh the current session even
                 // if an old, ended activity was used to open the app.
                 Task { await model.refresh() }
             }
+        }
+    }
+
+    private func syncMembership() {
+        guard let session = model.session, let group = model.group else { return }
+        if session.phase == .confirmed || session.phase == .delivered, let option = session.selectedOption {
+            if !settings.lunchGroups.contains(where: { $0.id == group.id }) { settings.lunchGroups.append(group) }
+            settings.join(option, group: group)
+        } else if session.phase == .ended, settings.selectedGroupID == group.id {
+            settings.resetGroup()
         }
     }
 

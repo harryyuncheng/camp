@@ -68,9 +68,7 @@ struct CampTodayPage: View {
             HStack {
                 Text("Sample orders and prices. No purchases.").font(.caption).foregroundStyle(CampPalette.muted)
                 Spacer()
-                #if os(macOS)
                 Button("Preview lunch invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
-                #endif
             }
             CampPair(compact: compact) {
                 summaryCard("Total savings", value: LunchStyle.money(store.totalSavingsCents), symbol: "arrow.down.right")

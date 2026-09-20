@@ -11,3 +11,4 @@ dist/
 .state/
 __pycache__/
 *.pyc
+Config/Local.xcconfig

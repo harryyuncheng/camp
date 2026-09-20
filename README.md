@@ -34,7 +34,7 @@ The shared workspace has five SwiftUI screens:
 - **Spending:** a credit-card-shaped preview, sample budget and transactions; no live card connection.
 - **Connections:** live Ramp sandbox bridge, Mac location and calendars, plus placeholders for recommendations and DoorDash.
 
-Use **Save** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders and other connections are simulated; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. The original iPhone Live Activity flow remains separate.
+Use **Save** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders and other connections are simulated; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
 
 The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. The installed Xcode 14.3.1 cannot build this project's iOS 17 Live Activity target; use Xcode 15 or newer with an appropriate device SDK and signing team.
 
@@ -109,18 +109,20 @@ xcrun swift test
 
 For a future meal-only integration, pass a session to **`MacLunchModel.offer(_:)`** on the main actor. It saves the offer and posts the in-process `lunchReady` notification; the panel automatically expands. This is an application event, not a macOS Notification Center banner. A future backend/prediction service should call this entry point after receiving an offer. Remote push delivery and background launch aren't implemented. The current group-picker context lives separately in `MacLunchModel`; a real offer adapter must set or clear that context explicitly.
 
-## Optional iPhone Live Activity
+## Native iPhone companion
 
-The original iPhone app + WidgetKit extension remain included, using the same domain and card layout. Mac and iPhone currently keep independent local sessions; they don't sync to one another.
+The native iPhone app + WidgetKit extension use the existing workspace, shared domain and camp styling. Group menus start Live Activities with select/review/confirm controls. Mac and iPhone keep independent local sessions; they do not sync yet. See [iPhone development and device setup](docs/IOS.md) for the simulator workflow, local signing configuration and push-delivery boundary.
+
+Build for Simulator with `bash scripts/build-ios.sh` after installing Xcode 15 or newer.
 
 1. Use Xcode 15+ to compile the iOS 17 APIs, or a newer Xcode compatible with your phone's installed iOS.
 2. Open `Lunchline.xcodeproj`, select the **Lunchline** scheme.
-3. Change `BUNDLE_ID_PREFIX` in `Config/Shared.xcconfig` to your own identifier.
+3. Copy `Config/Local.xcconfig.example` to ignored `Config/Local.xcconfig`; set your team and unique bundle prefix.
 4. Select the same signing team for **Lunchline** and **LunchlineActivity**. Enable automatic signing.
 5. Connect your iPhone, enable Developer Mode if prompted, and run.
-6. Tap **Start demo lunch**, then open the Lock Screen or expand the Dynamic Island.
+6. Tap a lunch group’s **View menu** (or **Preview lunch invitation → Start demo lunch**), then open the Lock Screen or expand the Dynamic Island.
 
-`NSSupportsLiveActivities`, extension embedding, intents, and the `lunchline://` URL scheme are configured. No App Group or APNs entitlement is required for this local demo: `LiveActivityIntent` executes in the app process, and the extension renders ActivityKit content.
+`NSSupportsLiveActivities`, extension embedding, intents, and the `camp://` URL scheme (plus legacy `lunchline://`) are configured. No App Group or APNs entitlement is required for this local demo: `LiveActivityIntent` executes in the app process, and the extension renders ActivityKit content.
 
 The iPhone app can also supply Apple's mirrored Live Activity on macOS Tahoe 26+, but the standalone Mac notch panel is the primary Mac experience. See [Apple's mirroring setup](https://support.apple.com/en-us/120684) if you want to compare them.
 

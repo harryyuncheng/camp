@@ -120,7 +120,7 @@ public enum DemoLunch {
 }
 
 
-public struct DemoLunchGroup: Identifiable, Hashable, Sendable {
+public struct DemoLunchGroup: Codable, Identifiable, Hashable, Sendable {
     public let id: String
     public let name: String
     public let cuisine: String

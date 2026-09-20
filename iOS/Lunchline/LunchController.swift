@@ -7,6 +7,7 @@ import SwiftUI
 final class LunchController: ObservableObject {
     static let shared = LunchController()
 
+    @Published private(set) var group: DemoLunchGroup?
     @Published private(set) var session: LunchSession?
     @Published private(set) var isWorking = false
     @Published private(set) var hasLiveActivity = false
@@ -27,21 +28,42 @@ final class LunchController: ObservableObject {
         }
     }
 
-    func start() async throws {
+    func start(group: DemoLunchGroup? = nil, office: String = "HackMIT HQ") async throws {
+        let next = group.map {
+            LunchSession(office: office, options: $0.options,
+                         closesAt: .now.addingTimeInterval(8 * 60),
+                         arrivesAt: max($0.arrival(), .now.addingTimeInterval(35 * 60)))
+        } ?? DemoLunch.make()
+        try await present(next, group: group)
+    }
+
+    /// Foreground entry point for a future recommendation/order transport.
+    /// The transport must supply a bounded, fresh menu; no payment happens here.
+    func present(_ next: LunchSession, group: DemoLunchGroup? = nil) async throws {
         guard !isWorking else { throw LunchError.busy }
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             throw ActivitySetupError.disabled
         }
         isWorking = true
         defer { isWorking = false }
-        let next = DemoLunch.make()
+        guard !next.options.isEmpty, next.options.count <= 3,
+              next.phase == .choosing, !next.isExpired(),
+              Set(next.options.map(\.id)).count == next.options.count,
+              group == nil || group?.options == next.options else {
+            throw ActivitySetupError.invalidOffer
+        }
+        let attributes = LunchAttributes(sessionID: next.id, group: group)
+        // ActivityKit limits combined static and dynamic payloads to 4 KB.
+        guard try JSONEncoder().encode(attributes).count + JSONEncoder().encode(next).count < 4_000 else {
+            throw ActivitySetupError.invalidOffer
+        }
         // Keep the prototype to one session, including after relaunch.
         for existing in Activity<LunchAttributes>.activities {
             await existing.end(nil, dismissalPolicy: .immediate)
         }
         hasLiveActivity = false
         let created = try Activity.request(
-            attributes: LunchAttributes(sessionID: next.id),
+            attributes: attributes,
             content: content(for: next), pushType: nil
         )
         do { try store.save(next) }
@@ -49,6 +71,7 @@ final class LunchController: ObservableObject {
             await created.end(nil, dismissalPolicy: .immediate)
             throw error
         }
+        self.group = group
         session = next
         errorMessage = nil
         observe(created)
@@ -61,6 +84,7 @@ final class LunchController: ObservableObject {
         }
         isWorking = true
         defer { isWorking = false }
+        group = activity?.attributes.group ?? group
         let next = try current.applying(event, expectedRevision: revision)
         // Persist before publishing. Confirm only records a demo choice: no provider
         // calls or payment side effects belong in this local state transition.
@@ -89,6 +113,7 @@ final class LunchController: ObservableObject {
             hasLiveActivity = false
             return
         }
+        group = activity.attributes.group
         if session.isFinished {
             await activity.end(content(for: session), dismissalPolicy: .immediate)
             hasLiveActivity = false
@@ -117,8 +142,11 @@ final class LunchController: ObservableObject {
 }
 
 private enum ActivitySetupError: LocalizedError {
-    case disabled
+    case disabled, invalidOffer
     var errorDescription: String? {
-        "Live Activities are disabled. Enable them for camp in iPhone Settings, then try again."
+        switch self {
+        case .disabled: return "Live Activities are disabled. Enable them for camp in iPhone Settings, then try again."
+        case .invalidOffer: return "This lunch invitation is unavailable. Try a fresh menu with up to three meals."
+        }
     }
 }

@@ -41,9 +41,12 @@ public final class CampSettingsStore: ObservableObject {
                                   options: restaurant.options, arrivalMinutes: arrivalMinutes)
         lunchGroups.append(group)
         join(meal, group: group)
+        requestConfirmedDemoGroup?(group, meal)
         return true
     }
     @Published public var selectedGroupID: String?
+    public var requestConfirmedDemoGroup: ((DemoLunchGroup, LunchOption) -> Void)?
+    public var requestEndDemoGroup: (() -> Void)?
     public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
     public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
     public func join(_ option: LunchOption, group: DemoLunchGroup) {
@@ -139,7 +142,10 @@ public final class CampSettingsStore: ObservableObject {
     }
 
     public func discard() { draft = saved; saveError = nil; statusMessage = nil }
-    public func resetGroup() { selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting }
+    public func resetGroup() {
+        selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting
+        requestEndDemoGroup?()
+    }
     public func join(_ option: LunchOption) {
         guard groupStage == .collecting else { return }
         selectedMeal = option
