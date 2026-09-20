@@ -7,6 +7,8 @@ public struct CampWorkspace: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     let previewActivity: () -> Void
+    private let phoneSections: [CampSection] = [.today, .you, .spending]
+    private let moreSections: [CampSection] = [.office, .connections, .demo]
 
     public init(store: CampSettingsStore, compact: Bool = false, previewActivity: @escaping () -> Void) {
         self.store = store; self.compact = compact; self.previewActivity = previewActivity
@@ -48,7 +50,7 @@ public struct CampWorkspace: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.system(size: compact ? 29 : 34, weight: .semibold, design: .rounded)).tracking(-0.8)
             if !store.hasChanges, let status = store.statusMessage {
-                Label(status, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(CampPalette.green)
+                Text(status).font(.caption).foregroundStyle(CampPalette.muted)
             }
         }
     }
@@ -84,6 +86,7 @@ public struct CampWorkspace: View {
             }.frame(maxWidth: .infinity, minHeight: 20, alignment: .leading).padding(13).contentShape(Rectangle()).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 11))
         }.buttonStyle(.plain)
+            .accessibilityAddTraits(store.section == section ? [.isSelected] : [])
     }
 
     private var phoneHeader: some View {
@@ -94,23 +97,41 @@ public struct CampWorkspace: View {
                 Toggle("Demo admin", isOn: $store.isDemoAdmin)
                 Button("Preview activity", action: previewActivity)
             } label: {
-                CampBadge(text: store.isDemoAdmin ? "Demo admin" : "Member", active: store.isDemoAdmin)
-            }
+                Image(systemName: "ellipsis.circle").font(.title3)
+                    .frame(width: 44, height: 44).contentShape(Rectangle())
+            }.accessibilityLabel("Workspace options")
         }.padding(.horizontal, 20).padding(.vertical, 12).background(.white)
     }
 
     private var phoneTabs: some View {
         HStack(spacing: 0) {
-            ForEach(CampSection.allCases) { section in
+            ForEach(phoneSections) { section in
                 Button { store.section = section } label: {
-                    VStack(spacing: 5) {
-                        Image(systemName: section.symbol).font(.system(size: 18))
-                        Text(section.rawValue).font(.system(size: 10, weight: .medium))
-                    }.frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
-                        .foregroundStyle(store.section == section ? CampPalette.green : CampPalette.muted)
+                    phoneTabLabel(section.rawValue, symbol: section.symbol, selected: store.section == section)
                 }.buttonStyle(.plain).accessibilityLabel(section.rawValue)
+                    .accessibilityAddTraits(store.section == section ? [.isSelected] : [])
             }
+            Menu {
+                ForEach(moreSections) { section in
+                    Button { store.section = section } label: {
+                        Label(section.rawValue, systemImage: store.section == section ? "checkmark" : section.symbol)
+                    }
+                }
+            } label: {
+                phoneTabLabel("More", symbol: "ellipsis", selected: moreSections.contains(store.section))
+            }
+            .accessibilityLabel("More sections")
+            .accessibilityValue(moreSections.contains(store.section) ? store.section.rawValue : "")
         }.background(.white).overlay(alignment: .top) { CampPalette.border.frame(height: 1) }
+    }
+
+    private func phoneTabLabel(_ title: String, symbol: String, selected: Bool) -> some View {
+        VStack(spacing: 5) {
+            Image(systemName: symbol).font(.system(size: 18))
+            Text(title).font(.caption.weight(selected ? .semibold : .regular))
+        }.frame(maxWidth: .infinity, minHeight: 44).padding(.vertical, 8).contentShape(Rectangle())
+            .foregroundStyle(selected ? CampPalette.green : CampPalette.muted)
+            .background(selected ? CampPalette.lime.opacity(0.25) : .clear)
     }
 
     private var saveBar: some View {
@@ -119,7 +140,7 @@ public struct CampWorkspace: View {
             HStack {
                 Text("Unsaved changes").font(.system(size: 12)).foregroundStyle(CampPalette.muted)
                 Spacer()
-                Button("Discard") { store.discard() }.buttonStyle(.plain).font(.system(size: 12))
+                Button("Discard") { store.discard() }.buttonStyle(CampActionStyle(primary: false))
                 Button("Save") { store.save() }.buttonStyle(CampActionStyle())
                     .disabled(!store.validationErrors.isEmpty)
             }

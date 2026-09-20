@@ -10,9 +10,11 @@ struct CampRecommendationView: View {
     var body: some View {
         CampCard("Recommendation service", subtitle: "The deterministic recommender: hard filters → scoring → office batching. Jev/LLM only classify.") {
             CampTextField(title: "http://127.0.0.1:8788", text: $store.draft.connections.recommendationURL)
-            CampTextField(title: "Sync token (CAMP_TOKEN on the backend)", text: Binding(
+            SecureField("Sync token (CAMP_TOKEN on the backend)", text: Binding(
                 get: { store.draft.connections.recommendationToken ?? "" },
                 set: { store.draft.connections.recommendationToken = $0.isEmpty ? nil : $0 }))
+                .textFieldStyle(.plain).padding(11).background(CampPalette.background)
+                .clipShape(RoundedRectangle(cornerRadius: 9)).accessibilityLabel("Backend sync token")
             HStack {
                 CampBadge(text: store.syncStatus ?? "Mac ↔ iPhone sync off", active: store.syncStatus?.hasPrefix("Live") == true)
                 Text("Orders started or changed on one device appear on the other through the same backend. Save to apply.")
