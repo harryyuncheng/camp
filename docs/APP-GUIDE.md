@@ -33,6 +33,7 @@ For an end-to-end device rehearsal, follow the [Mac and iPhone demo runbook](DEM
 ## Current limits
 
 - Restaurant and menu prices are catalog estimates, not live delivery quotes.
+- The catalog covers ~310 real places with full menus (~6 k dishes): everything within walking distance of Ramp HQ plus destination picks inside the 6 km delivery radius. It is generated from `backend/tools/catalog/*.menu` by `backend/tools/build_catalog.py`; see `backend/PLAN.md` → "Catalog expansion".
 - camp does not submit restaurant orders or charge a payment method.
 - Ramp is connected to its sandbox only; a sandbox fund is spending permission, not a food purchase.
 - Office policy controls and demo-admin mode are prototype controls, not an employee authorization system.

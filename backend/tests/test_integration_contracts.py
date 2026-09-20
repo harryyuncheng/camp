@@ -1,7 +1,7 @@
 import importlib
 import os
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from multiprocessing import get_context
 from threading import Barrier
 from urllib.parse import urlsplit, urlunsplit
@@ -12,12 +12,12 @@ import pytest
 from fastapi.testclient import TestClient
 from psycopg import sql
 
-from camp import feedback, offers
+from camp import feedback
 from camp.contracts import MealContext, OfficeRef
 from camp.groups import CreateGroupReq, GroupService, JoinGroupReq, ScheduleReq
 from camp.models import (
     FeedbackEvent, FeeSchedule, LatLng, LunchGroup, MenuItem, OfferRecord, Order,
-    Restaurant, ScheduledOrder, User, utcnow,
+    Restaurant, ScheduledOrder, User,
 )
 from camp.offers import OfferService
 from camp.store import Store
@@ -104,26 +104,37 @@ def test_durable_offer_survives_copy_and_ends_without_resurrection(world, monkey
         destination.close()
 
 
-class _TenAM(datetime):
-    @classmethod
-    def now(cls, tz=None):
-        return datetime.now(tz).replace(hour=10, minute=0, second=0, microsecond=0)
-
-
 def test_live_offer_expiration_and_terminal_state(world, monkeypatch):
+    # Exercise the live-clock branch at a fixed, feasible lunch time. Using the
+    # runner's clock made this test fail after 13:55 UTC despite a fresh offer.
+    now = datetime(2026, 9, 20, 10, tzinfo=timezone.utc)
+
+    class FixedDateTime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return now.astimezone(tz) if tz else now.replace(tzinfo=None)
+
+    class FixedDate(date):
+        @classmethod
+        def today(cls):
+            return now.date()
+
+    monkeypatch.setattr("camp.offers.datetime", FixedDateTime)
+    monkeypatch.setattr("camp.offers.date", FixedDate)
+    monkeypatch.setattr("camp.offers.utcnow", lambda: now)
     _, store, _, users, _ = world
-    monkeypatch.setattr(offers, "datetime", _TenAM)
     offer = issue(store, users[0], monkeypatch)
     record = store.get(OfferRecord, offer.offer_id)
     record.now_minutes = None
-    record.wire.closes_at = (utcnow() - timedelta(seconds=1)).isoformat()
+    record.wire.closes_at = (now - timedelta(seconds=1)).isoformat()
     store.put(record)
     service = OfferService(store)
     assert "expired" in service.lunch_event(offer.offer_id, offer.options[0].id, "confirmed")["error"]
     assert store.get(Order, record.order_id).status == "proposed"
-    record.wire.closes_at = (utcnow() + timedelta(hours=1)).isoformat()
+    record.wire.closes_at = (now + timedelta(hours=1)).isoformat()
     store.put(record)
-    assert service.lunch_event(offer.offer_id, offer.options[0].id, "confirmed")["status"] == "confirmed"
+    confirmed = service.lunch_event(offer.offer_id, offer.options[0].id, "confirmed")
+    assert confirmed.get("status") == "confirmed", confirmed
     assert service.lunch_event(offer.offer_id, offer.options[0].id, "ended")["status"] == "confirmed"
     assert "ended" in service.lunch_event(offer.offer_id, offer.options[0].id, "delivered")["error"]
     assert store.get(OfferRecord, offer.offer_id).state == "ended"

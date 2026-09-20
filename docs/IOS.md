@@ -21,6 +21,19 @@ No Apple account, push certificate or Ramp credentials are needed for local simu
 - Connect/trust the phone, enable Developer Mode when requested, select the phone in Xcode, and Run. Automatic signing must succeed for both targets.
 - Enable Live Activities for camp in iPhone Settings if disabled. Start a lunch while camp is foregrounded, then lock the phone.
 
+## If an order does not appear while the phone is locked
+
+The current build receives Mac orders only while camp is open on the phone. Locking the phone or switching apps stops its long-poll connection. A new order chosen on the Mac therefore cannot start a Live Activity until camp returns to the foreground.
+
+For the current demo, keep camp open on the phone while choosing the order on the Mac. Wait for it to appear on the phone, then lock the phone to show the existing Live Activity. Later Mac changes will catch up when camp is opened again.
+
+There are two separate push paths:
+
+- **Update an existing activity:** backend support exists in `backend/src/camp/apns.py`, but `LunchController.pushToUpdateEnabled` is false and `Config/App.entitlements` is not connected to the app target. Enabling it requires a signing team that supports Push Notifications and backend APNs credentials.
+- **Start an activity while locked:** this also requires ActivityKit push-to-start token registration and a backend `start` push containing `LunchAttributes` and the order state. That path is not implemented. Flipping the update flag alone will not make a new Mac order appear on a locked phone.
+
+See Apple's [starting and updating Live Activities with push notifications](https://developer.apple.com/documentation/activitykit/starting-and-updating-live-activities-with-activitykit-push-notifications). These are delivery limitations; a successful simulator build does not verify locked-phone behavior.
+
 ## Lifecycle and integration boundary
 
 `LunchController.present(_:group:)` is the main-actor entry point for an incoming invitation. It requires a fresh choosing session with unique options, publishes it through the backend, then displays it locally. The ActivityKit projection checks the combined payload size against 4 KB. Activity and sync failures appear in Today; acknowledged group membership remains visible there. `presentConfirmed(_:office:)` preserves all item IDs from an acknowledged group join.
