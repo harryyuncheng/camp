@@ -25,6 +25,7 @@ is the symptom); stop it with `lsof -ti :8788 | xargs kill`.
 
 ## Orders (`/v1/groups`, `/v1/restaurants`, `/v1/schedules`, `/v1/lunch-session`)
 
+- The catalog (`src/camp/providers/fixtures/ramp_hq_restaurants.json` + `ramp_hq_cafes.json`) covers ~310 places with full menus (~6 k dishes): everything within walking distance of Ramp HQ plus destination picks across Manhattan and north Brooklyn inside the 6 km delivery radius (Katz's, Via Carota, Peter Luger, Joe's Shanghai, Los Tacos No. 1, …). Bakery-cafés such as Maman, Ole & Steen and Levain belong to both categories. It is generated from `tools/catalog/*.menu` by `tools/build_catalog.py`; see `PLAN.md` → "Catalog expansion".
 - `GET /v1/restaurants?category=coffee|meal&limit=` best-rated catalog places serving that category (rating shrunk towards 4.2 by review count).
 - `GET /v1/restaurants/{id}/menu?userId=&groupId=` the whole menu priced with that group's delivery share, the public rating (`rating`, `reviewCount`, per-source `ratings`) and `top`: the user's three best items by recommender score.
 - `POST /v1/craving` (`text`, optional `category`, `userId`, `limit`) free text such as "I want tacos": OpenAI (`OPENAI_API_KEY`; an offline keyword reader otherwise) extracts cuisine, dish format, keywords, diet and price cap, and the catalog's menus are scored against them. Each match is a `RestaurantWire` whose `options` are the dishes that matched, ready for `POST /v1/groups`; `backend` says whether the sentence was read by `llm` or `keywords`.
@@ -66,8 +67,8 @@ authoritative payer/office mappings.
 
 ## Everything else
 
-See the repository `README.md` ("Recommendation core") for the recommender, the `PLAN.md` for its design, and
-`ARCHITECTURE.md` for what the native apps read and write.
+See [`PLAN.md`](PLAN.md) for the recommender design and the repository's
+[`ARCHITECTURE.md`](../ARCHITECTURE.md) for what the native apps read and write.
 
 ## Correctness checks
 
