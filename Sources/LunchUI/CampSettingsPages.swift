@@ -19,11 +19,11 @@ struct CampPersonalPage: View {
             }
             CampCard("Lunch timing") {
                 CampPair(compact: compact) {
-                    CampField("Earliest lunch") { CampTimePicker(label: "Earliest lunch", minutes: $store.draft.personal.lunchStart) }
-                    CampField("Latest lunch") { CampTimePicker(label: "Latest lunch", minutes: $store.draft.personal.lunchEnd) }
+                    CampField("Earliest lunch") { CampTimingField(label: "Earliest lunch", value: $store.draft.personal.lunchStart, kind: .time) }
+                    CampField("Latest lunch") { CampTimingField(label: "Latest lunch", value: $store.draft.personal.lunchEnd, kind: .time) }
                 }
-                CampField("Time to eat") { CampNumberStepper(label: "Time to eat", value: $store.draft.personal.lunchDuration, range: 15...120, step: 5, suffix: " min") }
-                CampField("Meeting buffer") { CampNumberStepper(label: "Meeting buffer", value: $store.draft.personal.meetingBuffer, range: 0...60, step: 5, suffix: " min") }
+                CampField("Time to eat") { CampTimingField(label: "Time to eat", value: $store.draft.personal.lunchDuration, kind: .duration(15...120)) }
+                CampField("Meeting buffer") { CampTimingField(label: "Meeting buffer", value: $store.draft.personal.meetingBuffer, kind: .duration(0...60)) }
 
             }
             CampCalendarView(store: store)

@@ -125,3 +125,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Removed repeated header kickers/taglines, the global prototype badge, metric footnotes and redundant helper paragraphs. Simplified card titles and notification toggles; removed the explanatory-only spending card.
 - Kept actionable map/scroll instructions, permission and error messages, demo/live connection distinctions, dietary limitations and sandbox fund consequences. Backend setup retains the default URL without a hardcoded connection-status badge.
 - macOS release build succeeded. No automated tests were added or run; iPhone build is not supported by the installed Xcode version.
+
+## Editable lunch timing — September 19
+
+- Replaced the four controls in You → Lunch timing with text fields. Enter or leaving a field commits valid input and formats it as a clock time or minutes.
+- Clock parsing accepts AM/PM, 24-hour times and compact digits; unsuffixed hours use 24-hour interpretation. Duration stays within 15–120 minutes and buffer within 0–60 minutes. Invalid text remains visible with a hint and does not replace the last valid draft value. Escape restores the previous value on macOS.
+- Existing Save/Discard and cross-field lunch-window validation remain in use. Office time dropdowns are unchanged.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.

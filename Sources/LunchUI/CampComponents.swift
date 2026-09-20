@@ -183,3 +183,98 @@ private struct CampNativeTimePicker: NSViewRepresentable {
     }
 }
 #endif
+
+/// Keeps incomplete typing local, committing a validated value on Return or focus loss.
+struct CampTimingField: View {
+    enum Kind {
+        case time
+        case duration(ClosedRange<Int>)
+
+        func format(_ value: Int) -> String {
+            switch self {
+            case .time: return CampTimePicker.label(value)
+            case .duration: return "\(value) min"
+            }
+        }
+        var hint: String {
+            switch self {
+            case .time: return "Use a time like 12:30 PM or 13:30."
+            case .duration(let range): return "Enter \(range.lowerBound)–\(range.upperBound) minutes."
+            }
+        }
+        func parse(_ input: String) -> Int? {
+            let text = input.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            switch self {
+            case .duration(let range):
+                let number = text.replacingOccurrences(of: #"\s*(minutes?|mins?)$"#, with: "", options: .regularExpression)
+                guard !number.isEmpty, number.allSatisfy({ $0.isASCII && $0.isNumber }),
+                      let value = Int(number), range.contains(value) else { return nil }
+                return value
+            case .time:
+                var digits = text.replacingOccurrences(of: " ", with: "")
+                var meridiem: String?
+                if digits.hasSuffix("am") || digits.hasSuffix("pm") {
+                    meridiem = String(digits.suffix(2)); digits.removeLast(2)
+                }
+                let parts = digits.split(separator: ":", omittingEmptySubsequences: false)
+                let hourText: String
+                let minuteText: String
+                if parts.count == 2 {
+                    hourText = String(parts[0]); minuteText = String(parts[1])
+                    guard minuteText.count == 2 else { return nil }
+                } else if parts.count == 1, (3...4).contains(digits.count) {
+                    hourText = String(digits.dropLast(2)); minuteText = String(digits.suffix(2))
+                } else if parts.count == 1 {
+                    hourText = digits; minuteText = "00"
+                } else { return nil }
+                guard (1...2).contains(hourText.count),
+                      (hourText + minuteText).allSatisfy({ $0.isASCII && $0.isNumber }),
+                      var hour = Int(hourText), let minute = Int(minuteText), (0...59).contains(minute) else { return nil }
+                if let meridiem {
+                    guard (1...12).contains(hour) else { return nil }
+                    hour = hour % 12 + (meridiem == "pm" ? 12 : 0)
+                } else {
+                    guard (0...23).contains(hour) else { return nil }
+                }
+                return hour * 60 + minute
+            }
+        }
+    }
+
+    let label: String
+    @Binding var value: Int
+    let kind: Kind
+    @State private var input = ""
+    @State private var error: String?
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            TextField(label, text: $input)
+                .textFieldStyle(.plain).font(.system(size: 14)).monospacedDigit()
+                .padding(11).background(CampPalette.background)
+                .clipShape(RoundedRectangle(cornerRadius: 9))
+                .overlay(RoundedRectangle(cornerRadius: 9).stroke(error == nil ? Color.clear : .red, lineWidth: 1))
+                .accessibilityLabel(label).accessibilityHint(kind.hint)
+                .focused($focused)
+                .onSubmit { commit() }
+                #if os(macOS)
+                .onExitCommand { input = kind.format(value); error = nil; focused = false }
+                #endif
+            if let error { Text(error).font(.caption).foregroundStyle(.red) }
+        }
+        .onAppear { input = kind.format(value) }
+        .onChange(of: focused) { active in if !active { commit() } }
+        .onChange(of: value) { updated in
+            if !focused { input = kind.format(updated); error = nil }
+        }
+        .onChange(of: input) { _ in error = nil }
+    }
+
+    private func commit() {
+        guard let parsed = kind.parse(input) else { error = kind.hint; return }
+        value = parsed
+        input = kind.format(parsed)
+        error = nil
+    }
+}
