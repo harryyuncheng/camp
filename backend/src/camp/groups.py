@@ -20,6 +20,13 @@ from .store import Store
 
 MAX_ITEMS_PER_MEMBER = 8               # one person's group order: a main plus sides/drinks, not a catering run
 
+# Stable restaurant lineup for the seeded demo; personalized menu ranking stays independent.
+DEMO_MEAL_RESTAURANT_IDS = (
+    "r_springbone-kitchen",
+    "r_chopt-creative-salad-co-union-square",
+    "r_dig-dig-inn-madison-square-park",
+)
+
 _COFFEE_WORDS = ("coffee", "latte", "espresso", "cappuccino", "americano", "cortado", "macchiato", "mocha", "cold brew",
                  "matcha", "chai", "tea", "hot chocolate", "flat white", "drip", "brew")
 _SYMBOL = {"salad": "leaf.fill", "bowl": "takeoutbag.and.cup.and.straw.fill", "soup": "cup.and.saucer.fill", "pizza": "circle.grid.cross.fill",
@@ -398,8 +405,13 @@ class GroupService:
         rng.shuffle(colleagues)
         chosen: list[tuple[Restaurant, str, int]] = []
         seen_cuisines: set[str] = set()
-        for r in self.restaurants(limit=40, category="meal"):
-            if r.cuisine in seen_cuisines or "coffee" in r.categories:      # meal groups go to proper restaurants, not cafés
+        priority = {restaurant_id: index for index, restaurant_id in enumerate(DEMO_MEAL_RESTAURANT_IDS)}
+        candidates = self.restaurants(limit=len(rests), category="meal")
+        candidates.sort(key=lambda r: priority.get(r.id, len(priority)))
+        for r in candidates:
+            # Preferred demo places may share a cuisine. Missing places fall back to
+            # the normal rating order, with cuisine variety among those fallbacks.
+            if (r.id not in priority and r.cuisine in seen_cuisines) or "coffee" in r.categories:
                 continue
             seen_cuisines.add(r.cuisine)
             chosen.append((rests[r.id], "meal", office.delivery_start + 15 * len(chosen)))

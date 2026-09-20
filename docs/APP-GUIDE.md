@@ -10,7 +10,7 @@ On **Today**, browse office groups, start a group at a catalog restaurant, or jo
 
 Use **Craving something else?** to describe a dish or cuisine in your own words. camp searches its catalog for matching restaurants and menu items. With an OpenAI key, an LLM interprets the request; without one, a keyword matcher keeps the flow working. Results come from the catalog, so the model does not invent restaurants or prices.
 
-The Today page also shows your confirmed orders, group size, and estimated delivery-fee savings. When no groups exist, the backend can seed synthetic demo groups so the office view has examples to explore.
+The Today page also shows your confirmed orders, group size, and estimated delivery-fee savings. When no groups exist, the backend can seed synthetic demo groups so the office view has examples to explore. The default meal lineup is Springbone Kitchen, Chopt, and DIG, with other catalog restaurants as fallbacks if a preferred menu is unavailable. Existing orders keep their restaurants.
 
 ## Screens and settings
 

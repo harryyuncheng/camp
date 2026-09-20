@@ -1,12 +1,14 @@
 """Lunch groups, spending ledger, profile and Ramp attempt ledger all live in the one store."""
 import importlib
 
+import pytest
+
 from fastapi.testclient import TestClient
 
 from camp import synth
 from camp.contracts import OfficeRef
 from camp.groups import CreateGroupReq, GroupService, JoinGroupReq
-from camp.models import LunchGroup, Order, RampAttempt, User
+from camp.models import LatLng, LunchGroup, MenuItem, Order, RampAttempt, Restaurant, User
 from camp.store import Store
 
 OFFICE = OfficeRef(id="hq", name="HQ", latitude=40.7424, longitude=-73.9913)
@@ -17,6 +19,34 @@ def world():
     u, r, i = synth.make_world(12, 20, 0)
     store.put_many(u); store.put_many(r); store.put_many(i)
     return store
+
+
+@pytest.mark.parametrize("springbone_items", [2, 3])
+def test_demo_lineup_prefers_springbone_chopt_and_dig_with_menu_fallback(springbone_items):
+    store = Store()
+    location = LatLng(lat=OFFICE.latitude, lng=OFFICE.longitude)
+    places = [
+        ("r_springbone-kitchen", "Springbone Kitchen", "american", springbone_items),
+        ("r_chopt-creative-salad-co-union-square", "Chopt", "salad", 3),
+        ("r_dig-dig-inn-madison-square-park", "DIG", "american", 3),
+        ("r_fallback", "Highly rated Thai", "thai", 3),
+    ]
+    try:
+        for restaurant_id, name, cuisine, count in places:
+            store.put(Restaurant(id=restaurant_id, name=name, cuisine=cuisine, location=location,
+                                 rating=5 if restaurant_id == "r_fallback" else 4, review_count=100))
+            store.put_many(MenuItem(id=f"{restaurant_id}_{i}", restaurant_id=restaurant_id,
+                                    name=f"Dish {i}", price_cents=1000, verified_allergens=set())
+                           for i in range(count))
+        store.put_many(User(id=f"demo_{i}", name=f"Colleague {i}", office_id=OFFICE.id,
+                            home=location, synthetic=True) for i in range(12))
+        service = GroupService(store)
+        first = service.today(OFFICE, None, "2026-09-21")
+        expected = ["Springbone Kitchen", "Chopt", "DIG"] if springbone_items == 3 else ["Chopt", "DIG", "Highly rated Thai"]
+        assert [g.name for g in first.groups] == expected
+        assert [g.id for g in service.today(OFFICE, None, "2026-09-21").groups] == [g.id for g in first.groups]
+    finally:
+        store.close()
 
 
 def test_seed_join_create_leave_keep_orders_consistent():
