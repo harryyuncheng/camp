@@ -211,6 +211,7 @@ private struct BodyHeightKey: PreferenceKey {
 private struct NotchContent: View {
     @ObservedObject var model: MacLunchModel
     @ObservedObject var motion: PanelMotion
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let expand: () -> Void
     let collapse: () -> Void
     let hide: () -> Void
@@ -261,45 +262,18 @@ private struct NotchContent: View {
                     .help("Return to menu bar").accessibilityLabel("Return to menu bar")
             }.foregroundStyle(.white.opacity(0.65)).buttonStyle(.plain)
                 .padding(.horizontal, 18).padding(.top, 8)
-            if model.choosingGroup {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Text("Join lunch?").font(.system(size: 22, weight: .semibold, design: .rounded))
-                        Spacer()
-                        Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
-                    }
-                    ScrollView {
-                    VStack(spacing: 8) {
-                    ForEach(model.groups) { group in
-                        Button { model.chooseGroup(group) } label: {
-                            HStack(spacing: 10) {
-                                Image(systemName: group.symbol).foregroundStyle(LunchStyle.lime).frame(width: 24)
-                                VStack(alignment: .leading, spacing: 3) {
-                                    Text(group.name).font(.system(size: 13, weight: .semibold))
-                                    Text("\(group.people + (model.joinedGroupID == group.id ? 1 : 0)) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
-                                }
-                                Spacer()
-                                Image(systemName: "chevron.right").font(.caption)
-                            }.frame(maxWidth: .infinity)
-                        }.buttonStyle(MealButtonStyle())
-                    }
-                    }
-                    }.frame(height: min(CGFloat(model.groups.count) * 65, 260))
-                }.foregroundStyle(.white).padding(20)
-            } else {
-                if let group = model.demoGroup, model.session.phase == .choosing || model.session.phase == .reviewing {
-                    HStack {
-                        Button("‹ Groups") { model.triggerDemo() }.buttonStyle(.plain)
-                        Spacer()
-                        Text(group.name)
-                    }.font(.caption).foregroundStyle(LunchStyle.lime).padding(.horizontal, 24).padding(.top, 12)
+            // A stable stage prevents a second shell resize after navigation.
+            // Only the contents crossfade; the header and footer stay anchored.
+            ZStack(alignment: .top) {
+                if model.choosingGroup {
+                    groupPicker.transition(.opacity)
+                } else {
+                    mealContent.id(model.session.phase).transition(.opacity)
                 }
-                LocalLunchCard(session: model.session, embedded: true) { event in
-                    withAnimation(.easeInOut(duration: 0.18)) {
-                        model.send(event, revision: model.session.revision)
-                    }
-                }.padding(.horizontal, 8).padding(.top, 4)
             }
+            .frame(height: 260, alignment: .top)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.choosingGroup)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.session.phase)
             if let error = model.error {
                 Text(error).font(.caption).foregroundStyle(.orange).padding(.horizontal, 20).padding(.top, 8)
             }
@@ -324,6 +298,49 @@ private struct NotchContent: View {
             }.buttonStyle(.plain).padding(.horizontal, 20).padding(.top, 10).padding(.bottom, 15)
         }
     }
+
+    private var groupPicker: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Join lunch?").font(.system(size: 22, weight: .semibold, design: .rounded))
+                Spacer()
+                Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
+            }
+            ScrollView {
+            VStack(spacing: 8) {
+            ForEach(model.groups) { group in
+                Button { model.chooseGroup(group) } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: group.symbol).foregroundStyle(LunchStyle.lime).frame(width: 24)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(group.name).font(.system(size: 13, weight: .semibold))
+                            Text("\(group.people + (model.joinedGroupID == group.id ? 1 : 0)) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.caption)
+                    }.frame(maxWidth: .infinity).frame(height: 34)
+                }.buttonStyle(MealButtonStyle())
+            }
+            }
+            }.frame(height: min(CGFloat(model.groups.count) * 52 + CGFloat(max(0, model.groups.count - 1)) * 8, 172))
+        }.foregroundStyle(.white).padding(.horizontal, 24).padding(.top, 16).padding(.bottom, 12)
+    }
+
+    private var mealContent: some View {
+        VStack(spacing: 0) {
+            if let group = model.demoGroup, model.session.phase == .choosing || model.session.phase == .reviewing {
+                HStack {
+                    Button("‹ Groups") { model.triggerDemo() }.buttonStyle(.plain)
+                    Spacer()
+                    Text(group.name)
+                }.font(.caption).foregroundStyle(LunchStyle.lime).padding(.horizontal, 24).padding(.top, 12)
+            }
+            LocalLunchCard(session: model.session, embedded: true) { event in
+                model.send(event, revision: model.session.revision)
+            }.padding(.horizontal, 8).padding(.top, 4)
+        }
+    }
+
 
     private var compactBody: some View {
         Button(action: expand) {

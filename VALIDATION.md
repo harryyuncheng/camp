@@ -189,3 +189,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 
 - Removed the entire embedded meal-card header row, including DEMO and countdown. The notch content no longer reserves space for the removed branding. Standalone card headers remain.
 - Release Mac build succeeded. No tests or app restart performed.
+
+
+## Notch group transition — 2026-09-19
+
+- Group selection reserved a taller scrolling area than meal selection and triggered an extra measured panel resize during navigation.
+- Added a shared 260-point content stage for expanded screens, shortened the group list to three 52-point rows with 8-point gaps, and crossfade contents over 0.24 seconds while keeping header/footer anchored. Additional groups scroll. Reduce Motion disables the content animation.
+- Removed the competing meal-action animation. Release Mac build succeeded; no tests or live UI restart performed. Visual review remains pending relaunch.
