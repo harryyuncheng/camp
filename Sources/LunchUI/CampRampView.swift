@@ -121,7 +121,7 @@ struct CampRampView: View {
     @State private var overageCents: Int?
     @State private var overageReason = ""
     var body: some View {
-        CampCard("Ramp sandbox") {
+        CampCard("Ramp sandbox", subtitle: "Test funds and limits in Ramp’s sandbox. No food order or charge is placed.") {
             if let snapshot = ramp.snapshot {
                 HStack { Label(snapshot.company, systemImage: "creditcard").font(.headline); Spacer(); CampBadge(text: "Sandbox connected", active: true) }
                 Text("Server allocation cap: \(LunchStyle.money(snapshot.groupCapCents)). Office demo settings cannot raise this cap. Allocation attempts are recorded in the camp database (\(snapshot.attempts ?? 0) so far).").font(.caption).foregroundStyle(CampPalette.muted)
@@ -191,8 +191,8 @@ struct CampRampView: View {
     @ViewBuilder private var spendingLimit: some View {
         if store.rampEmployeeID.isEmpty {
             Text("Choose an employee to read their Ramp spending limit.").font(.caption).foregroundStyle(CampPalette.muted)
-        } else if let limit = store.rampLimits?.limit {
-            HStack { Text("Spending limit").font(.headline); Spacer(); CampBadge(text: "Live from Ramp", active: true) }
+        } else if let limit = store.rampLimits?.limit, store.rampLimits?.userID == store.rampEmployeeID {
+            HStack { Text("Spending limit").font(.headline); Spacer(); CampBadge(text: "Ramp sandbox", active: true) }
             Text("\(limit.name) · \(LunchStyle.money(limit.limitCents)) \(limit.interval.lowercased()) · \(LunchStyle.money(limit.remainingCents)) left")
                 .font(.callout.weight(.semibold))
             Text("Today's orders are capped at \(LunchStyle.money(limit.perOrderCents)), which is what the budget bar and the recommender use. The office per-person cap only applies when Ramp holds no limit.")
@@ -205,7 +205,7 @@ struct CampRampView: View {
                 let amount = overageCents ?? defaultOverage(limit)
                 Task {
                     await store.requestOverage(cents: amount, reason: overageReason)
-                    overageReason = ""; overageCents = nil
+                    if store.rampLimitError == nil { overageReason = ""; overageCents = nil }
                 }
             }
             .buttonStyle(CampActionStyle())
@@ -214,12 +214,15 @@ struct CampRampView: View {
             if (store.rampLimits?.pendingOverages ?? 0) > 0 {
                 Text("A request is already waiting for a decision.").font(.caption).foregroundStyle(CampPalette.muted)
             }
-        } else if store.rampLimitError == nil {
+        } else if store.rampLimits?.userID == store.rampEmployeeID, store.rampLimitError == nil {
             Text("Ramp holds no active limit for this employee, so the office per-person cap applies.")
+                .font(.caption).foregroundStyle(CampPalette.muted)
+        } else if store.rampLimitError == nil {
+            Text("The spending limit has not loaded for this employee. Refresh the sandbox to check it.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
         }
         if let error = store.rampLimitError { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
-        if let requests = store.rampLimits?.overages, !requests.isEmpty {
+        if let requests = store.rampLimits?.overages, store.rampLimits?.userID == store.rampEmployeeID, !requests.isEmpty {
             Divider()
             Text("Overage requests").font(.headline)
             ForEach(requests) { request in overage(request) }

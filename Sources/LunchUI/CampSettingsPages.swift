@@ -91,13 +91,19 @@ struct CampScheduleCard: View {
                 }
             }
             CampField("Days") {
-                HStack(spacing: 6) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 44))], spacing: 8) {
                     ForEach(0..<7, id: \.self) { day in
-                        Button(LunchSchedule.weekdayNames[day]) { if weekdays.contains(day) { weekdays.remove(day) } else { weekdays.insert(day) } }
-                            .buttonStyle(.plain).font(.system(size: 11, weight: weekdays.contains(day) ? .semibold : .regular))
-                            .padding(.horizontal, 9).padding(.vertical, 6)
-                            .background(weekdays.contains(day) ? CampPalette.lime.opacity(0.6) : .white)
-                            .clipShape(Capsule()).overlay(Capsule().stroke(CampPalette.border))
+                        Button {
+                            if weekdays.contains(day) { weekdays.remove(day) } else { weekdays.insert(day) }
+                        } label: {
+                            Text(LunchSchedule.weekdayNames[day])
+                                .font(.caption.weight(weekdays.contains(day) ? .semibold : .regular))
+                                .frame(maxWidth: .infinity, minHeight: 44)
+                                .background(weekdays.contains(day) ? CampPalette.lime.opacity(0.6) : .white)
+                                .clipShape(Capsule()).overlay(Capsule().stroke(CampPalette.border))
+                                .contentShape(Capsule())
+                        }.buttonStyle(.plain)
+                            .accessibilityAddTraits(weekdays.contains(day) ? [.isSelected] : [])
                     }
                 }
             }
@@ -164,7 +170,7 @@ struct CampOfficePage: View {
                     CampField("Delivery until") { CampTimePicker(label: "Delivery until", minutes: $store.draft.office.deliveryEnd) }
                 }
             }
-            CampCard("Budgets", subtitle: "Per-person cap is sent with your profile and bounds recommender offers. Connect a Ramp employee on the Demo tab and their live Ramp limit takes over from this cap.") {
+            CampCard("Budgets", subtitle: "Per-person cap is sent with your profile and bounds recommender offers. Connect an employee in Demo to use their Ramp sandbox limit.") {
                 CampField("Per-person cap") { CampNumberStepper(label: "Per-person budget", value: $store.draft.office.personBudgetCents, range: 100...100000, step: 100, money: true) }
                 if let limit = store.rampLimits?.limit {
                     Text("In use now: \(LunchStyle.money(limit.perOrderCents)) per order, from Ramp · \(limit.name).")
@@ -192,12 +198,13 @@ struct CampConnectionsPage: View {
 struct CampSpendingPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
+    @State private var refreshing = false
 
     private var ledger: LunchLedgerResponse? { store.ledger }
     private var entries: [LunchLedgerEntry] { ledger?.entries ?? [] }
     private var monthlySpendCents: Int { ledger?.spentMonthCents ?? 0 }
     /// 20 working lunches at the user's per-meal budget, as the backend computed it.
-    private var monthlyBudgetCents: Int { max(ledger?.monthlyBudgetCents ?? store.personBudgetCents * 20, monthlySpendCents, 1) }
+    private var monthlyBudgetCents: Int { max(ledger?.monthlyBudgetCents ?? 0, 0) }
     private var savingsThisMonthCents: Int { ledger?.savedMonthCents ?? 0 }
     private var transactions: [CampDemoTransaction] {
         entries.prefix(8).map { entry in
@@ -205,54 +212,83 @@ struct CampSpendingPage: View {
                                 amountCents: entry.amountCents, symbol: entry.symbol)
         }
     }
-    private var subtitle: String {
-        if store.recommenderUserID == nil { return "Demo card · save your profile or join a group to create your account." }
-        if let error = store.ledgerError { return error }
-        return entries.isEmpty ? "Demo card · no confirmed orders in the database yet." : "Demo card · \(entries.count) confirmed order\(entries.count == 1 ? "" : "s") in the camp database."
-    }
-
     var body: some View {
         VStack(spacing: 20) {
-            CampCard("Order card", subtitle: subtitle) {
-                lunchCard
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .firstTextBaseline) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("SPENT THIS MONTH").font(.system(size: 9, weight: .semibold)).tracking(0.8).foregroundStyle(CampPalette.muted)
-                            Text(LunchStyle.money(monthlySpendCents)).font(.system(size: 25, weight: .semibold, design: .rounded)).monospacedDigit()
-                        }
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: 4) {
-                            Text("MONTHLY BUDGET").font(.system(size: 9, weight: .semibold)).tracking(0.5).foregroundStyle(CampPalette.muted)
-                            Text(LunchStyle.money(monthlyBudgetCents)).font(.system(size: 14, weight: .semibold, design: .rounded)).monospacedDigit()
-                        }
+            CampCard("Order estimates", subtitle: "Recorded in camp. No purchases or card charges are made.") {
+                if let error = store.ledgerError {
+                    Text(error).font(.callout).foregroundStyle(.red)
+                    if ledger != nil {
+                        Text("Showing the last loaded amounts.").font(.caption).foregroundStyle(CampPalette.muted)
                     }
-                    ProgressView(value: Double(monthlySpendCents), total: Double(monthlyBudgetCents)).tint(CampPalette.green)
-                    HStack {
-                        Text("\(LunchStyle.money(monthlyBudgetCents - monthlySpendCents)) available")
-                        Spacer()
-                        if savingsThisMonthCents > 0 {
-                            Text("\(LunchStyle.money(savingsThisMonthCents)) saved by sharing delivery").foregroundStyle(CampPalette.green)
-                        }
-                    }
-                    .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
                 }
+                if refreshing { ProgressView("Loading order estimates…").font(.callout) }
+                if ledger != nil {
+                    spendingSummary
+                } else if !refreshing {
+                    Text(store.recommenderUserID == nil
+                         ? "Save your preferences or join a group to create your profile."
+                         : "Spending is unavailable until the ledger loads.")
+                        .font(.callout).foregroundStyle(CampPalette.muted)
+                    if store.recommenderUserID == nil {
+                        Button("Your preferences") { store.section = .you }.buttonStyle(CampActionStyle(primary: false))
+                    }
+                }
+                Button(refreshing ? "Refreshing…" : store.ledgerError == nil ? "Refresh" : "Retry") {
+                    Task { await refresh() }
+                }.buttonStyle(CampActionStyle(primary: false)).disabled(refreshing || store.recommenderUserID == nil)
+                DisclosureGroup("Demo card preview · not a payment card") { lunchCard.padding(.top, 12) }
             }
 
-            CampCard("Recent activity", subtitle: entries.isEmpty ? "Confirm an order on the notch card or join a group on Today; it appears here from the orders table." : "Confirmed orders from the backend. No purchases are made.") {
-                ForEach(Array(transactions.enumerated()), id: \.element.id) { index, transaction in
-                    if index > 0 { Divider() }
-                    transactionRow(transaction)
+            if ledger != nil {
+                CampCard("Recent activity", subtitle: "Latest recorded items. Amounts are estimates, not payments.") {
+                    ForEach(Array(transactions.enumerated()), id: \.element.id) { index, transaction in
+                        if index > 0 { Divider() }
+                        transactionRow(transaction)
+                    }
+                    if entries.isEmpty {
+                        Text("No recorded orders yet. Join a group on Today to get started.")
+                            .font(.callout).foregroundStyle(CampPalette.muted)
+                        Button("See today’s groups") { store.section = .today }.buttonStyle(CampActionStyle(primary: false))
+                    }
                 }
-                if entries.isEmpty {
-                    Text("Nothing yet.").font(.system(size: 12)).foregroundStyle(CampPalette.muted)
-                }
-                Divider()
-                Button("Refresh") { Task { await store.refreshLedger() } }
-                    .buttonStyle(.plain).font(.system(size: 11, weight: .medium)).foregroundStyle(CampPalette.muted)
             }
         }
-        .task { await store.refreshLedger() }
+        .task { await refresh() }
+    }
+
+    private func refresh() async {
+        guard !refreshing else { return }
+        refreshing = true
+        defer { refreshing = false }
+        await store.refreshLedger()
+    }
+
+    private var spendingSummary: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            CampPair(compact: compact) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("ORDERS THIS MONTH").font(.caption.weight(.semibold)).foregroundStyle(CampPalette.muted)
+                    Text(LunchStyle.money(monthlySpendCents)).font(.system(size: 25, weight: .semibold, design: .rounded)).monospacedDigit()
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("MONTHLY ESTIMATE").font(.caption.weight(.semibold)).foregroundStyle(CampPalette.muted)
+                    Text(LunchStyle.money(monthlyBudgetCents)).font(.system(size: 14, weight: .semibold, design: .rounded)).monospacedDigit()
+                }
+            }
+            ProgressView(value: Double(max(0, min(monthlySpendCents, monthlyBudgetCents))), total: Double(max(1, monthlyBudgetCents)))
+                .tint(monthlySpendCents > monthlyBudgetCents ? .orange : CampPalette.green)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(monthlySpendCents > monthlyBudgetCents
+                     ? "\(LunchStyle.money(monthlySpendCents - monthlyBudgetCents)) over the estimate"
+                     : "\(LunchStyle.money(monthlyBudgetCents - monthlySpendCents)) below the estimate")
+                    .foregroundStyle(monthlySpendCents > monthlyBudgetCents ? .orange : CampPalette.muted)
+                if savingsThisMonthCents > 0 {
+                    Text("\(LunchStyle.money(savingsThisMonthCents)) saved by sharing delivery").foregroundStyle(CampPalette.green)
+                }
+            }.font(.caption).foregroundStyle(CampPalette.muted)
+            Text("The monthly estimate assumes 20 orders at your lunch budget in camp. It is not an available card balance.")
+                .font(.caption).foregroundStyle(CampPalette.muted)
+        }
     }
 
     private static func day(_ date: Date) -> String {
@@ -325,7 +361,7 @@ struct CampSpendingPage: View {
                 Text(transaction.detail).font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }
             Spacer()
-            Text("−\(LunchStyle.money(transaction.amountCents))").font(.system(size: 12, weight: .semibold)).monospacedDigit()
+            Text(LunchStyle.money(transaction.amountCents)).font(.system(size: 12, weight: .semibold)).monospacedDigit()
         }
     }
 }
