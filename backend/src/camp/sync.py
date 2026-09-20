@@ -16,8 +16,10 @@ State lives in the `sync` table of the shared database (one row) so it survives 
 from __future__ import annotations
 
 import asyncio
+import copy
+import json
 from datetime import datetime, timedelta, timezone
-from typing import Any, Optional
+from typing import Optional
 
 from .models import SyncState
 from .store import Store
@@ -45,9 +47,35 @@ def _arrives(record: dict) -> float:
 
 def _updated(record: dict) -> datetime:
     try:
-        return datetime.fromisoformat(record["updatedAt"])
+        value = datetime.fromisoformat(record["updatedAt"])
+        return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value
     except (KeyError, TypeError, ValueError):
         return datetime.now(timezone.utc)
+
+
+def _validate(record: dict) -> None:
+    session_id, revision = record.get("sessionId"), record.get("revision")
+    if not isinstance(session_id, str) or not session_id.strip() or len(session_id) > 128:
+        raise ValueError("record needs a nonempty sessionId")
+    if type(revision) is not int or not 0 <= revision < 2**63:
+        raise ValueError("record needs a nonnegative integer revision")
+    session = record.get("session")
+    if not isinstance(session, dict) or session.get("id") != session_id:
+        raise ValueError("session.id must match sessionId")
+    if type(session.get("revision")) is not int or session["revision"] != revision:
+        raise ValueError("session.revision must match revision")
+    if session.get("phase") not in ("choosing", "reviewing", "confirmed", "delivered", "ended"):
+        raise ValueError("session.phase is invalid")
+    for field in ("arrivesAt", "closesAt", "confirmedAt", "deliveredAt"):
+        value = session.get(field)
+        if value is not None and (type(value) not in (int, float) or not -1e15 <= value <= 1e15):
+            raise ValueError(f"session.{field} must be a finite numeric date")
+    if record.get("group") is not None and not isinstance(record["group"], dict):
+        raise ValueError("record.group must be an object")
+    try:
+        json.dumps(record, allow_nan=False)
+    except (TypeError, ValueError) as e:
+        raise ValueError("record must contain finite JSON values") from e
 
 
 def nearest(records: list[dict]) -> Optional[dict]:
@@ -62,20 +90,23 @@ class LunchSyncService:
     def __init__(self, store: Store | None = None):
         self.store = store
         self.seq = 0
-        self.records: list[dict[str, Any]] = []
+        self.records: list[dict] = []
         self._changed = asyncio.Condition()
         if self.store is not None:
             saved = self.store.get(SyncState, "lunch")
             if saved:
                 self.seq = saved.seq
                 self.records = list(saved.records) or ([saved.record] if saved.record else [])
+                pruned = self._prune(self.records)
+                if pruned != self.records:
+                    self._commit(pruned)
 
     @property
     def record(self) -> Optional[dict]:
         return nearest(self.records)
 
     def snapshot(self) -> dict:
-        return {"seq": self.seq, "record": self.record, "records": list(self.records)}
+        return copy.deepcopy({"seq": self.seq, "record": self.record, "records": self.records})
 
     def find(self, session_id: str) -> Optional[dict]:
         return next((r for r in self.records if r.get("sessionId") == session_id), None)
@@ -93,26 +124,31 @@ class LunchSyncService:
 
     async def publish(self, record: dict, expected_session_id: Optional[str], expected_revision: Optional[int],
                       device: str) -> dict:
-        session_id, revision = str(record.get("sessionId", "")), int(record.get("revision", -1))
-        if not session_id or revision < 0:
-            raise ValueError("record needs sessionId and revision")
-        current = self.find(session_id)
-        if current is not None:
-            # Same order: the writer must have started from the current revision and moved it forward.
-            if expected_revision != current["revision"] or revision <= current["revision"]:
-                raise SyncConflict(self.seq, current, list(self.records))
-        elif expected_session_id is not None and self.find(expected_session_id) is None and self.records:
-            # The writer believes an order is current that we no longer have: let them look first.
-            raise SyncConflict(self.seq, self.record, list(self.records))
-        stored = {**record, "device": device, "updatedAt": datetime.now(timezone.utc).isoformat()}
-        records = [r for r in self.records if r.get("sessionId") != session_id] + [stored]
-        await self._commit(self._prune(records))
-        return self.snapshot()
+        _validate(record)
+        if expected_revision is not None and (type(expected_revision) is not int or expected_revision < 0):
+            raise ValueError("expectedRevision must be a nonnegative integer")
+        async with self._changed:
+            session_id, revision = record["sessionId"], record["revision"]
+            current = self.find(session_id)
+            if current is not None:
+                if expected_session_id != session_id or expected_revision != current["revision"] or revision <= current["revision"]:
+                    raise SyncConflict(self.seq, current, list(self.records))
+            elif expected_session_id is not None and self.find(expected_session_id) is None and (
+                self.records or expected_session_id == session_id
+            ):
+                raise SyncConflict(self.seq, self.record, list(self.records))
+            stored = {**copy.deepcopy(record), "device": device, "updatedAt": datetime.now(timezone.utc).isoformat()}
+            records = [r for r in self.records if r.get("sessionId") != session_id] + [stored]
+            self._commit(self._prune(records))
+            self._changed.notify_all()
+            return self.snapshot()
 
     async def clear(self, session_id: Optional[str] = None) -> dict:
         """Forget one order, or every order when `session_id` is None."""
-        await self._commit([] if session_id is None else [r for r in self.records if r.get("sessionId") != session_id])
-        return self.snapshot()
+        async with self._changed:
+            self._commit([] if session_id is None else [r for r in self.records if r.get("sessionId") != session_id])
+            self._changed.notify_all()
+            return self.snapshot()
 
     @staticmethod
     def _prune(records: list[dict]) -> list[dict]:
@@ -125,10 +161,8 @@ class LunchSyncService:
             kept.append(r)
         return sorted(kept, key=_arrives)
 
-    async def _commit(self, records: list[dict]) -> None:
-        async with self._changed:
-            self.seq += 1
-            self.records = records
-            if self.store is not None:
-                self.store.put(SyncState(seq=self.seq, record=nearest(records), records=records))
-            self._changed.notify_all()
+    def _commit(self, records: list[dict]) -> None:
+        seq = self.seq + 1
+        if self.store is not None:
+            self.store.put(SyncState(seq=seq, record=nearest(records), records=records))
+        self.seq, self.records = seq, records

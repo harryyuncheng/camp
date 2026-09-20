@@ -10,11 +10,12 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
-from typing import Any, Iterable, TypeVar
-
-from pydantic import BaseModel
-
 import threading
+from contextlib import contextmanager
+from typing import Iterable, Iterator, TypeVar
+
+import psycopg
+from pydantic import BaseModel
 
 from .models import (Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, RampOverageRequest, Restaurant,
                      ScheduledOrder, SyncState, User)
@@ -42,13 +43,13 @@ class Store:
         self.url = path_or_url
         self.pg = path_or_url.startswith(("postgres://", "postgresql://"))
         if self.pg:
-            import psycopg
             # autocommit: a plain SELECT must not leave a transaction open (that held an ACCESS SHARE lock on every
             # table and blocked schema migrations from any other process). Writes use an explicit transaction below.
             self.conn = psycopg.connect(path_or_url, autocommit=True)
         else:
-            self.conn = sqlite3.connect(path_or_url, check_same_thread=False)
+            self.conn = sqlite3.connect(path_or_url, check_same_thread=False, isolation_level=None)
         self._lock = threading.RLock()
+        self._transaction_depth = 0
         self._migrate()
 
     @classmethod
@@ -72,6 +73,34 @@ class Store:
         self.conn.commit()
 
     # ------------------------------------------------------------ helpers
+    @contextmanager
+    def transaction(self) -> Iterator[None]:
+        """Atomic synchronous work on this connection; nested contexts use savepoints.
+
+        The lock spans reads and writes. Do not hold a transaction across an await or a remote request.
+        """
+        with self._lock:
+            if self.pg:
+                with self.conn.transaction():
+                    yield
+                return
+            depth = self._transaction_depth
+            savepoint = f"camp_{depth}"
+            self.conn.execute("BEGIN IMMEDIATE" if depth == 0 else f"SAVEPOINT {savepoint}")
+            self._transaction_depth += 1
+            try:
+                yield
+                self.conn.execute("COMMIT" if depth == 0 else f"RELEASE SAVEPOINT {savepoint}")
+            except BaseException:
+                if depth == 0:
+                    self.conn.rollback()
+                else:
+                    self.conn.execute(f"ROLLBACK TO SAVEPOINT {savepoint}")
+                    self.conn.execute(f"RELEASE SAVEPOINT {savepoint}")
+                raise
+            finally:
+                self._transaction_depth -= 1
+
     def _q(self, sql: str) -> str:
         return sql if self.pg else sql.replace("%s", "?")
 
@@ -92,31 +121,25 @@ class Store:
         self.put_many([obj])
 
     def put_many(self, objs: Iterable[BaseModel]) -> None:
-        with self._lock:
-            if self.pg:
-                with self.conn.transaction():
-                    cur = self.conn.cursor()
-                    for o in objs:
-                        cur.execute(f"INSERT INTO {TABLES[type(o)]} (id, data) VALUES (%s, %s::jsonb) "
-                                    f"ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
-                return
+        with self.transaction():
             cur = self.conn.cursor()
             for o in objs:
-                cur.execute(f"INSERT OR REPLACE INTO {TABLES[type(o)]} (id, data) VALUES (?, ?)", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
-            self.conn.commit()
+                if self.pg:
+                    cur.execute(f"INSERT INTO {TABLES[type(o)]} (id, data) VALUES (%s, %s::jsonb) "
+                                f"ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
+                else:
+                    cur.execute(f"INSERT OR REPLACE INTO {TABLES[type(o)]} (id, data) VALUES (?, ?)", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
 
     def delete_all(self, cls: type[BaseModel]) -> int:
-        with self._lock:
+        with self.transaction():
             cur = self.conn.cursor()
             cur.execute(f"DELETE FROM {TABLES[cls]}")
-            self.conn.commit()
             return cur.rowcount
 
     def delete(self, cls: type[BaseModel], id: str) -> bool:
-        with self._lock:
+        with self.transaction():
             cur = self.conn.cursor()
             cur.execute(self._q(f"DELETE FROM {TABLES[cls]} WHERE id = %s"), (id,))
-            self.conn.commit()
             return cur.rowcount > 0
 
     def get(self, cls: type[T], id: str) -> T | None:
@@ -162,12 +185,15 @@ class Store:
     # ------------------------------------------------------------ ops
     def copy_from(self, other: "Store") -> dict[str, int]:
         """Copy every row from another store (e.g. the old SQLite file) into this one. Upserts by id."""
+        with other.transaction():
+            snapshot = [(t, other.all(cls)) for cls, t in TABLES.items()]
         counts: dict[str, int] = {}
-        for cls, t in TABLES.items():
-            rows = other.all(cls)
-            self.put_many(rows)
-            counts[t] = len(rows)
+        with self.transaction():
+            for t, rows in snapshot:
+                self.put_many(rows)
+                counts[t] = len(rows)
         return counts
 
     def close(self) -> None:
-        self.conn.close()
+        with self._lock:
+            self.conn.close()
