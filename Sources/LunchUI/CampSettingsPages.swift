@@ -164,8 +164,12 @@ struct CampOfficePage: View {
                     CampField("Delivery until") { CampTimePicker(label: "Delivery until", minutes: $store.draft.office.deliveryEnd) }
                 }
             }
-            CampCard("Budgets", subtitle: "Per-person cap is sent with your profile and bounds recommender offers.") {
+            CampCard("Budgets", subtitle: "Per-person cap is sent with your profile and bounds recommender offers. Connect a Ramp employee on the Demo tab and their live Ramp limit takes over from this cap.") {
                 CampField("Per-person cap") { CampNumberStepper(label: "Per-person budget", value: $store.draft.office.personBudgetCents, range: 100...100000, step: 100, money: true) }
+                if let limit = store.rampLimits?.limit {
+                    Text("In use now: \(LunchStyle.money(limit.perOrderCents)) per order, from Ramp · \(limit.name).")
+                        .font(.caption).foregroundStyle(CampPalette.muted)
+                }
                 CampField("Whole-group cap") { CampNumberStepper(label: "Group budget", value: $store.draft.office.groupBudgetCents, range: 100...1000000, step: 500, money: true) }
             }
         }
@@ -193,7 +197,7 @@ struct CampSpendingPage: View {
     private var entries: [LunchLedgerEntry] { ledger?.entries ?? [] }
     private var monthlySpendCents: Int { ledger?.spentMonthCents ?? 0 }
     /// 20 working lunches at the user's per-meal budget, as the backend computed it.
-    private var monthlyBudgetCents: Int { max(ledger?.monthlyBudgetCents ?? store.draft.office.personBudgetCents * 20, monthlySpendCents, 1) }
+    private var monthlyBudgetCents: Int { max(ledger?.monthlyBudgetCents ?? store.personBudgetCents * 20, monthlySpendCents, 1) }
     private var savingsThisMonthCents: Int { ledger?.savedMonthCents ?? 0 }
     private var transactions: [CampDemoTransaction] {
         entries.prefix(8).map { entry in

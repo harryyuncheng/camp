@@ -1,7 +1,7 @@
 # camp backend
 
-One FastAPI service (`uv run uvicorn camp.api:app --port 8788`) fronts one database. It serves the recommender,
-Today's lunch groups, the spending ledger, the Mac ↔ iPhone lunch session and the Ramp sandbox bridge. The former
+One FastAPI service (`uv run camp serve`, i.e. `uvicorn camp.api:app --port 8788 --reload`) fronts one database. It serves the recommender,
+Today's lunch groups, the natural-language craving search, the spending ledger, the Mac ↔ iPhone lunch session and the Ramp sandbox bridge. The former
 stand-alone bridge `server.py` is retired; its endpoints moved to `/v1/ramp` unchanged and its SQLite ledger became
 the `ramp_attempts` table.
 
@@ -11,8 +11,13 @@ the `ramp_attempts` table.
 cd backend
 cp .env.example .env        # RAMP_CLIENT_ID / RAMP_CLIENT_SECRET, CAMP_DATABASE_URL (Postgres) …
 uv sync --extra dev
-uv run uvicorn camp.api:app --port 8788
+uv run camp serve            # :8788 with --reload; `--host 0.0.0.0` for the phone, `--no-reload` for a daemon
 ```
+
+Every endpoint the app uses (recommender, groups, `/v1/craving`, ledger, Ramp) is on this one process and one URL.
+Running `uvicorn camp.api:app` by hand without `--port 8788` listens on :8000, which the app is not pointed at, and
+any process still holding :8788 keeps answering the app with an older route table (a `Not Found` from a new feature
+is the symptom); stop it with `lsof -ti :8788 | xargs kill`.
 
 `CAMP_DATABASE_URL=postgresql://localhost/camp` (Postgres.app) is the intended setup; unset it to fall back to the
 `camp.db` SQLite file. Tables are created on startup. In the app, Demo → Recommendation service → `http://127.0.0.1:8788`
@@ -36,12 +41,13 @@ database instead of each keeping their own.
 - `GET /v1/restaurants/{id}/menu?userId=&groupId=` the whole menu priced with that group's delivery share, the public rating (`rating`, `reviewCount`, per-source `ratings`) and `top`: the user's three best items by recommender score.
 - `POST /v1/craving` (`text`, optional `category`, `userId`, `limit`) free text such as "I want tacos": OpenAI (`OPENAI_API_KEY`; an offline keyword reader otherwise) extracts cuisine, dish format, keywords, diet and price cap, and the catalog's menus are scored against them. Each match is a `RestaurantWire` whose `options` are the dishes that matched, ready for `POST /v1/groups`; `backend` says whether the sentence was read by `llm` or `keywords`.
 - `POST /v1/groups` (`category` optional, defaults to the place's primary one), `POST /v1/groups/{id}/join` with any menu item, `DELETE /v1/groups/{id}/members/{user}`. One order per person per category per day.
+- Both take `optionIds` (up to 8 items; `optionId` is still accepted for one). A member's whole selection is replaced on each join, one confirmed `Order` is written per item, and the delivery share is charged once per person, on their first item. The first item always goes through; every extra must keep the person inside their per-order budget (`budget_cents`, as `PUT /v1/profile` sets it), otherwise the request is refused with 422. The group wire carries `myOptionIds` and `budgetCents` so the menu can grey out what no longer fits.
 - `GET /v1/schedules/{user}`, `POST /v1/schedules` (`category`, `label`, `timeMinutes`, `weekdays` 0 = Monday, optional `restaurantId`/`optionId`), `PUT /v1/schedules/{id}/event` (store the device's calendar event id), `DELETE /v1/schedules/{id}?userId=`. `GET /v1/groups?userId=` materialises due schedules into groups.
 - `GET/PUT/DELETE /v1/lunch-session`: the shared list of active orders (`records`) with `record` = the nearest; `DELETE ?sessionId=` forgets one.
 
 ## Ramp sandbox (`/v1/ramp`)
 
-Enable the client-credentials grant and `business:read`, `users:read`, `funds:read`, `funds:write` in the Ramp sandbox
+Enable the client-credentials grant and `business:read`, `users:read`, `funds:read`, `funds:write`, `limits:read` in the Ramp sandbox
 developer application. Tokens are scoped per operation and kept in memory. The app never receives the client secret,
 access tokens, full card numbers or CVVs. Requests must carry `X-Camp-Client: camp-native` and no browser `Origin`
 (no CORS); `X-Camp-Token` applies when `CAMP_TOKEN` is set.
@@ -52,6 +58,16 @@ access tokens, full card numbers or CVVs. Requests must carry `X-Camp-Client: ca
   for a chosen active employee. Cap: $150 by default; `CAMP_SANDBOX_GROUP_CAP_CENTS` can lower it. Funds allow virtual
   cards only, restrict the Ramp category to Restaurants (19), use a non-resetting TOTAL limit plus an equal
   per-transaction cap, and lock after 24 hours.
+- `GET /v1/ramp/limits/{employee}`: the employee's live Ramp limits, the binding one, and their overage requests.
+  `perOrderCents` — what is left in the current interval, or Ramp's smaller per-transaction ceiling — is the cap the
+  app shows on Today and sends with the profile, so the office per-person setting is only a fallback for when Ramp
+  holds no limit. The one-off `camp · …` allocations are excluded: they are lunch money for one order, not a limit.
+- `POST /v1/ramp/overages`: `{ "requestID": "UUID", "userID": "UUID", "requestedCents": 7500, "reason": "", "requester": "" }`
+  files a request to raise that limit. Idempotent on `requestID`, one pending request per employee, and it must ask
+  for more than Ramp currently allows. Nothing changes in Ramp until someone decides.
+- `POST /v1/ramp/overages/{id}/decision`: `{ "approve": true, "approver": "" }`. Approving PATCHes the limit in Ramp to
+  the requested ceiling on top of what is already spent; the row keeps `baseline_cents`, the ceiling it had before. A
+  decision is final, and denial touches nothing in Ramp. Who may approve is the app's call (it gates on demo-admin).
 - Idempotency: the `ramp_attempts` row (request fingerprint, immutable payload, state) is written before the remote
   POST. Retries return the existing result; an interrupted attempt is marked `unknown` on restart and reconciled by the
   unique fund name, never blindly re-issued. The Ramp POST also carries `X-Idempotency-Key`.

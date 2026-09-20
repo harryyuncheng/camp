@@ -31,6 +31,18 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         settings.$lunchGroups.assign(to: &model.$groups)
         settings.$selectedGroupID.assign(to: &model.$joinedGroupID)
         model.onJoin = { [weak self] option, group in self?.settings.join(option, group: group) }
+        // "Looking for something else" in the notch: the same catalog search the Today page uses, and confirming
+        // one of its results starts a group order at that place.
+        settings.$craving.assign(to: &model.$cravingResult)
+        settings.$cravingBusy.assign(to: &model.$cravingBusy)
+        settings.$cravingError.assign(to: &model.$cravingError)
+        model.onCravingSearch = { [weak self] text, category in
+            await self?.settings.searchCraving(text, category: category)
+        }
+        model.onCravingOrder = { [weak self] restaurant, option, minutes, category in
+            guard let self else { return }
+            Task { await self.settings.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meals: [option], category: category) }
+        }
         settings.requestDemoGroup = { [weak self] group in
             guard let self else { return }
             self.model.officeName = self.settings.draft.office.name

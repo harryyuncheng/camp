@@ -50,13 +50,33 @@ public final class CampSettingsStore: ObservableObject {
     public var totalSavingsCents: Int { groupsSummary?.totalSavingsCents ?? lunchGroups.reduce(0) { $0 + savingsCents(for: $1) } }
     /// Every group the user is in today, one per category at most, nearest arrival first.
     public var myGroups: [DemoLunchGroup] { lunchGroups.filter { $0.myOptionId != nil || ($0.id == selectedGroupID && selectedMeal != nil) }.sorted { $0.arrivalMinutes < $1.arrivalMinutes } }
-    public func myOption(in group: DemoLunchGroup) -> LunchOption? {
-        if group.id == selectedGroupID, let selectedMeal { return selectedMeal }
-        return group.options.first { $0.id == group.myOptionId }
+    public func myOption(in group: DemoLunchGroup) -> LunchOption? { myOptions(in: group).first }
+    /// Everything the user ordered from this group: a main plus any sides or drinks that fit their budget.
+    public func myOptions(in group: DemoLunchGroup) -> [LunchOption] {
+        if group.id == selectedGroupID, !selectedMeals.isEmpty { return selectedMeals }
+        let ids = group.myOptionIdList
+        return ids.compactMap { id in group.options.first { $0.id == id } }
     }
     public func participantCount(for group: DemoLunchGroup) -> Int {
-        group.people + (myOption(in: group) != nil ? 1 : 0)
+        group.people + (myOption(in: group) != nil ? 1 : 0)      // several items, still one person
     }
+    /// What one person may spend on a single group order. Ramp is the authority whenever Connections names a Ramp
+    /// employee and Ramp holds a live limit for them; the office cap is the fallback for the offline demo. `save()`
+    /// syncs this number to the backend, so greying options out here matches what the backend will accept.
+    public var personBudgetCents: Int { rampLimits?.perOrderCents ?? saved.office.personBudgetCents }
+    /// Where `personBudgetCents` came from, for the line under the budget bar.
+    public var personBudgetSource: String {
+        guard let limit = rampLimits?.limit, rampLimits?.perOrderCents != nil else { return "Office per-person cap" }
+        return "Ramp · \(limit.name)" + (limit.spentCents > 0 ? " · \(LunchStyle.money(limit.spentCents)) spent \(limit.interval.lowercased())" : "")
+    }
+    /// True when `option` can still be added to `selection` without going over the cap. The first item always fits:
+    /// an expensive main is an order, not an overrun.
+    public func fitsBudget(_ option: LunchOption, with selection: [LunchOption]) -> Bool {
+        if selection.contains(where: { $0.id == option.id }) { return true }
+        if selection.isEmpty { return true }
+        return selection.reduce(option.priceCents) { $0 + $1.priceCents } <= personBudgetCents
+    }
+    public func selectionTotalCents(_ selection: [LunchOption]) -> Int { selection.reduce(0) { $0 + $1.priceCents } }
     public func restaurants(for category: OrderCategory) -> [LunchRestaurant] { restaurants.filter { $0.serves(category) } }
     public func savingsCents(for group: DemoLunchGroup) -> Int { max(0, participantCount(for: group) - 1) * (group.deliveryFeeCents ?? 600) }
 
@@ -118,10 +138,10 @@ public final class CampSettingsStore: ObservableObject {
         let mine = lunchGroups.filter { $0.myOptionId != nil }
         if let next = mine.first(where: { $0.arrivalMinutes >= now - 30 }) ?? mine.first {
             selectedGroupID = next.id
-            selectedMeal = next.options.first { $0.id == next.myOptionId }
+            selectedMeals = next.myOptionIdList.compactMap { id in next.options.first { $0.id == id } }
             groupStage = .collecting
         } else {
-            selectedGroupID = nil; selectedMeal = nil
+            selectedGroupID = nil; selectedMeals = []
         }
         syncOrderEvents()
     }
@@ -139,9 +159,9 @@ public final class CampSettingsStore: ObservableObject {
         if group.myOptionId != nil {
             for i in lunchGroups.indices where lunchGroups[i].id != group.id && lunchGroups[i].kind == group.kind { lunchGroups[i].myOptionId = nil }
             selectedGroupID = group.id
-            selectedMeal = group.options.first { $0.id == group.myOptionId }
+            selectedMeals = group.myOptionIdList.compactMap { id in group.options.first { $0.id == id } }
         } else if selectedGroupID == group.id {
-            selectedGroupID = nil; selectedMeal = nil
+            selectedGroupID = nil; selectedMeals = []
         }
         lunchGroups.removeAll { $0.status == "cancelled" }
         lunchGroups.sort { ($0.arrivalMinutes, $0.name) < ($1.arrivalMinutes, $1.name) }
@@ -152,15 +172,20 @@ public final class CampSettingsStore: ObservableObject {
     /// the same category first.
     @discardableResult
     public func createGroup(restaurant: LunchRestaurant, arrivalMinutes: Int, meal: LunchOption, category: OrderCategory) async -> Bool {
-        guard restaurant.options.contains(meal), (300...1320).contains(arrivalMinutes), restaurant.serves(category) else { return false }
+        await createGroup(restaurant: restaurant, arrivalMinutes: arrivalMinutes, meals: [meal], category: category)
+    }
+    @discardableResult
+    public func createGroup(restaurant: LunchRestaurant, arrivalMinutes: Int, meals: [LunchOption], category: OrderCategory) async -> Bool {
+        guard let first = meals.first, meals.allSatisfy({ restaurant.options.contains($0) }),
+              (300...1320).contains(arrivalMinutes), restaurant.serves(category) else { return false }
         do {
             let group = try await client().createGroup(office: officeRef, restaurantId: restaurant.id, deliveryMinutes: arrivalMinutes,
-                                                       optionId: meal.id, userId: recommenderUserID, displayName: saved.personal.displayName,
+                                                       optionIds: meals.map(\.id), userId: recommenderUserID, displayName: saved.personal.displayName,
                                                        category: category)
             if let me = group.userId { remember(userId: me) }
             merge(group)
             groupsError = nil
-            requestConfirmedDemoGroup?(group, meal)
+            requestConfirmedDemoGroup?(group, first)
             await refreshGroups()
             return true
         } catch { groupsError = "Couldn’t create the order: \(error.localizedDescription)"; return false }
@@ -183,7 +208,7 @@ public final class CampSettingsStore: ObservableObject {
             lunchCalendar.removeOrderEvent(id: eventId); events[groupId] = nil
         }
         for (groupId, group) in mine where events[groupId] == nil {
-            let item = group.options.first { $0.id == group.myOptionId }?.name ?? ""
+            let item = myOptions(in: group).map(\.name).joined(separator: " · ")
             let order = CampOrderEvent(title: "\(group.kind.label) · \(group.name)",
                                        start: lunchCalendar.date(minutes: group.arrivalMinutes),
                                        durationMinutes: group.kind == .coffee ? 15 : saved.personal.lunchDuration,
@@ -249,15 +274,18 @@ public final class CampSettingsStore: ObservableObject {
     public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
     /// Joins (or changes the meal in) a group. Optimistic locally, then `POST /v1/groups/{id}/join` makes it the
     /// backend's truth: the member row and a confirmed Order for this lunch.
-    public func join(_ option: LunchOption, group: DemoLunchGroup) {
-        guard group.options.contains(option) else { return }
+    public func join(_ option: LunchOption, group: DemoLunchGroup) { join([option], group: group) }
+    /// Joins with a whole selection (`POST /v1/groups/{id}/join`): one delivery share for the person, one confirmed
+    /// Order per item. The selection replaces whatever they had in this group before.
+    public func join(_ options: [LunchOption], group: DemoLunchGroup) {
+        guard !options.isEmpty, options.allSatisfy({ group.options.contains($0) }) else { return }
         if !lunchGroups.contains(where: { $0.id == group.id }) { lunchGroups.append(group) }
         selectedGroupID = group.id
-        selectedMeal = option
+        selectedMeals = options
         groupStage = .collecting
         Task {
             do {
-                let updated = try await client().joinGroup(group.id, office: officeRef, optionId: option.id,
+                let updated = try await client().joinGroup(group.id, office: officeRef, optionIds: options.map(\.id),
                                                            userId: recommenderUserID, displayName: saved.personal.displayName)
                 if let me = updated.userId { remember(userId: me) }
                 merge(updated)
@@ -267,7 +295,9 @@ public final class CampSettingsStore: ObservableObject {
             } catch { groupsError = "Couldn’t join \(group.name): \(error.localizedDescription)" }
         }
     }
-    @Published public var selectedMeal: LunchOption?
+    /// The first item of `selectedMeals`; the notch and the Live Activity show one meal.
+    public var selectedMeal: LunchOption? { selectedMeals.first }
+    @Published public var selectedMeals: [LunchOption] = []
     @Published public var groupStage = DemoGroupStage.collecting
     @Published public var previewConnections: Set<String> = []
     /// First-run setup. Never shown automatically: `CampDemoPage` opens it, so a demo starts on Today.
@@ -297,6 +327,56 @@ public final class CampSettingsStore: ObservableObject {
     /// Spending page. Nothing is charged; the rows are the record of what was ordered.
     @Published public var ledger: LunchLedgerResponse?
     @Published public var ledgerError: String?
+    /// The Ramp employee whose real limits bound this device's spending (Connections → Ramp employee).
+    public var rampEmployeeID: String { draft.connections.rampEmployeeReference }
+    /// `GET /v1/ramp/limits/{employee}`: the employee's live Ramp limits and their overage requests. nil until the
+    /// Ramp card is connected, or when Ramp holds no limit for them.
+    @Published var rampLimits: RampSpendLimits?        // internal: the Ramp wire types stay inside this module
+    @Published public var rampLimitError: String?
+    @Published public var rampOverageBusy = false
+
+    public func refreshRampLimits() async {
+        let employee = rampEmployeeID
+        guard !employee.isEmpty else { rampLimits = nil; rampLimitError = nil; return }
+        let before = rampLimits?.perOrderCents
+        do {
+            rampLimits = try await client().ramp("/limits/\(employee)")
+            rampLimitError = nil
+            // The backend enforces the cap too, so a changed Ramp number goes straight into the stored profile.
+            if rampLimits?.perOrderCents != before { await syncProfile() }
+        } catch {
+            rampLimits = nil
+            rampLimitError = "Couldn’t read the Ramp limit: \(error.localizedDescription)"
+        }
+    }
+
+    /// Asks for a higher ceiling on the employee's binding Ramp limit. Nothing changes in Ramp until it is approved.
+    public func requestOverage(cents: Int, reason: String) async {
+        guard !rampEmployeeID.isEmpty, !rampOverageBusy else { return }
+        rampOverageBusy = true
+        defer { rampOverageBusy = false }
+        let payload: [String: Any] = ["requestID": UUID().uuidString, "userID": rampEmployeeID, "requestedCents": cents,
+                                      "reason": reason, "requester": saved.personal.displayName]
+        do {
+            let body = try JSONSerialization.data(withJSONObject: payload)
+            let _: RampOverage = try await client().ramp("/overages", body: body)
+            rampLimitError = nil
+            await refreshRampLimits()
+        } catch { rampLimitError = "Couldn’t request the overage: \(error.localizedDescription)" }
+    }
+
+    /// Approve or deny a pending request. Approving raises the limit in Ramp; the app gates this on demo-admin mode.
+    public func decideOverage(_ id: String, approve: Bool) async {
+        guard isDemoAdmin, !rampOverageBusy else { return }
+        rampOverageBusy = true
+        defer { rampOverageBusy = false }
+        do {
+            let body = try JSONSerialization.data(withJSONObject: ["approve": approve, "approver": saved.personal.displayName])
+            let _: RampOverage = try await client().ramp("/overages/\(id)/decision", body: body)
+            rampLimitError = nil
+            await refreshRampLimits()
+        } catch { rampLimitError = "Couldn’t record the decision: \(error.localizedDescription)" }
+    }
     public func refreshLedger() async {
         guard let userId = recommenderUserID else { ledger = nil; return }
         do { ledger = try await client().ledger(userId: userId, officeName: saved.office.name); ledgerError = nil }
@@ -392,7 +472,8 @@ public final class CampSettingsStore: ObservableObject {
     /// any other device read the same profile.
     public func syncProfile() async {
         do {
-            let result = try await client().putProfile(MealContext(configuration: saved, userId: recommenderUserID))
+            let result = try await client().putProfile(MealContext(configuration: saved, userId: recommenderUserID,
+                                                                   budgetCentsOverride: rampLimits?.perOrderCents))
             remember(userId: result.userId)
             statusMessage = "Saved · profile synced to the backend"
             await refreshAll()
@@ -403,12 +484,12 @@ public final class CampSettingsStore: ObservableObject {
     /// Leaves the nearest joined group (the one the notch shows).
     public func resetGroup() {
         if let group = selectedGroup { leave(group) }
-        else { selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting; requestEndDemoGroup?() }
+        else { selectedGroupID = nil; selectedMeals = []; groupStage = .collecting; requestEndDemoGroup?() }
     }
     /// Leaves one group (`DELETE /v1/groups/{id}/members/{me}`): the member row goes, the order is cancelled and the
     /// calendar block is removed. Other categories' orders are untouched.
     public func leave(_ group: DemoLunchGroup) {
-        if selectedGroupID == group.id { selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting; requestEndDemoGroup?() }
+        if selectedGroupID == group.id { selectedGroupID = nil; selectedMeals = []; groupStage = .collecting; requestEndDemoGroup?() }
         if let i = lunchGroups.firstIndex(where: { $0.id == group.id }) { lunchGroups[i].myOptionId = nil }
         syncOrderEvents()
         guard let userId = recommenderUserID else { return }
@@ -419,7 +500,7 @@ public final class CampSettingsStore: ObservableObject {
     }
     public func join(_ option: LunchOption) {
         guard groupStage == .collecting else { return }
-        selectedMeal = option
+        selectedMeals = [option]
     }
 
     // MARK: recommender
@@ -432,7 +513,7 @@ public final class CampSettingsStore: ObservableObject {
         recommenderBusy = true; recommenderError = nil
         defer { recommenderBusy = false }
         do { recommenderHealth = try await client().health() }
-        catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run uvicorn camp.api:app --port 8788" }
+        catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run camp serve" }
     }
 
     /// Called by the platform shell when the lunch card changes phase. Only sessions that came from
@@ -460,7 +541,8 @@ public final class CampSettingsStore: ObservableObject {
         recommenderBusy = true; recommenderError = nil
         defer { recommenderBusy = false }
         do {
-            let context = MealContext(configuration: draft, userId: recommenderUserID)
+            let context = MealContext(configuration: draft, userId: recommenderUserID,
+                                      budgetCentsOverride: rampLimits?.perOrderCents)
             let offer = try await client().mealOffer(context, force: force)
             latestOffer = offer
             remember(userId: offer.userId)

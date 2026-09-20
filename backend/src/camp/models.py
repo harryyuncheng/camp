@@ -340,11 +340,23 @@ class GroupOption(BaseModel):
 
 
 class GroupMember(BaseModel):
+    """One person in a group order. A member can order several items; `option_ids` is the authority and
+    `option_id` / `order_id` mirror its first entry so rows and clients written before multi-item orders
+    keep working. The delivery share is charged once per member, on the first item's Order."""
     user_id: str
     display_name: str
     option_id: str
+    option_ids: list[str] = Field(default_factory=list)
     order_id: Optional[str] = None
+    order_ids: list[str] = Field(default_factory=list)
     joined_at: datetime = Field(default_factory=utcnow)
+
+    def items(self) -> list[str]:
+        return self.option_ids or ([self.option_id] if self.option_id else [])
+
+    def set_items(self, ids: list[str]) -> None:
+        self.option_ids = list(ids)
+        self.option_id = ids[0] if ids else ""
 
 
 class LunchGroup(BaseModel):
@@ -387,6 +399,23 @@ class RampAttempt(BaseModel):
     state: Literal["submitting", "ready", "unknown"] = "submitting"
     result: Optional[dict] = None
     created_at: datetime = Field(default_factory=utcnow)
+
+
+class RampOverageRequest(BaseModel):
+    """One ask to spend above the employee's Ramp limit. `state`: pending → approved | denied. Approving raises the
+    limit in Ramp; `baseline_cents` records what it was beforehand so the original ceiling is never lost."""
+    id: str                                # client request UUID
+    ramp_user_id: str                      # the Ramp employee the limit belongs to
+    limit_id: str                          # the Ramp limit (fund) that would be raised
+    limit_name: str = ""
+    requester: str = ""                    # display name, so the approver sees who asked
+    baseline_cents: int                    # the limit as Ramp reported it when the request was made
+    requested_cents: int                   # the ceiling being asked for
+    reason: str = ""
+    state: Literal["pending", "approved", "denied"] = "pending"
+    decided_by: str = ""
+    created_at: datetime = Field(default_factory=utcnow)
+    decided_at: Optional[datetime] = None
 
 
 # ---------------------------------------------------------------- shared lunch session (Mac <-> iPhone)

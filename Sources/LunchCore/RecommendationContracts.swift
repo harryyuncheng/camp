@@ -36,7 +36,9 @@ public struct MealContext: Codable, Equatable {
     public var nowMinutes: Int?
 
     /// Builds the context from local configuration. Raw coordinates for the office are policy, not the user's location.
-    public init(configuration c: CampConfiguration, userId: String?, now: Date = .now) {
+    /// `budgetCentsOverride` is the employee's live Ramp limit when one is known: Ramp, not the office setting, is
+    /// what the backend should enforce.
+    public init(configuration c: CampConfiguration, userId: String?, budgetCentsOverride: Int? = nil, now: Date = .now) {
         self.userId = userId
         displayName = c.personal.displayName
         office = OfficeRef(policy: c.office)
@@ -48,7 +50,7 @@ public struct MealContext: Codable, Equatable {
         lunchStart = c.personal.lunchStart; lunchEnd = c.personal.lunchEnd; lunchDuration = c.personal.lunchDuration
         dietaryStyle = c.personal.dietaryStyle
         allergies = Self.split(c.personal.allergies); dislikes = Self.split(c.personal.dislikes)
-        budgetCents = c.office.personBudgetCents
+        budgetCents = budgetCentsOverride ?? c.office.personBudgetCents
         let parts = Calendar.current.dateComponents([.hour, .minute], from: now)
         nowMinutes = (parts.hour ?? 10) * 60 + (parts.minute ?? 0)
     }

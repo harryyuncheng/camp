@@ -53,6 +53,25 @@ final class OrdersTests: XCTestCase {
         XCTAssertNil([LunchSyncRecord]().nearest)
     }
 
+    func testMultiItemMembershipDecodesAndFallsBackToTheSingleItemForm() throws {
+        let multi = """
+        {"id":"g1","name":"Dig","cuisine":"Bowls","symbol":"leaf.fill","people":3,"delivery":"12:30–12:45","options":[],
+         "arrivalMinutes":750,"myOptionId":"i_a","myOptionIds":["i_a","i_b"],"budgetCents":2500}
+        """
+        let group = try JSONDecoder().decode(DemoLunchGroup.self, from: Data(multi.utf8))
+        XCTAssertEqual(group.myOptionIdList, ["i_a", "i_b"])
+        XCTAssertEqual(group.budgetCents, 2500)
+        let legacy = """
+        {"id":"g2","name":"Dig","cuisine":"Bowls","symbol":"leaf.fill","people":3,"delivery":"12:30–12:45","options":[],
+         "arrivalMinutes":750,"myOptionId":"i_a"}
+        """
+        XCTAssertEqual(try JSONDecoder().decode(DemoLunchGroup.self, from: Data(legacy.utf8)).myOptionIdList, ["i_a"])
+        let none = """
+        {"id":"g3","name":"Dig","cuisine":"Bowls","symbol":"leaf.fill","people":3,"delivery":"12:30–12:45","options":[],"arrivalMinutes":750}
+        """
+        XCTAssertTrue(try JSONDecoder().decode(DemoLunchGroup.self, from: Data(none.utf8)).myOptionIdList.isEmpty)
+    }
+
     func testScheduleLabels() throws {
         let json = """
         {"id":"sch_1","category":"coffee","label":"Morning coffee","timeMinutes":540,"weekdays":[0,1,2,3,4],"active":true}

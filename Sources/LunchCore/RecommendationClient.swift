@@ -1,6 +1,6 @@
 import Foundation
 
-/// Foundation-only client for the Python recommender (`uv run uvicorn camp.api:app --port 8788`).
+/// Foundation-only client for the Python recommender (`uv run camp serve`).
 public struct RecommendationClient {
     public let base: URL
     public var session: URLSession = .shared
@@ -109,10 +109,12 @@ public struct RecommendationClient {
         if let userId { body["userId"] = userId }
         return try await send("v1/craving", body: json(body))
     }
-    public func createGroup(office: OfficeRef, restaurantId: String, deliveryMinutes: Int, optionId: String,
+    /// `optionIds` is the whole selection: one item, or a main with sides. The backend charges one delivery share
+    /// per person however many items they ordered, and refuses extras that take them over their budget.
+    public func createGroup(office: OfficeRef, restaurantId: String, deliveryMinutes: Int, optionIds: [String],
                             userId: String?, displayName: String, category: OrderCategory? = nil) async throws -> DemoLunchGroup {
         var body: [String: Any] = ["office": try officeJSON(office), "restaurantId": restaurantId, "deliveryMinutes": deliveryMinutes,
-                                   "optionId": optionId, "displayName": displayName]
+                                   "optionIds": optionIds, "displayName": displayName]
         if let userId { body["userId"] = userId }
         if let category { body["category"] = category.rawValue }
         return try await send("v1/groups", body: json(body))
@@ -135,8 +137,8 @@ public struct RecommendationClient {
     public func removeSchedule(_ scheduleId: String, userId: String) async throws -> LunchSchedule {
         try await send("v1/schedules/\(scheduleId)", method: "DELETE", query: ["userId": userId])
     }
-    public func joinGroup(_ groupId: String, office: OfficeRef, optionId: String, userId: String?, displayName: String) async throws -> DemoLunchGroup {
-        var body: [String: Any] = ["office": try officeJSON(office), "optionId": optionId, "displayName": displayName]
+    public func joinGroup(_ groupId: String, office: OfficeRef, optionIds: [String], userId: String?, displayName: String) async throws -> DemoLunchGroup {
+        var body: [String: Any] = ["office": try officeJSON(office), "optionIds": optionIds, "displayName": displayName]
         if let userId { body["userId"] = userId }
         return try await send("v1/groups/\(groupId)/join", body: json(body))
     }

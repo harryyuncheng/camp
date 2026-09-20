@@ -9,7 +9,7 @@ The Demo tab connects to Ramp through a local Python backend, lists active sandb
 ```sh
 cp backend/.env.example backend/.env
 # Add your sandbox credentials to backend/.env.
-python3 backend/server.py
+(cd backend && uv run camp serve)   # the one backend, on the port the app expects (8788)
 ```
 
 Open camp → Demo → **Connect / refresh sandbox**. Choose the company payer and allocation before clicking **Create sandbox fund**. No food order or charge is placed.
@@ -28,7 +28,7 @@ camp writes to one calendar of its own, named **camp** (created in your iCloud a
 
 Everything camp coordinates is an **order** in one of two categories: **Coffee & tea** (morning coffee runs, cafés and bakeries) and **Meal**. A person holds at most one active order per category per day, so a coffee and a lunch can both be live, and the notch and the iPhone always show the nearest one first with a **Next:** link to the other. There is no time-of-day rule: schedule either category whenever you like.
 
-- **Today** lists the office's group orders with a category filter and a badge per card. **View menu** opens the whole menu for that place with the public rating (blended Google/Yelp/other-source score and review count), your **top picks** ranked by the recommender first, then the full list; anything on it can be ordered and joins the group's option list.
+- **Today** lists the office's group orders with a category filter and a badge per card. **View menu** opens the whole menu for that place with the public rating (blended Google/Yelp/other-source score and review count), your **top picks** ranked by the recommender first, then the full list; anything on it can be ordered and joins the group's option list. Items are ticked, not picked one at a time: order a main plus sides or a drink, with one delivery share for the lot. A budget bar tracks the per-person cap from **Office → Budgets**, and once the selection fills it the rest of the menu greys out (your first item always goes through, however expensive). The backend applies the same rule to `optionIds`, so nothing that greys out here can slip through another surface.
 - **New order** on Today starts a group at any café or restaurant that serves the chosen category.
 - **You → Standing orders** schedules a repeating order: category, label, time, weekdays, an optional place and usual item. The backend puts you in a matching group each morning (creating one if needed) and the Mac mirrors it as a repeating event in the **camp** calendar.
 - The catalog now holds real Flatiron cafés and bakeries as well as restaurants (`backend/src/camp/providers/fixtures/ramp_hq_cafes.json`); bakery-cafés such as Maman, Ole & Steen and Levain belong to both categories.
@@ -64,11 +64,12 @@ The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the
 
 ## Today demo and editable timing
 
-- **New order** picks a category, a place from the catalog (`GET /v1/restaurants?category=`), an arrival time and an item, then `POST /v1/groups` creates and joins it. One order per person per category per day: joining a different group in the same category leaves the previous one server-side. New groups start with just you and zero delivery savings.
+- **New order** picks a category, a place from the catalog (`GET /v1/restaurants?category=`), an arrival time and one or more items, then `POST /v1/groups` creates and joins it. One order per person per category per day: joining a different group in the same category leaves the previous one server-side. New groups start with just you and zero delivery savings.
 - **Craving something else?** in the create-order sheet takes free text ("I want tacos", "something spicy and Thai"). `POST /v1/craving` has OpenAI turn the sentence into typed search terms (cuisine, dish format, keywords, diet, price cap) and then scores the catalog's menus against them, so the model never invents a place or a price. The matched dishes come back as the restaurant's options: pick one and the usual create-and-join path takes over. Without `OPENAI_API_KEY` a keyword reader produces the same search terms offline, so the demo still works.
 - **Total savings** and **People ordering** are computed by the backend from real membership: each group shares one delivery fee (the restaurant's own fee), so savings are `(participants − 1) × fee`. Prices are all-in estimates, not live quotes.
 - A day with no groups is seeded by the backend from the catalog with synthetic colleagues (flagged `seeded`), so the office is never empty on first run.
 - The notch lists the same groups, including newly created ones. **Preview order invitation** opens group selection; confirmation updates Today and retracts to the menu bar after three seconds.
+- **Looking for something else?** sits in the notch too, on the group list and on the order card: type a place or a dish ("I want tacos", "iced oat latte") and the same `POST /v1/craving` search answers from the catalog. Picking a result puts that place on the card with its matching dishes as the options, and confirming starts a group order there (`POST /v1/groups`). The notch only takes keyboard focus while that field is focused; the rest of the time it stays a non-key overlay.
 - In **You → Meal timing**, type times such as `1pm`, `13:30` or `1330`, then press Enter or leave the field. Unsuffixed times use the 24-hour clock. Duration and buffer are typed in minutes. Invalid input leaves the last valid draft value unchanged; **Save** applies valid preferences to the calendar service.
 - Groups, membership and orders persist in the database across restarts. Settings persist locally and are mirrored to your backend profile on Save. Rebuilding with the development signature may require reconnecting OS calendar/location permissions.
 
@@ -175,8 +176,8 @@ uv run camp run-batch --days 3            # office lunch batches on synthetic da
 uv run camp run-home                      # single home order (argmax, full fee)
 uv run camp feedback-demo                 # NL feedback → events → profile updates
 uv run camp eval --backends mock          # §8 harness; add jev,llm with keys set
-uv run uvicorn camp.api:app --port 8788  # the one backend: recommender, groups, ledger, sync and Ramp bridge
-CAMP_TOKEN=pick-a-secret uv run uvicorn camp.api:app --host 0.0.0.0 --port 8788  # also reachable from the phone
+uv run camp serve                         # the one backend on :8788 (--reload on): recommender, groups, craving search, ledger, sync, Ramp
+CAMP_TOKEN=pick-a-secret uv run camp serve --host 0.0.0.0   # also reachable from the phone
 ```
 
 Database: everything server-owned lives in one Postgres database when `CAMP_DATABASE_URL` is set (in `backend/.env`
@@ -214,8 +215,9 @@ need partner access.
 
 ## Native app ↔ recommender
 
-One local service: `cd backend && uv run uvicorn camp.api:app --port 8788` (recommender, groups, ledger, sync and the
-Ramp sandbox bridge at `/v1/ramp`; `backend/server.py` is retired). In the app, Demo → Recommendation
+One local service: `cd backend && uv run camp serve` (recommender, groups, craving search, ledger, sync and the
+Ramp sandbox bridge at `/v1/ramp`; `backend/server.py` is retired). Every feature the app talks to lives behind that
+single URL; a bare `uvicorn camp.api:app` without `--port 8788` listens on :8000, which the app is not pointed at. In the app, Demo → Recommendation
 service → Connect, then **Request lunch offer**: the app sends a `MealContext` (saved preferences, allergies,
 lunch window, office policy, presence preview) and gets a `MealOffer` back (up to three options with all-in
 estimated prices under the office batch and an "ordered alone" baseline). On the Mac the offer opens in the notch
@@ -239,8 +241,8 @@ Stale writes get a 409 and the device adopts the newer record. Single user, one 
 
 To connect the phone (same Wi-Fi, or the Mac joined to the phone's Personal Hotspot):
 
-1. Run the backend bound to the network with a token: `cd backend && CAMP_TOKEN=pick-a-secret uv run uvicorn
-   camp.api:app --host 0.0.0.0 --port 8788`. Never bind `0.0.0.0` without `CAMP_TOKEN`; the API fronts your keys.
+1. Run the backend bound to the network with a token: `cd backend && CAMP_TOKEN=pick-a-secret uv run camp serve
+   --host 0.0.0.0`. Never bind `0.0.0.0` without `CAMP_TOKEN`; the API fronts your keys.
 2. On the Mac, Demo → Recommendation service: `http://127.0.0.1:8788`, the token, **Save**.
 3. On the phone, the same card: `http://<mac-name>.local:8788` (`scutil --get LocalHostName` on the Mac; the `.local`
    name survives switching between Wi-Fi and hotspot) or the Mac's LAN IP, the same token, **Save**. iOS asks for

@@ -18,7 +18,7 @@ from urllib.parse import parse_qs, urlencode, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from uuid import UUID
 
-from .models import RampAttempt
+from .models import RampAttempt, RampOverageRequest
 from .store import Store
 
 RAMP = "https://demo-api.ramp.com/developer/v1"
@@ -91,6 +91,38 @@ class RampClient:
             seen.add(cursor)
             next_path = path + ("&" if "?" in path else "?") + urlencode({"page_size": 100, "start": cursor})
         raise Problem("This sandbox has too many records for the local prototype.")
+
+
+CAMP_FUND_PREFIX = "camp \u00b7 "     # "camp · ": the one-off allocations this app issues, not a standing spend limit
+
+
+def _cents(money: dict | None) -> int:
+    return int((money or {}).get("amount") or 0)
+
+
+def limit_summary(limit: dict) -> dict:
+    """One row of GET /limits (note: `restrictions`, where GET /funds says `spending_restrictions`).
+
+    `remainingCents` is what is left in the current interval; `perOrderCents` is what a single order may cost, which
+    is the smaller of that and any per-transaction ceiling Ramp holds on the limit."""
+    r = limit.get("restrictions") or {}
+    total = _cents((r.get("limit") or {}))
+    spent = _cents(((limit.get("balance") or {}).get("total")))
+    remaining = max(0, total - spent)
+    txn = _cents(r.get("transaction_amount_limit")) if r.get("transaction_amount_limit") else 0
+    return {"id": limit["id"], "name": limit.get("display_name") or "Unnamed limit",
+            "state": limit.get("state", "UNKNOWN"), "interval": r.get("interval", "TOTAL"),
+            "limitCents": total, "spentCents": spent, "remainingCents": remaining,
+            "perOrderCents": min(remaining, txn) if txn else remaining,
+            "transactionLimitCents": txn, "resetsAt": r.get("next_interval_reset") or "",
+            "currency": (r.get("limit") or {}).get("currency_code", "USD")}
+
+
+def overage_wire(row: RampOverageRequest) -> dict:
+    return {"id": row.id, "userID": row.ramp_user_id, "limitID": row.limit_id, "limitName": row.limit_name,
+            "requester": row.requester, "baselineCents": row.baseline_cents, "requestedCents": row.requested_cents,
+            "reason": row.reason, "state": row.state, "decidedBy": row.decided_by,
+            "createdAt": row.created_at.isoformat(), "decidedAt": row.decided_at.isoformat() if row.decided_at else None}
 
 
 def fund_summary(fund: dict) -> dict:
@@ -176,3 +208,90 @@ class RampService:
         row.state = "ready"
         self.store.put(row)
         return row.result
+
+    # ------------------------------------------------------------ spending limits and overage requests
+
+    def spend_limits(self, user_id: str) -> dict:
+        """What this employee may actually spend, read from Ramp rather than from the local demo budget.
+
+        `perOrderCents` is the binding one — the smallest per-order ceiling across their active limits — and is what
+        the app shows and enforces. The one-off allocations this app issues (`camp · …`) are left out: they are lunch
+        money for a single group order, not a standing limit. None means Ramp holds no limit and the local cap stands.
+        """
+        user_id = self._employee(user_id)
+        rows = self.ramp.list(f"/limits?user_id={user_id}", "limits:read")
+        limits = [limit_summary(x) for x in rows
+                  if x.get("state") == "ACTIVE" and not (x.get("display_name") or "").startswith(CAMP_FUND_PREFIX)]
+        binding = min(limits, key=lambda x: x["perOrderCents"], default=None)
+        requests = self.store.overages_for(user_id)
+        return {"userID": user_id, "limits": limits, "limit": binding,
+                "perOrderCents": binding["perOrderCents"] if binding else None,
+                "overages": [overage_wire(r) for r in requests[:20]],
+                "pendingOverages": sum(1 for r in requests if r.state == "pending")}
+
+    def _employee(self, user_id: str) -> str:
+        try:
+            return str(UUID(user_id))
+        except (ValueError, AttributeError, TypeError):
+            raise Problem("A valid Ramp employee ID is required.", 400) from None
+
+    def request_overage(self, body: dict) -> dict:
+        """Ask for a higher ceiling on the employee's binding Ramp limit. Idempotent on `requestID`, so a retry after
+        a dropped response returns the same request instead of filing a second one. Nothing changes in Ramp until
+        someone approves it."""
+        try:
+            request_id = str(UUID(body["requestID"]))
+            user_id = self._employee(body["userID"])
+            amount = body["requestedCents"]
+            reason = str(body.get("reason") or "").strip()[:280]
+            requester = str(body.get("requester") or "").strip()[:80]
+        except (KeyError, ValueError, TypeError, AttributeError):
+            raise Problem("A valid request ID, Ramp employee and requested amount are required.", 400) from None
+        if type(amount) is not int or not 100 <= amount <= 100_000:
+            raise Problem("The requested ceiling must be between 100 and 100000 cents ($1–$1,000).", 400)
+        existing = self.store.get(RampOverageRequest, request_id)
+        if existing:
+            return overage_wire(existing)
+        snapshot = self.spend_limits(user_id)
+        binding = snapshot["limit"]
+        if not binding:
+            raise Problem("Ramp holds no active spending limit for this employee, so there is nothing to raise.", 409)
+        if amount <= binding["perOrderCents"]:
+            raise Problem("That is not above the current Ramp limit; no overage is needed.", 400)
+        if any(r.state == "pending" for r in self.store.overages_for(user_id)):
+            raise Problem("An overage request for this employee is already waiting for a decision.", 409)
+        row = RampOverageRequest(id=request_id, ramp_user_id=user_id, limit_id=binding["id"], limit_name=binding["name"],
+                                 requester=requester, baseline_cents=binding["perOrderCents"], requested_cents=amount,
+                                 reason=reason)
+        self.store.put(row)
+        return overage_wire(row)
+
+    def decide_overage(self, request_id: str, body: dict) -> dict:
+        """Approve or deny a pending request. Approving raises the limit in Ramp; `baseline_cents` on the row keeps
+        the ceiling it had beforehand. Who may approve is the app's call — this endpoint trusts its caller."""
+        try:
+            request_id = str(UUID(request_id))
+        except (ValueError, TypeError, AttributeError):
+            raise Problem("A valid request ID is required.", 400) from None
+        row = self.store.get(RampOverageRequest, request_id)
+        if not row:
+            raise Problem("No such overage request.", 404)
+        if row.state != "pending":
+            return overage_wire(row)              # already decided; the decision stands
+        approve = body.get("approve")
+        if type(approve) is not bool:
+            raise Problem("Send approve: true or approve: false.", 400)
+        if approve:
+            current = self.ramp.request("GET", "/limits/" + row.limit_id, "limits:read")
+            restrictions = current.get("restrictions") or {}
+            spending: dict = {"interval": restrictions.get("interval", "TOTAL"),
+                              "limit": {"amount": row.requested_cents + _cents((current.get("balance") or {}).get("total")),
+                                        "currency_code": "USD"}}
+            if restrictions.get("transaction_amount_limit"):
+                spending["transaction_amount_limit"] = {"amount": row.requested_cents, "currency_code": "USD"}
+            self.ramp.request("PATCH", "/funds/" + row.limit_id, "funds:write", {"spending_restrictions": spending})
+        row.state = "approved" if approve else "denied"
+        row.decided_by = str(body.get("approver") or "").strip()[:80]
+        row.decided_at = dt.datetime.now(dt.timezone.utc)
+        self.store.put(row)
+        return overage_wire(row)
