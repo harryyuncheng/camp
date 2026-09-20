@@ -20,25 +20,6 @@ struct CampDemoPage: View {
         VStack(spacing: 20) {
             CampRecommendationView(store: store)
             if let offer = store.latestOffer { liveOffer(offer) }
-            CampRampView(store: store)
-            DisclosureGroup("Recommender diagnostics") {
-                diagnostics.padding(.top, 12)
-            }
-            CampCard("Ordering", subtitle: "Placeholder · no ordering provider is integrated yet.") {
-                Picker("Provider", selection: $store.draft.connections.orderingProvider) {
-                    Text("Mock provider").tag("Mock provider")
-                    Text("DoorDash · planned").tag("DoorDash")
-                }
-                CampBadge(text: store.draft.connections.orderingProvider == "Mock provider" ? "Demo only" : "Not connected")
-                Text("No orders are submitted.").font(.callout).foregroundStyle(CampPalette.muted)
-            }
-            Text("Ramp and recommendations use the same service URL above. Save connection changes to apply them to device sync.")
-                .font(.caption).foregroundStyle(CampPalette.muted)
-        }.task { await refresh() }
-    }
-
-    private var diagnostics: some View {
-        VStack(spacing: 20) {
             CampCard("Recommender debug", subtitle: "GET /v1/health and /v1/debug/snapshot") {
                 HStack {
                     Button(busy ? "Loading…" : "Refresh") { Task { await refresh() } }.buttonStyle(CampActionStyle()).disabled(busy)
@@ -56,14 +37,20 @@ struct CampDemoPage: View {
             if let user { userCard(user) }
             feedbackCard
             if let snapshot { CampCard("Raw snapshot") { JSONTree(value: snapshot, depth: 0) } }
-            if !store.draft.connections.backendURL.isEmpty {
-                CampCard("Legacy bridge URL", subtitle: "Ramp now uses the recommendation service URL. This stored value is unused but still validated when saving.") {
-                    CampTextField(title: "Legacy bridge URL", text: $store.draft.connections.backendURL)
-                    Button("Clear legacy URL") { store.draft.connections.backendURL = "" }
-                        .buttonStyle(CampActionStyle(primary: false))
+            CampRampView(store: store)
+            CampCard("Ordering", subtitle: "Placeholder · no ordering provider is integrated yet.") {
+                Picker("Provider", selection: $store.draft.connections.orderingProvider) {
+                    Text("Mock provider").tag("Mock provider")
+                    Text("DoorDash · planned").tag("DoorDash")
                 }
+                CampBadge(text: store.draft.connections.orderingProvider == "Mock provider" ? "Demo only" : "Not connected")
+                Text("No orders are submitted.").font(.callout).foregroundStyle(CampPalette.muted)
             }
-        }
+            CampCard("Ramp bridge URL", subtitle: "The local Python server that holds the Ramp sandbox credentials.") {
+                CampTextField(title: "http://127.0.0.1:8787", text: $store.draft.connections.backendURL)
+                Text("Leave blank to use http://127.0.0.1:8787.").font(.caption).foregroundStyle(CampPalette.muted)
+            }
+        }.task { await refresh() }
     }
 
     private func liveOffer(_ offer: MealOffer) -> some View {

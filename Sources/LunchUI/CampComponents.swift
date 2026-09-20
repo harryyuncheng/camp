@@ -48,17 +48,15 @@ struct CampCard<Content: View>: View {
 }
 
 struct CampActionStyle: ButtonStyle {
-    @Environment(\.isEnabled) private var isEnabled
     var primary = true
     func makeBody(configuration: Configuration) -> some View {
         configuration.label.font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(isEnabled ? (primary ? CampPalette.ink : CampPalette.green) : CampPalette.muted)
-            .padding(.horizontal, 17).padding(.vertical, 10)
-            .frame(minWidth: 44, minHeight: 44)
+            .foregroundStyle(primary ? CampPalette.ink : CampPalette.green)
+            .padding(.horizontal, 17).padding(.vertical, 12)
             .contentShape(Rectangle())
-            .background(primary && isEnabled ? CampPalette.lime : CampPalette.background)
+            .background(primary ? CampPalette.lime : CampPalette.background)
             .clipShape(RoundedRectangle(cornerRadius: 11))
-            .opacity(!isEnabled ? 0.6 : configuration.isPressed ? 0.7 : 1)
+            .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 

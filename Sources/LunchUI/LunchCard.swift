@@ -56,10 +56,14 @@ public struct LunchCard<Actions: View>: View {
                     }
                     actions
                 case .reviewing:
-                    if !session.selectedOptions.isEmpty {
-                        ForEach(session.selectedOptions) { option in MealLabel(option: option) }
+                    if let option = session.selectedOption {
+                        ForEach(session.selectedOptions) { selected in
+                            HStack(spacing: 8) {
+                                MealLabel(option: selected)
+                            }
+                        }
                         HStack {
-                            Text("Total \(LunchStyle.money(cartTotal)) estimated")
+                            Text("Save \(LunchStyle.money(option.savingsCents)) on delivery")
                                 .foregroundStyle(LunchStyle.lime)
                             Spacer(minLength: 4)
                             arrival
@@ -84,12 +88,6 @@ public struct LunchCard<Actions: View>: View {
         .padding(16)
         .background(embedded ? Color.clear : LunchStyle.ink)
         .clipShape(RoundedRectangle(cornerRadius: 22))
-    }
-
-    private var cartTotal: Int {
-        session.selectedOptions.enumerated().reduce(0) { total, entry in
-            total + entry.element.priceCents - (entry.offset == 0 ? 0 : entry.element.deliveryShareCents ?? 0)
-        }
     }
 
     private var arrival: some View {
