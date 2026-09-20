@@ -2,6 +2,9 @@
 
 **Corporate Autonomous Meal Protocol.**
 
+For the Mac/iPhone demo, start with the [demo runbook](docs/DEMO.md), including USB-C networking,
+local signing, backend recovery, and the device checks still required.
+
 ## Ramp sandbox integration
 
 The Demo tab connects to Ramp through a local Python backend, lists active sandbox employees, and can create a bounded restaurant fund with linked-card references. Credentials stay on the backend. See [setup and API details](backend/README.md).
@@ -30,14 +33,15 @@ Everything camp coordinates is an **order** in one of two categories: **Coffee &
 
 - **Today** lists the office's group orders with a category filter and a badge per card. **View menu** opens the whole menu for that place with the public rating (blended Google/Yelp/other-source score and review count), your **top picks** ranked by the recommender first, then the full list; anything on it can be ordered and joins the group's option list. Items are ticked, not picked one at a time: order a main plus sides or a drink, with one delivery share for the lot. A budget bar tracks the per-person cap from **Office → Budgets**, and once the selection fills it the rest of the menu greys out (your first item always goes through, however expensive). The backend applies the same rule to `optionIds`, so nothing that greys out here can slip through another surface.
 - **New order** on Today starts a group at any café or restaurant that serves the chosen category.
-- **You → Standing orders** schedules a repeating order: category, label, time, weekdays, an optional place and usual item. The backend puts you in a matching group each morning (creating one if needed) and the Mac mirrors it as a repeating event in the **camp** calendar.
+- **You → Standing orders** schedules a repeating order: category, label, time, weekdays, an optional place and usual item. Refreshing Today materializes a due occurrence into a matching group, creating one if needed; there is no background scheduler. The Mac mirrors the standing order as a repeating event in the **camp** calendar. Leaving today's occurrence does not immediately rejoin it on refresh.
 - The catalog now holds real Flatiron cafés and bakeries as well as restaurants (`backend/src/camp/providers/fixtures/ramp_hq_cafes.json`); bakery-cafés such as Maman, Ole & Steen and Levain belong to both categories.
 
 ## Configuration workspace
 
 The Mac app now opens a light camp workspace with lime accents. The dark notch panel remains available through the menu-bar icon or **Preview lunch invitation**. Right-click the camp menu-bar icon for **Open camp**, **Settings**, and **iPhone layout preview**.
 
-The shared workspace has five SwiftUI screens:
+The shared workspace has six SwiftUI sections. On iPhone, Today, You and Spending are bottom tabs;
+Office, Connections and Demo are under More.
 
 - **Today:** today's office group orders (coffee and meals) from the backend database, your confirmed orders, start an order at a catalog place, browse full menus with ratings, choose/change/leave, and live savings and participant totals.
 - **You:** food preferences, standing orders, editable meal timing, calendar selection and notification preview settings.
@@ -46,9 +50,9 @@ The shared workspace has five SwiftUI screens:
 - **Connections:** Mac calendars and location.
 - **Demo:** recommendation service, live offer and recommender debug views, Ramp sandbox bridge, and the DoorDash ordering placeholder.
 
-Use **Save** to persist settings on this device and sync your profile to the backend (`PUT /v1/profile`), or **Discard** to revert. Office settings become read-only when demo admin is off. Ramp makes sandbox API requests through the backend's `/v1/ramp` endpoints. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders live in the backend's `groups` and `orders` tables; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
+Use **Save** to persist settings on this device and sync your profile to the backend (`PUT /v1/profile`), or **Discard** to revert. Office settings become read-only when demo admin is off. Ramp makes sandbox API requests through the backend's `/v1/ramp` endpoints. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders live in the backend's `groups` and `orders` tables; no food orders or payments are made. Confirmations wait for the backend to acknowledge membership. Mac and iPhone share active sessions through the backend while the apps are active; calendar permissions, location permissions and connection settings remain device-local.
 
-The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. Xcode 16.2 on this machine successfully builds both the simulator and physical-device app. Running on the connected phone still requires Developer Mode and signing.
+The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. See [iPhone setup and historical verification](docs/IOS.md) for the earlier Xcode 16.2 build results. Running on a phone requires compatible Xcode/device support, Developer Mode and local signing.
 
 ## Today demo and editable timing
 

@@ -4,10 +4,10 @@ The native iPhone app and embedded WidgetKit extension share camp’s existing w
 
 ## Develop on this Mac
 
-1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. This machine has Xcode 16.2 selected and has successfully built both simulator and device binaries. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
+1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. The historical Xcode 16.2 results below apply to that revision and machine. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
 2. Open `Lunchline.xcodeproj`. Choose the **Lunchline** scheme (the app displays as **camp**), then an iPhone simulator. Run the app; Xcode embeds **LunchlineActivity** automatically.
 3. An unsigned simulator build is also available through `bash scripts/build-ios.sh`. It uses the machine’s selected Xcode without changing that selection. Override `DEVELOPER_DIR` if the newer Xcode has a different location.
-4. Today → a group’s **View menu** starts that group’s Live Activity and opens the existing lunch sheet. Select, review and confirm either in the app or on the activity. Create group → Create & join also starts a confirmed activity. Leave ends the current activity.
+4. Today → a group’s **View menu** opens its full menu. Choose one or more items and join; a successful backend response starts a confirmed activity. Existing activity controls also support selection, review and confirmation. Create group → Create & join starts a confirmed activity. Leave removes that group's shared session.
 5. **Preview lunch invitation** opens the existing demo controls. **Start demo lunch** starts a fresh sample. Close the sheet, background camp and lock the simulator to inspect the Lock Screen. On a Dynamic Island simulator, long-press the island for meal controls. Apple controls when the island expands; camp cannot force it open.
 6. **Simulate arrival** completes the activity. **End lunch** dismisses it. Tapping the activity body opens the lunch sheet through `camp://lunch/<session-id>`; legacy `lunchline://` links still work.
 
@@ -23,17 +23,19 @@ No Apple account, push certificate or Ramp credentials are needed for local simu
 
 ## Lifecycle and integration boundary
 
-`LunchController.present(_:group:)` is the main-actor entry point for a future incoming invitation. It requires a fresh choosing session with one to three unique options, checks the combined ActivityKit payload size, and replaces the previous local activity. `start(group:office:)` creates fixture invitations. For demos outside lunch hours, arrival is at least 35 minutes in the future.
+`LunchController.present(_:group:)` is the main-actor entry point for an incoming invitation. It requires a fresh choosing session with unique options, publishes it through the backend, then displays it locally. The ActivityKit projection checks the combined payload size against 4 KB. An activity failure leaves the acknowledged session visible in the app with an error. `presentConfirmed(_:office:)` preserves all item IDs from an acknowledged group join.
 
-The controller persists the meal session before publishing changes. Revision checks reject outdated buttons. App Intents execute in the containing app process; the extension renders ActivityKit state without accessing the app’s files. Group context travels in activity attributes, so returning to an active activity restores its group and confirmation into Today. Created group lists are otherwise in-memory; after the activity ends and the process restarts, complete group history is not restored.
+The controller waits for membership and session acknowledgements before advancing local confirmation state, then persists the session and group context in `SessionFile`. Revision checks reject outdated buttons. App Intents execute in the containing app process; the extension renders ActivityKit state without accessing the app’s files. Static activity attributes carry the session ID; group context is restored from the app's cache and backend. Groups, multi-item orders and historical receipts persist in the database and are refreshed through the API after launch.
+
+Membership and session publication are separate requests. If membership succeeds and publication fails, Today can already contain the order while the activity reports a retryable failure; refresh before retrying. A future operation/outbox API should make that recovery automatic.
 
 The app supports Lock Screen and compact, minimal and expanded Dynamic Island presentations. The activity uses a short, phone-specific composition of the existing camp styling; the desktop card is too tall for the Lock Screen’s limited height. No notification permission is requested for locally started activities.
 
 Automatic invitations while the phone app is closed are a separate integration: use ActivityKit push-to-start (iOS 17.2+), per-device token registration, an authenticated backend and APNs credentials/capability. Server reconciliation must also propagate phone confirmations back to the shared order. Those services and push entitlements are deliberately not represented as connected in this local build. The shared-lunch long-poll runs only while the app is active; nothing polls in the background.
 
-## Current verification and partner handoff
+## Historical verification and partner handoff
 
-On September 19, both the unsigned simulator build (arm64/x86_64) and the unsigned physical-device build succeeded with Xcode 16.2 on macOS 15.1. The app and Live Activity extension compile. There are existing deprecation and ActivityKit concurrency warnings under Swift 5 language mode; these did not block compilation.
+On September 19, both the unsigned simulator build (arm64/x86_64) and the unsigned physical-device build succeeded with Xcode 16.2 on macOS 15.1 for the revision tested then. These results do not validate subsequent changes. There were deprecation and ActivityKit concurrency warnings under Swift 5 language mode; these did not block that compilation.
 
 A connected iPhone 16 Pro running iOS 26.6.2 was detected and paired. Developer Mode was disabled, preventing developer services from becoming available. No local signing team is configured. No app installation, simulator launch or on-device interaction is claimed. This evidence does not establish a need to upgrade macOS: enable Developer Mode and configure signing first, then retry device preparation. If preparation subsequently rejects the available developer image, use a compatible newer Xcode/macOS combination.
 
@@ -43,7 +45,7 @@ For a partner to continue:
 2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`, and fill in their team and unique bundle prefix. Never commit the local file.
 3. Select the **Lunchline** scheme and their trusted, unlocked phone with Developer Mode enabled. Let Xcode prepare the device and resolve automatic signing for both targets.
 4. Run, open Today → View menu, then lock the phone. Select a meal in the activity, confirm, reopen camp and check Today. Also try Create group, Leave and Simulate arrival.
-5. For Mac-to-phone delivery, run the backend with `--host 0.0.0.0` and `CAMP_TOKEN`, point the Demo → Recommendation service card on both devices at it, keep camp open on the phone and choose a group in the Mac notch. Background delivery still needs APNs push-to-update.
+5. Follow the [USB-C demo runbook](DEMO.md) to establish an actual network interface, start a token-protected backend and configure both devices. Keep camp open on the phone when choosing a group in the Mac notch. Background delivery still needs APNs push-to-update.
 
 The first sandboxed attempt could not access CoreDevice/Simulator services or compiler preview plugins; repeating outside that sandbox allowed both builds to succeed. This is distinct from an Xcode compatibility failure.
 
