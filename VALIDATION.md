@@ -196,3 +196,13 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Group selection reserved a taller scrolling area than meal selection and triggered an extra measured panel resize during navigation.
 - Added a shared 260-point content stage for expanded screens, shortened the group list to three 52-point rows with 8-point gaps, and crossfade contents over 0.24 seconds while keeping header/footer anchored. Additional groups scroll. Reduce Motion disables the content animation.
 - Removed the competing meal-action animation. Release Mac build succeeded; no tests or live UI restart performed. Visual review remains pending relaunch.
+
+
+## iPhone build and connection check — 2026-09-19
+
+- Xcode 16.2 (16C5032a), macOS 15.1. Prior license blocker resolved.
+- `scripts/build-ios.sh` succeeded outside the tool sandbox for arm64/x86_64 Simulator, including the embedded activity extension.
+- Generic iOS device build with CODE_SIGNING_ALLOWED=NO also succeeded, including the extension. No source changes were needed.
+- Connected iPhone 16 Pro on iOS 26.6.2 is wired and paired, but reports Developer Mode disabled and no mounted developer image. Device installation/runtime verification blocked pending phone setup and signing team. No local signing override exists.
+- No macOS upgrade requirement established by this attempt. Existing SwiftUI deprecation and ActivityKit concurrency warnings remain.
+- No app installed, no phone reboot triggered, no simulator/UI interaction or automated tests run. Updated docs/IOS.md with partner handoff steps.

@@ -4,7 +4,7 @@ The native iPhone app and embedded WidgetKit extension share camp’s existing w
 
 ## Develop on this Mac
 
-1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. This machine now has Xcode 16.2 selected; complete its first-launch setup and license agreement before building. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
+1. Install Xcode 15 or newer, choosing a release compatible with your Mac and eventual phone OS. This machine has Xcode 16.2 selected and has successfully built both simulator and device binaries. Install an iOS 17+ Simulator runtime in Xcode Settings → Platforms (Components in newer releases).
 2. Open `Lunchline.xcodeproj`. Choose the **Lunchline** scheme (the app displays as **camp**), then an iPhone simulator. Run the app; Xcode embeds **LunchlineActivity** automatically.
 3. An unsigned simulator build is also available through `bash scripts/build-ios.sh`. It uses the machine’s selected Xcode without changing that selection. Override `DEVELOPER_DIR` if the newer Xcode has a different location.
 4. Today → a group’s **View menu** starts that group’s Live Activity and opens the existing lunch sheet. Select, review and confirm either in the app or on the activity. Create group → Create & join also starts a confirmed activity. Leave ends the current activity.
@@ -31,9 +31,21 @@ The app supports Lock Screen and compact, minimal and expanded Dynamic Island pr
 
 Automatic invitations while the phone app is closed are a separate integration: use ActivityKit push-to-start (iOS 17.2+), per-device token registration, an authenticated backend and APNs credentials/capability. Server reconciliation must also propagate phone confirmations back to the shared order. Those services and push entitlements are deliberately not represented as connected in this local build. No background polling is used.
 
-## Current verification limit
+## Current verification and partner handoff
 
-The initial build stopped at the Xcode 14.3.1 version preflight. After upgrading, Xcode 16.2 is selected, but SDK/build commands are blocked until its license agreement is accepted. No successful iOS compilation, simulator launch or device interaction is claimed. Device signing, final layout and intent execution still need checking once a supported Xcode is installed.
+On September 19, both the unsigned simulator build (arm64/x86_64) and the unsigned physical-device build succeeded with Xcode 16.2 on macOS 15.1. The app and Live Activity extension compile. There are existing deprecation and ActivityKit concurrency warnings under Swift 5 language mode; these did not block compilation.
+
+A connected iPhone 16 Pro running iOS 26.6.2 was detected and paired. Developer Mode was disabled, preventing developer services from becoming available. No local signing team is configured. No app installation, simulator launch or on-device interaction is claimed. This evidence does not establish a need to upgrade macOS: enable Developer Mode and configure signing first, then retry device preparation. If preparation subsequently rejects the available developer image, use a compatible newer Xcode/macOS combination.
+
+For a partner to continue:
+
+1. Pull `main` from the camp repository and open `Lunchline.xcodeproj` at the repository root.
+2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`, and fill in their team and unique bundle prefix. Never commit the local file.
+3. Select the **Lunchline** scheme and their trusted, unlocked phone with Developer Mode enabled. Let Xcode prepare the device and resolve automatic signing for both targets.
+4. Run, open Today → View menu, then lock the phone. Select a meal in the activity, confirm, reopen camp and check Today. Also try Create group, Leave and Simulate arrival.
+5. Automatic Mac-to-phone delivery is not implemented; start the invitation in the phone app for this demo.
+
+The first sandboxed attempt could not access CoreDevice/Simulator services or compiler preview plugins; repeating outside that sandbox allowed both builds to succeed. This is distinct from an Xcode compatibility failure.
 
 ## Apple references
 
