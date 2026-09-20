@@ -11,5 +11,11 @@ TARGETED_DEVICE_FAMILY = 1
 SUPPORTS_MACCATALYST = NO
 SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO
 
+// Real-time Live Activity updates while camp is backgrounded (APNs push-to-update and push-to-start)
+// need the Push Notifications capability, which a free Apple Developer team cannot sign. To enable,
+// set this to Config/App.entitlements in Local.xcconfig together with the CAMP_PUSH flag documented
+// in Local.xcconfig.example. Empty keeps every build signable without push.
+CAMP_PUSH_ENTITLEMENTS =
+
 // Optional machine-local signing overrides (never committed).
 #include? "Local.xcconfig"

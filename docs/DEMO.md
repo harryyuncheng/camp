@@ -36,8 +36,11 @@ The intended route is **USB Personal Hotspot**:
 
 This USB networking path requires a physical rehearsal. If no iPhone USB interface appears, a
 shared Wi-Fi network is the fallback; keep the same database and token. USB-C does not remove the
-need for reconnect handling, and it does not grant iOS background execution. Keep camp foregrounded
-on the phone for incoming changes; returning to the foreground refreshes the Lock Screen state.
+need for reconnect handling, and it does not grant iOS background execution. Without the `CAMP_PUSH`
+build, keep camp foregrounded on the phone for incoming changes; returning to the foreground refreshes
+the Lock Screen state. With `CAMP_PUSH` enabled and the backend's `CAMP_APNS_*` variables set
+(see `backend/src/camp/apns.py`), changes arrive in real time even while camp is closed — a new order
+push-starts the Live Activity and selections update it on the Lock Screen and Dynamic Island.
 
 ## Start the database and backend
 

@@ -32,6 +32,10 @@ struct LunchlineApp: App {
                     model.sync.configure(urlString: connections.recommendationURL, token: connections.recommendationToken)
                     if scenePhase == .active { model.sync.start() }
                 }
+                // onChange(of: scenePhase) doesn't fire for the launch-time .active phase, so the
+                // long-poll has to be started here or nothing from the Mac arrives until the first
+                // background/foreground cycle.
+                model.sync.start()
                 await model.refresh()
                 await settings.refreshAll()
                 syncMembership()

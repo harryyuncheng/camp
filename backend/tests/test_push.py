@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ec, utils
 
 from camp.apns import APNsClient, APNsConfig
-from camp.models import ActivityPushToken
+from camp.models import ActivityPushToken, ActivityStartToken
 from camp.store import Store
 from camp.sync import LunchSyncService
 
@@ -93,3 +93,90 @@ def test_fanout_never_breaks_a_write_without_a_loop(tmp_path):
         assert loop.run_until_complete(svc.publish(rec(), None, None, "mac"))["seq"] == 1
     finally:
         loop.close()
+
+
+# ------------------------------------------------------------ api fanout (update vs push-to-start)
+
+class _FakeAPNs:
+    enabled = True
+
+    def __init__(self):
+        self.sent = []
+
+    async def send(self, push_token, content_state, **kwargs):
+        self.sent.append((push_token, kwargs.get("event", "update"), kwargs.get("attributes")))
+        return (200, "apns-id")
+
+
+def _api(monkeypatch, tmp_path):
+    """The api module with its store/APNs swapped for a temp DB and a recording fake."""
+    monkeypatch.setenv("CAMP_DB", ":memory:")
+    monkeypatch.setenv("CAMP_DATABASE_URL", "")
+    import camp.api as api
+    store = Store(str(tmp_path / "camp.db"))
+    fake = _FakeAPNs()
+    monkeypatch.setattr(api, "store", store)
+    monkeypatch.setattr(api, "apns", fake)
+    return api, store, fake
+
+
+def test_write_push_starts_a_session_the_phone_never_saw(monkeypatch, tmp_path):
+    api, store, fake = _api(monkeypatch, tmp_path)
+    store.put(ActivityStartToken(id="iphone", push_token="beefface"))
+
+    asyncio.run(api._push_live_activity(rec("s1"), "mac"))
+    assert fake.sent == [("beefface", "start", {"sessionID": "s1"})]
+    assert store.get(ActivityStartToken, "iphone").started == ["s1"]
+
+    # A later write for the same session can't raise a duplicate Live Activity.
+    asyncio.run(api._push_live_activity(rec("s1", revision=1, phase="reviewing"), "mac"))
+    assert len(fake.sent) == 1
+    # The device that wrote is never pushed, and finished sessions never start an activity.
+    asyncio.run(api._push_live_activity(rec("s2"), "iphone"))
+    asyncio.run(api._push_live_activity(rec("s3", phase="delivered"), "mac"))
+    assert len(fake.sent) == 1
+
+
+def test_registered_update_token_wins_over_push_to_start(monkeypatch, tmp_path):
+    api, store, fake = _api(monkeypatch, tmp_path)
+    store.put(ActivityPushToken(id="s1", push_token="deadbeef", device="iphone"))
+    store.put(ActivityStartToken(id="iphone", push_token="beefface"))
+
+    asyncio.run(api._push_live_activity(rec("s1"), "mac"))
+    assert fake.sent == [("deadbeef", "update", None)]
+    assert store.get(ActivityStartToken, "iphone").started == []
+
+
+def test_update_token_registration_marks_the_session_started(monkeypatch, tmp_path):
+    """Once the phone has registered an activity token, dropping it (activity ended) must not let a
+    later write push-start a duplicate for the same session."""
+    api, store, fake = _api(monkeypatch, tmp_path)
+    store.put(ActivityStartToken(id="iphone", push_token="beefface"))
+    api.lunch_session_push_token(api.ActivityTokenReq(session_id="s1", push_token="deadbeef", device="iphone"))
+    assert store.get(ActivityStartToken, "iphone").started == ["s1"]
+
+    store.delete(ActivityPushToken, "s1")  # as happens when the activity ends (410/finished)
+    asyncio.run(api._push_live_activity(rec("s1", revision=2, phase="choosing"), "mac"))
+    assert fake.sent == []
+
+
+def test_forgetting_an_order_ends_its_pushed_activity(monkeypatch, tmp_path):
+    api, store, fake = _api(monkeypatch, tmp_path)
+    store.put(ActivityPushToken(id="s1", push_token="deadbeef", device="iphone"))
+    store.put(ActivityPushToken(id="s2", push_token="cafef00d", device="iphone"))
+
+    asyncio.run(api._end_live_activities([rec("s1")]))
+    assert fake.sent == [("deadbeef", "end", None)]
+    assert store.get(ActivityPushToken, "s1") is None
+    assert store.get(ActivityPushToken, "s2") is not None
+
+
+def test_push_start_token_registration_round_trip(monkeypatch, tmp_path):
+    api, store, _ = _api(monkeypatch, tmp_path)
+    api.lunch_session_push_start_token(api.ActivityStartTokenReq(push_token="BEEF", device="iphone"))
+    assert store.get(ActivityStartToken, "iphone").push_token == "beef"
+    # Re-registering a rotated token keeps the sessions this device already renders.
+    store.put(ActivityStartToken(id="iphone", push_token="beef", started=["s1"]))
+    api.lunch_session_push_start_token(api.ActivityStartTokenReq(push_token="cafe", device="iphone"))
+    row = store.get(ActivityStartToken, "iphone")
+    assert row.push_token == "cafe" and row.started == ["s1"]

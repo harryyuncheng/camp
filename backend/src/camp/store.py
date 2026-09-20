@@ -17,8 +17,8 @@ from typing import Iterable, Iterator, TypeVar
 import psycopg
 from pydantic import BaseModel
 
-from .models import (ActivityPushToken, Batch, FeedbackEvent, LunchGroup, MenuItem, OfferRecord, Order, RampAttempt, RampOverageRequest, Restaurant,
-                     ScheduledOrder, SyncState, User)
+from .models import (ActivityPushToken, ActivityStartToken, Batch, FeedbackEvent, LunchGroup, MenuItem, OfferRecord, Order, RampAttempt,
+                     RampOverageRequest, Restaurant, ScheduledOrder, SyncState, User)
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -27,13 +27,13 @@ TABLES: dict[type[BaseModel], str] = {
     Order: "orders", Batch: "batches", FeedbackEvent: "events",
     LunchGroup: "groups", RampAttempt: "ramp_attempts", RampOverageRequest: "ramp_overages",
     SyncState: "sync", ScheduledOrder: "schedules", OfferRecord: "offers",
-    ActivityPushToken: "activity_push_tokens",
+    ActivityPushToken: "activity_push_tokens", ActivityStartToken: "activity_start_tokens",
 }
 # JSON keys promoted to indexed columns per table (used by the convenience queries)
 INDEXED: dict[str, list[str]] = {
     "users": ["office_id"], "items": ["restaurant_id"], "orders": ["user_id", "date"],
     "events": ["user_id"], "batches": ["office_id", "date"], "restaurants": [],
-    "groups": ["office_id", "date"], "ramp_attempts": [], "ramp_overages": ["ramp_user_id"], "sync": [], "schedules": ["user_id"], "activity_push_tokens": [],
+    "groups": ["office_id", "date"], "ramp_attempts": [], "ramp_overages": ["ramp_user_id"], "sync": [], "schedules": ["user_id"], "activity_push_tokens": [], "activity_start_tokens": [],
     "offers": ["user_id", "date"],
 }
 

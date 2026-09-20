@@ -92,6 +92,8 @@ class LunchSyncService:
         # Set by the API layer to fan an accepted write out to Live Activity push tokens. It runs detached
         # so a slow or unreachable APNs never holds the compare-and-swap lock or delays the long-poll.
         self.on_change: Optional[Callable[[dict, str], Awaitable[None]]] = None
+        # Same, for the records a `clear` removed: phones showing them get an "end" push.
+        self.on_remove: Optional[Callable[[list[dict]], Awaitable[None]]] = None
         self.seq = 0
         self.records: list[dict] = []
         self._changed = asyncio.Condition()
@@ -148,7 +150,7 @@ class LunchSyncService:
             return self.snapshot()
 
     def _fanout(self, stored: dict, device: str) -> None:
-        """Schedules the push-to-update for `stored`. Detached on purpose; failures are logged by the sender."""
+        """Schedules the push for `stored`. Detached on purpose; failures are logged by the sender."""
         if self.on_change is None:
             return
         try:
@@ -156,11 +158,21 @@ class LunchSyncService:
         except RuntimeError:  # no loop (tests calling publish synchronously) - nothing to push to
             pass
 
+    def _fanout_removed(self, removed: list[dict]) -> None:
+        if not removed or self.on_remove is None:
+            return
+        try:
+            asyncio.get_running_loop().create_task(self.on_remove(removed))
+        except RuntimeError:
+            pass
+
     async def clear(self, session_id: Optional[str] = None) -> dict:
         """Forget one order, or every order when `session_id` is None."""
         async with self._changed:
-            self._commit([] if session_id is None else [r for r in self.records if r.get("sessionId") != session_id])
+            removed = [r for r in self.records if session_id is None or r.get("sessionId") == session_id]
+            self._commit([r for r in self.records if r not in removed])
             self._changed.notify_all()
+            self._fanout_removed(removed)
             return self.snapshot()
 
     @staticmethod

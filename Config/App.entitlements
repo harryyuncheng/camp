@@ -2,12 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- NOT WIRED IN. Live Activity push-to-update needs the Push Notifications capability, which a free
-	     Apple Developer team cannot enable, so referencing this file from CODE_SIGN_ENTITLEMENTS would
-	     break device builds. To turn push-to-update on once the team is paid:
-	       1. add CODE_SIGN_ENTITLEMENTS = Config/App.entitlements to both Lunchline app configs
-	       2. flip LunchController.pushToUpdateEnabled to true
-	       3. set CAMP_APNS_KEY / _KEY_ID / _TEAM_ID / _BUNDLE_ID on the backend
+	<!-- Live Activity push (update + push-to-start) needs the Push Notifications capability, which a
+	     free Apple Developer team cannot enable, so wiring it in is opt-in via Config/Local.xcconfig:
+	       CAMP_PUSH_ENTITLEMENTS = Config/App.entitlements
+	       SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) CAMP_PUSH
+	     The app target's CODE_SIGN_ENTITLEMENTS already reads $(CAMP_PUSH_ENTITLEMENTS) (empty by
+	     default). The backend also needs CAMP_APNS_KEY / _KEY_ID / _TEAM_ID / _BUNDLE_ID.
 	     Xcode's Automatic signing rewrites "development" to "production" for a distribution build. -->
 	<key>aps-environment</key>
 	<string>development</string>

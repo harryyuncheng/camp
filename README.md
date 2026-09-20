@@ -39,4 +39,4 @@ Connect the app to `http://127.0.0.1:8788` in **Demo → Recommendation service*
 
 ## Prototype boundaries
 
-Menu prices are estimates. The app groups and tracks orders, but restaurant checkout and food payments are not connected. Ramp access is sandbox-only, and iPhone background updates still need APNs push delivery.
+Menu prices are estimates. The app groups and tracks orders, but restaurant checkout and food payments are not connected. Ramp access is sandbox-only, and iPhone background updates need APNs push delivery (`CAMP_PUSH` plus `CAMP_APNS_*` credentials; see docs/IOS.md).
