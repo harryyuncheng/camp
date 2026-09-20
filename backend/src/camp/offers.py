@@ -2,13 +2,15 @@
 from __future__ import annotations
 
 import statistics
+import re
+import hashlib
 from datetime import date, datetime, timedelta
 from typing import Any
 
-from . import catalog, explain, filters, synth
+from . import batching, catalog, explain, feedback as fb, filters, scoring, synth
 from .contracts import MealContext, MealOffer, MealOfferOption, OfficeRef
 from .filters import haversine_km
-from .models import ALLERGENS, DIETS, Context, LatLng, MealWindow, MenuItem, Restaurant, Restriction, ScheduleEntry, User, new_id
+from .models import Batch, Context, FeedbackEvent, LatLng, MealWindow, MenuItem, Order, OrderLine, Restaurant, Restriction, User, new_id
 from .pipeline import MealPlan, plan_home, plan_office
 from .store import Store
 
@@ -33,7 +35,7 @@ class OfferService:
     # ------------------------------------------------------------ world + user sync
     def ensure_world(self, office: OfficeRef) -> None:
         loc = LatLng(lat=office.latitude, lng=office.longitude)
-        seed = hash(office.id) & 0xFFFF
+        seed = int.from_bytes(hashlib.sha256(office.id.encode()).digest()[:2], "big")
         if catalog.ensure_current(self.store, center=loc, seed=seed):     # legacy/synthetic or mis-centred catalog → replace
             self.last["seeded"].append(f"loaded the Ramp HQ catalog ({len(self.store.all(Restaurant))} restaurants) around {office.name}")
             self.plans.clear()
@@ -59,12 +61,27 @@ class OfferService:
         keep = [r for r in u.restrictions if r.source != "onboarding"]
         new: list[Restriction] = []
         for raw in ctx.allergies:
+            matched = False
             for word, a in _ALLERGY_WORDS.items():
-                if word in raw.lower() and a in ALLERGENS and not any(r.value == a for r in new):
+                if re.search(rf"\b{re.escape(word)}\b", raw.lower()):
+                    matched = True
+                    existing = next((r for r in new if r.value == a), None)
+                    if existing:
+                        existing.severe = existing.severe or "severe" in raw.lower()
+                        continue
                     new.append(Restriction(kind="allergen", value=a, severe="severe" in raw.lower()))
+            if not matched and raw.strip():
+                new.append(Restriction(kind="allergen", value=raw.strip().lower(), severe=True))
         if ctx.dietary_style in _DIET_STYLE:
             new.append(Restriction(kind="diet", value=_DIET_STYLE[ctx.dietary_style]))
-        u.restrictions = new + [k for k in keep if not any(n.value == k.value for n in new)]
+        for kept in keep:
+            match = next((n for n in new if (n.kind, n.value) == (kept.kind, kept.value)), None)
+            if match:
+                match.severe = match.severe or kept.severe
+                match.source = kept.source
+            else:
+                new.append(kept)
+        u.restrictions = new
         for raw in ctx.dislikes:
             d = raw.strip().lower()
             if d:
@@ -77,9 +94,10 @@ class OfferService:
     # ------------------------------------------------------------ offer
     def _context(self, ctx: MealContext) -> Context:
         d = date.today()
-        now = ctx.now_minutes if ctx.now_minutes is not None else datetime.now().hour * 60 + datetime.now().minute
+        clock = datetime.now()
+        now = ctx.now_minutes if ctx.now_minutes is not None else clock.hour * 60 + clock.minute
         return Context(date=d.isoformat(), meal=ctx.meal, weekday=d.weekday(), temp_c=ctx.temp_c, raining=ctx.raining,
-                       order_time_minutes=min(now, ctx.office.cutoff), exploration=EXPLORATION, nonce=new_id("n"))
+                       order_time_minutes=now, exploration=EXPLORATION, nonce=new_id("n"))
 
     def offer(self, ctx: MealContext, force: bool = False) -> MealOffer:   # force kept for API compatibility
         self.ensure_world(ctx.office)
@@ -91,7 +109,7 @@ class OfferService:
         if location == "office":
             # every explicit request re-plans with a fresh nonce, so a refreshed offer explores different options;
             # the cached plan is still used by lunch_event / snapshot between requests
-            live = {x.id: "office" for x in self.store.users_in_office(ctx.office.id)}
+            live = {u.id: "office"}
             plan = plan_office(self.store, ctx.office.id, office_loc, c, live_location=live)
             self.plans[key] = plan
         else:
@@ -124,7 +142,8 @@ class OfferService:
         my_order = next((o for o in plan.orders if o.user_id == u.id), None)
         self.offers[offer.offer_id] = dict(user_id=u.id, order_id=my_order.id if my_order else None, default_item_id=options[0].item_id if options else None,
                                            shown=[o.item_id for o in options], novel=options[0].novel if options else False, meal=ctx.meal, date=c.date,
-                                           location=location, fee_share=share, plan_key=key)
+                                           location=location, fee_share=share, plan_key=key, office=ctx.office.model_dump(),
+                                           context=c.model_dump(), now_minutes=ctx.now_minutes)
         self.last["context"], self.last["offer"], self.last["plan_key"] = ctx.model_dump(by_alias=True), offer.model_dump(by_alias=True), key
         return offer
 
@@ -132,23 +151,50 @@ class OfferService:
     def lunch_event(self, offer_id: str, option_id: str | None, event: str, rating: int | None = None) -> dict:
         """confirmed → the pick becomes the order + accept/change events. delivered → order delivered (+ optional rating).
         ended (before confirm) → skip event, ignored per §6.1."""
-        from . import feedback as fb
-        from .models import FeedbackEvent, Order, OrderLine
         meta = self.offers.get(offer_id)
         if not meta:
             return {"error": "unknown offer; request a new lunch offer"}
+        if event not in ("confirmed", "delivered", "ended"):
+            return {"error": "unknown event"}
+        if rating is not None and (event != "delivered" or rating not in range(5)):
+            return {"error": "rating must be between 0 and 4 on delivery"}
         u = self.store.get(User, meta["user_id"])
+        if u is None:
+            return {"error": "unknown user"}
         items = {i.id: i for i in self.store.all(MenuItem)}
         rests = {r.id: r for r in self.store.all(Restaurant)}
         order = self.store.get(Order, meta["order_id"]) if meta["order_id"] else None
         logs: list[str] = []
         events: list[FeedbackEvent] = []
         if event == "confirmed":
+            if option_id not in meta["shown"]:
+                return {"error": "option was not shown in this offer"}
+            if meta.get("ended") or (order and order.status == "cancelled"):
+                return {"error": "offer has ended"}
+            if order and order.status == "confirmed":
+                if order.line.item_id != option_id:
+                    return {"error": "offer is already confirmed with another option"}
+                return dict(orderId=order.id, status=order.status, events=[], profileUpdates=["already confirmed"],
+                            learned=fb.learned_view(u), epsilon=round(u.traits.epsilon, 3), autonomy=u.traits.autonomy)
             item = items.get(option_id or "")
-            if not item:
+            if not item or item.restaurant_id not in rests:
                 return {"error": "unknown option"}
             r = rests[item.restaurant_id]
             fee = meta["fee_share"].get(r.id, r.fees.delivery_fee_cents)
+            if not filters.passes_dietary(u, item)[0] or not filters.passes_budget(u, item, r, meta["meal"], fee)[0]:
+                return {"error": "option no longer fits your dietary settings or budget; request a new offer"}
+            office = OfficeRef.model_validate(meta["office"])
+            c = Context.model_validate(meta["context"])
+            clock = datetime.now()
+            c.order_time_minutes = meta["now_minutes"] if meta["now_minutes"] is not None else clock.hour * 60 + clock.minute
+            if meta["date"] != date.today().isoformat() or (meta["location"] == "office" and c.order_time_minutes > office.cutoff):
+                return {"error": "offer has expired; request a new offer"}
+            if not filters.passes_location(u, r, meta["location"], LatLng(lat=office.latitude, lng=office.longitude))[0]:
+                return {"error": "option no longer delivers to your location"}
+            batch = self.store.get(Batch, order.batch_id) if order and order.batch_id else None
+            headcount = next((len(br.user_ids) + (u.id not in br.user_ids) for br in batch.restaurants if br.restaurant_id == r.id), 1) if batch else 1
+            if headcount > r.max_meals_per_slot or not filters.passes_time(u, r, c, headcount)[0]:
+                return {"error": "option no longer fits the delivery window or restaurant capacity"}
             line = OrderLine(item_id=item.id, restaurant_id=r.id, price_cents=item.price_cents)
             if order is None:   # suggest-only / home users had no order yet
                 default = items.get(meta["default_item_id"] or item.id, item)
@@ -159,27 +205,33 @@ class OfferService:
             order.line, order.fee_share_cents = line, fee
             order.total_cents = filters.total_cost_cents(item, r, fee)
             order.status = "confirmed"
-            self.store.put(order)
+            if batch:
+                regret = batch.regret.get(u.id, -1)
+                if regret > batching.DELTA_REGRET:
+                    u.traits.sacrifice_debt += regret - batching.DELTA_REGRET
+                elif regret >= 0:
+                    u.traits.sacrifice_debt *= 0.5
+            self.store.put_many([order, u])
             default_id = meta["default_item_id"]
             if item.id == default_id:
-                events.append(FeedbackEvent(user_id=u.id, type="accept", order_id=order.id, item_id=item.id, payload=dict(novel=meta["novel"]), source="tap"))
+                events.append(FeedbackEvent(id=f"{offer_id}:confirmed", user_id=u.id, type="accept", order_id=order.id, item_id=item.id, payload=dict(novel=meta["novel"]), source="tap"))
             else:
                 same_r = items[default_id].restaurant_id == r.id if default_id in items else True
-                events.append(FeedbackEvent(user_id=u.id, type="change_item" if same_r else "change_restaurant", order_id=order.id, item_id=item.id,
+                events.append(FeedbackEvent(id=f"{offer_id}:confirmed", user_id=u.id, type="change_item" if same_r else "change_restaurant", order_id=order.id, item_id=item.id,
                                             payload=dict(from_item_id=default_id, old_was_novel=meta["novel"], shown_item_ids=meta["shown"]), source="tap"))
         elif event == "delivered":
-            if order:
-                order.status = "confirmed"
-                self.store.put(order)
-            if rating is not None and order:
-                events.append(FeedbackEvent(user_id=u.id, type="rating", order_id=order.id, item_id=order.line.item_id, payload=dict(overall=rating), source="tap"))
+            if not order or order.status != "confirmed":
+                return {"error": "confirm the offer before marking it delivered"}
+            if rating is not None:
+                events.append(FeedbackEvent(id=f"{offer_id}:rating", user_id=u.id, type="rating", order_id=order.id, item_id=order.line.item_id, payload=dict(overall=rating), source="tap"))
             else:
                 logs.append("delivered without a rating: enjoyment unknown (not neutral); the order itself now counts in history")
         elif event == "ended":
+            meta["ended"] = True
             if order and order.status == "proposed":
                 order.status = "cancelled"
                 self.store.put(order)
-                events.append(FeedbackEvent(user_id=u.id, type="skip", order_id=order.id, source="tap"))
+                events.append(FeedbackEvent(id=f"{offer_id}:ended", user_id=u.id, type="skip", order_id=order.id, source="tap"))
         for ev in events:
             logs += fb.apply_event(self.store, ev)
         # the profile and history changed: the next offer must re-plan instead of reusing today's cached batch
@@ -214,8 +266,6 @@ class OfferService:
                     counts=dict(users=len(users), restaurants=len(rests), items=len(self.store.all(MenuItem))))
 
     def user_debug(self, user_id: str) -> dict:
-        from . import feedback as fb
-        from . import scoring
         u = self.store.get(User, user_id)
         if not u:
             return {"error": "unknown user"}

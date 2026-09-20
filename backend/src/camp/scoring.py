@@ -9,8 +9,7 @@ import hashlib
 import math
 from collections import Counter
 from dataclasses import dataclass
-
-import numpy as np
+from datetime import date
 
 from .models import Context, MenuItem, Order, Restaurant, User
 
@@ -69,14 +68,13 @@ class History:
     @classmethod
     def from_orders(cls, orders: list[Order], items: dict[str, MenuItem], restaurants: dict[str, Restaurant],
                     today_ordinal: int) -> "History":
-        from datetime import date
         il, cl, ce, ie = {}, {}, Counter(), set()
         for o in orders:
-            if o.status in ("cancelled", "proposed"):   # only meals that were actually taken count as eaten
+            if o.status != "confirmed":
                 continue
             days = today_ordinal - date.fromisoformat(o.date).toordinal()
             it = items.get(o.line.item_id)
-            if not it:
+            if not it or days < 0 or it.restaurant_id not in restaurants:
                 continue
             cuisine = (it.tags.cuisine if it.tags and it.tags.cuisine else restaurants[it.restaurant_id].cuisine)
             il[it.id] = min(days, il.get(it.id, 10**6))
