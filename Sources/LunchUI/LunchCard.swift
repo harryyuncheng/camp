@@ -30,18 +30,19 @@ public struct LunchCard<Actions: View>: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                // The notch supplies its own persistent branded header.
-                if !embedded {
+            // The notch owns the header; omit this whole row when embedded
+            // so neither status metadata nor an empty header reserves space.
+            if !embedded {
+                HStack(spacing: 8) {
                     CampLogo().fill(LunchStyle.lime).frame(width: 30, height: 18).accessibilityHidden(true)
                     Text("camp").font(.system(size: 22, weight: .bold, design: .rounded)).tracking(-0.8)
-                }
-                Spacer(minLength: 4)
-                Text("DEMO").font(.system(size: 9, weight: .bold)).foregroundStyle(LunchStyle.muted)
-                if !expired && (session.phase == .choosing || session.phase == .reviewing) {
-                    Text(timerInterval: min(Date.now, session.closesAt)...session.closesAt, countsDown: true)
-                        .monospacedDigit().font(.caption.weight(.semibold)).frame(width: 42)
-                        .accessibilityLabel("Time left to choose")
+                    Spacer(minLength: 4)
+                    Text("DEMO").font(.system(size: 9, weight: .bold)).foregroundStyle(LunchStyle.muted)
+                    if !expired && (session.phase == .choosing || session.phase == .reviewing) {
+                        Text(timerInterval: min(Date.now, session.closesAt)...session.closesAt, countsDown: true)
+                            .monospacedDigit().font(.caption.weight(.semibold)).frame(width: 42)
+                            .accessibilityLabel("Time left to choose")
+                    }
                 }
             }
             if expired {

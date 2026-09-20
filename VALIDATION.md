@@ -183,3 +183,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 
 - Cause: the expanded notch owns a camp header, while its embedded LunchCard also rendered one. Embedded cards now omit only their logo/name; demo status and countdown remain. Standalone phone/in-app cards retain branding.
 - Release Mac build succeeded. No automated tests or app restart performed; running app needs relaunch to display the change.
+
+
+## Notch header spacing — 2026-09-19
+
+- Removed the entire embedded meal-card header row, including DEMO and countdown. The notch content no longer reserves space for the removed branding. Standalone card headers remain.
+- Release Mac build succeeded. No tests or app restart performed.
