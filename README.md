@@ -5,6 +5,10 @@
 For the Mac/iPhone demo, start with the [demo runbook](docs/DEMO.md), including USB-C networking,
 local signing, backend recovery, and the device checks still required.
 
+camp makes workplace food ordering easier. It recommends menu items from your preferences and order history, helps coworkers find a match from a craving, and groups orders from the same place to share delivery fees. The Mac notch panel and iPhone Live Activity keep the current order close at hand and in sync.
+
+**Your order, on your time.**
+
 ## Ramp sandbox integration
 
 The Demo tab connects to Ramp through a local Python backend, lists active sandbox employees, and can create a bounded restaurant fund with linked-card references. Credentials stay on the backend. See [setup and API details](backend/README.md).
