@@ -25,6 +25,7 @@ from .groups import (CreateGroupReq, GroupService, GroupsResponse, JoinGroupReq,
                      ScheduleReq, ScheduleWire)
 from .offers import OfferService
 from .ramp import Problem, RampService
+from .search import CravingReq, CravingResponse, CravingService
 from .store import Store
 from .sync import LunchSyncService, SyncConflict
 
@@ -46,6 +47,7 @@ clf = default_classifier()
 offers = OfferService(store)
 lunch_sync = LunchSyncService(store)
 groups = GroupService(store)
+cravings = CravingService(store)
 ramp = RampService(store)
 
 
@@ -314,6 +316,14 @@ def restaurants(limit: int = 12, category: Optional[str] = None):
     if category is not None and category not in ORDER_CATEGORIES:
         raise HTTPException(422, "category must be coffee or meal")
     return groups.restaurants(limit, category)
+
+
+@app.post("/v1/craving", response_model=CravingResponse)
+async def craving(req: CravingReq):
+    """"I want tacos" when none of the offered places appeal: OpenAI reads the sentence, the catalog answers it."""
+    if not req.text.strip():
+        raise HTTPException(422, "say what you are craving")
+    return await cravings.search(req)
 
 
 @app.get("/v1/restaurants/{restaurant_id}/menu", response_model=MenuWire)

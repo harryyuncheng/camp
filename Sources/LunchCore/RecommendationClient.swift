@@ -74,6 +74,13 @@ public struct RecommendationClient {
         if let groupId { query["groupId"] = groupId }
         return try await send("v1/restaurants/\(restaurantId)/menu", query: query)
     }
+    /// "I want tacos": the backend's OpenAI model turns the sentence into search terms and answers from the catalog.
+    public func craving(text: String, category: OrderCategory?, userId: String?, limit: Int = 3) async throws -> LunchCravingResult {
+        var body: [String: Any] = ["text": text, "limit": limit]
+        if let category { body["category"] = category.rawValue }
+        if let userId { body["userId"] = userId }
+        return try await send("v1/craving", body: json(body))
+    }
     public func createGroup(office: OfficeRef, restaurantId: String, deliveryMinutes: Int, optionId: String,
                             userId: String?, displayName: String, category: OrderCategory? = nil) async throws -> DemoLunchGroup {
         var body: [String: Any] = ["office": try officeJSON(office), "restaurantId": restaurantId, "deliveryMinutes": deliveryMinutes,
