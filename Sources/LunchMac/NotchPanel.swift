@@ -324,8 +324,11 @@ private struct NotchContent: View {
     private var compactBody: some View {
         Button(action: expand) {
             HStack(spacing: 9) {
-                Image(systemName: model.session.phase == .confirmed ? "checkmark.circle.fill" : "tent.fill")
-                    .foregroundStyle(LunchStyle.lime)
+                if model.session.phase == .confirmed {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(LunchStyle.lime)
+                } else {
+                    CampLogo().fill(LunchStyle.lime).frame(width: 23, height: 14).accessibilityHidden(true)
+                }
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     Text(pillTitle(at: context.date)).font(.system(size: 11, weight: .medium))
                 }

@@ -56,7 +56,7 @@ public struct CampWorkspace: View {
         VStack(alignment: .leading, spacing: 28) {
             VStack(alignment: .leading, spacing: 7) {
                 HStack(spacing: 8) {
-                    Image(systemName: "tent.fill").foregroundStyle(CampPalette.green)
+                    CampLogo().fill(CampPalette.green).frame(width: 36, height: 22).accessibilityHidden(true)
                     Text("camp").font(.system(size: 32, weight: .bold, design: .rounded)).tracking(-1.5)
                 }
             }.padding(.top, 8)
@@ -85,7 +85,7 @@ public struct CampWorkspace: View {
 
     private var phoneHeader: some View {
         HStack {
-            Label("camp", systemImage: "tent.fill").font(.system(size: 24, weight: .bold, design: .rounded))
+            HStack(spacing: 8) { CampLogo().fill(CampPalette.green).frame(width: 30, height: 18).accessibilityHidden(true); Text("camp").font(.system(size: 24, weight: .bold, design: .rounded)) }
             Spacer()
             Menu {
                 Toggle("Demo admin", isOn: $store.isDemoAdmin)

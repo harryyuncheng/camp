@@ -36,7 +36,16 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         }
         panel = NotchPanelController(model: model)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        statusItem.button?.image = NSImage(systemSymbolName: "tent.fill", accessibilityDescription: "camp")
+        let logo = NSImage(size: NSSize(width: 22, height: 16), flipped: true) { rect in
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            context.addPath(CampLogo().path(in: rect.insetBy(dx: 1, dy: 1)).cgPath)
+            context.setFillColor(NSColor.black.cgColor)
+            context.fillPath()
+            return true
+        }
+        logo.isTemplate = true
+        logo.accessibilityDescription = "camp"
+        statusItem.button?.image = logo
         let menu = NSMenu()
         add("Open camp", action: #selector(openWorkspace), to: menu)
         add("Settings", action: #selector(openSettings), to: menu)

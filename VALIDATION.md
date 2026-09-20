@@ -140,3 +140,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Today’s View menu opens the chosen group in the Mac notch. Other workspace hosts without the Mac callback use an in-app menu sheet with explicit confirmation. One lunch choice is active at a time; choosing another group replaces it. Leave clears it.
 - Fixture spending totals use the chosen group’s participants and sample food subtotal. Coffee, menus, delivery windows and prices are demo fixtures; no ordering or payments occur. Demo join state is in-memory, not synced or restored across launches.
 - macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## SVG logo trial — September 19
+
+- Preserved the supplied SVG in Branding/camp.svg. Its three vector paths are cached in CampLogo; the white background and surrounding whitespace are omitted for template-style use. The original file is unchanged.
+- Replaced the tent symbol in the sidebar, compact workspace header, shared lunch card, unconfirmed notch pill and macOS menu-bar icon. Kept the camp wordmark and confirmation checkmark. The menu-bar image is a system template for light/dark appearance.
+- macOS release build succeeded; relaunched and visually inspected the sidebar logo at its displayed size. Other surfaces share the vector but have not all been visually inspected. iOS was not built. No automated tests were run.
