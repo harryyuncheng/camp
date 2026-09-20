@@ -52,6 +52,7 @@
 		A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
 		A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
 		A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
+		A10000000000000000000004 /* Sources/LunchCore/OnboardingContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40E1F2A3B4C5D6E70 /* Sources/LunchCore/OnboardingContracts.swift */; };
 		A265BFFF63667E8DCC32D510 /* iOS/Lunchline/LunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */; };
 		A4C01EBC144440E7AD392B0A /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
 		A9DE95356B439FB451D9337C /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
@@ -449,6 +450,7 @@
 				A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */,
 				A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */,
 				A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */,
+				A10000000000000000000004 /* Sources/LunchCore/OnboardingContracts.swift in Sources */,
 				2401BF6CC6E2F5E7E69150BC /* Sources/LunchCore/LunchSession.swift in Sources */,
 				5CB3F5F2FF0B5E1CA0DA7E2C /* Sources/LunchCore/SessionFile.swift in Sources */,
 				A0FCD6E20BE285115E786C78 /* Sources/LunchUI/LunchCard.swift in Sources */,
