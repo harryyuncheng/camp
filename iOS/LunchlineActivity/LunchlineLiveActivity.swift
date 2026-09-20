@@ -53,7 +53,7 @@ private struct InteractiveLunchCard: View {
                 Text("Lunch window closed").font(.subheadline.weight(.semibold))
                 Text("Open camp for a fresh invitation.").font(.caption)
             } else if session.phase == .choosing {
-                Text(context.attributes.group?.name ?? "Choose your lunch").font(.subheadline.weight(.semibold)).lineLimit(1)
+                Text(context.state.place ?? context.attributes.group?.name ?? "Choose your lunch").font(.subheadline.weight(.semibold)).lineLimit(1)
                 HStack(spacing: 6) {
                     ForEach(session.options) { option in
                         Button(intent: SelectLunchIntent(session: session, optionID: option.id)) {
@@ -66,7 +66,7 @@ private struct InteractiveLunchCard: View {
                     }
                 }
             } else if session.phase == .reviewing {
-                Text(session.selectedOption?.name ?? "Review lunch").font(.subheadline.weight(.semibold)).lineLimit(1)
+                Text(session.selectedOptions.map(\.name).joined(separator: " + ")).font(.subheadline.weight(.semibold)).lineLimit(2)
                 HStack(spacing: 12) {
                     Button("Change", intent: ChangeLunchIntent(session: session)).font(.caption).buttonStyle(.plain)
                     Button(intent: ConfirmLunchIntent(session: session)) { ConfirmLabel() }.buttonStyle(.plain)
@@ -75,7 +75,7 @@ private struct InteractiveLunchCard: View {
                 Text(session.phase == .confirmed ? "You’re on the list." : session.phase == .delivered ? "Lunch has landed." : "Lunch ended")
                     .font(.subheadline.weight(.semibold))
                 HStack {
-                    Text(session.selectedOption?.name ?? "Demo complete").lineLimit(1)
+                    Text(session.selectedOptions.map(\.name).joined(separator: " + ")).lineLimit(2)
                     Spacer()
                     if session.phase == .confirmed { Text(session.arrivesAt, style: .time) }
                 }.font(.caption).foregroundStyle(LunchStyle.muted)

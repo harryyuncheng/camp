@@ -311,6 +311,7 @@ private struct NotchContent: View {
                 }
             }
             .frame(height: stageHeights[stageKey], alignment: .top)
+            .disabled(model.isWorking)
             .clipped()
             .onPreferenceChange(StageHeightKey.self) { stageHeights.merge($0) { $1 } }
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.choosingGroup)
@@ -321,7 +322,7 @@ private struct NotchContent: View {
                 Text(error).font(.caption).foregroundStyle(.orange).padding(.horizontal, 20).padding(.top, 8)
             }
             HStack {
-                Text(model.session.phase == .confirmed ? "Saved · available in the menu bar" :
+                Text(model.isWorking ? "Saving order…" : model.session.phase == .confirmed ? "Saved · available in the menu bar" :
                      model.scheduled ? "Next order arrives in 5 seconds" : "All-in price estimates")
                     .font(.system(size: 10)).foregroundStyle(.white.opacity(0.45))
                 Spacer()

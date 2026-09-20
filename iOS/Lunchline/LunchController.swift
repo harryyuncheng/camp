@@ -18,15 +18,21 @@ final class LunchController: ObservableObject {
     let sync = LunchSyncCoordinator(device: "iphone")
     /// A lunch started on the Mac just arrived; the shell opens the lunch sheet so it is visible immediately.
     var onRemoteLunch: (() -> Void)?
+    var onConfirm: (([LunchOption], DemoLunchGroup) async throws -> DemoLunchGroup)?
 
     private let store = SessionFile.applicationStore(named: "Lunchline")
     private var observation: Task<Void, Never>?
-    private var pendingRemote: LunchSyncRecord?
+    private var pendingRemote: [LunchSyncRecord]?
+    private var records: [LunchSyncRecord] = []
 
     private init() {
-        do { session = try store.load() }
+        do { let cached = try store.loadRecord(); session = cached?.session; group = cached?.group }
         catch { errorMessage = "Couldn't restore your lunch: \(error.localizedDescription)" }
-        sync.apply = { [weak self] record in self?.applyRemote(record) }
+        do {
+            let configuration = try ConfigurationFile.applicationDefault.load() ?? CampConfiguration()
+            sync.configure(urlString: configuration.connections.recommendationURL, token: configuration.connections.recommendationToken)
+        } catch { errorMessage = "Couldn't load your connection settings: \(error.localizedDescription)" }
+        sync.applyAll = { [weak self] records in self?.applySnapshot(records) }
     }
 
     private var activity: Activity<LunchAttributes>? {
@@ -40,7 +46,7 @@ final class LunchController: ObservableObject {
         let next = group.map {
             LunchSession(office: office, options: $0.options,
                          closesAt: .now.addingTimeInterval(8 * 60),
-                         arrivesAt: max($0.arrival(), .now.addingTimeInterval(35 * 60)))
+                         arrivesAt: $0.arrival(), category: $0.kind, place: $0.name)
         } ?? DemoLunch.make()
         try await present(next, group: group)
     }
@@ -49,20 +55,41 @@ final class LunchController: ObservableObject {
     /// The transport must supply a bounded, fresh menu; no payment happens here.
     func present(_ next: LunchSession, group: DemoLunchGroup? = nil) async throws {
         guard !isWorking else { throw LunchError.busy }
-        guard ActivityAuthorizationInfo().areActivitiesEnabled else {
-            throw ActivitySetupError.disabled
-        }
         isWorking = true
         defer { isWorking = false; drainPendingRemote() }
-        guard !next.options.isEmpty, next.options.count <= 3,
+        guard !next.options.isEmpty,
               next.phase == .choosing, !next.isExpired(),
               Set(next.options.map(\.id)).count == next.options.count,
               group == nil || group?.options == next.options else {
             throw ActivitySetupError.invalidOffer
         }
         let previous = session
-        try await replaceActivity(with: next, group: group)
-        publish(previous: previous)
+        if let failure = await sync.publish(next, group: group, previous: previous) { throw failure }
+        try await display(next, group: group)
+    }
+
+    func presentConfirmed(_ group: DemoLunchGroup, office: String) async throws {
+        guard !isWorking else { throw LunchError.busy }
+        isWorking = true
+        defer { isWorking = false; drainPendingRemote() }
+        let now = Date()
+        let initial = LunchSession(office: office, options: group.options, closesAt: now.addingTimeInterval(8 * 60),
+                                   arrivesAt: group.arrival(on: now), category: group.kind, place: group.name)
+        let selected = try initial.applying(.selectMany(group.myOptionIdList), at: now)
+        let confirmed = try selected.applying(.confirm, at: now)
+        if let failure = await sync.publish(confirmed, group: group, previous: session) { throw failure }
+        try await display(confirmed, group: group)
+    }
+
+    func forgetGroup(_ groupID: String) async throws {
+        guard !isWorking else { throw LunchError.busy }
+        isWorking = true
+        defer { isWorking = false; drainPendingRemote() }
+        var ids = Set(records.filter { $0.group?.id == groupID }.map(\.sessionId))
+        if group?.id == groupID, let session { ids.insert(session.id.uuidString) }
+        for id in ids {
+            if let failure = await sync.forget(sessionId: id) { throw failure }
+        }
     }
 
     func handle(_ event: LunchEvent, sessionID: String, revision: Int) async throws {
@@ -72,15 +99,26 @@ final class LunchController: ObservableObject {
         }
         isWorking = true
         defer { isWorking = false; drainPendingRemote() }
-        group = activity?.attributes.group ?? group
         let next = try current.applying(event, expectedRevision: revision)
-        // Persist before publishing. Confirm only records a demo choice: no provider
-        // calls or payment side effects belong in this local state transition.
-        try store.save(next)
+        if next.phase == .confirmed, current.phase != .confirmed, let group {
+            if let onConfirm {
+                self.group = try await onConfirm(next.selectedOptions, group)
+            } else {
+                let configuration = try ConfigurationFile.applicationDefault.load() ?? CampConfiguration()
+                let client = try RecommendationClient(urlString: configuration.connections.recommendationURL,
+                                                       token: configuration.connections.recommendationToken)
+                self.group = try await client.joinGroup(group.id, office: OfficeRef(policy: configuration.office),
+                                                        optionIds: next.selectedIDs,
+                                                        userId: UserDefaults.standard.string(forKey: "camp.recommender.userID"),
+                                                        displayName: configuration.personal.displayName)
+                if let userID = self.group?.userId { UserDefaults.standard.set(userID, forKey: "camp.recommender.userID") }
+            }
+        }
+        if let failure = await sync.publish(next, group: group, previous: current) { throw failure }
+        try store.save(next, group: group)
         session = next
         errorMessage = nil
         await pushToActivity(next)
-        publish(previous: current)
     }
 
     /// Reattach to the existing activity after launch or return from mirroring.
@@ -93,7 +131,7 @@ final class LunchController: ObservableObject {
             hasLiveActivity = false
             return
         }
-        group = activity.attributes.group
+        if group == nil { group = activity.attributes.group }
         if session.isFinished {
             await activity.end(content(for: session), dismissalPolicy: .immediate)
             hasLiveActivity = false
@@ -109,17 +147,34 @@ final class LunchController: ObservableObject {
     /// Live Activity; a different lunch → replace the activity as if it had been started here. Echoes of
     /// this phone's own writes have an equal revision and are ignored. While a local command is still
     /// finishing, the record waits and is applied right after.
-    private func applyRemote(_ record: LunchSyncRecord) {
-        guard !isWorking else { pendingRemote = record; return }
-        let incoming = record.session
-        if let current = session, current.id == incoming.id {
-            guard incoming.revision > current.revision else { return }
+    private func applySnapshot(_ records: [LunchSyncRecord]) {
+        guard !isWorking else { pendingRemote = records; return }
+        self.records = records
+        guard let record = records.nearest else {
             isWorking = true
             Task {
                 defer { isWorking = false; drainPendingRemote() }
-                do { try store.save(incoming) } catch { errorMessage = error.localizedDescription }
+                for existing in Activity<LunchAttributes>.activities { await existing.end(nil, dismissalPolicy: .immediate) }
+                hasLiveActivity = false
+                session = nil
+                group = nil
+                do { try store.clear() } catch { errorMessage = error.localizedDescription }
+            }
+            return
+        }
+        applyRemote(record)
+    }
+
+    private func applyRemote(_ record: LunchSyncRecord) {
+        let incoming = record.session
+        if let current = session, current.id == incoming.id {
+            guard incoming != current || record.group != group else { return }
+            isWorking = true
+            Task {
+                defer { isWorking = false; drainPendingRemote() }
+                do { try store.save(incoming, group: record.group) } catch { errorMessage = error.localizedDescription }
                 session = incoming
-                if let group = record.group { self.group = group }
+                self.group = record.group
                 await pushToActivity(incoming)
             }
         } else {
@@ -127,17 +182,7 @@ final class LunchController: ObservableObject {
             Task {
                 defer { isWorking = false; drainPendingRemote() }
                 do {
-                    if incoming.isFinished || !ActivityAuthorizationInfo().areActivitiesEnabled {
-                        // Nothing to put on the Lock Screen; keep the app's view of the lunch current.
-                        for existing in Activity<LunchAttributes>.activities { await existing.end(nil, dismissalPolicy: .immediate) }
-                        hasLiveActivity = false
-                        try store.save(incoming)
-                        group = record.group
-                        session = incoming
-                    } else {
-                        try await replaceActivity(with: incoming, group: record.group)
-                    }
-                    errorMessage = nil
+                    try await display(incoming, group: record.group)
                     if !incoming.isFinished { onRemoteLunch?() }
                 } catch { errorMessage = error.localizedDescription }
             }
@@ -145,17 +190,22 @@ final class LunchController: ObservableObject {
     }
 
     private func drainPendingRemote() {
-        guard let record = pendingRemote else { return }
+        guard let records = pendingRemote else { return }
         pendingRemote = nil
-        applyRemote(record)
+        applySnapshot(records)
     }
 
-    private func publish(previous: LunchSession?) {
-        guard sync.isConfigured, let current = session else { return }
-        let group = group
-        Task { [weak self] in
-            guard let self, let failure = await self.sync.publish(current, group: group, previous: previous) else { return }
-            if failure is LunchSyncConflict { self.errorMessage = failure.localizedDescription }
+    private func display(_ next: LunchSession, group: DemoLunchGroup?) async throws {
+        try store.save(next, group: group)
+        self.session = next
+        self.group = group
+        if next.isFinished || !ActivityAuthorizationInfo().areActivitiesEnabled {
+            for existing in Activity<LunchAttributes>.activities { await existing.end(nil, dismissalPolicy: .immediate) }
+            hasLiveActivity = false
+            errorMessage = next.isFinished ? nil : "Order synced. Live Activities are disabled in iPhone Settings."
+        } else {
+            do { try await replaceActivity(with: next, group: group) }
+            catch { errorMessage = "Order synced; Live Activity unavailable: \(error.localizedDescription)" }
         }
     }
 
@@ -164,7 +214,7 @@ final class LunchController: ObservableObject {
     /// Ends whatever activity exists and starts one for `next` in its current phase. Used both for lunches
     /// started here and for lunches that arrive from the Mac mid-flight.
     private func replaceActivity(with next: LunchSession, group: DemoLunchGroup?) async throws {
-        let attributes = LunchAttributes(sessionID: next.id, group: group)
+        let attributes = LunchAttributes(sessionID: next.id, group: nil)
         // ActivityKit limits combined static and dynamic payloads to 4 KB.
         guard try JSONEncoder().encode(attributes).count + JSONEncoder().encode(next).count < 4_000 else {
             throw ActivitySetupError.invalidOffer
@@ -178,7 +228,7 @@ final class LunchController: ObservableObject {
             attributes: attributes,
             content: content(for: next), pushType: nil
         )
-        do { try store.save(next) }
+        do { try store.save(next, group: group) }
         catch {
             await created.end(nil, dismissalPolicy: .immediate)
             throw error

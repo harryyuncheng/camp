@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Foundation-only client for the Python recommender (`uv run camp serve`).
 public struct RecommendationClient {
@@ -133,4 +136,3 @@ public struct RecommendationClient {
         return try await send("v1/debug/feedback", body: JSONSerialization.data(withJSONObject: payload))
     }
 }
-

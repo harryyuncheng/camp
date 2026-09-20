@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 #if SWIFT_PACKAGE
+import LunchCore
 import LunchUI
 #endif
 
@@ -30,7 +31,11 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         settings.$lunchGroups.assign(to: &model.$groups)
         settings.$selectedGroupID.assign(to: &model.$joinedGroupID)
-        model.onJoin = { [weak self] option, group in self?.settings.join(option, group: group) }
+        model.onJoin = { [weak self] options, group in
+            guard let self else { throw CancellationError() }
+            return try await self.settings.joinConfirmed(options, group: group)
+        }
+        model.onRemoteChange = { [weak self] in Task { await self?.settings.refreshGroups(); await self?.settings.refreshLedger() } }
         // "Looking for something else" in the notch: the same catalog search the Today page uses, and confirming
         // one of its results starts a group order at that place.
         settings.$craving.assign(to: &model.$cravingResult)
@@ -40,14 +45,24 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
             await self?.settings.searchCraving(text, category: category)
         }
         model.onCravingOrder = { [weak self] restaurant, option, minutes, category in
-            guard let self else { return }
-            Task { await self.settings.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meals: [option], category: category) }
+            guard let self,
+                  await self.settings.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meals: [option],
+                                                   category: category, presentConfirmation: false) else { return nil }
+            return self.settings.lunchGroups.first {
+                $0.restaurantId == restaurant.id && $0.kind == category && !$0.myOptionIdList.isEmpty
+            }
         }
         settings.requestDemoGroup = { [weak self] group in
             guard let self else { return }
-            self.model.officeName = self.settings.draft.office.name
+            self.model.officeName = self.settings.savedOffice.name
             self.model.chooseGroup(group)
         }
+        settings.requestConfirmedDemoGroup = { [weak self] group, _ in
+            guard let self else { return }
+            self.model.officeName = self.settings.savedOffice.name
+            self.model.showConfirmed(group)
+        }
+        settings.requestLeftGroup = { [weak self] groupID in self?.model.forgetGroup(groupID) }
         panel = NotchPanelController(model: model)
         settings.onOffer = { [weak self] session in self?.model.offer(session) }
         model.onTransition = { [weak self] session in self?.settings.reportLunch(session) }
@@ -134,7 +149,7 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
             panel.toggle()
         }
     }
-    @objc private func trigger() { model.officeName = settings.draft.office.name; model.triggerDemo() }
+    @objc private func trigger() { model.officeName = settings.savedOffice.name; model.triggerDemo() }
     @objc private func schedule() { panel.hide(); model.triggerAfterDelay() }
     @objc private func collapse() { panel.collapse() }
     @objc private func hide() { panel.hide() }
