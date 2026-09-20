@@ -14,12 +14,6 @@ struct LunchlineApp: App {
             NavigationStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("A little less\nlunch admin.")
-                                .font(.system(size: 36, weight: .semibold, design: .rounded))
-                            Text("Pick a meal. Get back to your day.")
-                                .foregroundStyle(.secondary)
-                        }
                         if let session = model.session {
                             LocalLunchCard(session: session) { event in
                                 run {
@@ -35,7 +29,7 @@ struct LunchlineApp: App {
                         }
                         VStack(spacing: 12) {
                             Button { run { try await model.start() } } label: {
-                                Text(model.session == nil ? "Start demo lunch" : "Start a new demo lunch")
+                                Text(model.session == nil ? "Start demo order" : "Start a new demo order")
                                     .frame(maxWidth: .infinity).padding(.vertical, 7)
                             }.buttonStyle(.borderedProminent).tint(LunchStyle.ink)
                             if let session = model.session, !session.isFinished {
@@ -46,7 +40,7 @@ struct LunchlineApp: App {
                                         }
                                     }
                                     Spacer()
-                                    Button("End lunch", role: .destructive) {
+                                    Button("End order", role: .destructive) {
                                         run { try await model.handle(.end, sessionID: session.id.uuidString, revision: session.revision) }
                                     }
                                 }.font(.subheadline)
@@ -56,7 +50,7 @@ struct LunchlineApp: App {
                             Label(error, systemImage: "exclamationmark.circle")
                                 .font(.callout).foregroundStyle(.red)
                         }
-                        Text("Demo meals, prices, savings, and arrival times. Confirm records your selection in camp; no purchase is made.")
+                        Text("Demo items, prices, savings, and arrival times. Confirm records your selection in camp; no purchase is made.")
                             .font(.footnote).foregroundStyle(.secondary)
                     }.padding(24)
                 }
@@ -129,7 +123,7 @@ private struct ContentPlaceholder: View {
         VStack(alignment: .leading, spacing: 12) {
             Image(systemName: "fork.knife.circle.fill").font(.largeTitle)
             Text("Three good options.\nOne quick decision.").font(.title2.weight(.semibold))
-            Text("Start a lunch to try the interactive Live Activity.").font(.callout)
+            Text("Start an order to try the interactive Live Activity.").font(.callout)
         }.foregroundStyle(LunchStyle.lime).padding(24).frame(maxWidth: .infinity, alignment: .leading)
             .background(LunchStyle.ink).clipShape(RoundedRectangle(cornerRadius: 22))
     }
