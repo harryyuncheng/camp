@@ -18,6 +18,14 @@ uv run uvicorn camp.api:app --port 8788
 `camp.db` SQLite file. Tables are created on startup. In the app, Demo → Recommendation service → `http://127.0.0.1:8788`
 → Save; the same URL and token also serve the Ramp card.
 
+## Orders (`/v1/groups`, `/v1/restaurants`, `/v1/schedules`, `/v1/lunch-session`)
+
+- `GET /v1/restaurants?category=coffee|meal&limit=` best-rated catalog places serving that category (rating shrunk towards 4.2 by review count).
+- `GET /v1/restaurants/{id}/menu?userId=&groupId=` the whole menu priced with that group's delivery share, the public rating (`rating`, `reviewCount`, per-source `ratings`) and `top`: the user's three best items by recommender score.
+- `POST /v1/groups` (`category` optional, defaults to the place's primary one), `POST /v1/groups/{id}/join` with any menu item, `DELETE /v1/groups/{id}/members/{user}`. One order per person per category per day.
+- `GET /v1/schedules/{user}`, `POST /v1/schedules` (`category`, `label`, `timeMinutes`, `weekdays` 0 = Monday, optional `restaurantId`/`optionId`), `PUT /v1/schedules/{id}/event` (store the device's calendar event id), `DELETE /v1/schedules/{id}?userId=`. `GET /v1/groups?userId=` materialises due schedules into groups.
+- `GET/PUT/DELETE /v1/lunch-session`: the shared list of active orders (`records`) with `record` = the nearest; `DELETE ?sessionId=` forgets one.
+
 ## Ramp sandbox (`/v1/ramp`)
 
 Enable the client-credentials grant and `business:read`, `users:read`, `funds:read`, `funds:write` in the Ramp sandbox

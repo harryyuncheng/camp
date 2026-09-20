@@ -20,7 +20,18 @@ Office and Connections now use macOS Location Services. Use **Search** or **Find
 
 ## Mac calendars
 
-Open **Connections → Connect calendars**, allow full calendar access, and select the calendars that should block lunch. Google, Outlook and iCloud calendars work when already synced in the Mac Calendar app. Available windows appear in Connections. Your saved lunch duration, window and meeting buffer determine which gaps fit. camp does not create or edit events. See [calendar setup and behavior](docs/CALENDAR.md).
+Open **Connections → Connect calendars**, allow full calendar access, and select the calendars that should block your orders. Google, Outlook and iCloud calendars work when already synced in the Mac Calendar app. Available windows appear in Connections. Your saved meal duration, window and meeting buffer determine which gaps fit.
+
+camp writes to one calendar of its own, named **camp** (created in your iCloud account on first use, otherwise locally). Every group order you join becomes a block there at its arrival time, and every standing order becomes a weekly repeating event; leaving a group or removing a standing order deletes the block. camp never edits events in your other calendars, and its own blocks are ignored when it looks for free time. See [calendar setup and behavior](docs/CALENDAR.md).
+
+## Orders, not just lunch
+
+Everything camp coordinates is an **order** in one of two categories: **Coffee & tea** (morning coffee runs, cafés and bakeries) and **Meal**. A person holds at most one active order per category per day, so a coffee and a lunch can both be live, and the notch and the iPhone always show the nearest one first with a **Next:** link to the other. There is no time-of-day rule: schedule either category whenever you like.
+
+- **Today** lists the office's group orders with a category filter and a badge per card. **View menu** opens the whole menu for that place with the public rating (blended Google/Yelp/other-source score and review count), your **top picks** ranked by the recommender first, then the full list; anything on it can be ordered and joins the group's option list.
+- **New order** on Today starts a group at any café or restaurant that serves the chosen category.
+- **You → Standing orders** schedules a repeating order: category, label, time, weekdays, an optional place and usual item. The backend puts you in a matching group each morning (creating one if needed) and the Mac mirrors it as a repeating event in the **camp** calendar.
+- The catalog now holds real Flatiron cafés and bakeries as well as restaurants (`backend/src/camp/providers/fixtures/ramp_hq_cafes.json`); bakery-cafés such as Maman, Ole & Steen and Levain belong to both categories.
 
 ## Configuration workspace
 
@@ -28,8 +39,8 @@ The Mac app now opens a light camp workspace with lime accents. The dark notch p
 
 The shared workspace has five SwiftUI screens:
 
-- **Today:** today's office lunch groups from the backend database, your confirmed lunch, create a group at a catalog restaurant, choose/change/leave a meal, and live savings and participant totals.
-- **You:** food preferences, editable lunch timing, calendar selection and notification preview settings.
+- **Today:** today's office group orders (coffee and meals) from the backend database, your confirmed orders, start an order at a catalog place, browse full menus with ratings, choose/change/leave, and live savings and participant totals.
+- **You:** food preferences, standing orders, editable meal timing, calendar selection and notification preview settings.
 - **Office:** demo-admin toggle, address/geofence coordinates and radius, budgets, timing, fee sharing and group rules.
 - **Spending:** a credit-card-shaped preview over your confirmed orders in the backend (`/v1/ledger`); no live card connection.
 - **Connections:** Mac calendars and location.
@@ -41,11 +52,11 @@ The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the
 
 ## Today demo and editable timing
 
-- **Create group** picks a restaurant from the catalog (`GET /v1/restaurants`), a delivery time and a meal, then `POST /v1/groups` creates and joins it. One lunch per person per day: joining a different group leaves the previous one server-side. New groups start with just you and zero delivery savings.
+- **New order** picks a category, a place from the catalog (`GET /v1/restaurants?category=`), an arrival time and an item, then `POST /v1/groups` creates and joins it. One order per person per category per day: joining a different group in the same category leaves the previous one server-side. New groups start with just you and zero delivery savings.
 - **Total savings** and **People ordering** are computed by the backend from real membership: each group shares one delivery fee (the restaurant's own fee), so savings are `(participants − 1) × fee`. Prices are all-in estimates, not live quotes.
 - A day with no groups is seeded by the backend from the catalog with synthetic colleagues (flagged `seeded`), so the office is never empty on first run.
-- The notch lists the same groups, including newly created ones. **Preview lunch invitation** opens group selection; confirmation updates Today and retracts to the menu bar after three seconds.
-- In **You → Lunch timing**, type times such as `1pm`, `13:30` or `1330`, then press Enter or leave the field. Unsuffixed times use the 24-hour clock. Duration and buffer are typed in minutes. Invalid input leaves the last valid draft value unchanged; **Save** applies valid preferences to the calendar service.
+- The notch lists the same groups, including newly created ones. **Preview order invitation** opens group selection; confirmation updates Today and retracts to the menu bar after three seconds.
+- In **You → Meal timing**, type times such as `1pm`, `13:30` or `1330`, then press Enter or leave the field. Unsuffixed times use the 24-hour clock. Duration and buffer are typed in minutes. Invalid input leaves the last valid draft value unchanged; **Save** applies valid preferences to the calendar service.
 - Groups, membership and orders persist in the database across restarts. Settings persist locally and are mirrored to your backend profile on Save. Rebuilding with the development signature may require reconnecting OS calendar/location permissions.
 
 ## Branding and layout
@@ -54,9 +65,9 @@ The supplied logo is preserved in `Branding/camp.svg`. `CampLogo` in `LunchCard.
 
 Spending's demo card uses a 1.586 aspect ratio, caps its width at 400 points and scales its artwork uniformly on compact layouts. Workspace pages use stable stacks; macOS office-time menus use native controls. Map views are pooled, and calendar reads run away from the UI thread. Frame-rate improvements have not been benchmarked.
 
-## Native lunch assistant
+## Native order assistant
 
-A small native lunch assistant POC. The Mac app opens an interactive panel beneath the notch when a lunch event arrives. Pick a lunch group, choose one of its meals, review the price, and confirm. Meal choices use fictional data; confirmation records a local choice and never places an order. Ramp sandbox account data is fetched separately on the Demo tab.
+A small native order assistant POC. The Mac app opens an interactive panel beneath the notch when an order arrives. Pick a group, choose one of its items, review the price, and confirm. Meal choices use fictional data; confirmation records a local choice and never places an order. Ramp sandbox account data is fetched separately on the Demo tab.
 
 ## Run the Mac app
 
@@ -159,11 +170,11 @@ Database: everything server-owned lives in one Postgres database when `CAMP_DATA
 or the shell; local default `postgresql://localhost/camp`, e.g. Postgres.app), otherwise in the SQLite file named by
 `CAMP_DB` (default `camp.db`). Tables (`backend/src/camp/store.py`, one JSONB document table each with generated index
 columns): `users` (profile + learned preferences + the app's saved settings), `restaurants`, `items`, `orders`, `batches`,
-`events` (feedback), `groups` (Today's lunch groups and membership), `ramp_attempts` (idempotent sandbox fund issuance)
-and `sync` (the current Mac ↔ iPhone lunch). Tests use in-memory SQLite plus one Postgres round-trip test that skips
+`events` (feedback), `groups` (Today's group orders and membership), `schedules` (standing orders), `ramp_attempts`
+(idempotent sandbox fund issuance) and `sync` (the active Mac ↔ iPhone orders). Tests use in-memory SQLite plus one Postgres round-trip test that skips
 when no server is reachable. `uv run camp migrate --source camp.db` copies an old SQLite file into `CAMP_DATABASE_URL`.
 What stays on the device on purpose: OS permissions and their choices (calendar selection, the confirmed geofence),
-connection URLs, and the locally cached lunch session.
+connection URLs, the locally cached order session, and the ids of the calendar blocks camp wrote.
 
 Keys: `TYPESAFE_API_KEY` enables Jev (`typesafe:jev-latest` via pydantic-ai); `OPENAI_API_KEY` enables the
 LLM fallback and "why this pick" text. With neither set, an offline keyword mock is used so everything still runs.
