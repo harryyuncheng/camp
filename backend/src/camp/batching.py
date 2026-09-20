@@ -12,6 +12,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from ortools.sat.python import cp_model
+
 from .filters import total_cost_cents
 from .models import Batch, BatchRestaurant, MenuItem, Restaurant, User
 
@@ -48,6 +50,11 @@ class Candidate:
             self._by_restaurant[uid] = idx
         return idx.get(rid, [])
 
+    def exclude(self, uid: str, rid: str) -> None:
+        """Drop every option `uid` has at restaurant `rid`."""
+        self.scores[uid] = {iid: s for iid, s in self.scores[uid].items() if self.items[iid].restaurant_id != rid}
+        self._by_restaurant.pop(uid, None)
+
 
 @dataclass
 class Assignment:
@@ -65,7 +72,6 @@ def fee_share(r: Restaurant, n: int) -> int:
 def _assign(c: Candidate, R: list[str], n_seed: dict[str, int] | None = None, iters: int = 6) -> Assignment:
     """Assign each user their best budget-feasible option in R, iterating because fee shares depend on headcount."""
     n = {r: (n_seed or {}).get(r, len(c.users)) for r in R}   # optimistic seed: assume everyone shares
-    a = Assignment()
     for _ in range(iters):
         assign: dict[str, tuple[str, str]] = {}
         picks_by_r: dict[str, list[tuple[float, str, str]]] = {r: [] for r in R}
@@ -94,14 +100,24 @@ def _assign(c: Candidate, R: list[str], n_seed: dict[str, int] | None = None, it
         if new_n == n:
             break
         n = new_n
-    # min order: drop restaurants that don't reach it (their users become unassigned this round)
-    for rid in R:
-        subtotal = sum(c.items[iid].price_cents for (r2, iid) in assign.values() if r2 == rid)
-        if 0 < subtotal < c.restaurants[rid].fees.min_order_cents:
-            for uid in [u for u, v in assign.items() if v[0] == rid]:
-                del assign[uid]
-            n[rid] = 0
-    a.assign, a.n = assign, n
+    while True:
+        n = {r: sum(1 for rid, _ in assign.values() if rid == r) for r in R}
+        invalid = {uid for uid, (rid, iid) in assign.items()
+                   if total_cost_cents(c.items[iid], c.restaurants[rid], fee_share(c.restaurants[rid], n[rid])) > c.users[uid].budget(c.meal)}
+        for rid in R:
+            subtotal = sum(c.items[iid].price_cents for r2, iid in assign.values() if r2 == rid)
+            if subtotal < c.restaurants[rid].fees.min_order_cents:
+                invalid.update(uid for uid, (r2, _) in assign.items() if r2 == rid)
+        if not invalid:
+            break
+        for uid in invalid:
+            del assign[uid]
+    return _evaluate(c, R, assign)
+
+
+def _evaluate(c: Candidate, R: list[str], assign: dict[str, tuple[str, str]]) -> Assignment:
+    n = {r: sum(1 for rid, _ in assign.values() if rid == r) for r in R}
+    a = Assignment(assign=assign, n=n)
     a.total_cost = sum(total_cost_cents(c.items[iid], c.restaurants[rid], 0) for rid, iid in assign.values()) \
         + sum(c.restaurants[r].fees.delivery_fee_cents for r in R if n[r] > 0)
     util = 0.0
@@ -143,8 +159,6 @@ def solve_greedy(c: Candidate) -> tuple[list[str], Assignment]:
 
 def solve_exact(c: Candidate, time_limit_s: float = 10.0) -> tuple[list[str], Assignment] | None:
     """CP-SAT. Fee-share budget constraint linearised: x[u,r,i] ⇒ fee_r ≤ slack[u,i]·n_r."""
-    from ortools.sat.python import cp_model
-
     SCALE = 1000
     m = cp_model.CpModel()
     users, rests = list(c.users), list(c.restaurants)
@@ -191,12 +205,8 @@ def solve_exact(c: Candidate, time_limit_s: float = 10.0) -> tuple[list[str], As
     if st not in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         return None
     R = [r for r in rests if solver.Value(y[r])]
-    a = _assign(c, R, n_seed={r: solver.Value(n[r]) for r in R})
-    # trust the solver's assignment where it differs
-    for (uid, iid), v in x.items():
-        if solver.Value(v):
-            a.assign[uid] = (c.items[iid].restaurant_id, iid)
-    return R, _assign(c, R, n_seed={r: sum(1 for v in a.assign.values() if v[0] == r) for r in R})
+    assign = {uid: (c.items[iid].restaurant_id, iid) for (uid, iid), v in x.items() if solver.Value(v)}
+    return R, _evaluate(c, R, assign)
 
 
 def solve(c: Candidate) -> tuple[list[str], Assignment, str]:

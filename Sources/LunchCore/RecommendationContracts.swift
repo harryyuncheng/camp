@@ -99,12 +99,15 @@ public struct MealOffer: Codable, Equatable {
     public func lunchSession(office: String, now: Date = .now) -> LunchSession? {
         guard !options.isEmpty else { return nil }
         let iso = ISO8601DateFormatter()
-        let closes = iso.date(from: closesAt) ?? now.addingTimeInterval(8 * 60)
-        let arrives = iso.date(from: arrivesAt) ?? now.addingTimeInterval(35 * 60)
+        let fractional = ISO8601DateFormatter()
+        fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        guard let closes = iso.date(from: closesAt) ?? fractional.date(from: closesAt),
+              let arrives = iso.date(from: arrivesAt) ?? fractional.date(from: arrivesAt),
+              closes > now, arrives > closes else { return nil }
         return LunchSession(office: office, options: options.map {
             LunchOption(id: $0.id, name: $0.name, detail: "\($0.restaurant) · \($0.detail)", symbol: $0.symbol,
                         priceCents: $0.priceCents, baselineCents: $0.baselineCents)
-        }, closesAt: max(closes, now.addingTimeInterval(60)), arrivesAt: max(arrives, now.addingTimeInterval(120)))
+        }, closesAt: closes, arrivesAt: arrives, offerID: offerId)
     }
 }
 

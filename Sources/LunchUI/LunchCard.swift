@@ -57,8 +57,10 @@ public struct LunchCard<Actions: View>: View {
                     actions
                 case .reviewing:
                     if let option = session.selectedOption {
-                        HStack(spacing: 8) {
-                            MealLabel(option: option)
+                        ForEach(session.selectedOptions) { selected in
+                            HStack(spacing: 8) {
+                                MealLabel(option: selected)
+                            }
                         }
                         HStack {
                             Text("Save \(LunchStyle.money(option.savingsCents)) on delivery")
@@ -69,7 +71,7 @@ public struct LunchCard<Actions: View>: View {
                         actions
                     }
                 case .confirmed:
-                    status("You're on the list.", detail: session.selectedOption?.name ?? "Order confirmed", symbol: "checkmark.circle.fill")
+                    status("You're on the list.", detail: session.selectedOptions.map(\.name).joined(separator: " + "), symbol: "checkmark.circle.fill")
                     HStack {
                         Text("Saved · no purchase made")
                         Spacer(minLength: 4)

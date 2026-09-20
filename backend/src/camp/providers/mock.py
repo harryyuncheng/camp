@@ -97,7 +97,7 @@ class MockProvider:
 
     async def quote(self, store_external_id: str, dropoff: LatLng, n_items: int = 1) -> PQuote:
         await self._lag()
-        r = random.Random(hash((store_external_id, self.name)) & 0xFFFF)
+        r = random.Random(f"{store_external_id}:{self.name}")
         if self.name == "uber":
             lo = r.randint(15, 35)
             return uber.parse_quote({"delivery_fee": {"amount": r.choice([399, 499, 699])}, "service_fee_pct": 0.15,
@@ -106,7 +106,7 @@ class MockProvider:
 
     async def place_order(self, store_external_id: str, dropoff: LatLng, lines: list[dict]) -> PlacedOrder:
         await self._lag()
-        return PlacedOrder(external_order_id=f"{self.name}-ord-{self.rng.randint(10**6, 10**7)}", platform=self.name)
+        return PlacedOrder(external_order_id=f"mock-{self.name}-ord-{self.rng.randint(10**6, 10**7)}", platform=self.name, status="simulated")
 
     def dump_fixtures(self) -> None:
         FIXTURES.mkdir(exist_ok=True)
