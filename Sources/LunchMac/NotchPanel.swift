@@ -251,9 +251,9 @@ private struct NotchContent: View {
     private var expandedBody: some View {
         VStack(spacing: 0) {
             HStack(spacing: 7) {
-                Circle().fill(LunchStyle.lime).frame(width: 5, height: 5)
-                Text("CORPORATE AUTONOMOUS MEAL PROTOCOL")
-                    .font(.system(size: 8, weight: .medium)).tracking(0.65)
+                CampLogo().fill(LunchStyle.lime).frame(width: 26, height: 16).accessibilityHidden(true)
+                Text("camp").font(.system(size: 18, weight: .bold, design: .rounded))
+                    .tracking(-0.5).foregroundStyle(.white)
                 Spacer()
                 Button(action: collapse) { Image(systemName: "chevron.up").frame(width: 24, height: 22) }
                     .help("Collapse lunch").accessibilityLabel("Collapse lunch")
