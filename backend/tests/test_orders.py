@@ -166,6 +166,53 @@ def test_nearest_ignores_finished_unless_nothing_else():
     assert nearest([done])["sessionId"] == "a"
 
 
+def test_nearest_skips_dead_orders_so_a_stale_morning_session_cannot_hide_new_ones():
+    """Regression: a Mac 'reviewing' session from the morning that nobody ended kept winning `nearest` by
+    arrival time, so every later order was invisible to the phone's Live Activity."""
+    from datetime import datetime, timedelta, timezone
+    from camp.sync import SWIFT_EPOCH, is_dead
+    now = datetime(2026, 9, 20, 15, 0, tzinfo=timezone.utc)
+    t = lambda **kw: (now + timedelta(**kw) - SWIFT_EPOCH).total_seconds()
+    stale = rec("morning", phase="reviewing", arrives=t(hours=-1))
+    stale["session"]["closesAt"] = t(hours=-1, minutes=-8)
+    fresh = rec("lunch", phase="confirmed", arrives=t(hours=2))
+    fresh["session"]["closesAt"] = t(hours=1)
+    assert is_dead(stale, now) and not is_dead(fresh, now)
+    assert nearest([stale, fresh], now)["sessionId"] == "lunch"
+    # a choosing order whose window is still open stays live even if it arrives first
+    live = rec("coffee", phase="choosing", arrives=t(minutes=20))
+    live["session"]["closesAt"] = t(minutes=5)
+    assert nearest([stale, fresh, live], now)["sessionId"] == "coffee"
+    # a confirmed order is only dead well after its arrival time (late deliveries happen)
+    late = rec("late", phase="confirmed", arrives=t(minutes=-30))
+    assert not is_dead(late, now) and is_dead(late, now + timedelta(hours=3))
+    # nothing live at all → most recently touched, as before
+    stale["updatedAt"] = "2026-09-20T14:00:00+00:00"
+    assert nearest([stale], now)["sessionId"] == "morning"
+
+
+def test_prune_drops_dead_orders_after_the_finished_grace(tmp_path):
+    from datetime import datetime, timedelta, timezone
+    from camp.sync import SWIFT_EPOCH
+    store = Store(str(tmp_path / "camp.db"))
+    svc = LunchSyncService(store)
+    now = datetime.now(timezone.utc)
+    t = lambda **kw: (now + timedelta(**kw) - SWIFT_EPOCH).total_seconds()
+    old = rec("old", phase="reviewing", arrives=t(hours=-5)); old["session"]["closesAt"] = t(hours=-5)
+    recent = rec("recent", phase="reviewing", arrives=t(minutes=-30)); recent["session"]["closesAt"] = t(minutes=-30)
+    live = rec("live", phase="choosing", arrives=t(hours=1)); live["session"]["closesAt"] = t(minutes=30)
+
+    async def go():
+        for r in (old, recent, live):
+            await svc.publish(r, None, None, "mac")
+        snap = await svc.publish(rec("live", revision=1, phase="reviewing", arrives=t(hours=1)) | {"session": {**live["session"], "revision": 1, "phase": "reviewing"}}, "live", 0, "mac")
+        ids = {r["sessionId"] for r in snap["records"]}
+        assert "old" not in ids and {"recent", "live"} <= ids       # expired hours ago → gone; just expired → kept briefly
+        assert snap["record"]["sessionId"] == "live"
+
+    asyncio.run(go())
+
+
 def test_sync_http_lists_records(monkeypatch, tmp_path):
     monkeypatch.setenv("CAMP_DB", ":memory:")
     monkeypatch.setenv("CAMP_DATABASE_URL", "")

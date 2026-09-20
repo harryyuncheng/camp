@@ -21,6 +21,7 @@ final class MacLunchModel: ObservableObject {
     var officeName = "HackMIT HQ"
     var onJoin: (([LunchOption], DemoLunchGroup) async throws -> DemoLunchGroup)?
     var onRemoteChange: (() -> Void)?
+    var onRecords: (([LunchSyncRecord]) -> Void)?
     @Published private(set) var isWorking = false
     private var pendingRecords: [LunchSyncRecord]?
     private var localDemo = true
@@ -236,6 +237,16 @@ final class MacLunchModel: ObservableObject {
         } catch { self.error = error.localizedDescription }
     }
 
+    /// Deletes one shared order from the backend; the snapshot echo removes it from every device.
+    func forgetSession(_ sessionID: String) {
+        guard !isWorking else { error = LunchError.busy.localizedDescription; return }
+        isWorking = true
+        Task {
+            defer { finishWrite() }
+            if let failure = await sync.forget(sessionId: sessionID) { error = failure.localizedDescription }
+        }
+    }
+
     func forgetGroup(_ groupID: String) {
         guard !isWorking else { error = LunchError.busy.localizedDescription; return }
         let matching = others.filter { $0.group?.id == groupID }.map(\.sessionId)
@@ -280,6 +291,7 @@ final class MacLunchModel: ObservableObject {
     /// is gone too, fall back to the nearest remaining one.
     private func reconcile(_ records: [LunchSyncRecord]) {
         guard !isWorking else { pendingRecords = records; return }
+        onRecords?(records)
         others = records.filter { $0.session.id != session.id }
         if let current = records.first(where: { $0.session.id == session.id }) {
             applyRemote(current)

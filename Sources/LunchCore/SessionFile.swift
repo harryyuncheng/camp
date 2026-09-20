@@ -117,9 +117,13 @@ public struct LunchSyncSnapshot: Codable, Equatable, Sendable {
 }
 
 extension Array where Element == LunchSyncRecord {
-    /// The order a single-card surface should show: the unfinished one that arrives soonest, else the latest touched.
-    public var nearest: LunchSyncRecord? {
-        let active = filter { !$0.session.isFinished }
+    /// The order a single-card surface should show: the live one that arrives soonest, else the latest touched.
+    /// Finished and dead orders never win over a live one, so a stale morning session that nobody ended can't
+    /// hide every later order (mirrors `camp.sync.nearest` on the backend).
+    public var nearest: LunchSyncRecord? { nearest(at: .now) }
+
+    public func nearest(at now: Date) -> LunchSyncRecord? {
+        let active = filter { $0.session.isLive(at: now) }
         if let soonest = active.min(by: { $0.session.arrivesAt < $1.session.arrivesAt }) { return soonest }
         return self.max { ($0.updatedAt ?? "") < ($1.updatedAt ?? "") }
     }

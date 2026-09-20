@@ -27,6 +27,9 @@ from .store import Store
 FINISHED = {"delivered", "ended"}
 KEEP_FINISHED_FOR = timedelta(hours=2)
 KEEP_ANY_FOR = timedelta(hours=20)
+# A confirmed order nobody marked delivered is considered dead this long after its arrival time.
+DELIVERY_GRACE = timedelta(hours=2)
+SWIFT_EPOCH = datetime(2001, 1, 1, tzinfo=timezone.utc)
 
 
 class SyncConflict(Exception):
@@ -43,6 +46,26 @@ def _arrives(record: dict) -> float:
     """`arrivesAt` as Swift's JSONEncoder writes dates: seconds since 2001-01-01. Missing → sort last."""
     v = (record.get("session") or {}).get("arrivesAt")
     return float(v) if isinstance(v, (int, float)) else float("inf")
+
+
+def _swift_date(value) -> Optional[datetime]:
+    return SWIFT_EPOCH + timedelta(seconds=float(value)) if isinstance(value, (int, float)) else None
+
+
+def is_dead(record: dict, now: Optional[datetime] = None) -> bool:
+    """An unfinished order that can no longer progress: a choosing/reviewing one past `closesAt` (the Swift
+    `isExpired` rule) or a confirmed one long past `arrivesAt`. Such a record must never be the `nearest`
+    order, or a stale morning session would outrank every new order for the rest of the day."""
+    now = now or datetime.now(timezone.utc)
+    session = record.get("session") or {}
+    phase = _phase(record)
+    if phase in ("choosing", "reviewing"):
+        closes = _swift_date(session.get("closesAt"))
+        return closes is not None and now >= closes
+    if phase == "confirmed":
+        arrives = _swift_date(session.get("arrivesAt"))
+        return arrives is not None and now >= arrives + DELIVERY_GRACE
+    return False
 
 
 def _updated(record: dict) -> datetime:
@@ -78,9 +101,11 @@ def _validate(record: dict) -> None:
         raise ValueError("record must contain finite JSON values") from e
 
 
-def nearest(records: list[dict]) -> Optional[dict]:
-    """The order to show first: the unfinished one that arrives soonest, else the most recently touched one."""
-    active = [r for r in records if _phase(r) not in FINISHED]
+def nearest(records: list[dict], now: Optional[datetime] = None) -> Optional[dict]:
+    """The order to show first: the live one that arrives soonest, else the most recently touched one.
+    Finished and dead (expired) orders never outrank a live one."""
+    now = now or datetime.now(timezone.utc)
+    active = [r for r in records if _phase(r) not in FINISHED and not is_dead(r, now)]
     if active:
         return min(active, key=_arrives)
     return max(records, key=_updated) if records else None
@@ -182,6 +207,10 @@ class LunchSyncService:
         for r in records:
             age = now - _updated(r)
             if age > KEEP_ANY_FOR or (_phase(r) in FINISHED and age > KEEP_FINISHED_FOR):
+                continue
+            # An expired order is as done as a delivered one; keep it briefly so a device that still
+            # renders it sees the removal on its next snapshot rather than a silent disappearance.
+            if is_dead(r, now - KEEP_FINISHED_FOR):
                 continue
             kept.append(r)
         return sorted(kept, key=_arrives)

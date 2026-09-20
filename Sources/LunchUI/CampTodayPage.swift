@@ -65,6 +65,26 @@ struct CampTodayPage: View {
                     }.padding(18).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 14))
                 }
             }
+            if !store.activeOrders.isEmpty {
+                Text("Active orders").font(.system(size: 22, weight: .semibold, design: .rounded)).padding(.top, 6)
+                ForEach(store.activeOrders, id: \.sessionId) { record in
+                    let s = record.session
+                    HStack(spacing: 12) {
+                        Image(systemName: s.kind.symbol).foregroundStyle(CampPalette.green)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(s.place ?? record.group?.name ?? s.selectedOptions.first?.name ?? "\(s.kind.label) order")
+                                .font(.callout.weight(.semibold))
+                            Text("\(s.phase.rawValue.capitalized) · arrives \(s.arrivesAt.formatted(date: .omitted, time: .shortened))\(record.device.map { " · from \($0)" } ?? "")")
+                                .font(.caption).foregroundStyle(CampPalette.muted)
+                        }
+                        Spacer()
+                        Button("Delete", role: .destructive) { store.deleteOrder(record) }
+                            .buttonStyle(.plain).font(.caption).foregroundStyle(.red)
+                            .accessibilityLabel("Delete this order")
+                    }.padding(18).background(.white).clipShape(RoundedRectangle(cornerRadius: 14))
+                        .overlay(RoundedRectangle(cornerRadius: 14).stroke(CampPalette.border))
+                }
+            }
             if let error = store.groupsError {
                 HStack(spacing: 12) {
                     Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)

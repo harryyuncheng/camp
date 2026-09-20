@@ -25,6 +25,8 @@ struct LunchlineApp: App {
                     run { try await model.handle(.end, sessionID: session.id.uuidString, revision: session.revision) }
                 }
                 settings.requestLeftGroup = { groupID in run { try await model.forgetGroup(groupID) } }
+                settings.requestDeleteOrder = { sessionID in run { try await model.forgetSession(sessionID) } }
+                model.onRecords = { records in settings.activeOrders = records }
                 model.onRemoteLunch = { settings.section = .today }
                 model.onConfirm = { options, group in try await settings.joinConfirmed(options, group: group) }
                 model.sync.onStatus = { status in settings.syncStatus = status }

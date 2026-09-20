@@ -63,6 +63,8 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
             self.model.showConfirmed(group)
         }
         settings.requestLeftGroup = { [weak self] groupID in self?.model.forgetGroup(groupID) }
+        settings.requestDeleteOrder = { [weak self] sessionID in self?.model.forgetSession(sessionID) }
+        model.onRecords = { [weak self] records in self?.settings.activeOrders = records }
         panel = NotchPanelController(model: model)
         settings.onOffer = { [weak self] session in self?.model.offer(session) }
         model.onBackendTransition = { [weak self] session in

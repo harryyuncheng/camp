@@ -330,6 +330,11 @@ public final class CampSettingsStore: ObservableObject {
     public var requestConfirmedDemoGroup: ((DemoLunchGroup, LunchOption) -> Void)?
     public var requestEndDemoGroup: (() -> Void)?
     public var requestLeftGroup: ((String) -> Void)?
+    /// Every shared order the backend currently holds (the app model feeds this from its sync snapshot).
+    @Published public var activeOrders: [LunchSyncRecord] = []
+    /// Set by the app: removes one shared order from the backend (`DELETE /v1/lunch-session?sessionId=`).
+    public var requestDeleteOrder: ((String) -> Void)?
+    public func deleteOrder(_ record: LunchSyncRecord) { requestDeleteOrder?(record.sessionId) }
     public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
     public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
     /// Joins (or changes the meal in) a group after the backend acknowledges the selection.

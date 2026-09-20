@@ -17,6 +17,7 @@ final class LunchController: ObservableObject {
     /// through `applyRemote`. The app shell configures it from saved settings and runs it while foregrounded.
     let sync = LunchSyncCoordinator(device: "iphone")
     var onRemoteLunch: (() -> Void)?
+    var onRecords: (([LunchSyncRecord]) -> Void)?
     var onConfirm: (([LunchOption], DemoLunchGroup) async throws -> DemoLunchGroup)?
 
     private let store = SessionFile.applicationStore(named: "Lunchline")
@@ -96,6 +97,14 @@ final class LunchController: ObservableObject {
         }
     }
 
+    /// Deletes one shared order everywhere (backend list, both devices' cards, this Live Activity).
+    func forgetSession(_ sessionID: String) async throws {
+        guard !isWorking else { throw LunchError.busy }
+        isWorking = true
+        defer { isWorking = false; drainPendingRemote() }
+        if let failure = await sync.forget(sessionId: sessionID) { throw failure }
+    }
+
     func handle(_ event: LunchEvent, sessionID: String, revision: Int) async throws {
         guard !isWorking else { throw LunchError.busy }
         guard let current = session, current.id.uuidString == sessionID else {
@@ -170,6 +179,7 @@ final class LunchController: ObservableObject {
     private func applySnapshot(_ records: [LunchSyncRecord]) {
         guard !isWorking else { pendingRemote = records; return }
         self.records = records
+        onRecords?(records)
         guard let record = records.nearest else {
             isWorking = true
             Task {

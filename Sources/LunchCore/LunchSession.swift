@@ -97,6 +97,17 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
         (phase == .choosing || phase == .reviewing) && now >= closesAt
     }
 
+    /// A confirmed order nobody marked delivered counts as dead this long after `arrivesAt`.
+    public static let deliveryGrace: TimeInterval = 2 * 60 * 60
+
+    /// Still worth showing: not finished, not expired, and (if confirmed) not hours past its arrival.
+    /// Same rule as `camp.sync.is_dead` on the backend.
+    public func isLive(at now: Date = .now) -> Bool {
+        if isFinished || isExpired(at: now) { return false }
+        if phase == .confirmed { return now < arrivesAt.addingTimeInterval(Self.deliveryGrace) }
+        return true
+    }
+
     /// One transition path for every surface. Checking revision rejects delayed taps
     /// from an older card, including a confirm for a meal that has since changed.
     public func applying(_ event: LunchEvent, at now: Date = .now,

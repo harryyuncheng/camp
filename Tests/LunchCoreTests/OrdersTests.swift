@@ -7,8 +7,9 @@ import XCTest
 final class OrdersTests: XCTestCase {
     private let now = Date(timeIntervalSince1970: 1_800_000_000)
 
-    private func session(_ category: OrderCategory, arrivesIn minutes: Double, phase: LunchPhase = .choosing) throws -> LunchSession {
-        var s = LunchSession(office: "HQ", options: DemoLunch.make(now: now).options, closesAt: now.addingTimeInterval(600),
+    private func session(_ category: OrderCategory, arrivesIn minutes: Double, closesIn: Double = 10,
+                         phase: LunchPhase = .choosing) throws -> LunchSession {
+        var s = LunchSession(office: "HQ", options: DemoLunch.make(now: now).options, closesAt: now.addingTimeInterval(closesIn * 60),
                              arrivesAt: now.addingTimeInterval(minutes * 60), category: category, place: "Place")
         if phase == .ended { s = try s.applying(.end, at: now) }
         return s
@@ -51,6 +52,28 @@ final class OrdersTests: XCTestCase {
         XCTAssertEqual([meal, done].nearest?.sessionId, meal.sessionId)      // finished orders never win over active ones
         XCTAssertEqual([done].nearest?.sessionId, done.sessionId)            // ...unless nothing else is there
         XCTAssertNil([LunchSyncRecord]().nearest)
+    }
+
+    /// Regression: a morning session left in `reviewing` that nobody ended arrived earlier than every later order,
+    /// so it stayed `nearest` all day and the phone never raised a Live Activity for the new ones.
+    func testNearestSkipsDeadOrders() throws {
+        var stale = try session(.meal, arrivesIn: -60)
+        stale = try stale.applying(.select(stale.options[0].id), at: now.addingTimeInterval(-3600))  // reviewing
+        let staleRecord = LunchSyncRecord(session: stale, group: nil, device: "mac")
+        let later = now.addingTimeInterval(2 * 3600)   // past stale.closesAt (now + 10 min)
+        XCTAssertFalse(stale.isLive(at: later))
+        XCTAssertTrue(stale.isLive(at: now))
+        let fresh = LunchSyncRecord(session: try session(.meal, arrivesIn: 240, closesIn: 200), group: nil, device: "mac")
+        XCTAssertEqual([staleRecord, fresh].nearest(at: later)?.sessionId, fresh.sessionId)   // stale is dead → fresh wins
+        XCTAssertEqual([staleRecord, fresh].nearest(at: now)?.sessionId, staleRecord.sessionId)  // still open → still wins
+        // a confirmed order is dead only well after its arrival
+        var confirmed = try session(.coffee, arrivesIn: 5)
+        confirmed = try confirmed.applying(.select(confirmed.options[0].id), at: now)
+        confirmed = try confirmed.applying(.confirm, at: now)
+        XCTAssertTrue(confirmed.isLive(at: now.addingTimeInterval(3600)))
+        XCTAssertFalse(confirmed.isLive(at: now.addingTimeInterval(3 * 3600)))
+        // nothing live at all → the latest touched one, as before
+        XCTAssertEqual([staleRecord].nearest(at: later)?.sessionId, staleRecord.sessionId)
     }
 
     func testMultiItemMembershipDecodesAndFallsBackToTheSingleItemForm() throws {
