@@ -3,8 +3,8 @@
 ## Setup
 
 1. Quit an older camp copy and open the rebuilt `dist/camp.app`.
-2. Open **Connections → Connect calendars** and allow full calendar access. macOS calls this full/read-write access; camp only reads events and contains no event-writing operations.
-3. Open the **Select calendars** dropdown and check the calendars that should block lunch. The dropdown stays open for multiple selections. Names include the calendar's account/source. Selections save immediately on this Mac. None are selected automatically.
+2. Open **Connections → Connect calendars** and allow full calendar access. macOS calls this full/read-write access; camp reads your calendars for availability and writes only to a calendar of its own named **camp**, which it creates on first use (in iCloud when that account exists, otherwise locally).
+3. Open the **Select calendars** dropdown and check the calendars that should block your orders. The dropdown stays open for multiple selections. Names include the calendar's account/source. Selections save immediately on this Mac. None are selected automatically.
 4. In **You → Lunch timing**, type the lunch window, time to eat and meeting buffer; press Enter to format each value, then **Save**. Computation uses saved preferences and the saved office timezone.
 5. View today’s hourly timeline below the selector. Blue-gray blocks represent merged busy time including your buffer. A light-green block marks the earliest remaining gap for exactly your saved lunch duration. This is a suggestion, not a booked event; no lunch block appears if no gap fits. Use **Refresh** or the **…** menu for settings and pause.
 
@@ -22,7 +22,11 @@ No access, no selected calendars, a missing selected calendar, sleep and an ende
 
 Only calendar identifiers, the enable setting and the all-day preference persist in UserDefaults. Event titles, attendee details and event history are never displayed, persisted, logged or sent to camp's backend. EventKit necessarily supplies event objects to inspect timing, attendance status and availability; the service only publishes anonymous free intervals, busy-now status, and a freshness timestamp.
 
-`MacLunchCalendar` is owned by `CampSettingsStore`. It is available to future meal orchestration through `freeWindows`, `busyNow`, `checkedAt`, `summary` and `permission`. This integration does not automatically order meals, create lunch events or change the notch demo's timing. The eventual coordinator must recheck availability before recommending or confirming an order.
+`MacLunchCalendar` is owned by `CampSettingsStore`. It is available to meal orchestration through `freeWindows`, `busyNow`, `checkedAt`, `summary` and `permission`.
+
+## Order blocks in the camp calendar
+
+camp writes two kinds of events, both only into the **camp** calendar: a one-off block for every group order you join (title `Meal · Dig` or `Coffee & tea · Blue Bottle`, at the group's arrival time, lasting your saved time-to-eat for meals and 15 minutes for coffee) and a weekly repeating block for every standing order from **You → Standing orders**. Leaving the group or removing the standing order deletes the block, future occurrences included. Event identifiers are kept in UserDefaults (per group) and on the backend schedule row, so a restart neither duplicates nor orphans blocks. Events in the camp calendar are excluded from busy time, so a scheduled order never blocks itself. Nothing is written to any other calendar.
 
 ## Toolchain compatibility
 
