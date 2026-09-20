@@ -10,7 +10,7 @@ struct CampTodayPage: View {
     @State private var choosingMeal = false
 
     var body: some View {
-        VStack(spacing: 20) {
+        LazyVStack(spacing: 20) {
             groupHero
             HStack(spacing: 12) {
                 metric("Delivery saved", value: LunchStyle.money(store.group.deliverySavingsCents), note: "fixture comparison", symbol: "arrow.down.right")
@@ -43,11 +43,11 @@ struct CampTodayPage: View {
                 }
             }
             CampCard("A little context", subtitle: "These signals will eventually help camp time your invitation.") {
-                contextRow("Office presence", detail: store.officePresenceLabel, symbol: "location")
+                CampLiveSignalRow(store: store, isLocation: true)
                 Divider()
                 contextRow("Your lunch window", detail: "\(CampTimePicker.label(store.draft.personal.lunchStart)) – \(CampTimePicker.label(store.draft.personal.lunchEnd))", symbol: "calendar")
                 Divider()
-                contextRow("Calendar availability", detail: store.lunchAvailabilityLabel, symbol: "clock")
+                CampLiveSignalRow(store: store, isLocation: false)
             }
             CampCalendarView(store: store)
             CampCard("Where the savings come from", subtitle: "Illustrative delivery-fee comparison for the same meals. Not a live quote.") {
@@ -182,5 +182,30 @@ struct CampTodayPage: View {
         #if os(macOS)
         .frame(width: 450)
         #endif
+    }
+}
+
+private struct CampLiveSignalRow: View {
+    let store: CampSettingsStore
+    let isLocation: Bool
+    #if os(macOS)
+    @ObservedObject private var location: MacOfficeLocation
+    @ObservedObject private var calendar: MacLunchCalendar
+    #endif
+    init(store: CampSettingsStore, isLocation: Bool) {
+        self.store = store; self.isLocation = isLocation
+        #if os(macOS)
+        self.location = store.location; self.calendar = store.lunchCalendar
+        #endif
+    }
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: isLocation ? "location" : "clock").frame(width: 22).foregroundStyle(CampPalette.green)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(isLocation ? "Office presence" : "Calendar availability").font(.system(size: 12, weight: .medium))
+                Text(isLocation ? store.officePresenceLabel : store.lunchAvailabilityLabel).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+            }
+            Spacer()
+        }
     }
 }

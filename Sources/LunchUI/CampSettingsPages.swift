@@ -7,7 +7,7 @@ struct CampPersonalPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     var body: some View {
-        VStack(spacing: 20) {
+        LazyVStack(spacing: 20) {
             CampCard("Your usual", subtitle: "Help camp learn what a good lunch looks like for you.") {
                 CampTextField(title: "Your name", text: $store.draft.personal.displayName)
                 Picker("Dietary preference", selection: $store.draft.personal.dietaryStyle) {
@@ -42,7 +42,7 @@ struct CampOfficePage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     var body: some View {
-        VStack(spacing: 20) {
+        LazyVStack(spacing: 20) {
             CampCard("Office controls", subtitle: "A demo role switch, available on both devices. Real roles will be enforced by the backend.") {
                 CampToggle(title: "Demo admin", detail: store.isDemoAdmin ? "Office policy is editable" : "Office policy is read-only", value: $store.isDemoAdmin)
             }
@@ -51,7 +51,7 @@ struct CampOfficePage: View {
         }
     }
     private var policy: some View {
-        VStack(spacing: 20) {
+        LazyVStack(spacing: 20) {
             CampCard("Office details") {
                 CampTextField(title: "Office name", text: $store.draft.office.name)
                 CampTextField(title: "Delivery address", text: $store.draft.office.address)
@@ -82,7 +82,7 @@ struct CampConnectionsPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     var body: some View {
-        VStack(spacing: 20) {
+        LazyVStack(spacing: 20) {
             CampCalendarView(store: store)
             CampLocationView(store: store)
             CampRampView(store: store)

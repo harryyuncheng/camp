@@ -100,3 +100,12 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 
 - Calendar viewport now matches the map at 340 points and requires a click before consuming scrolling. Pointer exit or Done returns control to the page.
 - Mac release build completed; no interactive or automated tests were run.
+
+## Navigation responsiveness — September 19
+
+- Reproduced the original sidebar padding click missing its action before editing.
+- Expanded sidebar/button content shapes; widened the sidebar so Connections fits.
+- A navigation process sample showed MapKit initialization and EventKit reads on the main thread. Calendar snapshots now run in a separate actor; service updates are observed by their own panels instead of invalidating the whole workspace.
+- Office/Connections recycle up to two detached native map views, clearing delegates, gestures, overlays and annotations between owners. First map construction is deferred until after navigation begins; page cards are lazy.
+- macOS build succeeded. Relaunched the built app and opened Office then Connections; both rendered their office map and controls.
+- No automated tests were added or run. End-to-end latency has not been quantified. Coordinate-based sidebar verification was unavailable through UI automation; accessibility navigation worked. Calendar access needs reconnecting in the rebuilt copy, so the live calendar path was not rechecked.

@@ -72,10 +72,10 @@ public struct CampWorkspace: View {
                     Button { store.section = section } label: {
                         HStack(spacing: 11) {
                             Image(systemName: section.symbol).frame(width: 20)
-                            Text(section.rawValue).font(.system(size: 13, weight: store.section == section ? .semibold : .regular))
+                            Text(section.rawValue).font(.system(size: 13, weight: store.section == section ? .semibold : .regular)).lineLimit(1)
                             Spacer()
                             if store.section == section { Circle().fill(CampPalette.green).frame(width: 5, height: 5) }
-                        }.padding(13).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
+                        }.frame(maxWidth: .infinity, minHeight: 20, alignment: .leading).padding(13).contentShape(Rectangle()).background(store.section == section ? CampPalette.lime.opacity(0.5) : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: 11))
                     }.buttonStyle(.plain)
                 }
@@ -88,7 +88,7 @@ public struct CampWorkspace: View {
                 Toggle("Demo admin", isOn: $store.isDemoAdmin).font(.system(size: 11)).toggleStyle(.switch).controlSize(.small)
                 Text("Preview role only").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }
-        }.padding(22).frame(width: 190).background(.white)
+        }.frame(width: 190).padding(22).background(.white)
             .overlay(alignment: .trailing) { CampPalette.border.frame(width: 1) }
     }
 
@@ -112,7 +112,7 @@ public struct CampWorkspace: View {
                     VStack(spacing: 5) {
                         Image(systemName: section.symbol).font(.system(size: 18))
                         Text(section.rawValue).font(.system(size: 10, weight: .medium))
-                    }.frame(maxWidth: .infinity).padding(.vertical, 12)
+                    }.frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
                         .foregroundStyle(store.section == section ? CampPalette.green : CampPalette.muted)
                 }.buttonStyle(.plain).accessibilityLabel(section.rawValue)
             }

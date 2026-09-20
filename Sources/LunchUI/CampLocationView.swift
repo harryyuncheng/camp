@@ -4,12 +4,14 @@ import MapKit
 
 struct CampLocationView: View {
     @ObservedObject var store: CampSettingsStore
+    @ObservedObject private var location: MacOfficeLocation
     @State private var latitude: Double
     @State private var longitude: Double
     @State private var radius: Double
     @State private var placed: Bool
     @State private var focus = UUID()
     @State private var mapActive = false
+    @State private var mapReady = false
     @State private var query = ""
     @State private var results: [MKMapItem] = []
     @State private var searching = false
@@ -19,6 +21,7 @@ struct CampLocationView: View {
 
     init(store: CampSettingsStore) {
         self.store = store
+        self.location = store.location
         let office = store.savedOffice
         _latitude = State(initialValue: office.latitude)
         _longitude = State(initialValue: office.longitude)
@@ -27,7 +30,7 @@ struct CampLocationView: View {
     }
     private var changed: Bool {
         let office = store.savedOffice
-        return !store.location.officeConfirmed || latitude != office.latitude || longitude != office.longitude || Int(radius) != office.radiusMeters
+        return !location.officeConfirmed || latitude != office.latitude || longitude != office.longitude || Int(radius) != office.radiusMeters
     }
     var body: some View {
         CampCard("Your office", subtitle: "Click the map to place your office circle. Adjust its size, then confirm.") {
@@ -49,8 +52,20 @@ struct CampLocationView: View {
                     }
                 }
             }
-            OfficeBoundaryMap(latitude: latitude, longitude: longitude, radius: radius, placed: placed,
-                              userCoordinate: store.location.mapCoordinate, focus: focus, focusPoint: mapFocusPoint, active: $mapActive, editable: store.isDemoAdmin) { point in place(point, recenter: false) }
+            Group {
+                if mapReady {
+                    OfficeBoundaryMap(latitude: latitude, longitude: longitude, radius: radius, placed: placed,
+                              userCoordinate: location.mapCoordinate, focus: focus, focusPoint: mapFocusPoint, active: $mapActive, editable: store.isDemoAdmin) { point in place(point, recenter: false) }
+                } else {
+                    ZStack { CampPalette.background; ProgressView("Loading office map…") }
+                }
+            }
+                .task {
+                    // Let navigation commit before initializing MapKit on the main thread.
+                    try? await Task.sleep(nanoseconds: 20_000_000)
+                    guard !Task.isCancelled else { return }
+                    mapReady = true
+                }
                 .frame(height: 340)
                 .overlay(alignment: .topTrailing) {
                     if mapActive {
@@ -71,39 +86,39 @@ struct CampLocationView: View {
             }
             Slider(value: $radius, in: 50...5000, step: 25).disabled(!store.isDemoAdmin).accessibilityLabel("Office circle radius in meters")
             HStack {
-                Label(store.location.presence, systemImage: store.location.presence == "In office" ? "building.2.fill" : "location")
+                Label(location.presence, systemImage: location.presence == "In office" ? "building.2.fill" : "location")
                     .font(.callout)
                 Spacer()
                 Button(changed ? "Confirm office" : "Office confirmed") {
                     if store.confirmOfficeBoundary(latitude: latitude, longitude: longitude, radius: Int(radius)) {
                         message = "Office saved. Your circle is now active."
-                        if !store.location.enabled { store.location.enable() }
+                        if !location.enabled { location.enable() }
                     } else { message = store.saveError }
                 }.buttonStyle(CampActionStyle()).disabled(!placed || !store.isDemoAdmin || !changed)
             }
             if let message { Text(message).font(.caption).foregroundStyle(CampPalette.muted) }
             DisclosureGroup("Location details") {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(store.location.detail)
-                    Text("Permission: \(store.location.permission)")
-                    if let accuracy = store.location.accuracyMeters { Text("Accuracy: ±\(Int(accuracy)) m") }
-                    if let arrival = store.location.arrivedAt { HStack { Text("Last arrival"); Text(arrival, style: .time) } }
+                    Text(location.detail)
+                    Text("Permission: \(location.permission)")
+                    if let accuracy = location.accuracyMeters { Text("Accuracy: ±\(Int(accuracy)) m") }
+                    if let arrival = location.arrivedAt { HStack { Text("Last arrival"); Text(arrival, style: .time) } }
                     HStack {
-                        Button(store.location.enabled ? "Pause tracking" : "Enable location") {
-                            if store.location.enabled { store.location.disable() } else { store.location.enable() }
+                        Button(location.enabled ? "Pause tracking" : "Enable location") {
+                            if location.enabled { location.disable() } else { location.enable() }
                         }
-                        Button("Location settings") { store.location.openSettings() }
+                        Button("Location settings") { location.openSettings() }
                     }
                     Text("Runs while camp is open and this Mac is awake.")
                 }.font(.caption).foregroundStyle(CampPalette.muted).padding(.top, 8)
             }
-        }.onChange(of: store.location.permission) { permission in
+        }.onChange(of: location.permission) { permission in
             if ["Denied", "Restricted", "Location Services off"].contains(permission) {
                 waitingForLocation = false
                 message = "Enable camp in Location details → Location settings to see your position."
             }
-        }.onChange(of: store.location.observedAt) { _ in
-            if waitingForLocation, let point = store.location.mapCoordinate {
+        }.onChange(of: location.observedAt) { _ in
+            if waitingForLocation, let point = location.mapCoordinate {
                 mapFocusPoint = point; focus = UUID()
                 waitingForLocation = false
                 message = "Blue marker is your Mac. Click your office on the map to place its circle."
@@ -117,12 +132,12 @@ struct CampLocationView: View {
         if recenter { focus = UUID() }
     }
     private func locateMe() {
-        if !store.location.enabled { store.location.enable() }
-        if let point = store.location.mapCoordinate {
+        if !location.enabled { location.enable() }
+        if let point = location.mapCoordinate {
             // Camera and selected boundary must remain separate: finding yourself doesn't move the office.
             mapFocusPoint = point
             focus = UUID()
-        } else { waitingForLocation = true; store.location.refresh(); message = "Allow Location Services to show your position." }
+        } else { waitingForLocation = true; location.refresh(); message = "Allow Location Services to show your position." }
     }
     @State private var mapFocusPoint: CLLocationCoordinate2D?
     private func search() {
@@ -154,7 +169,7 @@ private struct OfficeBoundaryMap: NSViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeNSView(context: Context) -> OfficeMapContainer {
-        let container = OfficeMapContainer()
+        let container = OfficeMapPool.take()
         let map = container.map
         container.onActivation = { value in context.coordinator.parent.active = value }
         map.delegate = context.coordinator
@@ -162,8 +177,21 @@ private struct OfficeBoundaryMap: NSViewRepresentable {
         map.isRotateEnabled = false; map.isPitchEnabled = false
         let click = NSClickGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.clicked(_:)))
         click.numberOfClicksRequired = 1
+        container.placementGesture = click
         map.addGestureRecognizer(click)
         return container
+    }
+    static func dismantleNSView(_ container: OfficeMapContainer, coordinator: Coordinator) {
+        container.onActivation = nil
+        container.active = false
+        container.map.delegate = nil
+        if let gesture = container.placementGesture {
+            container.map.removeGestureRecognizer(gesture)
+            container.placementGesture = nil
+        }
+        container.map.removeAnnotations(container.map.annotations)
+        container.map.removeOverlays(container.map.overlays)
+        OfficeMapPool.recycle(container)
     }
     func updateNSView(_ container: OfficeMapContainer, context: Context) {
         let map = container.map
@@ -214,9 +242,20 @@ private struct OfficeBoundaryMap: NSViewRepresentable {
         }
     }
 }
+/// Keep a bounded set of detached maps warm across Office/Connections navigation.
+/// A map is returned only after SwiftUI dismantles its previous owner.
+private enum OfficeMapPool {
+    private static var available: [OfficeMapContainer] = []
+    static func take() -> OfficeMapContainer { available.popLast() ?? OfficeMapContainer() }
+    static func recycle(_ container: OfficeMapContainer) {
+        if available.count < 2 { available.append(container) }
+    }
+}
+
 /// Inactive maps route wheel events to the page before MapKit can consume them.
 private final class OfficeMapContainer: NSView {
     let map = MKMapView()
+    var placementGesture: NSClickGestureRecognizer?
     var active = false
     var onActivation: ((Bool) -> Void)?
     private var area: NSTrackingArea?

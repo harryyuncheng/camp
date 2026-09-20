@@ -50,6 +50,7 @@ struct CampActionStyle: ButtonStyle {
         configuration.label.font(.system(size: 13, weight: .semibold))
             .foregroundStyle(primary ? CampPalette.ink : CampPalette.green)
             .padding(.horizontal, 17).padding(.vertical, 12)
+            .contentShape(Rectangle())
             .background(primary ? CampPalette.lime : CampPalette.background)
             .clipShape(RoundedRectangle(cornerRadius: 11))
             .opacity(configuration.isPressed ? 0.7 : 1)

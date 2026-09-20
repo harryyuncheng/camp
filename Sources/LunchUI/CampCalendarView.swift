@@ -6,39 +6,48 @@ import AppKit
 struct CampCalendarView: View {
     @ObservedObject var store: CampSettingsStore
     @State private var choosingCalendars = false
+    #if os(macOS)
+    @ObservedObject private var calendar: MacLunchCalendar
+    #endif
+    init(store: CampSettingsStore) {
+        self.store = store
+        #if os(macOS)
+        self.calendar = store.lunchCalendar
+        #endif
+    }
     var body: some View {
         #if os(macOS)
         CampCard("Today’s calendar", subtitle: "See your blockers and a suggested time for lunch.") {
-            if store.lunchCalendar.enabled && store.lunchCalendar.canRead {
+            if calendar.enabled && calendar.canRead {
                 Button { choosingCalendars.toggle() } label: {
                     HStack {
                         Image(systemName: "calendar")
-                        Text(store.lunchCalendar.selected.isEmpty ? "Select calendars" : "\(store.lunchCalendar.selected.count) calendars selected")
+                        Text(calendar.selected.isEmpty ? "Select calendars" : "\(calendar.selected.count) calendars selected")
                         Spacer()
                         Image(systemName: "chevron.down")
                     }.font(.callout).padding(12).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 10))
                 }.buttonStyle(.plain).popover(isPresented: $choosingCalendars, arrowEdge: .bottom) { calendarPicker }
             }
-            if let day = store.lunchCalendar.timelineDay, store.lunchCalendar.checkedAt != nil {
-                CampDayTimeline(calendar: store.lunchCalendar, day: day)
+            if let day = calendar.timelineDay, calendar.checkedAt != nil {
+                CampDayTimeline(calendar: calendar, day: day)
             } else {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(store.lunchCalendar.summary).font(.headline)
-                    Text(store.lunchCalendar.detail).font(.caption).foregroundStyle(CampPalette.muted)
+                    Text(calendar.summary).font(.headline)
+                    Text(calendar.detail).font(.caption).foregroundStyle(CampPalette.muted)
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(20).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 12))
             }
             HStack {
-                if !store.lunchCalendar.enabled || !store.lunchCalendar.canRead {
-                    Button(store.lunchCalendar.requesting ? "Waiting for permission…" : "Connect calendars") { store.lunchCalendar.connect() }
-                        .buttonStyle(CampActionStyle()).disabled(store.lunchCalendar.requesting)
+                if !calendar.enabled || !calendar.canRead {
+                    Button(calendar.requesting ? "Waiting for permission…" : "Connect calendars") { calendar.connect() }
+                        .buttonStyle(CampActionStyle()).disabled(calendar.requesting)
                 } else {
-                    Button("Refresh") { store.lunchCalendar.refresh() }.buttonStyle(CampActionStyle(primary: false))
+                    Button("Refresh") { calendar.refresh() }.buttonStyle(CampActionStyle(primary: false))
                 }
                 Spacer()
                 Menu {
-                    Button("Calendar settings") { store.lunchCalendar.openSettings() }
-                    if store.lunchCalendar.enabled { Button("Pause calendar access") { store.lunchCalendar.pause() } }
-                    Toggle("All-day events block lunch", isOn: Binding(get: { store.lunchCalendar.blockAllDay }, set: { store.lunchCalendar.setBlockAllDay($0) }))
+                    Button("Calendar settings") { calendar.openSettings() }
+                    if calendar.enabled { Button("Pause calendar access") { calendar.pause() } }
+                    Toggle("All-day events block lunch", isOn: Binding(get: { calendar.blockAllDay }, set: { calendar.setBlockAllDay($0) }))
                 } label: { Image(systemName: "ellipsis.circle").font(.title3) }.menuStyle(.borderlessButton).fixedSize()
             }
             Text("Lunch is a suggestion, not a calendar event. Busy blocks include your meeting buffer. Adjust lunch timing in You.")
@@ -54,18 +63,18 @@ struct CampCalendarView: View {
             HStack { Text("Show calendars").font(.headline); Spacer(); Button("Done") { choosingCalendars = false } }
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    ForEach(store.lunchCalendar.calendars) { calendar in
-                        Toggle(isOn: Binding(get: { store.lunchCalendar.selected.contains(calendar.id) }, set: { store.lunchCalendar.select(calendar.id, enabled: $0) })) {
+                    ForEach(calendar.calendars) { choice in
+                        Toggle(isOn: Binding(get: { calendar.selected.contains(choice.id) }, set: { calendar.select(choice.id, enabled: $0) })) {
                             VStack(alignment: .leading, spacing: 3) {
-                                Text(calendar.name).font(.callout)
-                                Text(calendar.account).font(.caption).foregroundStyle(CampPalette.muted)
+                                Text(choice.name).font(.callout)
+                                Text(choice.account).font(.caption).foregroundStyle(CampPalette.muted)
                             }
                         }.toggleStyle(.checkbox)
                     }
-                    ForEach(Array(store.lunchCalendar.missingSelections).sorted(), id: \.self) { id in
-                        Button("Remove unavailable calendar") { store.lunchCalendar.select(id, enabled: false) }.font(.caption)
+                    ForEach(Array(calendar.missingSelections).sorted(), id: \.self) { id in
+                        Button("Remove unavailable calendar") { calendar.select(id, enabled: false) }.font(.caption)
                     }
-                    if store.lunchCalendar.calendars.isEmpty { Text("Add an account in the Mac Calendar app, then refresh.").font(.caption) }
+                    if calendar.calendars.isEmpty { Text("Add an account in the Mac Calendar app, then refresh.").font(.caption) }
                 }.frame(maxWidth: .infinity, alignment: .leading)
             }.frame(maxHeight: 280)
         }.padding(18).frame(width: 300)
@@ -83,13 +92,11 @@ private struct CampDayTimeline: View {
     private var height: CGFloat { CGFloat(day.duration / 3600) * hourHeight }
     private var lunch: DateInterval? { calendar.suggestedLunch }
     private var title: String {
-        let formatter = DateFormatter(); formatter.timeZone = TimeZone(identifier: calendar.timezone)
-        formatter.dateFormat = "EEEE, MMM d"
+        let formatter = CampTimelineFormatters.get(zone: calendar.timezone, format: "EEEE, MMM d")
         return formatter.string(from: day.start)
     }
     private func time(_ date: Date) -> String {
-        let formatter = DateFormatter(); formatter.timeZone = TimeZone(identifier: calendar.timezone)
-        formatter.dateFormat = "h a"
+        let formatter = CampTimelineFormatters.get(zone: calendar.timezone, format: "h a")
         return formatter.string(from: date)
     }
     private func y(_ date: Date) -> CGFloat { CGFloat(date.timeIntervalSince(day.start) / 3600) * hourHeight }
@@ -190,6 +197,17 @@ private struct CalendarScrollShield: NSViewRepresentable {
             if let page = enclosingScrollView { page.scrollWheel(with: event) }
             else { nextResponder?.scrollWheel(with: event) }
         }
+    }
+}
+
+private enum CampTimelineFormatters {
+    static var cache: [String: DateFormatter] = [:]
+    static func get(zone: String, format: String) -> DateFormatter {
+        let key = zone + "|" + format + "|" + Locale.current.identifier
+        if let formatter = cache[key] { return formatter }
+        let formatter = DateFormatter(); formatter.timeZone = TimeZone(identifier: zone); formatter.dateFormat = format
+        cache[key] = formatter
+        return formatter
     }
 }
 

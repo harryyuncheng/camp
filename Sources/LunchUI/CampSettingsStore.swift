@@ -30,8 +30,6 @@ public final class CampSettingsStore: ObservableObject {
     #if os(macOS)
     public let location = MacOfficeLocation()
     public let lunchCalendar = MacLunchCalendar()
-    private var calendarSubscription: AnyCancellable?
-    private var locationSubscription: AnyCancellable?
     #endif
     public var officePresenceLabel: String {
         #if os(macOS)
@@ -58,8 +56,6 @@ public final class CampSettingsStore: ObservableObject {
         #if os(macOS)
         lunchCalendar.configure(saved.personal, timezone: saved.office.timezone)
         location.configure(saved.office)
-        locationSubscription = location.objectWillChange.sink { [weak self] _ in self?.objectWillChange.send() }
-        calendarSubscription = lunchCalendar.objectWillChange.sink { [weak self] _ in self?.objectWillChange.send() }
         #endif
     }
 
