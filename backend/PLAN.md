@@ -67,8 +67,9 @@ normalized name + 150 m, prefers the platform with lower fee + 15¢/ETA-minute, 
 Assumptions: allergen labels from platforms count as "verified"; missing allergen field = no data; only ACTIVE/in-stock items.
 
 ## Restaurant dataset (replaced 2026-09-19)
-`providers/fixtures/ramp_hq_restaurants.json` is the offline catalog: real restaurants within ~2 km of Ramp HQ
-(28 W 23rd St, Flatiron), collected from menus, delivery-app listings and review sites on 2026-09-19. Each entry has
+`providers/fixtures/ramp_hq_restaurants.json` is the offline catalog: real restaurants around Ramp HQ
+(28 W 23rd St, Flatiron; originally ~2 km, now the 6 km service radius — see "Catalog expansion" below), collected
+from menus, delivery-app listings and review sites on 2026-09-19. Each entry has
 address + coordinates, cuisine, price level, Google/Yelp/Tripadvisor/Infatuation ratings where findable, press
 recommendations, weekday hours, which delivery apps list it, whether it publishes allergen info, and 6-12 lunch dishes
 with price (`price_estimated` when not from a menu), ingredients, dish type, protein, spice, diet flags, allergens,
@@ -78,6 +79,21 @@ signal). `MockProvider` serves the same catalog as Uber/DoorDash-shaped JSON; `s
 `make_world(center=...)` re-centres the geometry on another office. `uber_stores.json` / `doordash_stores.json` are
 dumped from the mock (`camp sync --fixtures`). Ratings are partial: Yelp and Google block scripted fetches, so
 counts came from search snippets and aggregators; treat them as approximate.
+
+## Catalog expansion (2026-09-20)
+The two fixture JSONs are now generated: `tools/build_catalog.py` merges the hand-collected rows kept in
+`tools/catalog/base_*.json` with the compact menu sources in `tools/catalog/*.menu` (one `@ id` block per place: header
+keys, then `name | price | description [| type [| protein [| flags]]]` dish lines) and writes
+`ramp_hq_restaurants.json` / `ramp_hq_cafes.json`. `--check` parses and validates without writing. Ingredients,
+allergens, protein, diet flags, spice and dish type are inferred from the dish text with `tools/catalog/vocab.py`
+(longest phrase wins, so "rice noodle" is gluten-free while "noodle" is not) and can be pinned per line with flags
+(`v vg gf nv +dairy -egg i=…`). New places are geocoded through Nominatim (`tools/catalog/geocache.json`) and must sit
+inside `catalog.SERVICE_RADIUS_KM` (6 km, the same radius `camp sync` uses). Contents: the original 169 places grew to
+a full menu each (≥ 12 dishes, prices `price_estimated` unless from a published menu), ~95 more places within walking
+distance of Ramp HQ (`new_*.menu`: quick-service, sit-down, coffee/juice/bakery/dessert) and ~50 destination picks
+across Chinatown, LES, East/West Village, SoHo, Tribeca, Midtown and Williamsburg/DUMBO (`dest_*.menu`) — 312 places,
+~6 k dishes. Café rows are any block whose `categories` include `coffee`. Re-dump `uber_stores.json` /
+`doordash_stores.json` with `camp sync --fixtures --no-tag` after rebuilding.
 
 ## Exploration noise (added 2026-09-19)
 `Context.exploration` (amplitude) and `Context.nonce` add a deterministic per-request jitter to every score

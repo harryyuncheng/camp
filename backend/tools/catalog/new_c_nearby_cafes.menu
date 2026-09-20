@@ -1,0 +1,667 @@
+# New nearby coffee shops, bakeries, dessert and drink spots (OSM coordinates; approximate Google ratings; estimated prices).
+
+@ juice-press-w-23rd
+name: Juice Press (W 23rd St)
+address: 6 W 23rd St, New York, NY 10010
+ll: 40.74149, -73.99002
+hood: Flatiron
+cuisine: salad
+detail: Cold-pressed juices, smoothies and grab-and-go vegan food
+price: 2
+google: 4.2
+hours: 07:00-20:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+source: https://juicepress.com/menu
+--
+*Mother Earth | 11.50 | Green juice: cucumber, celery, kale, spinach, parsley, lemon | other | none | vg gf
+*Fountain of Youth | 12.50 | Green juice with pineapple, spinach, kale, lemon | other | none | vg gf
+OMG! My Favorite Juice | 11.50 | Pineapple, apple, cucumber, mint | other | none | vg gf
+Blue Magic Smoothie | 12.50 | Blue majik, banana, coconut, almond butter | other | none | vg gf
+Doctor Green Juice | 11.50 | Kale, cucumber, celery, apple, lemon | other | none | vg gf
+Volcano Smoothie | 12.50 | Berries, banana, almond milk | other | none | vg gf
+Acai Bowl | 14.50 | Acai, granola, banana, berries, coconut | bowl | none | vg
+Overnight Oats | 8.50 | Oats, almond milk, chia, berries | other | none | vg
+Avocado Toast | 11.00 | Avocado, chili on sprouted bread | sandwich | none | vg s1
+Kale Caesar Salad | 13.50 | Kale, hemp caesar, croutons | salad | none | vg
+Quinoa Bowl | 14.00 | Quinoa, sweet potato, kale, tahini | bowl | none | vg gf
+Vegan Chocolate Chip Cookie | 4.50 | Vegan chocolate chip cookie | other | none | vg
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Almond Milk Latte | 6.50 | Espresso, almond milk | other | none | vg gf
+Coconut Water | 5.50 | Raw coconut water | other | none | vg gf
+
+@ ralph-s-coffee-flatiron
+name: Ralph's Coffee (Flatiron)
+address: 160 5th Ave, New York, NY 10010
+ll: 40.7404, -73.99066
+hood: Flatiron
+cuisine: bakery
+detail: Ralph Lauren's green-and-white coffee bar
+price: 2
+google: 4.4
+hours: 07:00-19:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Ralph's Latte | 6.00 | Espresso, steamed milk | other | none | v gf
+*Ralph's Iced Coffee | 5.50 | Iced brewed coffee | other | none | vg gf
+Cappuccino | 5.50 | Espresso, foamed milk | other | none | v gf
+Espresso | 4.00 | Double espresso | other | none | vg gf
+Americano | 4.50 | Espresso with hot water | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Mocha | 6.50 | Espresso, chocolate, milk | other | none | v gf
+Hot Chocolate | 5.50 | Hot chocolate | other | none | v gf
+Matcha Latte | 6.50 | Matcha, milk | other | none | v gf
+Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Almond Croissant | 6.00 | Almond croissant | other | none | v
+Blueberry Scone | 5.00 | Blueberry scone | other | none | v
+Banana Bread | 5.00 | Banana bread | other | none | v
+Chai Latte | 6.00 | Spiced chai with milk | other | none | v gf
+
+@ la-colombe-nomad
+name: La Colombe (NoMad)
+address: 1141 Broadway, New York, NY 10001
+ll: 40.74406, -73.98897
+hood: NoMad
+cuisine: bakery
+detail: Philadelphia roaster known for the draft latte
+price: 2
+google: 4.4
+hours: 07:00-18:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Draft Latte | 6.00 | Cold-pressed espresso and frothed milk on draft | other | none | v gf
+*Oat Milk Draft Latte | 6.75 | Draft latte with oat milk | other | none | vg gf
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso with equal steamed milk | other | none | v gf
+Espresso | 3.75 | Double espresso | other | none | vg gf
+Americano | 4.25 | Espresso with hot water | other | none | vg gf
+Drip Coffee | 3.75 | Brewed coffee | other | none | vg gf
+Cold Brew | 5.25 | Cold brew coffee | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.75 | Spiced chai with milk | other | none | v gf
+Chocolate Chip Cookie | 4.25 | Chocolate chip cookie | other | none | v
+Butter Croissant | 4.75 | Butter croissant | other | none | v
+Everything Bagel with Cream Cheese | 6.00 | Bagel, cream cheese | sandwich | none | v
+
+@ bluestone-lane-nomad
+name: Bluestone Lane (NoMad)
+address: 1114 Broadway, New York, NY 10010
+ll: 40.74263, -73.98964
+hood: NoMad
+cuisine: bakery
+detail: Australian-style café; flat whites, avocado smash and brekkie bowls
+price: 2
+google: 4.4
+hours: 07:00-17:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+source: https://bluestonelane.com/menu
+--
+*Avocado Smash | 16.00 | Smashed avocado, feta, cherry tomatoes on sourdough | sandwich | none | v
+*Flat White | 5.25 | Double ristretto, steamed milk | other | none | v gf
+Brekkie Bowl | 17.00 | Poached eggs, avocado, quinoa, greens, tahini | bowl | egg | v gf
+Ricotta Hotcakes | 18.00 | Ricotta hotcakes, berries, maple | other | egg | v
+Bacon & Egg Roll | 14.00 | Bacon, egg, aioli on brioche
+Chicken Sandwich | 16.00 | Roast chicken, avocado, greens on sourdough
+Salmon Toast | 18.00 | Smoked salmon, cream cheese, capers on sourdough
+Acai Bowl | 15.00 | Acai, granola, banana, coconut | bowl | none | vg
+Brekkie Burrito | 15.00 | Eggs, cheese, avocado, salsa in a tortilla | wrap | egg | v
+Kale Salad | 15.00 | Kale, quinoa, almonds, lemon | salad | none | vg gf
+Banana Bread | 6.00 | Toasted banana bread with butter | other | none | v
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Long Black | 4.50 | Espresso over hot water | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk, ice | other | none | v gf
+Matcha Latte | 6.25 | Matcha, milk | other | none | v gf
+Golden Latte | 6.25 | Turmeric, ginger, oat milk | other | none | vg gf
+
+@ gasoline-alley-coffee-nomad
+name: Gasoline Alley Coffee (NoMad)
+address: 331 5th Ave, New York, NY 10016
+ll: 40.74707, -73.98483
+hood: NoMad
+cuisine: bakery
+detail: Small NYC roaster café; espresso and pastries
+price: 2
+google: 4.5
+hours: 07:00-18:00
+platforms: uber, doordash
+categories: coffee
+--
+*Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+*Cold Brew | 5.00 | Cold brew coffee | other | none | vg gf
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Oat Milk Latte | 6.25 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Matcha Latte | 6.00 | Matcha, milk | other | none | v gf
+Butter Croissant | 4.50 | Butter croissant | other | none | v
+Chocolate Croissant | 5.00 | Chocolate croissant | other | none | v
+Blueberry Muffin | 4.50 | Blueberry muffin | other | none | v
+Avocado Toast | 11.00 | Avocado, chili flakes on sourdough | sandwich | none | vg s1
+
+@ 787-coffee-chelsea
+name: 787 Coffee (Chelsea)
+address: 200 W 23rd St, New York, NY 10011
+ll: 40.74441, -73.99615
+hood: Chelsea
+cuisine: bakery
+detail: Puerto Rican farm-to-cup coffee chain; horchata latte
+price: 2
+google: 4.6
+hours: 07:00-19:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Horchata Latte | 6.75 | Espresso, horchata, milk | other | none | v gf
+*Coquito Latte | 6.75 | Espresso with coconut coquito | other | none | v gf
+Latte | 5.75 | Espresso, steamed milk | other | none | v gf
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Café con Leche | 5.00 | Puerto Rican coffee with milk | other | none | v gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Espresso | 3.75 | Double espresso | other | none | vg gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Oat Milk Latte | 6.50 | Espresso, oat milk | other | none | vg gf
+Matcha Latte | 6.25 | Matcha, milk | other | none | v gf
+Quesito | 4.50 | Puerto Rican cream cheese pastry | other | none | v
+Guava Pastelillo | 4.50 | Guava and cheese pastry | other | none | v
+Ham & Cheese Croissant | 7.00 | Ham, cheese croissant
+Avocado Toast | 11.00 | Avocado on sourdough | sandwich | none | vg
+
+@ intelligentsia-highline-hotel
+name: Intelligentsia Coffee (High Line Hotel)
+address: 180 10th Ave, New York, NY 10011
+ll: 40.74562, -74.00553
+hood: Chelsea
+cuisine: bakery
+detail: Chicago roaster's coffee bar in the High Line Hotel lobby and garden
+price: 2
+google: 4.5
+hours: 07:00-17:00
+platforms: none
+categories: coffee
+--
+*Latte | 5.75 | Espresso, steamed milk | other | none | v gf
+*Pour Over | 6.00 | Single-origin pour over | other | none | vg gf
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.75 | Double espresso | other | none | vg gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Oat Milk Latte | 6.50 | Espresso, oat milk | other | none | vg gf
+Hot Chocolate | 5.25 | Hot chocolate | other | none | v gf
+Chai Latte | 5.75 | Spiced chai, milk | other | none | v gf
+Butter Croissant | 4.75 | Butter croissant | other | none | v
+Chocolate Chip Cookie | 4.25 | Chocolate chip cookie | other | none | v
+Banana Bread | 5.00 | Banana bread | other | none | v
+
+@ bibble-and-sip-nomad
+name: Bibble & Sip (NoMad)
+address: 253 W 28th St, New York, NY 10001
+ll: 40.74756, -73.99518
+hood: Chelsea
+cuisine: bakery
+detail: Asian-inspired pastries; cream puffs, matcha and lavender lattes
+price: 2
+google: 4.6
+rec: The cream puffs are the reason to go (Eater NY)
+hours: 08:00-19:00
+platforms: uber, doordash
+categories: coffee
+--
+*Matcha Cream Puff | 5.50 | Choux with matcha cream | other | egg | v
+*Earl Grey Cream Puff | 5.50 | Choux with earl grey cream | other | egg | v
+Yuzu Cream Puff | 5.50 | Choux with yuzu cream | other | egg | v
+Black Sesame Cream Puff | 5.50 | Choux with black sesame cream | other | egg | v
+Hojicha Cheesecake | 7.50 | Roasted tea cheesecake | other | egg | v
+Ube Croissant | 6.50 | Purple yam croissant | other | none | v
+Matcha Croissant | 6.50 | Matcha croissant | other | none | v
+Lavender Latte | 6.50 | Espresso, lavender syrup, milk | other | none | v gf
+Matcha Latte | 6.50 | Matcha, milk | other | none | v gf
+Hojicha Latte | 6.50 | Roasted green tea, milk | other | none | v gf
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Pandan Cake | 6.50 | Pandan chiffon cake | other | egg | v
+Mochi Donut | 4.50 | Mochi donut | other | none | v
+
+@ ample-hills-creamery-chelsea-market
+name: Ample Hills Creamery (Chelsea Market)
+address: 75 9th Ave, New York, NY 10011
+ll: 40.74236, -74.00522
+hood: Chelsea
+cuisine: bakery
+detail: Brooklyn ice cream; Ooey Gooey Butter Cake and Salted Crack Caramel
+price: 1
+google: 4.5
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Salted Crack Caramel | 7.50 | Salted caramel ice cream with crack cookie | other | egg | v
+*Ooey Gooey Butter Cake | 7.50 | Vanilla ice cream with butter cake pieces | other | egg | v
+The Munchies | 7.50 | Pretzel-infused ice cream with chips, M&Ms, Ritz | other | egg | v
+Sweet as Honey | 7.50 | Honey ice cream with honeycomb candy | other | egg | v gf
+Vanilla Malted | 7.00 | Vanilla malt ice cream | other | egg | v
+Nonna D's Oatmeal Lace | 7.50 | Brown sugar cinnamon ice cream, oatmeal cookies | other | egg | v
+Chocolate Milk & Cookies | 7.50 | Chocolate ice cream with cookies | other | egg | v
+Peppermint Pattie | 7.50 | Peppermint ice cream with chocolate | other | egg | v gf
+Strawberry Sorbet | 7.00 | Dairy-free strawberry sorbet | other | none | vg gf
+Coconut Vegan | 7.50 | Vegan coconut ice cream | other | none | vg gf
+Milkshake | 10.00 | Ice cream milkshake | other | egg | v gf
+Sundae | 11.00 | Two scoops, hot fudge, whipped cream | other | egg | v
+Waffle Cone | 1.50 | House waffle cone | other | egg | v
+Ice Cream Sandwich | 8.00 | Ice cream between two cookies | other | egg | v
+
+@ doughnuttery-chelsea-market
+name: Doughnuttery (Chelsea Market)
+address: 75 9th Ave, New York, NY 10011
+ll: 40.74236, -74.00502
+hood: Chelsea
+cuisine: bakery
+detail: Mini doughnuts fried to order with dozens of sugar blends
+price: 1
+google: 4.6
+hours: 10:00-20:00
+platforms: uber, doordash
+categories: coffee
+--
+*Mini Doughnuts (6) | 6.50 | Six warm mini doughnuts, choice of sugar | other | egg | v
+*Mini Doughnuts (12) | 11.00 | Twelve warm mini doughnuts | other | egg | v
+Mini Doughnuts (24) | 20.00 | Twenty-four warm mini doughnuts | other | egg | v
+Cinnamon Sugar | 6.50 | Six mini doughnuts in cinnamon sugar | other | egg | v
+Purple Pig | 6.50 | Six mini doughnuts in maple, bacon, potato sugar | other | pork
+Paris Time | 6.50 | Six mini doughnuts with lavender, pistachio, vanilla sugar | other | egg | v
+Urban Monkey | 6.50 | Six mini doughnuts with banana, coffee, coconut sugar | other | egg | v
+Cacao Nibs | 6.50 | Six mini doughnuts with cacao sugar | other | egg | v
+Doughnut Sundae | 9.00 | Mini doughnuts with soft serve | other | egg | v
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Hot Chocolate | 5.00 | Hot chocolate | other | none | v gf
+Cold Brew | 5.00 | Cold brew coffee | other | none | vg gf
+
+@ li-lac-chocolates-chelsea-market
+name: Li-Lac Chocolates (Chelsea Market)
+address: 75 9th Ave, New York, NY 10011
+ll: 40.74246, -74.00477
+hood: Chelsea
+cuisine: bakery
+detail: Manhattan's oldest chocolate house (1923); hand-made truffles and bark
+price: 2
+google: 4.6
+hours: 10:00-20:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Dark Chocolate Almond Bark | 12.00 | Dark chocolate with almonds | other | none | v gf
+*Assorted Truffles (6) | 18.00 | Six hand-made truffles | other | none | v gf
+Milk Chocolate Caramels (6) | 14.00 | Chocolate-covered caramels | other | none | v gf
+Peanut Butter Cups (4) | 12.00 | Chocolate peanut butter cups | other | none | v gf
+Hazelnut Truffle | 3.50 | Single hazelnut truffle | other | none | v gf
+Chocolate-Covered Pretzels | 10.00 | Chocolate-dipped pretzels | other | none | v
+Chocolate Bark Assortment | 22.00 | Mixed chocolate bark | other | none | v gf
+Fudge Slice | 6.00 | Chocolate fudge | other | none | v gf
+Chocolate-Covered Strawberries (4) | 14.00 | Chocolate-dipped strawberries | other | none | v gf
+Hot Chocolate | 6.00 | Rich hot chocolate | other | none | v gf
+Chocolate Bar (Dark) | 7.00 | Dark chocolate bar | other | none | vg gf
+Butter Crunch | 12.00 | Almond butter crunch | other | none | v gf
+Marzipan | 8.00 | Chocolate-covered marzipan | other | none | v gf
+
+@ maison-kayser-flatiron
+name: Eric Kayser (Flatiron)
+address: 921 Broadway, New York, NY 10010
+ll: 40.73956, -73.98984
+hood: Flatiron
+cuisine: bakery
+detail: Parisian boulangerie; baguettes, croissants and tartines
+price: 2
+google: 4.3
+hours: 07:00-20:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+--
+*Croissant | 4.50 | Butter croissant | other | none | v
+*Baguette Jambon-Beurre | 12.00 | Ham, butter on baguette
+Pain au Chocolat | 5.00 | Chocolate croissant | other | none | v
+Almond Croissant | 6.00 | Almond croissant | other | none | v
+Chausson aux Pommes | 5.50 | Apple turnover | other | none | v
+Tartine Avocat | 14.00 | Avocado, egg on toasted bread | sandwich | egg | v
+Croque Monsieur | 15.00 | Ham, gruyère, béchamel
+Quiche Lorraine | 12.00 | Bacon, egg, cream quiche with salad | other | egg
+Poulet Crudités Sandwich | 13.00 | Chicken, vegetables on baguette
+Salade Niçoise | 17.00 | Tuna, egg, olives, greens | salad | fish | gf
+Soupe du Jour | 9.00 | Soup of the day | soup | none | v
+Éclair au Chocolat | 6.50 | Chocolate éclair | other | egg | v
+Tarte au Citron | 7.00 | Lemon tart | other | egg | v
+Café Crème | 5.50 | Espresso, steamed milk | other | none | v gf
+Chocolat Chaud | 5.50 | Hot chocolate | other | none | v gf
+
+@ hungry-ghost-flatiron
+name: Hungry Ghost Coffee (Flatiron)
+address: 22 W 21st St, New York, NY 10010
+ll: 40.74098, -73.99144
+hood: Flatiron
+cuisine: bakery
+detail: Brooklyn roaster café; espresso, cold brew and pastries
+price: 2
+google: 4.4
+hours: 07:00-18:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+*Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Oat Milk Latte | 6.25 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Matcha Latte | 6.00 | Matcha, milk | other | none | v gf
+Chai Latte | 5.75 | Spiced chai, milk | other | none | v gf
+Butter Croissant | 4.50 | Butter croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Bagel with Cream Cheese | 5.50 | Bagel, cream cheese | sandwich | none | v
+
+@ partners-coffee-chelsea
+name: Partners Coffee (Chelsea)
+address: 44 W 29th St, New York, NY 10001
+ll: 40.74618, -73.98939
+hood: NoMad
+cuisine: bakery
+detail: Brooklyn specialty roaster; single-origin pour overs
+price: 2
+google: 4.5
+hours: 07:00-18:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Latte | 5.75 | Espresso, steamed milk | other | none | v gf
+*Pour Over | 6.00 | Single-origin pour over | other | none | vg gf
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.75 | Double espresso | other | none | vg gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.75 | Brewed coffee | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Oat Milk Latte | 6.50 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Matcha Latte | 6.25 | Matcha, milk | other | none | v gf
+Butter Croissant | 4.75 | Butter croissant | other | none | v
+Banana Bread | 5.00 | Banana bread | other | none | v
+Avocado Toast | 11.00 | Avocado on sourdough | sandwich | none | vg
+
+@ chalait-chelsea
+name: Chalait (Chelsea)
+address: 224 W 4th St, New York, NY 10014
+ll: 40.73357, -74.00191
+hood: West Village
+cuisine: bakery
+detail: Matcha-focused café; ceremonial matcha lattes and toasts
+price: 2
+google: 4.5
+hours: 08:00-18:00
+platforms: uber, doordash
+categories: coffee, meal
+--
+*Matcha Latte | 6.50 | Ceremonial matcha, milk | other | none | v gf
+*Iced Matcha Latte | 7.00 | Matcha, cold milk, ice | other | none | v gf
+Matcha Lemonade | 6.50 | Matcha, lemonade | other | none | vg gf
+Hojicha Latte | 6.50 | Roasted green tea, milk | other | none | v gf
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Avocado Toast | 13.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Smoked Salmon Toast | 15.00 | Smoked salmon, cream cheese, capers on sourdough
+Ricotta Honey Toast | 11.00 | Ricotta, honey, sea salt on sourdough | sandwich | none | v
+Acai Bowl | 14.00 | Acai, granola, banana, coconut | bowl | none | vg
+Matcha Chia Pudding | 9.00 | Chia pudding with matcha | other | none | vg gf
+Matcha Croissant | 6.00 | Matcha croissant | other | none | v
+Matcha Cookie | 4.50 | White chocolate matcha cookie | other | none | v
+Egg Sandwich | 12.00 | Egg, cheese, greens on brioche | sandwich | egg | v
+
+@ breads-bakery-union-square-kiosk
+name: Breads Bakery Kiosk (Union Square Park)
+address: 1 Union Sq W, New York, NY 10003
+ll: 40.73556, -73.99048
+hood: Union Square
+cuisine: bakery
+detail: Breads Bakery's park kiosk; babka, rugelach and coffee
+price: 2
+google: 4.5
+hours: 08:00-18:00
+platforms: none
+chain: yes
+categories: coffee
+--
+*Chocolate Babka Slice | 6.00 | Chocolate babka | other | egg | v
+*Chocolate Rugelach (3) | 6.00 | Chocolate rugelach | other | none | v
+Cinnamon Babka Slice | 6.00 | Cinnamon babka | other | egg | v
+Cheese Straw | 4.50 | Parmesan cheese straw | other | none | v
+Almond Croissant | 6.00 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Pretzel Croissant | 5.50 | Pretzel-salted croissant | other | none | v
+Cheese Danish | 5.50 | Cheese danish | other | egg | v
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Cold Brew | 5.00 | Cold brew coffee | other | none | vg gf
+Hot Chocolate | 5.00 | Hot chocolate | other | none | v gf
+
+@ max-brenner-union-square
+name: Max Brenner (Union Square)
+address: 841 Broadway, New York, NY 10003
+ll: 40.73434, -73.99099
+hood: Union Square
+cuisine: bakery
+detail: Chocolate restaurant; fondue, crepes and hug mugs
+price: 2
+google: 4.3
+hours: 09:00-23:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+--
+*Chocolate Fondue for Two | 32.00 | Melted chocolate with fruit, marshmallows, banana bread | other | none | v
+*Hug Mug Hot Chocolate | 8.50 | Signature hot chocolate | other | none | v gf
+Chocolate Chunks Pizza | 18.00 | Sweet pizza with chocolate, marshmallow, peanut butter | pizza | none | v
+Waffles with Chocolate | 16.00 | Belgian waffles, chocolate sauce, ice cream | other | egg | v
+Banana Split Crepe | 17.00 | Crepe, banana, chocolate, ice cream | other | egg | v
+Chocolate Milkshake | 11.00 | Thick chocolate shake | other | none | v gf
+Churros | 14.00 | Churros with chocolate dipping sauce | other | none | v
+Chocolate Syringe | 6.00 | Chocolate in a syringe | other | none | v gf
+Burger | 21.00 | Beef patty, cheddar, fries
+Chicken Caesar Salad | 19.00 | Grilled chicken, romaine, parmesan | salad | chicken
+Mac & Cheese | 16.00 | Baked macaroni and cheese | other | none | v
+Chocolate Babka French Toast | 18.00 | Babka French toast, syrup | other | egg | v
+Iced Chocolate | 8.50 | Iced chocolate drink | other | none | v gf
+Latte | 5.50 | Espresso, steamed milk | other | none | v gf
+
+@ van-leeuwen-union-square
+name: Van Leeuwen Ice Cream (Union Square)
+address: 39 E 14th St, New York, NY 10003
+ll: 40.73426, -73.99019
+hood: Union Square
+cuisine: bakery
+detail: Brooklyn ice cream with a full vegan lineup; Honeycomb and Earl Grey Tea
+price: 1
+google: 4.6
+hours: 12:00-23:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+source: https://vanleeuwenicecream.com/menu
+--
+*Honeycomb | 7.50 | Honeycomb ice cream | other | egg | v gf
+*Earl Grey Tea | 7.50 | Earl grey ice cream | other | egg | v gf
+Vanilla Bean | 7.00 | Vanilla bean ice cream | other | egg | v gf
+Sicilian Pistachio | 7.50 | Pistachio ice cream | other | egg | v gf
+Cookies & Cream Caramel Swirl | 7.50 | Vanilla, cookies, caramel | other | egg | v
+Vegan Oat Milk Brown Sugar Chunk | 7.50 | Vegan oat milk ice cream with brown sugar chunks | other | none | vg
+Vegan Chocolate Chip Cookie Dough | 7.50 | Vegan cookie dough ice cream | other | none | vg
+Vegan Strawberry | 7.50 | Vegan strawberry ice cream | other | none | vg gf
+Marionberry Cheesecake | 7.50 | Cheesecake ice cream with berry swirl | other | egg | v
+Espresso | 7.50 | Espresso ice cream | other | egg | v gf
+Pint | 12.00 | Take-home pint | other | egg | v gf
+Sundae | 11.00 | Two scoops with toppings | other | egg | v
+Milkshake | 10.00 | Ice cream milkshake | other | egg | v gf
+Waffle Cone | 1.50 | Waffle cone | other | egg | v
+
+@ eileen-s-special-cheesecake-nolita
+name: Eileen's Special Cheesecake
+address: 17 Cleveland Pl, New York, NY 10012
+ll: 40.72154, -73.99751
+hood: Nolita
+cuisine: bakery
+detail: NYC cheesecake landmark since 1975; individual mini cheesecakes
+price: 1
+google: 4.7
+rec: Lighter than the deli-style giants; the strawberry mini is a classic (Eater NY)
+hours: 11:00-19:00
+platforms: uber, doordash
+categories: coffee
+--
+*Plain Mini Cheesecake | 6.00 | Classic New York cheesecake | other | egg | v
+*Strawberry Mini Cheesecake | 6.50 | Cheesecake with strawberry topping | other | egg | v
+Chocolate Mini Cheesecake | 6.50 | Chocolate cheesecake | other | egg | v
+Salted Caramel Mini Cheesecake | 6.50 | Salted caramel cheesecake | other | egg | v
+Pumpkin Mini Cheesecake | 6.50 | Pumpkin cheesecake | other | egg | v
+Blueberry Mini Cheesecake | 6.50 | Cheesecake with blueberry topping | other | egg | v
+Cherry Mini Cheesecake | 6.50 | Cheesecake with cherry topping | other | egg | v
+Red Velvet Mini Cheesecake | 6.50 | Red velvet cheesecake | other | egg | v
+Oreo Mini Cheesecake | 6.50 | Cookies and cream cheesecake | other | egg | v
+Gluten-Free Mini Cheesecake | 7.00 | Plain cheesecake with GF crust | other | egg | v gf
+Whole 6-inch Cheesecake | 28.00 | Six-inch plain cheesecake | other | egg | v
+Drip Coffee | 3.00 | Brewed coffee | other | none | vg gf
+Latte | 5.00 | Espresso, steamed milk | other | none | v gf
+
+@ boba-guys-nomad
+name: Boba Guys (NoMad)
+address: 30 W 27th St, New York, NY 10001
+ll: 40.74504, -73.98996
+hood: NoMad
+cuisine: bakery
+detail: Premium bubble tea with house-made boba and Straus organic milk
+price: 1
+google: 4.4
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Classic Milk Tea | 6.25 | Black tea, milk, boba | other | none | v gf
+*Strawberry Matcha Latte | 7.25 | Strawberry purée, matcha, milk | other | none | v gf
+Hong Kong Milk Tea | 6.50 | Strong black tea, condensed milk | other | none | v gf
+Jasmine Milk Tea | 6.25 | Jasmine green tea, milk | other | none | v gf
+Thai Iced Tea | 6.50 | Thai tea, milk | other | none | v gf
+Horchata | 6.50 | Rice cinnamon drink | other | none | vg gf
+Dirty Horchata | 7.25 | Horchata with espresso | other | none | vg gf
+Coffee Milk Tea | 6.75 | Black tea, coffee, milk | other | none | v gf
+Matcha Latte | 6.75 | Matcha, milk | other | none | v gf
+Passion Fruit Green Tea | 5.75 | Green tea, passion fruit | other | none | vg gf
+Mango Green Tea | 5.75 | Green tea, mango | other | none | vg gf
+Oat Milk Tea | 6.75 | Black tea, oat milk | other | none | vg gf
+Boba Add-on | 1.00 | House-made tapioca pearls | other | none | vg gf
+Grass Jelly Add-on | 1.00 | Grass jelly | other | none | vg gf
+
+@ chatime-union-square
+name: Chatime (Union Square)
+address: 10 E 14th St, New York, NY 10003
+ll: 40.73519, -73.99251
+hood: Union Square
+cuisine: bakery
+detail: Taiwanese bubble tea chain
+price: 1
+google: 4.2
+hours: 11:00-22:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Pearl Milk Tea | 6.00 | Black milk tea with boba | other | none | v gf
+*Brown Sugar Pearl Milk | 6.75 | Brown sugar boba with fresh milk | other | none | v gf
+Taro Milk Tea | 6.50 | Taro milk tea | other | none | v gf
+Roasted Milk Tea | 6.25 | Roasted oolong milk tea | other | none | v gf
+Matcha Red Bean Milk Tea | 6.75 | Matcha milk tea with red bean | other | none | v gf
+Mango Green Tea | 5.75 | Green tea, mango | other | none | vg gf
+Passion Fruit Green Tea | 5.75 | Green tea, passion fruit | other | none | vg gf
+Lychee Green Tea | 5.75 | Green tea, lychee | other | none | vg gf
+Grapefruit Green Tea | 5.75 | Green tea, grapefruit | other | none | vg gf
+Mango Smoothie | 6.75 | Mango smoothie | other | none | vg gf
+Thai Milk Tea | 6.25 | Thai tea, milk | other | none | v gf
+Oolong Tea | 4.75 | Oolong tea | other | none | vg gf
+Popcorn Chicken | 7.50 | Taiwanese popcorn chicken | other | chicken | s1
+
+@ pressed-juicery-flatiron
+name: Pressed (Flatiron)
+address: 145 5th Ave, New York, NY 10010
+ll: 40.73969, -73.99044
+hood: Flatiron
+cuisine: salad
+detail: Cold-pressed juices, shots and Freeze soft-serve
+price: 2
+google: 4.3
+hours: 08:00-19:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Greens 2 | 9.50 | Kale, spinach, romaine, cucumber, celery, apple, lemon | other | none | vg gf
+*Vanilla Almond | 9.50 | Almond, date, vanilla, sea salt | other | none | vg gf
+Roots 3 | 9.50 | Beet, apple, lemon, ginger | other | none | vg gf
+Citrus 2 | 9.50 | Pineapple, apple, lemon, mint | other | none | vg gf
+Strawberry Lemonade | 8.50 | Strawberry, lemon, apple | other | none | vg gf
+Wellness Shot | 4.50 | Ginger, lemon, cayenne | other | none | vg gf s2
+Chocolate Almond | 9.50 | Almond, cacao, date | other | none | vg gf
+Freeze (Vanilla) | 8.00 | Plant-based soft serve | other | none | vg gf
+Freeze with Toppings | 10.00 | Freeze with fruit and granola | other | none | vg
+Cold Brew Almond | 9.50 | Cold brew with almond milk | other | none | vg gf
+Coconut Water | 6.50 | Coconut water | other | none | vg gf
+Celery Juice | 9.50 | Pure celery juice | other | none | vg gf
+Acai Bowl | 13.00 | Acai, granola, banana | bowl | none | vg
+
+@ culture-espresso-w-38th
+name: Culture Espresso (W 36th)
+address: 72 W 38th St, New York, NY 10018
+ll: 40.75188, -73.98492
+hood: Midtown
+cuisine: bakery
+detail: Cult espresso bar; famous chocolate chip cookies
+price: 2
+google: 4.6
+rec: One of the best cookies in the city, and serious espresso (Eater NY)
+hours: 07:00-19:00
+platforms: uber, doordash
+chain: yes
+categories: coffee
+--
+*Chocolate Chip Cookie | 5.00 | Large sea-salt chocolate chip cookie | other | none | v
+*Latte | 5.75 | Espresso, steamed milk | other | none | v gf
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.75 | Double espresso | other | none | vg gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.75 | Brewed coffee | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Oat Milk Latte | 6.50 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Butter Croissant | 4.75 | Butter croissant | other | none | v
+Banana Bread | 5.00 | Banana bread | other | none | v
+Oatmeal Raisin Cookie | 5.00 | Oatmeal raisin cookie | other | none | v
+Hot Chocolate | 5.25 | Hot chocolate | other | none | v gf

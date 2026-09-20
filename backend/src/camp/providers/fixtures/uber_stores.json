@@ -2671,5 +2671,3623 @@
    "count": 422
   },
   "price_bucket": 3
+ },
+ {
+  "store_id": "uber-tenjou-flatiron",
+  "name": "Tenjou",
+  "location": {
+   "latitude": 40.74213,
+   "longitude": -73.9905,
+   "address": "25 W 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-mista-oh-flatiron",
+  "name": "Mista Oh",
+  "location": {
+   "latitude": 40.74324,
+   "longitude": -73.99122,
+   "address": "12 W 24th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "korean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-lenwich-w-23rd",
+  "name": "Lenwich (W 23rd St)",
+  "location": {
+   "latitude": 40.74168,
+   "longitude": -73.9904,
+   "address": "16 W 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-lava-shawarma-nyc",
+  "name": "Lava Shawarma NYC",
+  "location": {
+   "latitude": 40.74164,
+   "longitude": -73.99025,
+   "address": "12 W 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-grandma-s-home-flatiron",
+  "name": "Grandma's Home",
+  "location": {
+   "latitude": 40.74192,
+   "longitude": -73.99283,
+   "address": "56 W 22nd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-brown-bag-sandwich-shop",
+  "name": "Brown Bag Sandwich Shop",
+  "location": {
+   "latitude": 40.74202,
+   "longitude": -73.99304,
+   "address": "64 W 22nd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-chick-fil-a-700-6th-ave",
+  "name": "Chick-fil-A (6th Ave & 23rd)",
+  "location": {
+   "latitude": 40.74225,
+   "longitude": -73.99304,
+   "address": "700 6th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "06:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-inday-flatiron",
+  "name": "Inday",
+  "location": {
+   "latitude": 40.74197,
+   "longitude": -73.99293,
+   "address": "60 W 22nd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "indian"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-memo-shish-kebab",
+  "name": "Memo Shish Kebab",
+  "location": {
+   "latitude": 40.74283,
+   "longitude": -73.99312,
+   "address": "100 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-andiamo-pizza-688-6th",
+  "name": "Andiamo Pizza (6th Ave)",
+  "location": {
+   "latitude": 40.74205,
+   "longitude": -73.99317,
+   "address": "688 6th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-great-burrito-w-23rd",
+  "name": "Great Burrito",
+  "location": {
+   "latitude": 40.74288,
+   "longitude": -73.99319,
+   "address": "100 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "02:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-s-and-p-sandwich-shop",
+  "name": "S&P Sandwich Shop",
+  "location": {
+   "latitude": 40.74112,
+   "longitude": -73.99017,
+   "address": "174 5th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-all-antico-vinaio-nomad",
+  "name": "All'Antico Vinaio (NoMad)",
+  "location": {
+   "latitude": 40.74332,
+   "longitude": -73.98953,
+   "address": "7 W 25th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-mama-mezze-nomad",
+  "name": "Mama Mezze",
+  "location": {
+   "latitude": 40.74323,
+   "longitude": -73.98928,
+   "address": "1123 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-naya-nomad-broadway",
+  "name": "Naya (NoMad)",
+  "location": {
+   "latitude": 40.74347,
+   "longitude": -73.98922,
+   "address": "1123 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-2-bros-pizza-755-6th",
+  "name": "2 Bros. Pizza (6th Ave)",
+  "location": {
+   "latitude": 40.74435,
+   "longitude": -73.99197,
+   "address": "755 6th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "02:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.1,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-cospa-ramen-nomad",
+  "name": "Cospa Ramen",
+  "location": {
+   "latitude": 40.74434,
+   "longitude": -73.99054,
+   "address": "42 W 26th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-la-pecora-bianca-nomad",
+  "name": "La Pecora Bianca (NoMad)",
+  "location": {
+   "latitude": 40.74371,
+   "longitude": -73.98921,
+   "address": "1133 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "italian"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-izakaya-nomad",
+  "name": "Izakaya NoMad",
+  "location": {
+   "latitude": 40.74408,
+   "longitude": -73.98945,
+   "address": "13 W 26th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-premier-shojin",
+  "name": "Premier Sh\u014djin",
+  "location": {
+   "latitude": 40.74033,
+   "longitude": -73.99219,
+   "address": "17 W 20th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "21:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-boqueria-flatiron",
+  "name": "Boqueria (Flatiron)",
+  "location": {
+   "latitude": 40.7403,
+   "longitude": -73.99372,
+   "address": "53 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-burger-and-lobster-flatiron",
+  "name": "Burger & Lobster (Flatiron)",
+  "location": {
+   "latitude": 40.74009,
+   "longitude": -73.99346,
+   "address": "39 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "burger"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-tacos-guey-flatiron",
+  "name": "Tacos G\u00fcey",
+  "location": {
+   "latitude": 40.74,
+   "longitude": -73.99322,
+   "address": "37 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-hee-korean-bbq-grill",
+  "name": "Hee Korean BBQ & Grill",
+  "location": {
+   "latitude": 40.74539,
+   "longitude": -73.9912,
+   "address": "793 6th Ave, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "korean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-mulberry-and-vine-nomad",
+  "name": "Mulberry & Vine (NoMad)",
+  "location": {
+   "latitude": 40.74529,
+   "longitude": -73.99039,
+   "address": "55 W 27th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "salad"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-malibu-diner-chelsea",
+  "name": "Malibu Diner",
+  "location": {
+   "latitude": 40.74386,
+   "longitude": -73.99467,
+   "address": "163 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "00:00",
+    "end_time": "23:59"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-excellent-dumpling-house-chelsea",
+  "name": "Excellent Dumpling House (Chelsea)",
+  "location": {
+   "latitude": 40.74401,
+   "longitude": -73.99505,
+   "address": "165 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-sophie-s-cuban-cuisine-flatiron",
+  "name": "Sophie's Cuban Cuisine (Flatiron)",
+  "location": {
+   "latitude": 40.7406,
+   "longitude": -73.98779,
+   "address": "28 E 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "10:30",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-blackbarn-nomad",
+  "name": "BLACKBARN",
+  "location": {
+   "latitude": 40.74305,
+   "longitude": -73.98707,
+   "address": "19 E 26th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-skewr-kabob-kitchen",
+  "name": "Skewr Kabob Kitchen",
+  "location": {
+   "latitude": 40.74049,
+   "longitude": -73.98754,
+   "address": "34 E 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-wrapido-chelsea",
+  "name": "Wrapido",
+  "location": {
+   "latitude": 40.74412,
+   "longitude": -73.9953,
+   "address": "171 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-nana-thai-street-flatiron",
+  "name": "NaNa Thai Street",
+  "location": {
+   "latitude": 40.73958,
+   "longitude": -73.98853,
+   "address": "31 E 21st St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "thai"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-mezeh-mediterranean-grill-flatiron",
+  "name": "Mezeh Mediterranean Grill",
+  "location": {
+   "latitude": 40.73892,
+   "longitude": -73.98967,
+   "address": "900 Broadway, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "10:30",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-kazunori-nomad",
+  "name": "KazuNori (NoMad)",
+  "location": {
+   "latitude": 40.74518,
+   "longitude": -73.98819,
+   "address": "15 W 28th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-rare-bar-and-grill-chelsea",
+  "name": "Rare Bar & Grill (Chelsea)",
+  "location": {
+   "latitude": 40.74563,
+   "longitude": -73.99375,
+   "address": "152 W 26th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "burger"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-the-breslin-nomad",
+  "name": "The Breslin",
+  "location": {
+   "latitude": 40.74568,
+   "longitude": -73.98812,
+   "address": "16 W 29th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-blt-fish-flatiron",
+  "name": "BLT Fish",
+  "location": {
+   "latitude": 40.73853,
+   "longitude": -73.99338,
+   "address": "21 W 17th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-mari-vanna-flatiron",
+  "name": "Mari Vanna",
+  "location": {
+   "latitude": 40.7388,
+   "longitude": -73.98857,
+   "address": "41 E 20th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-go-go-curry-chelsea",
+  "name": "Go! Go! Curry (Chelsea)",
+  "location": {
+   "latitude": 40.74116,
+   "longitude": -73.99662,
+   "address": "144 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:55"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-ajisen-ramen-chelsea",
+  "name": "Ajisen Ramen (Chelsea)",
+  "location": {
+   "latitude": 40.74662,
+   "longitude": -73.99217,
+   "address": "136 W 28th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-glur-thai-chelsea",
+  "name": "Glur Thai",
+  "location": {
+   "latitude": 40.74119,
+   "longitude": -73.99672,
+   "address": "144 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "thai"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-petite-abeille-flatiron",
+  "name": "Petite Abeille",
+  "location": {
+   "latitude": 40.73867,
+   "longitude": -73.9945,
+   "address": "44 W 17th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "09:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-roll-over-kimbap",
+  "name": "Roll Over Kimbap",
+  "location": {
+   "latitude": 40.73737,
+   "longitude": -73.99067,
+   "address": "25 E 17th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "korean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-poke-bowl-union-square",
+  "name": "Poke Bowl (Union Square)",
+  "location": {
+   "latitude": 40.73728,
+   "longitude": -73.99099,
+   "address": "26 E 17th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-sarabeth-s-park-ave-south",
+  "name": "Sarabeth's (Park Avenue South)",
+  "location": {
+   "latitude": 40.74249,
+   "longitude": -73.98442,
+   "address": "381 Park Ave S, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-tsurutontan-union-square",
+  "name": "TsuruTonTan (Union Square)",
+  "location": {
+   "latitude": 40.73678,
+   "longitude": -73.99107,
+   "address": "21 E 16th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-sweet-chick-union-square",
+  "name": "Sweet Chick (Union Square)",
+  "location": {
+   "latitude": 40.73661,
+   "longitude": -73.99122,
+   "address": "32 E 16th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-maialino-vicino",
+  "name": "Maialino (vicino)",
+  "location": {
+   "latitude": 40.73842,
+   "longitude": -73.98576,
+   "address": "2 Lexington Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "italian"
+  ],
+  "hours": [
+   {
+    "start_time": "07:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-mala-town-gramercy",
+  "name": "Mala Town",
+  "location": {
+   "latitude": 40.74017,
+   "longitude": -73.98261,
+   "address": "162 E 25th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-chama-mama-chelsea",
+  "name": "Chama Mama (Chelsea)",
+  "location": {
+   "latitude": 40.73842,
+   "longitude": -73.99892,
+   "address": "149 W 14th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-da-andrea-chelsea",
+  "name": "Da Andrea (Chelsea)",
+  "location": {
+   "latitude": 40.74207,
+   "longitude": -74.00061,
+   "address": "160 8th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "italian"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-beef-up-noodle-kips-bay",
+  "name": "Beef Up Noodle",
+  "location": {
+   "latitude": 40.74065,
+   "longitude": -73.98206,
+   "address": "350 3rd Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-street-taco-kips-bay",
+  "name": "Street Taco",
+  "location": {
+   "latitude": 40.74089,
+   "longitude": -73.98187,
+   "address": "358 3rd Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-luke-s-lobster-union-square",
+  "name": "Luke's Lobster (Union Square)",
+  "location": {
+   "latitude": 40.73483,
+   "longitude": -73.99225,
+   "address": "124 University Pl, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-taboonette-union-square",
+  "name": "Taboonette",
+  "location": {
+   "latitude": 40.73465,
+   "longitude": -73.99279,
+   "address": "30 E 13th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-1915-lanzhou-hand-pulled-noodles",
+  "name": "1915 Lanzhou Hand-Pulled Noodles & Dumplings",
+  "location": {
+   "latitude": 40.74062,
+   "longitude": -73.98125,
+   "address": "207 E 26th St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-jack-s-wife-freda-chelsea",
+  "name": "Jack's Wife Freda (Chelsea)",
+  "location": {
+   "latitude": 40.74092,
+   "longitude": -74.00144,
+   "address": "116 8th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "08:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-bb-q-chicken-kips-bay",
+  "name": "bb.q Chicken (Kips Bay)",
+  "location": {
+   "latitude": 40.74156,
+   "longitude": -73.98093,
+   "address": "383 3rd Ave, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "korean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-ramen-ishida-chelsea",
+  "name": "Ramen Ishida (Chelsea)",
+  "location": {
+   "latitude": 40.74052,
+   "longitude": -74.00169,
+   "address": "104 8th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-mimi-cheng-s-dumplings-east-village",
+  "name": "Mimi Cheng's Dumplings (East Village)",
+  "location": {
+   "latitude": 40.73075,
+   "longitude": -73.98635,
+   "address": "179 2nd Ave, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "21:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-mamoun-s-falafel-macdougal",
+  "name": "Mamoun's Falafel (MacDougal St)",
+  "location": {
+   "latitude": 40.73032,
+   "longitude": -74.00036,
+   "address": "119 MacDougal St, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "02:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-ukrainian-east-village-restaurant",
+  "name": "Ukrainian East Village Restaurant",
+  "location": {
+   "latitude": 40.72892,
+   "longitude": -73.98723,
+   "address": "140 2nd Ave, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-l-industrie-pizzeria-west-village",
+  "name": "L'industrie Pizzeria (West Village)",
+  "location": {
+   "latitude": 40.73321,
+   "longitude": -74.00495,
+   "address": "104 Christopher St, New York, NY 10014"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.7,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-momofuku-noodle-bar-east-village",
+  "name": "Momofuku Noodle Bar (East Village)",
+  "location": {
+   "latitude": 40.72924,
+   "longitude": -73.9845,
+   "address": "171 1st Ave, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-b-and-h-dairy",
+  "name": "B&H Dairy",
+  "location": {
+   "latitude": 40.72842,
+   "longitude": -73.98802,
+   "address": "127 2nd Ave, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-joe-s-pizza-carmine",
+  "name": "Joe's Pizza (Carmine St)",
+  "location": {
+   "latitude": 40.73055,
+   "longitude": -74.00206,
+   "address": "7 Carmine St, New York, NY 10014"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "04:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-mighty-quinn-s-bbq-east-village",
+  "name": "Mighty Quinn's Barbeque (East Village)",
+  "location": {
+   "latitude": 40.72763,
+   "longitude": -73.98872,
+   "address": "103 2nd Ave, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-los-tacos-no-1-times-square",
+  "name": "Los Tacos No. 1 (Times Square)",
+  "location": {
+   "latitude": 40.75747,
+   "longitude": -73.98747,
+   "address": "229 W 43rd St, New York, NY 10036"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.7,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-emily-west-village",
+  "name": "Emily (West Village)",
+  "location": {
+   "latitude": 40.72935,
+   "longitude": -74.00384,
+   "address": "35 Downing St, New York, NY 10014"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "17:00",
+    "end_time": "22:30"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-prince-street-pizza",
+  "name": "Prince Street Pizza",
+  "location": {
+   "latitude": 40.72308,
+   "longitude": -73.99454,
+   "address": "27 Prince St, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-cafe-habana-nolita",
+  "name": "Cafe Habana",
+  "location": {
+   "latitude": 40.72284,
+   "longitude": -73.99423,
+   "address": "17 Prince St, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "09:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-rubirosa",
+  "name": "Rubirosa",
+  "location": {
+   "latitude": 40.72272,
+   "longitude": -73.99615,
+   "address": "235 Mulberry St, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "italian"
+  ],
+  "hours": [
+   {
+    "start_time": "11:30",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-katz-s-delicatessen",
+  "name": "Katz's Delicatessen",
+  "location": {
+   "latitude": 40.72234,
+   "longitude": -73.98735,
+   "address": "205 E Houston St, New York, NY 10002"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "22:45"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-thai-diner",
+  "name": "Thai Diner",
+  "location": {
+   "latitude": 40.72074,
+   "longitude": -73.9957,
+   "address": "186 Mott St, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "thai"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-totto-ramen-52nd",
+  "name": "Totto Ramen (W 52nd)",
+  "location": {
+   "latitude": 40.76436,
+   "longitude": -73.98764,
+   "address": "366 W 52nd St, New York, NY 10019"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-ivan-ramen-clinton",
+  "name": "Ivan Ramen",
+  "location": {
+   "latitude": 40.72058,
+   "longitude": -73.98441,
+   "address": "25 Clinton St, New York, NY 10002"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-the-halal-guys-53rd-6th",
+  "name": "The Halal Guys (53rd & 6th)",
+  "location": {
+   "latitude": 40.76437,
+   "longitude": -73.98498,
+   "address": "307 W 53rd St, New York, NY 10019"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "04:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-russ-and-daughters-cafe",
+  "name": "Russ & Daughters Cafe",
+  "location": {
+   "latitude": 40.71964,
+   "longitude": -73.98956,
+   "address": "127 Orchard St, New York, NY 10002"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "08:30",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-scarr-s-pizza",
+  "name": "Scarr's Pizza",
+  "location": {
+   "latitude": 40.71574,
+   "longitude": -73.99157,
+   "address": "35 Orchard St, New York, NY 10002"
+  },
+  "cuisine_types": [
+   "pizza"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-uncle-lou-chinatown",
+  "name": "Uncle Lou",
+  "location": {
+   "latitude": 40.71628,
+   "longitude": -73.99939,
+   "address": "73 Mulberry St, New York, NY 10013"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-joe-s-shanghai-chinatown",
+  "name": "Joe's Shanghai (Chinatown)",
+  "location": {
+   "latitude": 40.71563,
+   "longitude": -73.99669,
+   "address": "46 Bowery, New York, NY 10013"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-great-ny-noodletown",
+  "name": "Great N.Y. Noodletown",
+  "location": {
+   "latitude": 40.71497,
+   "longitude": -73.99709,
+   "address": "28 Bowery, New York, NY 10013"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "10:30",
+    "end_time": "03:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-nom-wah-tea-parlor",
+  "name": "Nom Wah Tea Parlor",
+  "location": {
+   "latitude": 40.71446,
+   "longitude": -73.9982,
+   "address": "13 Doyers St, New York, NY 10013"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "10:30",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-wo-hop",
+  "name": "Wo Hop",
+  "location": {
+   "latitude": 40.71429,
+   "longitude": -73.99887,
+   "address": "17 Mott St, New York, NY 10013"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "10:30",
+    "end_time": "04:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-joe-coffee-flatiron",
+  "name": "Joe Coffee (Flatiron)",
+  "location": {
+   "latitude": 40.741,
+   "longitude": -73.9898,
+   "address": "186 5th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "17:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 14
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-think-coffee-nomad",
+  "name": "Think Coffee (NoMad)",
+  "location": {
+   "latitude": 40.7452,
+   "longitude": -73.9877,
+   "address": "246 5th Ave, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 20
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-stumptown-coffee-ace-hotel",
+  "name": "Stumptown Coffee Roasters (Ace Hotel)",
+  "location": {
+   "latitude": 40.7458,
+   "longitude": -73.9884,
+   "address": "18 W 29th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "17:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 4609
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-devocion-flatiron",
+  "name": "Devoci\u00f3n (Flatiron)",
+  "location": {
+   "latitude": 40.7388,
+   "longitude": -73.9887,
+   "address": "25 E 20th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.45,
+   "count": 266
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-blue-bottle-gramercy-park",
+  "name": "Blue Bottle Coffee (Gramercy Park)",
+  "location": {
+   "latitude": 40.7388,
+   "longitude": -73.9875,
+   "address": "257 Park Ave S, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:30",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 257
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-gregorys-coffee-park-ave-south",
+  "name": "Gregorys Coffee (Park Ave South)",
+  "location": {
+   "latitude": 40.7401,
+   "longitude": -73.9846,
+   "address": "327 Park Ave S, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.0,
+   "count": 429
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-blank-street-coffee-23rd-lex",
+  "name": "Blank Street Coffee (23rd & Lex)",
+  "location": {
+   "latitude": 40.7396,
+   "longitude": -73.9838,
+   "address": "127 E 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:30",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 36
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-felix-roasting-co-nomad",
+  "name": "Felix Roasting Co. (NoMad)",
+  "location": {
+   "latitude": 40.745,
+   "longitude": -73.9832,
+   "address": "450 Park Ave S, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.53,
+   "count": 384
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-irving-farm-gramercy",
+  "name": "Irving Farm New York (Gramercy)",
+  "location": {
+   "latitude": 40.7362,
+   "longitude": -73.9871,
+   "address": "71 Irving Pl, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "17:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.05,
+   "count": 583
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-birch-coffee-murray-hill",
+  "name": "Birch Coffee (Murray Hill)",
+  "location": {
+   "latitude": 40.7442,
+   "longitude": -73.9793,
+   "address": "432 3rd Ave, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "07:30",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 127
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-cha-cha-matcha-flatiron",
+  "name": "Cha Cha Matcha (Flatiron)",
+  "location": {
+   "latitude": 40.7396,
+   "longitude": -73.9897,
+   "address": "922 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.1,
+   "count": 553
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-variety-coffee-roasters-chelsea",
+  "name": "Variety Coffee Roasters (Chelsea)",
+  "location": {
+   "latitude": 40.7466,
+   "longitude": -73.9936,
+   "address": "261 7th Ave, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 232
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-cafe-grumpy-nomad",
+  "name": "Caf\u00e9 Grumpy (NoMad)",
+  "location": {
+   "latitude": 40.7434,
+   "longitude": -73.9849,
+   "address": "63 Madison Ave, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-starbucks-reserve-roastery-nyc",
+  "name": "Starbucks Reserve Roastery New York",
+  "location": {
+   "latitude": 40.7417,
+   "longitude": -74.0053,
+   "address": "61 9th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:30",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 1174
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-levain-bakery-flatiron",
+  "name": "Levain Bakery (Flatiron)",
+  "location": {
+   "latitude": 40.7381,
+   "longitude": -73.9926,
+   "address": "2 W 18th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 5.0,
+   "count": 161
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-le-pain-quotidien-29th-7th",
+  "name": "Le Pain Quotidien (29th & 7th)",
+  "location": {
+   "latitude": 40.7478,
+   "longitude": -73.993,
+   "address": "339 7th Ave, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 49
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-magnolia-bakery-moynihan",
+  "name": "Magnolia Bakery (Moynihan Train Hall)",
+  "location": {
+   "latitude": 40.751,
+   "longitude": -73.9955,
+   "address": "383 8th Ave, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 280
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-dominique-ansel-workshop",
+  "name": "Dominique Ansel Workshop",
+  "location": {
+   "latitude": 40.7443,
+   "longitude": -73.9869,
+   "address": "17 E 27th St, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 272
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-paris-baguette-6th-ave",
+  "name": "Paris Baguette (23rd St)",
+  "location": {
+   "latitude": 40.7423,
+   "longitude": -73.9926,
+   "address": "700 6th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 66
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-lady-m-nomad",
+  "name": "Lady M Cake Boutique (NoMad)",
+  "location": {
+   "latitude": 40.7457,
+   "longitude": -73.9884,
+   "address": "1178 Broadway, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 363
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-gotham-coffee-roasters",
+  "name": "Gotham Coffee Roasters",
+  "location": {
+   "latitude": 40.7397,
+   "longitude": -73.9927,
+   "address": "23 W 19th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 111
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-somedays-bakery-flatiron",
+  "name": "Somedays Bakery (Flatiron)",
+  "location": {
+   "latitude": 40.7399,
+   "longitude": -73.9863,
+   "address": "297 Park Ave S, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": null,
+   "count": 28
+  },
+  "price_bucket": 3
+ },
+ {
+  "store_id": "uber-copper-mug-coffee",
+  "name": "Copper Mug Coffee",
+  "location": {
+   "latitude": 40.7466,
+   "longitude": -73.9883,
+   "address": "38 W 30th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.8,
+   "count": 156
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-bluestone-lane-nomad",
+  "name": "Bluestone Lane (NoMad)",
+  "location": {
+   "latitude": 40.74263,
+   "longitude": -73.98964,
+   "address": "1114 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "17:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-juice-press-w-23rd",
+  "name": "Juice Press (W 23rd St)",
+  "location": {
+   "latitude": 40.74149,
+   "longitude": -73.99002,
+   "address": "6 W 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "salad"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-hungry-ghost-flatiron",
+  "name": "Hungry Ghost Coffee (Flatiron)",
+  "location": {
+   "latitude": 40.74098,
+   "longitude": -73.99144,
+   "address": "22 W 21st St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-ralph-s-coffee-flatiron",
+  "name": "Ralph's Coffee (Flatiron)",
+  "location": {
+   "latitude": 40.7404,
+   "longitude": -73.99066,
+   "address": "160 5th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-la-colombe-nomad",
+  "name": "La Colombe (NoMad)",
+  "location": {
+   "latitude": 40.74406,
+   "longitude": -73.98897,
+   "address": "1141 Broadway, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-boba-guys-nomad",
+  "name": "Boba Guys (NoMad)",
+  "location": {
+   "latitude": 40.74504,
+   "longitude": -73.98996,
+   "address": "30 W 27th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-pressed-juicery-flatiron",
+  "name": "Pressed (Flatiron)",
+  "location": {
+   "latitude": 40.73969,
+   "longitude": -73.99044,
+   "address": "145 5th Ave, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "salad"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-maison-kayser-flatiron",
+  "name": "Eric Kayser (Flatiron)",
+  "location": {
+   "latitude": 40.73956,
+   "longitude": -73.98984,
+   "address": "921 Broadway, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-zucker-s-bagels-flatiron",
+  "name": "Zucker's Bagels & Smoked Fish (Flatiron)",
+  "location": {
+   "latitude": 40.74039,
+   "longitude": -73.9873,
+   "address": "40 E 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:30",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.4,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-partners-coffee-chelsea",
+  "name": "Partners Coffee (Chelsea)",
+  "location": {
+   "latitude": 40.74618,
+   "longitude": -73.98939,
+   "address": "44 W 29th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-787-coffee-chelsea",
+  "name": "787 Coffee (Chelsea)",
+  "location": {
+   "latitude": 40.74441,
+   "longitude": -73.99615,
+   "address": "200 W 23rd St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-kung-fu-tea-tkk-e-23rd",
+  "name": "Kung Fu Tea / TKK Fried Chicken (E 23rd)",
+  "location": {
+   "latitude": 40.74,
+   "longitude": -73.9855,
+   "address": "115 E 23rd St, New York, NY 10010"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-bibble-and-sip-nomad",
+  "name": "Bibble & Sip (NoMad)",
+  "location": {
+   "latitude": 40.74756,
+   "longitude": -73.99518,
+   "address": "253 W 28th St, New York, NY 10001"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-gasoline-alley-coffee-nomad",
+  "name": "Gasoline Alley Coffee (NoMad)",
+  "location": {
+   "latitude": 40.74707,
+   "longitude": -73.98483,
+   "address": "331 5th Ave, New York, NY 10016"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-modern-bread-and-bagel-chelsea",
+  "name": "Modern Bread and Bagel (Chelsea)",
+  "location": {
+   "latitude": 40.73825,
+   "longitude": -73.99851,
+   "address": "139 W 14th St, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-chatime-union-square",
+  "name": "Chatime (Union Square)",
+  "location": {
+   "latitude": 40.73519,
+   "longitude": -73.99251,
+   "address": "10 E 14th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.2,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-murray-s-bagels-chelsea",
+  "name": "Murray's Bagels (Chelsea)",
+  "location": {
+   "latitude": 40.73633,
+   "longitude": -73.99717,
+   "address": "500 6th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "16:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-max-brenner-union-square",
+  "name": "Max Brenner (Union Square)",
+  "location": {
+   "latitude": 40.73434,
+   "longitude": -73.99099,
+   "address": "841 Broadway, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "09:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.3,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-van-leeuwen-union-square",
+  "name": "Van Leeuwen Ice Cream (Union Square)",
+  "location": {
+   "latitude": 40.73426,
+   "longitude": -73.99019,
+   "address": "39 E 14th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "12:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-li-lac-chocolates-chelsea-market",
+  "name": "Li-Lac Chocolates (Chelsea Market)",
+  "location": {
+   "latitude": 40.74246,
+   "longitude": -74.00477,
+   "address": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-doughnuttery-chelsea-market",
+  "name": "Doughnuttery (Chelsea Market)",
+  "location": {
+   "latitude": 40.74236,
+   "longitude": -74.00502,
+   "address": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "10:00",
+    "end_time": "20:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-ample-hills-creamery-chelsea-market",
+  "name": "Ample Hills Creamery (Chelsea Market)",
+  "location": {
+   "latitude": 40.74236,
+   "longitude": -74.00522,
+   "address": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "21:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 1
+ },
+ {
+  "store_id": "uber-culture-espresso-w-38th",
+  "name": "Culture Espresso (W 36th)",
+  "location": {
+   "latitude": 40.75188,
+   "longitude": -73.98492,
+   "address": "72 W 38th St, New York, NY 10018"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "07:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-chalait-chelsea",
+  "name": "Chalait (Chelsea)",
+  "location": {
+   "latitude": 40.73357,
+   "longitude": -74.00191,
+   "address": "224 W 4th St, New York, NY 10014"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "18:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.5,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-veniero-s-pastry",
+  "name": "Veniero's Pasticceria",
+  "location": {
+   "latitude": 40.72938,
+   "longitude": -73.98455,
+   "address": "342 E 11th St, New York, NY 10003"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "08:00",
+    "end_time": "23:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-ess-a-bagel-3rd-ave",
+  "name": "Ess-a-Bagel (3rd Ave)",
+  "location": {
+   "latitude": 40.75616,
+   "longitude": -73.97017,
+   "address": "831 3rd Ave, New York, NY 10022"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "06:00",
+    "end_time": "17:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.6,
+   "count": 0
+  },
+  "price_bucket": 2
+ },
+ {
+  "store_id": "uber-eileen-s-special-cheesecake-nolita",
+  "name": "Eileen's Special Cheesecake",
+  "location": {
+   "latitude": 40.72154,
+   "longitude": -73.99751,
+   "address": "17 Cleveland Pl, New York, NY 10012"
+  },
+  "cuisine_types": [
+   "bakery"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "19:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false,
+  "rating": {
+   "value": 4.7,
+   "count": 0
+  },
+  "price_bucket": 1
  }
 ]

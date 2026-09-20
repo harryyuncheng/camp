@@ -6,7 +6,7 @@ from collections import Counter
 
 import typer
 
-from . import synth
+from . import catalog, synth
 from .models import MenuItem, Restaurant, User
 from .pipeline import plan_home, plan_office
 from .store import Store
@@ -122,7 +122,7 @@ def migrate(source: str = "camp.db", target: str | None = None):
 
 
 @app.command()
-def sync(db: str = "camp.db", radius_km: float = 6.0, tag: bool = True, fixtures: bool = False):
+def sync(db: str = "camp.db", radius_km: float = catalog.SERVICE_RADIUS_KM, tag: bool = True, fixtures: bool = False):
     """Pull restaurants + menus from Uber/DoorDash (mocks unless env keys are set), de-dupe, tag, store."""
     import asyncio
     from .ai.classify import default_classifier

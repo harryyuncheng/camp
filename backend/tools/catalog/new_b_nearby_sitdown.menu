@@ -1,0 +1,1063 @@
+# New nearby sit-down restaurants within ~1 km of Ramp HQ (OSM coordinates; approximate Google ratings; estimated prices).
+
+@ tenjou-flatiron
+name: Tenjou
+address: 25 W 23rd St, New York, NY 10010
+ll: 40.74213, -73.9905
+hood: Flatiron
+cuisine: japanese
+detail: Sushi and Japanese small plates directly across from Ramp HQ
+price: 2
+google: 4.4
+hours: 11:30-22:00
+platforms: uber, doordash
+--
+*Chirashi Bowl | 26.00 | Assorted sashimi over sushi rice | bowl | fish | gf
+*Salmon Avocado Roll | 12.00 | Salmon, avocado, sushi rice | rice | fish | gf
+Spicy Tuna Roll | 12.00 | Spicy tuna, cucumber | rice | fish | s1
+Sushi Deluxe | 32.00 | Eight pieces nigiri and a tuna roll | rice | fish | gf
+Sashimi Deluxe | 36.00 | Fifteen pieces assorted sashimi | other | fish | gf
+Chicken Teriyaki | 19.00 | Grilled chicken, teriyaki, rice | rice | chicken
+Salmon Teriyaki | 24.00 | Grilled salmon, teriyaki, rice | rice | fish
+Tonkatsu | 21.00 | Fried pork cutlet, cabbage, rice | other | pork
+Shrimp Tempura Udon | 18.00 | Udon in dashi with shrimp tempura | noodles | shrimp
+Agedashi Tofu | 8.00 | Fried tofu in dashi broth | other | tofu | v
+Gyoza (6) | 8.00 | Pan-fried pork dumplings | other | pork
+Edamame | 6.00 | Steamed soybeans | other | none | vg gf
+Miso Soup | 4.00 | Miso soup | soup | tofu | vg
+Seaweed Salad | 7.00 | Wakame salad | salad | none | vg
+Green Tea Ice Cream | 6.00 | Matcha ice cream | other | none | v gf
+
+@ mista-oh-flatiron
+name: Mista Oh
+address: 12 W 24th St, New York, NY 10010
+ll: 40.74324, -73.99122
+hood: Flatiron
+cuisine: korean
+detail: Modern Korean; lunch bowls and dinner grill plates
+price: 2
+google: 4.5
+hours: 11:30-22:00
+platforms: uber, doordash
+--
+*Galbi Bowl | 22.00 | Grilled marinated short rib, rice, banchan | bowl | beef | gf
+*Spicy Pork Bowl | 18.00 | Gochujang pork, rice, pickles | bowl | pork | s2
+Bulgogi Bowl | 19.00 | Soy-marinated beef, rice, vegetables | bowl | beef
+Chicken Bulgogi Bowl | 18.00 | Soy-marinated chicken, rice | bowl | chicken
+Dolsot Bibimbap | 19.00 | Stone pot rice, vegetables, egg | rice | egg | v s1
+Tofu Bibimbap | 18.00 | Rice, vegetables, crispy tofu | rice | tofu | vg s1
+Kimchi Jjigae | 18.00 | Kimchi stew with pork and tofu | soup | pork | s2
+Sundubu Jjigae | 18.00 | Soft tofu stew | soup | tofu | s2 v
+Japchae | 16.00 | Glass noodles with vegetables | noodles | none | vg
+Haemul Pajeon | 18.00 | Seafood scallion pancake | other | shrimp
+Mandu (6) | 10.00 | Pork dumplings | other | pork
+Kimchi Fried Rice | 16.00 | Kimchi, pork, egg, rice | rice | pork | s1
+Tteokbokki | 12.00 | Spicy rice cakes | other | none | v s2
+Banchan Set | 8.00 | Assorted side dishes | other | none | v s1
+Yuja Tea | 5.00 | Citron tea | other | none | vg gf
+
+@ grandma-s-home-flatiron
+name: Grandma's Home
+address: 56 W 22nd St, New York, NY 10010
+ll: 40.74192, -73.99283
+hood: Flatiron
+cuisine: chinese
+detail: Hangzhou-style Chinese comfort food chain from China
+price: 2
+google: 4.4
+hours: 11:30-22:00
+platforms: uber, doordash
+chain: yes
+--
+*Grandma's Braised Pork | 22.00 | Dongpo-style braised pork belly | other | pork | gf
+*Tea-Smoked Duck | 26.00 | Longjing tea-smoked duck | other | chicken | gf
+Beggar's Chicken | 38.00 | Clay-baked whole chicken with lotus leaf | other | chicken | gf
+West Lake Fish in Vinegar Sauce | 32.00 | Poached fish in sweet vinegar sauce | other | fish | gf
+Shrimp with Longjing Tea | 28.00 | Stir-fried shrimp with tea leaves | other | shrimp | gf
+Mapo Tofu | 16.00 | Tofu in spicy bean sauce | other | tofu | vg s2
+Salted Egg Yolk Pumpkin | 15.00 | Fried pumpkin with salted egg yolk | other | egg | v gf
+Green Beans with Minced Pork | 17.00 | Dry-fried green beans | other | pork | gf
+Sweet & Sour Spare Ribs | 20.00 | Glazed pork ribs | other | pork
+Scallion Noodles | 12.00 | Noodles in scallion oil | noodles | none | vg
+Fried Rice with Egg | 12.00 | Egg fried rice | rice | egg | v
+Steamed Rice | 3.00 | White rice | rice | none | vg gf
+Osmanthus Rice Cake | 8.00 | Sweet osmanthus glutinous rice cake | other | none | vg gf
+Red Bean Soup | 6.00 | Sweet red bean soup | soup | none | vg gf
+
+@ inday-flatiron
+name: Inday
+address: 60 W 22nd St, New York, NY 10010
+ll: 40.74197, -73.99293
+hood: Flatiron
+cuisine: indian
+detail: Indian-inspired fast-casual bowls; "good karma served daily"
+price: 1
+google: 4.5
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+allergen_info: yes
+source: https://www.indaynyc.com/menu
+--
+*Tandoori Chicken Bowl | 15.50 | Tandoori chicken, basmati, greens, chutney, raita | bowl | chicken | gf s1
+*Coconut Curry Chicken Bowl | 15.50 | Coconut curry chicken over rice | bowl | chicken | gf s1
+Lamb Meatball Bowl | 16.50 | Spiced lamb meatballs, rice, greens, yogurt | bowl | lamb | gf s1
+Roasted Cauliflower Bowl | 13.50 | Turmeric cauliflower, chickpeas, rice, tamarind | bowl | none | vg gf s1
+Spiced Tofu Bowl | 13.50 | Masala tofu, brown rice, greens | bowl | tofu | vg gf s1
+Salmon Bowl | 17.50 | Tandoori salmon, rice, greens | bowl | fish | gf s1
+Tikka Masala Chicken Bowl | 15.50 | Chicken tikka masala, basmati | bowl | chicken | gf s1
+Chana Masala Bowl | 13.00 | Spiced chickpeas, rice, cilantro chutney | bowl | none | vg gf s1
+Tandoori Chicken Salad | 15.50 | Tandoori chicken over greens with mint dressing | salad | chicken | gf s1
+Garlic Naan | 4.00 | Garlic naan | other | none | v
+Samosas (2) | 6.00 | Potato and pea samosas | other | none | vg
+Lentil Dal Cup | 5.50 | Yellow lentil dal | soup | none | vg gf
+Mango Lassi | 5.50 | Mango yogurt drink | other | none | v gf
+Cardamom Cookie | 3.00 | Cardamom shortbread | other | none | v
+Masala Chai | 4.00 | Spiced chai | other | none | v gf
+
+@ serra-alpina-eataly
+name: Serra by Birreria (Eataly Flatiron rooftop)
+address: 200 5th Ave, New York, NY 10010
+ll: 40.74231, -73.9898
+hood: Flatiron
+cuisine: italian
+detail: Eataly's seasonal rooftop restaurant with rotating themed decor
+price: 3
+google: 4.3
+hours: 11:30-22:00
+platforms: none
+--
+*Cacio e Pepe | 26.00 | Spaghetti, pecorino, black pepper | noodles | none | v
+*Margherita Pizza | 22.00 | Tomato, mozzarella, basil | pizza | none | v
+Rigatoni alla Bolognese | 28.00 | Rigatoni, beef and pork ragù | noodles | beef
+Lasagna | 28.00 | Layered pasta, ragù, béchamel | noodles | beef
+Diavola Pizza | 24.00 | Tomato, mozzarella, spicy salami | pizza | pork | s2
+Funghi Pizza | 24.00 | Mushrooms, fontina, thyme | pizza | none | v
+Pollo alla Griglia | 32.00 | Grilled chicken, roasted potatoes | other | chicken | gf
+Branzino | 38.00 | Roasted branzino, lemon, herbs | other | fish | gf
+Tagliata | 42.00 | Sliced ribeye, arugula, parmigiano | other | beef | gf
+Burrata | 20.00 | Burrata, tomatoes, basil | other | none | v gf
+Insalata Mista | 14.00 | Mixed greens, vinaigrette | salad | none | vg gf
+Fritto Misto | 22.00 | Fried calamari and shrimp | other | shrimp
+Tiramisù | 12.00 | Classic tiramisù | other | none | v
+Gelato | 9.00 | Two scoops gelato | other | none | v gf
+Aranciata | 5.00 | Italian orange soda | other | none | vg gf
+
+@ mama-mezze-nomad
+name: Mama Mezze
+address: 1123 Broadway, New York, NY 10010
+ll: 40.74323, -73.98928
+hood: NoMad
+cuisine: mediterranean
+detail: Turkish mezze, kebabs and pide
+price: 2
+google: 4.5
+hours: 11:30-22:30
+platforms: uber, doordash
+halal: yes
+--
+*Mixed Mezze Platter | 24.00 | Hummus, babaganoush, ezme, haydari, dolma with pita | other | none | v
+*Adana Kebab | 26.00 | Spiced ground lamb kebab, rice, grilled peppers | other | lamb | h gf s1
+Chicken Shish Kebab | 24.00 | Grilled chicken, rice, salad | other | chicken | h gf
+Lamb Shish Kebab | 28.00 | Grilled lamb cubes, rice | other | lamb | h gf
+Doner Plate | 24.00 | Sliced lamb and beef doner, rice, salad | other | lamb | h
+Iskender | 28.00 | Doner over pita with tomato sauce and yogurt | other | lamb | h
+Cheese Pide | 18.00 | Boat-shaped flatbread with cheese | pizza | none | v
+Ground Beef Pide | 20.00 | Pide with minced beef and peppers | pizza | beef | h
+Lahmacun | 12.00 | Thin flatbread with minced lamb | pizza | lamb | h
+Falafel Plate | 18.00 | Falafel, hummus, salad, pita | other | none | vg
+Grilled Branzino | 32.00 | Whole branzino, lemon, arugula | other | fish | gf
+Shepherd Salad | 12.00 | Tomato, cucumber, onion, parsley | salad | none | vg gf
+Lentil Soup | 8.00 | Red lentil soup | soup | none | vg gf
+Baklava | 9.00 | Pistachio baklava | other | none | v
+Kunefe | 12.00 | Sweet cheese pastry with pistachio | other | none | v
+Turkish Tea | 3.00 | Black tea | other | none | vg gf
+
+@ la-pecora-bianca-nomad
+name: La Pecora Bianca (NoMad)
+address: 1133 Broadway, New York, NY 10010
+ll: 40.74371, -73.98921
+hood: NoMad
+cuisine: italian
+detail: Bright Italian all-day spot; house-made pasta and local produce
+price: 3
+google: 4.5
+rec: Reliable, cheerful Italian for a work lunch or group dinner (Infatuation)
+hours: 08:00-22:30
+platforms: uber, doordash
+chain: yes
+source: https://www.lapecorabianca.com/menus
+--
+*Spaghetti Pomodoro | 24.00 | Spaghetti, tomato, basil, parmigiano | noodles | none | v
+*Rigatoni alla Norcina | 28.00 | Rigatoni, sausage, black truffle, cream | noodles | pork
+Cacio e Pepe | 26.00 | Tonnarelli, pecorino, black pepper | noodles | none | v
+Tagliatelle Bolognese | 29.00 | Tagliatelle, beef and pork ragù | noodles | beef
+Bucatini alle Vongole | 30.00 | Bucatini, clams, garlic, chili | noodles | shrimp | s1
+Pappardelle with Mushrooms | 27.00 | Pappardelle, wild mushrooms, parmigiano | noodles | none | v
+Branzino | 38.00 | Roasted branzino, salsa verde | other | fish | gf
+Roast Chicken | 32.00 | Half chicken, potatoes, lemon | other | chicken | gf
+Grilled Salmon | 34.00 | Salmon, farro, greens | other | fish
+Little Gem Salad | 17.00 | Little gem lettuce, pecorino, lemon | salad | none | v gf
+Burrata | 20.00 | Burrata, tomatoes, basil, focaccia | other | none | v
+Meatballs | 18.00 | Beef and pork meatballs, tomato, ricotta | other | beef
+Avocado Toast | 16.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Tiramisù | 13.00 | Classic tiramisù | other | none | v
+Olive Oil Cake | 12.00 | Olive oil cake, citrus | other | egg | v
+
+@ izakaya-nomad
+name: Izakaya NoMad
+address: 13 W 26th St, New York, NY 10010
+ll: 40.74408, -73.98945
+hood: NoMad
+cuisine: japanese
+detail: Japanese pub plates, skewers and sake
+price: 2
+google: 4.4
+hours: 12:00-23:00
+platforms: uber, doordash
+--
+*Chicken Karaage | 12.00 | Japanese fried chicken, spicy mayo | other | chicken | s1
+*Yakitori Set (5) | 18.00 | Assorted chicken skewers | other | chicken | gf
+Pork Belly Skewers (2) | 8.00 | Grilled pork belly skewers | other | pork | gf
+Takoyaki (6) | 10.00 | Octopus fritters with sauce and mayo | other | shrimp
+Agedashi Tofu | 9.00 | Fried tofu in dashi | other | tofu | v
+Okonomiyaki | 16.00 | Savory cabbage pancake with pork | other | pork
+Salmon Sashimi | 16.00 | Sliced salmon sashimi | other | fish | gf
+Spicy Tuna Roll | 13.00 | Spicy tuna roll | rice | fish | s1
+Tonkotsu Ramen | 18.00 | Pork bone broth, chashu, egg | noodles | pork
+Chashu Don | 16.00 | Rice topped with pork chashu | rice | pork
+Chicken Katsu Curry | 18.00 | Chicken katsu with Japanese curry rice | curry | chicken
+Edamame | 6.00 | Steamed soybeans | other | none | vg gf
+Miso Soup | 4.00 | Miso soup | soup | tofu | vg
+Kimchi | 5.00 | Kimchi | other | none | s2 nv
+Mochi Ice Cream | 7.00 | Mochi ice cream | other | none | v gf
+
+@ maysville-nomad
+name: Maysville
+address: 17 W 26th St, New York, NY 10010
+ll: 40.74416, -73.98958
+hood: NoMad
+cuisine: american
+detail: Southern-inflected American with a bourbon focus
+price: 3
+google: 4.5
+hours: 17:00-22:00
+platforms: none
+--
+*Grits with Smoked Brisket | 24.00 | Creamy grits, smoked brisket, pickled onion | other | beef | gf
+*Fried Chicken | 34.00 | Buttermilk fried chicken, hot honey | other | chicken | s1
+Pork Chop | 38.00 | Grilled pork chop, apple, mustard | other | pork | gf
+Duck Breast | 40.00 | Seared duck breast, sweet potato | other | chicken | gf
+Trout | 34.00 | Pan-roasted trout, brown butter | other | fish | gf
+Shrimp & Grits | 30.00 | Shrimp, grits, andouille | other | shrimp | gf
+Deviled Eggs | 12.00 | Deviled eggs, pickled shrimp | other | egg | gf
+Cornbread | 10.00 | Skillet cornbread, honey butter | other | none | v
+Little Gem Salad | 16.00 | Little gem, buttermilk dressing, herbs | salad | none | v gf
+Beet Salad | 16.00 | Roasted beets, goat cheese, pecans | salad | none | v gf
+Mac & Cheese | 14.00 | Baked macaroni and cheese | other | none | v
+Collard Greens | 10.00 | Braised collards with bacon | other | pork | gf
+Pecan Pie | 12.00 | Bourbon pecan pie | other | egg | v
+Banana Pudding | 12.00 | Banana pudding | other | none | v
+
+@ premier-shojin
+name: Premier Shōjin
+address: 17 W 20th St, New York, NY 10011
+ll: 40.74033, -73.99219
+hood: Flatiron
+cuisine: japanese
+detail: Vegan Japanese temple-style cuisine
+price: 3
+google: 4.6
+hours: 12:00-21:30
+platforms: uber, doordash
+--
+*Shojin Bento | 32.00 | Assorted seasonal vegan small plates with rice | other | none | vg
+*Vegetable Tempura | 18.00 | Seasonal vegetable tempura | other | none | vg
+Goma Dofu | 12.00 | Sesame tofu with wasabi soy | other | tofu | vg gf
+Yuba Sashimi | 16.00 | Fresh tofu skin sashimi | other | tofu | vg gf
+Mushroom Sushi Roll | 18.00 | Roasted mushroom, avocado roll | rice | none | vg gf
+Nasu Dengaku | 14.00 | Miso-glazed eggplant | other | none | vg
+Vegan Ramen | 22.00 | Shoyu vegetable broth, noodles, tofu | noodles | tofu | vg
+Kenchin-jiru | 12.00 | Root vegetable and tofu soup | soup | tofu | vg gf
+Vegetable Kakiage Don | 22.00 | Mixed vegetable tempura over rice | rice | none | vg
+Hijiki Salad | 10.00 | Seaweed and soybean salad | salad | none | vg gf
+Inari Sushi (4) | 12.00 | Sweet tofu pouches with rice | rice | tofu | vg gf
+Matcha Tofu Cheesecake | 12.00 | Vegan matcha cheesecake | other | tofu | vg
+Warabi Mochi | 10.00 | Bracken starch mochi with kinako | other | none | vg gf
+Hojicha | 5.00 | Roasted green tea | other | none | vg gf
+
+@ sophie-s-cuban-cuisine-flatiron
+name: Sophie's Cuban Cuisine (Flatiron)
+address: 28 E 23rd St, New York, NY 10010
+ll: 40.7406, -73.98779
+hood: Flatiron
+cuisine: american
+detail: Cuban lunch counter; pernil, ropa vieja and Cuban sandwiches
+price: 1
+google: 4.4
+hours: 10:30-20:00
+platforms: uber, doordash
+chain: yes
+source: https://www.sophiescuban.com/menu
+--
+*Pernil Plate | 15.95 | Roast pork, rice, black beans, plantains | other | pork | gf
+*Cuban Sandwich | 13.95 | Roast pork, ham, swiss, pickles, mustard on pressed Cuban bread
+Ropa Vieja Plate | 16.95 | Shredded beef in tomato sauce, rice, beans | other | beef | gf
+Pollo Guisado Plate | 14.95 | Stewed chicken, rice, beans | other | chicken | gf
+Pescado Frito Plate | 16.95 | Fried fish fillet, rice, beans | other | fish | gf
+Picadillo Plate | 14.95 | Ground beef stew with olives, rice, beans | other | beef | gf
+Vegetarian Plate | 12.95 | Rice, beans, plantains, avocado salad | other | none | vg gf
+Media Noche | 13.95 | Ham, pork, swiss, pickles on sweet bread
+Chicharrón de Pollo | 13.95 | Fried marinated chicken chunks, rice | other | chicken | gf
+Tostones | 5.95 | Fried green plantains, garlic sauce | other | none | vg gf
+Maduros | 4.95 | Sweet fried plantains | other | none | vg gf
+Yuca Fries | 5.95 | Fried yuca | other | none | vg gf
+Black Bean Soup | 6.95 | Cuban black bean soup | soup | none | vg gf
+Flan | 5.95 | Caramel flan | other | egg | v gf
+Café con Leche | 3.95 | Cuban coffee with milk | other | none | v gf
+
+@ boqueria-flatiron
+name: Boqueria (Flatiron)
+address: 53 W 19th St, New York, NY 10011
+ll: 40.7403, -73.99372
+hood: Flatiron
+cuisine: mediterranean
+detail: Barcelona-style tapas bar; the original Boqueria location
+price: 3
+google: 4.5
+rec: The original Boqueria; go for the paella and datiles (Eater NY)
+hours: 12:00-23:00
+platforms: uber, doordash
+chain: yes
+source: https://www.boquerianyc.com/menus
+--
+*Datiles con Beicon | 15.00 | Bacon-wrapped dates stuffed with almonds and cheese | other | pork | gf
+*Patatas Bravas | 12.00 | Crispy potatoes, spicy tomato sauce, aioli | other | egg | v gf s1
+Pan con Tomate | 10.00 | Grilled bread, tomato, olive oil | other | none | vg
+Jamón Ibérico | 32.00 | Acorn-fed Ibérico ham | other | pork | gf
+Gambas al Ajillo | 18.00 | Shrimp, garlic, guindilla | other | shrimp | gf s1
+Croquetas Cremosas | 14.00 | Chicken and ham croquettes | other | chicken
+Tortilla Española | 12.00 | Potato and onion omelette, aioli | other | egg | v gf
+Pimientos de Padrón | 12.00 | Blistered padrón peppers | other | none | vg gf s1
+Pulpo a la Gallega | 22.00 | Octopus, potato, paprika | other | shrimp | gf
+Paella de Mariscos | 46.00 | Seafood paella with shrimp, clams, mussels | rice | shrimp | gf
+Paella de Verduras | 34.00 | Vegetable paella | rice | none | vg gf
+Espinacas a la Catalana | 12.00 | Spinach, pine nuts, raisins | other | none | vg gf
+Ensalada Mixta | 14.00 | Greens, tomato, onion, olives, sherry vinaigrette | salad | none | vg gf
+Churros con Chocolate | 12.00 | Churros with chocolate | other | none | v
+Crema Catalana | 11.00 | Catalan custard | other | egg | v gf
+
+@ burger-and-lobster-flatiron
+name: Burger & Lobster (Flatiron)
+address: 39 W 19th St, New York, NY 10011
+ll: 40.74009, -73.99346
+hood: Flatiron
+cuisine: burger
+detail: Whole lobsters, lobster rolls and burgers
+price: 3
+google: 4.5
+hours: 12:00-22:30
+platforms: uber, doordash
+chain: yes
+source: https://www.burgerandlobster.com/menu
+--
+*The Burger | 24.00 | 10 oz beef patty, lettuce, tomato, pickle, secret sauce, fries
+*Lobster Roll | 38.00 | Chilled lobster, lemon mayo in a toasted brioche roll, fries | sandwich | shrimp
+Whole Lobster (1.5 lb) | 55.00 | Steamed or grilled lobster, lemon butter, fries, salad | other | shrimp | gf
+Bacon Cheeseburger | 27.00 | Beef patty, bacon, cheddar, fries
+Truffle Burger | 29.00 | Beef patty, truffle mayo, gruyère, fries
+Lobster & Burger Combo | 58.00 | Half lobster with a burger | other | shrimp
+Beyond Burger | 24.00 | Plant-based patty, vegan cheese, fries | burger | none | vg
+Chicken Sandwich | 22.00 | Fried chicken, slaw, pickles, fries | sandwich | chicken
+Lobster Bisque | 14.00 | Lobster bisque | soup | shrimp | gf
+Caesar Salad | 16.00 | Romaine, parmesan, croutons | salad | none | nv
+Fries | 8.00 | French fries | other | none | vg gf
+Mac & Cheese | 12.00 | Baked macaroni and cheese | other | none | v
+Lobster Mac & Cheese | 22.00 | Macaroni, lobster, cheddar | other | shrimp
+Chocolate Brownie | 11.00 | Warm brownie, vanilla ice cream | other | none | v
+Lemonade | 5.00 | Fresh lemonade | other | none | vg gf
+
+@ tacos-guey-flatiron
+name: Tacos Güey
+address: 37 W 19th St, New York, NY 10011
+ll: 40.74, -73.99322
+hood: Flatiron
+cuisine: mexican
+detail: Mexico City-style tacos and seafood tostadas
+price: 2
+google: 4.5
+hours: 11:30-23:00
+platforms: uber, doordash
+--
+*Al Pastor Tacos (2) | 14.00 | Spit-roasted pork, pineapple, cilantro | taco | pork | gf
+*Carne Asada Tacos (2) | 16.00 | Grilled steak, salsa, onion | taco | beef | gf
+Cochinita Pibil Tacos (2) | 14.00 | Yucatán slow-roasted pork, pickled onion | taco | pork | gf
+Pescado Tacos (2) | 16.00 | Battered fish, cabbage, chipotle crema | taco | fish
+Camarón Tacos (2) | 17.00 | Grilled shrimp, salsa verde | taco | shrimp | gf
+Hongos Tacos (2) | 13.00 | Roasted mushrooms, epazote | taco | none | vg gf
+Tuna Tostada | 12.00 | Raw tuna, avocado, chipotle mayo on a tostada | taco | fish | gf s1
+Ceviche Tostada | 11.00 | Fish ceviche, avocado on a tostada | taco | fish | gf
+Guacamole | 14.00 | Guacamole, tortilla chips | other | none | vg gf
+Queso Fundido | 14.00 | Melted cheese with chorizo | other | pork
+Esquites | 9.00 | Corn, mayo, cotija, chili | other | none | v gf s1
+Pozole Rojo | 16.00 | Pork and hominy soup | soup | pork | gf s2
+Flan | 9.00 | Caramel flan | other | egg | v gf
+Churros | 9.00 | Churros with cajeta | other | none | v
+Agua Fresca | 5.00 | Seasonal agua fresca | other | none | vg gf
+
+@ coqodaq
+name: COQODAQ
+address: 12 E 22nd St, New York, NY 10010
+ll: 40.74012, -73.98865
+hood: Flatiron
+cuisine: korean
+detail: Upscale Korean fried chicken from the Cote team; champagne pairing
+price: 3
+google: 4.6
+rec: Korean fried chicken elevated to a celebration, with a deep Champagne list (NYT)
+hours: 17:00-23:00
+platforms: none
+source: https://www.coqodaq.com/menu
+--
+*The Bucket List | 38.00 | Whole fried chicken with golden nuggets, banchan, perilla salad | other | chicken
+*Golden Nuggets (6) | 18.00 | Fried chicken nuggets with truffle and caviar dipping | other | chicken
+Fried Chicken Half (Original) | 24.00 | Half fried chicken, unsauced | other | chicken
+Fried Chicken Half (Spicy) | 25.00 | Half fried chicken in gochugaru glaze | other | chicken | s2
+Fried Chicken Half (Soy Garlic) | 25.00 | Half fried chicken in soy garlic glaze | other | chicken
+Dak Kalguksu | 24.00 | Chicken noodle soup with hand-cut noodles | soup | chicken
+Kimchi Fried Rice | 22.00 | Kimchi fried rice with egg | rice | egg | v s1
+Perilla Salad | 14.00 | Perilla leaf salad with soy vinaigrette | salad | none | vg
+Cucumber Kimchi | 10.00 | Oi kimchi | other | none | vg gf s2
+Tteokbokki | 16.00 | Rice cakes in gochujang | other | none | v s2
+Caviar Service | 95.00 | Caviar with crispy rice | other | fish | gf
+Hotteok | 14.00 | Sweet stuffed pancake with ice cream | other | none | v
+Soft Serve | 12.00 | Soft serve of the day | other | none | v gf
+
+@ mulberry-and-vine-nomad
+name: Mulberry & Vine (NoMad)
+address: 55 W 27th St, New York, NY 10001
+ll: 40.74529, -73.99039
+hood: NoMad
+cuisine: salad
+detail: Veggie-forward bowls, sandwiches and market plates
+price: 2
+google: 4.5
+hours: 11:00-20:00
+platforms: uber, doordash
+chain: yes
+source: https://www.mulberryandvine.com/menu
+--
+*Market Plate | 16.50 | Choice of protein plus two market sides | other | none | gf nv
+*Herb Roasted Chicken Plate | 17.50 | Roasted chicken with two sides | other | chicken | gf
+Za'atar Salmon Plate | 19.50 | Roasted salmon with two sides | other | fish | gf
+Turmeric Tofu Plate | 15.50 | Roasted tofu with two sides | other | tofu | vg gf
+Grass-Fed Meatballs | 17.50 | Beef meatballs with two sides | other | beef | gf
+Roasted Sweet Potatoes | 5.50 | Roasted sweet potatoes with tahini | other | none | vg gf
+Charred Broccoli | 5.50 | Charred broccoli with lemon | other | none | vg gf
+Quinoa Tabbouleh | 5.50 | Quinoa, parsley, tomato, lemon | salad | none | vg gf
+Kale Caesar | 13.50 | Kale, parmesan, seeded croutons | salad | none | nv
+Chicken Salad Sandwich | 14.00 | Herbed chicken salad on multigrain
+Roasted Vegetable Sandwich | 13.00 | Roasted vegetables, hummus, greens on multigrain | sandwich | none | vg
+Lentil Soup | 7.50 | Red lentil soup | soup | none | vg gf
+Cauliflower Rice Bowl | 15.50 | Cauliflower rice, roasted vegetables, chicken, green goddess | bowl | chicken | gf
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Fresh Juice | 7.00 | Cold-pressed juice | other | none | vg gf
+
+@ malibu-diner-chelsea
+name: Malibu Diner
+address: 163 W 23rd St, New York, NY 10011
+ll: 40.74386, -73.99467
+hood: Chelsea
+cuisine: american
+detail: Classic 24-hour Chelsea diner
+price: 2
+google: 4.2
+hours: 00:00-23:59
+platforms: uber, doordash
+--
+*Two Eggs Any Style | 12.95 | Two eggs, home fries, toast | other | egg | v
+*Cheeseburger Deluxe | 16.95 | Beef patty, American cheese, lettuce, tomato, fries
+Buttermilk Pancakes | 13.95 | Three pancakes, syrup | other | egg | v
+Western Omelette | 15.95 | Ham, peppers, onion omelette, home fries | other | egg
+Greek Salad with Grilled Chicken | 18.95 | Romaine, feta, olives, grilled chicken | salad | chicken | gf
+Turkey Club | 16.95 | Turkey, bacon, lettuce, tomato on toast
+Tuna Melt | 15.95 | Tuna salad, American cheese on rye
+Grilled Cheese | 10.95 | American cheese on white | sandwich | none | v
+Gyro Platter | 18.95 | Gyro meat, pita, tzatziki, fries | other | lamb
+Chicken Souvlaki Platter | 19.95 | Grilled chicken skewers, rice, salad, pita | other | chicken
+Meatloaf Dinner | 19.95 | Meatloaf, mashed potatoes, gravy | other | beef
+Fish & Chips | 19.95 | Fried cod, fries, tartar | other | fish
+Chicken Noodle Soup | 6.95 | Chicken noodle soup | soup | chicken
+French Fries | 6.95 | French fries | other | none | vg gf
+Milkshake | 8.95 | Vanilla, chocolate or strawberry | other | none | v gf
+Rice Pudding | 6.95 | Rice pudding | other | none | v gf
+
+@ blackbarn-nomad
+name: BLACKBARN
+address: 19 E 26th St, New York, NY 10010
+ll: 40.74305, -73.98707
+hood: NoMad
+cuisine: american
+detail: Farm-to-table American in a barn-inspired space by Madison Square Park
+price: 3
+google: 4.5
+hours: 11:30-22:00
+platforms: uber, doordash
+--
+*BLACKBARN Burger | 26.00 | Dry-aged beef, cheddar, bacon, fries
+*Roasted Half Chicken | 34.00 | Roast chicken, root vegetables, jus | other | chicken | gf
+Wood-Grilled Salmon | 36.00 | Salmon, farro, greens | other | fish
+Pappardelle Bolognese | 28.00 | Pappardelle, beef and pork ragù | noodles | beef
+Cauliflower Steak | 26.00 | Roasted cauliflower, romesco, herbs | other | none | vg gf
+Short Rib | 42.00 | Braised short rib, potato purée | other | beef | gf
+Heritage Pork Chop | 38.00 | Grilled pork chop, apple, mustard | other | pork | gf
+Grilled Octopus | 22.00 | Octopus, chickpeas, chorizo | other | shrimp | gf
+Burrata | 20.00 | Burrata, heirloom tomatoes, basil | other | none | v gf
+Kale Salad | 16.00 | Kale, apple, pecorino, walnuts | salad | none | v gf
+Wedge Salad | 16.00 | Iceberg, bacon, blue cheese, tomato | salad | pork | gf
+Truffle Fries | 12.00 | Fries, truffle oil, parmesan | other | none | v gf
+Mac & Cheese | 14.00 | Baked macaroni and cheese | other | none | v
+Apple Crisp | 12.00 | Warm apple crisp, vanilla ice cream | other | none | v
+Chocolate Cake | 12.00 | Flourless chocolate cake | other | egg | v gf
+
+@ nana-thai-street-flatiron
+name: NaNa Thai Street
+address: 31 E 21st St, New York, NY 10010
+ll: 40.73958, -73.98853
+hood: Flatiron
+cuisine: thai
+detail: Bangkok street-food style Thai
+price: 2
+google: 4.5
+hours: 11:30-22:30
+platforms: uber, doordash
+--
+*Khao Soi | 18.00 | Northern curry noodle soup with chicken, crispy noodles | noodles | chicken | s2
+*Pad Kra Pao Pork | 18.00 | Stir-fried minced pork with holy basil, chili, fried egg, rice | rice | pork | gf s3
+Pad Thai Shrimp | 19.00 | Rice noodles, shrimp, egg, peanuts, tamarind | noodles | shrimp | s1
+Boat Noodles | 17.00 | Rich beef broth, rice noodles, beef, herbs | soup | beef | s2
+Khao Man Gai | 16.00 | Poached chicken over garlic rice with ginger sauce | rice | chicken | gf
+Moo Ping (3) | 10.00 | Grilled pork skewers | other | pork | gf
+Som Tum Thai | 14.00 | Green papaya salad, peanuts, dried shrimp | salad | shrimp | gf s2
+Green Curry Chicken | 18.00 | Green curry with chicken, bamboo, basil, rice | curry | chicken | gf s2
+Massaman Beef | 20.00 | Massaman curry with beef, potatoes, rice | curry | beef | gf s1
+Pad See Ew Chicken | 17.00 | Wide rice noodles, chicken, egg, Chinese broccoli | noodles | chicken | gf
+Tom Yum Goong | 10.00 | Spicy lemongrass soup with shrimp | soup | shrimp | gf s2
+Crispy Pork Belly with Rice | 18.00 | Fried pork belly, rice, chili soy | rice | pork | s1
+Fried Tofu | 9.00 | Fried tofu with sweet chili peanut sauce | other | tofu | vg s1
+Mango Sticky Rice | 10.00 | Coconut sticky rice, mango | other | none | vg gf
+Thai Iced Tea | 5.50 | Thai tea with milk | other | none | v gf
+
+@ kazunori-nomad
+name: KazuNori (NoMad)
+address: 15 W 28th St, New York, NY 10001
+ll: 40.74518, -73.98819
+hood: NoMad
+cuisine: japanese
+detail: Hand-roll bar from the Sugarfish team; counter service, set menus
+price: 2
+google: 4.6
+rec: Warm rice, crisp nori, no reservations, fast (Infatuation)
+hours: 11:30-22:00
+platforms: uber, doordash
+chain: yes
+source: https://www.kazunorisushi.com/menu
+--
+*3 Hand Roll Set | 16.00 | Toro, salmon, crab hand rolls | rice | fish | gf
+*5 Hand Roll Set | 26.00 | Toro, yellowtail, salmon, bay scallop, crab hand rolls | rice | fish | gf
+6 Hand Roll Set | 31.00 | Toro, yellowtail, salmon, bay scallop, crab, lobster hand rolls | rice | shrimp | gf
+Toro Hand Roll | 8.00 | Fatty tuna hand roll | rice | fish | gf
+Salmon Hand Roll | 6.00 | Salmon hand roll | rice | fish | gf
+Yellowtail Hand Roll | 6.00 | Yellowtail hand roll | rice | fish | gf
+Blue Crab Hand Roll | 6.00 | Blue crab hand roll | rice | shrimp | gf
+Lobster Hand Roll | 9.00 | Lobster hand roll | rice | shrimp | gf
+Bay Scallop Hand Roll | 6.00 | Bay scallop hand roll | rice | shrimp | gf
+Cucumber Hand Roll | 4.00 | Cucumber hand roll | rice | none | vg gf
+Edamame | 5.00 | Steamed soybeans | other | none | vg gf
+Salmon Sashimi | 14.00 | Sliced salmon sashimi | other | fish | gf
+Miso Soup | 4.00 | Miso soup | soup | tofu | vg
+Green Tea | 3.00 | Hot green tea | other | none | vg gf
+
+@ the-breslin-nomad
+name: The Breslin
+address: 16 W 29th St, New York, NY 10001
+ll: 40.74568, -73.98812
+hood: NoMad
+cuisine: american
+detail: British gastropub in the Ace Hotel; lamb burger and scrumpets
+price: 3
+google: 4.4
+hours: 07:00-23:00
+platforms: uber, doordash
+--
+*Lamb Burger | 32.00 | Lamb patty, feta, cumin mayo, thrice-cooked fries | burger | lamb
+*Scrumpets | 18.00 | Fried lamb belly with mint vinegar | other | lamb
+Fish & Chips | 30.00 | Beer-battered cod, chips, mushy peas | other | fish
+Chicken Liver Parfait | 18.00 | Chicken liver parfait, toast | other | chicken
+Beef & Stilton Pie | 30.00 | Braised beef and stilton pie | other | beef
+Full English Breakfast | 26.00 | Eggs, bacon, sausage, beans, toast | other | egg
+Pork Sausage Roll | 16.00 | Sausage in puff pastry, mustard | other | pork
+Caesar Salad | 18.00 | Romaine, anchovy, parmesan | salad | none | nv
+Grilled Salmon | 34.00 | Salmon, lentils, herb salad | other | fish | gf
+Roasted Chicken | 32.00 | Half chicken, potatoes, jus | other | chicken | gf
+Thrice-Cooked Fries | 12.00 | Fries with cumin mayo | other | egg | v gf
+Beet Salad | 16.00 | Beets, goat cheese, hazelnuts | salad | none | v gf
+Sticky Toffee Pudding | 14.00 | Sticky toffee pudding, clotted cream | other | none | v
+Scotch Egg | 14.00 | Sausage-wrapped soft egg | other | pork
+Builder's Tea | 4.00 | English breakfast tea with milk | other | none | v gf
+
+@ aldea-flatiron
+name: Aldea
+address: 31 W 17th St, New York, NY 10011
+ll: 40.73873, -73.9938
+hood: Flatiron
+cuisine: mediterranean
+detail: Michelin-starred Portuguese-inspired tasting and à la carte
+price: 4
+google: 4.6
+rec: Michelin Guide: one star; George Mendes' Portuguese-inflected cooking
+hours: 17:30-22:00
+platforms: none
+--
+*Arroz de Pato | 42.00 | Duck confit rice, chorizo, olives | rice | chicken | gf
+*Shrimp Alhinho | 24.00 | Shrimp, garlic, chili, pimentón | other | shrimp | gf s1
+Sea Urchin Toast | 22.00 | Uni, cauliflower cream, mustard | other | shrimp
+Bacalhau | 40.00 | Salt cod, potato, egg, olive | other | fish | gf
+Pork Belly | 38.00 | Crispy pork belly, clams, pickled onions | other | pork | gf
+Whole Roasted Branzino | 46.00 | Branzino, herbs, lemon | other | fish | gf
+Duck Breast | 44.00 | Duck breast, cherry, turnip | other | chicken | gf
+Caldo Verde | 16.00 | Kale and potato soup with chouriço | soup | pork | gf
+Beet Salad | 18.00 | Beets, goat cheese, hazelnuts | salad | none | v gf
+Petiscos Tasting | 32.00 | Selection of Portuguese small plates | other | none | nv
+Piri Piri Chicken | 36.00 | Grilled chicken with piri piri | other | chicken | gf s2
+Pastéis de Nata (2) | 12.00 | Portuguese custard tarts | other | egg | v
+Chocolate Mousse | 14.00 | Dark chocolate mousse, olive oil, sea salt | other | egg | v gf
+
+@ blt-fish-flatiron
+name: BLT Fish
+address: 21 W 17th St, New York, NY 10011
+ll: 40.73853, -73.99338
+hood: Flatiron
+cuisine: american
+detail: Seafood restaurant with a casual fish shack downstairs
+price: 3
+google: 4.4
+hours: 11:30-22:00
+platforms: uber, doordash
+--
+*Lobster Roll | 34.00 | Maine lobster, mayo on a toasted bun, fries | sandwich | shrimp
+*Fish & Chips | 28.00 | Beer-battered cod, fries, tartar | other | fish
+Clam Chowder | 14.00 | New England clam chowder | soup | shrimp
+Oysters (6) | 22.00 | Daily oysters, mignonette | other | shrimp | gf
+Shrimp Cocktail | 22.00 | Jumbo shrimp, cocktail sauce | other | shrimp | gf
+Crab Cake | 26.00 | Jumbo lump crab cake, remoulade | other | shrimp
+Grilled Salmon | 34.00 | Grilled salmon, lemon, vegetables | other | fish | gf
+Whole Roasted Branzino | 44.00 | Branzino, herbs, lemon | other | fish | gf
+Steamed Lobster (1.5 lb) | 56.00 | Steamed lobster, butter, corn | other | shrimp | gf
+Fish Tacos (3) | 22.00 | Grilled fish, cabbage, chipotle crema | taco | fish
+Caesar Salad | 16.00 | Romaine, anchovy, parmesan | salad | none | nv
+Fries | 10.00 | French fries | other | none | vg gf
+Coleslaw | 8.00 | Coleslaw | salad | egg | v gf
+Key Lime Pie | 12.00 | Key lime pie | other | egg | v
+Lemonade | 5.00 | Fresh lemonade | other | none | vg gf
+
+@ petite-abeille-flatiron
+name: Petite Abeille
+address: 44 W 17th St, New York, NY 10011
+ll: 40.73867, -73.9945
+hood: Flatiron
+cuisine: american
+detail: Belgian café; mussels, frites, waffles and beer
+price: 2
+google: 4.3
+hours: 09:00-22:00
+platforms: uber, doordash
+--
+*Moules Frites | 26.00 | Steamed mussels in white wine, fries | other | shrimp
+*Liège Waffle | 9.00 | Caramelized Belgian waffle | other | egg | v
+Carbonnade Flamande | 26.00 | Beef stew with beer, fries | other | beef
+Stoofvlees Croquettes | 12.00 | Beef stew croquettes | other | beef
+Shrimp Croquettes | 14.00 | Grey shrimp croquettes | other | shrimp
+Croque Monsieur | 16.00 | Ham, gruyère, béchamel on bread
+Croque Madame | 17.00 | Ham, gruyère, béchamel, fried egg
+Steak Frites | 32.00 | Grilled steak, fries, béarnaise | other | beef | gf
+Vol-au-Vent | 24.00 | Chicken and mushroom in puff pastry | other | chicken
+Belgian Endive Salad | 14.00 | Endive, apple, walnuts, blue cheese | salad | none | v gf
+Frites | 8.00 | Belgian fries with mayo | other | egg | v gf
+Waterzooi | 22.00 | Flemish chicken and vegetable stew | soup | chicken | gf
+Brussels Waffle | 10.00 | Light waffle with whipped cream and strawberries | other | egg | v
+Speculoos Cheesecake | 10.00 | Speculoos cheesecake | other | none | v
+Hot Chocolate | 5.00 | Belgian hot chocolate | other | none | v gf
+
+@ mari-vanna-flatiron
+name: Mari Vanna
+address: 41 E 20th St, New York, NY 10003
+ll: 40.7388, -73.98857
+hood: Flatiron
+cuisine: american
+detail: Russian home cooking in a grandmother's-parlor setting
+price: 3
+google: 4.4
+hours: 12:00-23:00
+platforms: uber, doordash
+--
+*Beef Stroganoff | 34.00 | Beef in mushroom cream sauce, mashed potatoes | other | beef
+*Pelmeni | 22.00 | Siberian meat dumplings, sour cream | other | beef
+Vareniki with Potato | 20.00 | Potato and onion dumplings, sour cream | other | none | v
+Borscht | 16.00 | Beet soup with beef, sour cream | soup | beef | gf
+Chicken Kiev | 32.00 | Breaded chicken breast with herb butter | other | chicken
+Blini with Salmon Caviar | 28.00 | Blini, salmon roe, sour cream | other | fish
+Olivier Salad | 16.00 | Potato, egg, peas, chicken, mayo | salad | chicken | gf
+Herring under a Fur Coat | 16.00 | Layered herring, beet, potato, egg salad | salad | fish | gf
+Golubtsy | 26.00 | Stuffed cabbage rolls with beef and rice | other | beef | gf
+Pirozhki (2) | 12.00 | Baked buns with meat or cabbage | other | beef
+Syrniki | 16.00 | Farmer's cheese pancakes, jam, sour cream | other | egg | v
+Kotleti | 28.00 | Chicken cutlets, mashed potatoes | other | chicken
+Medovik | 14.00 | Honey layer cake | other | egg | v
+Napoleon Cake | 14.00 | Layered puff pastry cream cake | other | egg | v
+Kompot | 6.00 | Fruit drink | other | none | vg gf
+
+@ ajisen-ramen-chelsea
+name: Ajisen Ramen (Chelsea)
+address: 136 W 28th St, New York, NY 10001
+ll: 40.74662, -73.99217
+hood: Chelsea
+cuisine: japanese
+detail: Kumamoto-style tonkotsu ramen chain
+price: 1
+google: 4.2
+hours: 11:00-22:00
+platforms: uber, doordash
+chain: yes
+--
+*Ajisen Ramen | 14.95 | Tonkotsu broth, chashu, egg, bamboo, scallion | noodles | pork
+*Spicy Ajisen Ramen | 15.95 | Tonkotsu broth with spicy paste | noodles | pork | s2
+Chicken Karaage Ramen | 15.95 | Tonkotsu ramen topped with fried chicken | noodles | chicken
+Vegetable Ramen | 14.95 | Vegetable broth, tofu, vegetables | noodles | tofu | vg
+Seafood Ramen | 16.95 | Tonkotsu broth with shrimp and squid | noodles | shrimp
+Black Garlic Ramen | 15.95 | Tonkotsu with black garlic oil | noodles | pork
+Miso Ramen | 15.95 | Miso tonkotsu broth | noodles | pork
+Chashu Don | 11.95 | Rice with pork chashu | rice | pork
+Chicken Katsu Don | 12.95 | Chicken katsu over rice | rice | chicken
+Gyoza (6) | 7.95 | Pan-fried pork dumplings | other | pork
+Karaage | 8.95 | Japanese fried chicken | other | chicken
+Edamame | 4.95 | Steamed soybeans | other | none | vg gf
+Seaweed Salad | 5.95 | Wakame salad | salad | none | vg
+Green Tea Ice Cream | 4.95 | Matcha ice cream | other | none | v gf
+
+@ skirt-steak-nyc
+name: Skirt Steak
+address: 835 6th Ave, New York, NY 10001
+ll: 40.74684, -73.99019
+hood: Chelsea
+cuisine: american
+detail: One thing done well: skirt steak with unlimited fries and salad
+price: 2
+google: 4.6
+rec: The $32 steak-frites deal that's genuinely worth it (Eater NY)
+hours: 17:00-22:00
+platforms: none
+source: https://www.skirtsteaknyc.com
+--
+*Skirt Steak Frites | 34.00 | Skirt steak with unlimited fries and salad | other | beef | gf
+*Steak Frites for Two | 68.00 | Two skirt steaks with unlimited fries and salad | other | beef | gf
+Mushroom Steak (vegetarian) | 28.00 | Grilled king oyster mushrooms with fries and salad | other | none | vg gf
+Chicken Frites | 30.00 | Grilled chicken with unlimited fries and salad | other | chicken | gf
+Green Salad | 6.00 | Mixed greens, house vinaigrette | salad | none | vg gf
+Unlimited Fries | 6.00 | Bottomless french fries | other | none | vg gf
+Chimichurri | 2.00 | Herb chimichurri | other | none | vg gf
+Peppercorn Sauce | 3.00 | Creamy peppercorn sauce | other | none | v gf
+Béarnaise | 3.00 | Béarnaise sauce | other | egg | v gf
+Bread & Butter | 4.00 | Baguette with butter | other | none | v
+Soft Serve | 6.00 | Vanilla soft serve | other | none | v gf
+Chocolate Mousse | 9.00 | Chocolate mousse | other | egg | v gf
+Lemonade | 5.00 | House lemonade | other | none | vg gf
+
+@ rare-bar-and-grill-chelsea
+name: Rare Bar & Grill (Chelsea)
+address: 152 W 26th St, New York, NY 10001
+ll: 40.74563, -73.99375
+hood: Chelsea
+cuisine: burger
+detail: Burger joint with a rooftop bar and famous fry basket
+price: 2
+google: 4.3
+hours: 11:30-23:00
+platforms: uber, doordash
+--
+*Rare Classic Burger | 19.00 | Beef patty, lettuce, tomato, onion on a brioche bun
+*French Fry Basket | 16.00 | Shoestring, waffle, sweet potato and cottage fries with dipping sauces | other | none | v gf
+Bacon Cheddar Burger | 22.00 | Beef patty, bacon, cheddar
+Truffle Burger | 24.00 | Beef patty, truffle aioli, gruyère
+Turkey Burger | 19.00 | Turkey patty, avocado, chipotle mayo | burger | chicken | s1
+Veggie Burger | 18.00 | House veggie patty, greens, tomato | burger | none | v
+Fried Chicken Sandwich | 19.00 | Fried chicken, pickles, slaw
+Mac & Cheese Bites | 12.00 | Fried mac and cheese | other | none | v
+Buffalo Wings (10) | 18.00 | Buffalo wings, blue cheese | other | chicken | gf s2
+Caesar Salad | 14.00 | Romaine, parmesan, croutons | salad | none | nv
+Onion Rings | 10.00 | Beer-battered onion rings | other | none | v
+Sweet Potato Fries | 9.00 | Sweet potato fries | other | none | vg gf
+Milkshake | 9.00 | Vanilla, chocolate or strawberry shake | other | none | v gf
+Brownie Sundae | 11.00 | Brownie, vanilla ice cream, chocolate sauce | other | none | v
+
+@ okdongsik-nomad
+name: Okdongsik
+address: 13 E 30th St, New York, NY 10016
+ll: 40.7457, -73.98537
+hood: NoMad
+cuisine: korean
+detail: Michelin Bib Gourmand pork gomtang counter from Seoul
+price: 2
+google: 4.6
+rec: Michelin Bib Gourmand; one perfect bowl of clear pork soup (Michelin Guide)
+hours: 11:30-20:30
+platforms: none
+--
+*Dweji Gomtang | 21.00 | Clear pork broth soup with sliced pork and rice | soup | pork | gf
+*Dweji Gomtang Set | 26.00 | Pork gomtang with kimchi and extra pork | soup | pork | gf
+Bibim Guksu | 18.00 | Cold spicy noodles | noodles | none | vg s2
+Suyuk | 24.00 | Boiled pork slices with kimchi | other | pork | gf
+Mandu (5) | 12.00 | Pork dumplings | other | pork
+Pork Katsu | 22.00 | Fried pork cutlet with rice | other | pork
+Kimchi | 5.00 | House kimchi | other | none | s2 nv
+Kkakdugi | 5.00 | Radish kimchi | other | none | s2 nv
+Extra Rice | 3.00 | Steamed rice | rice | none | vg gf
+Extra Pork | 8.00 | Additional sliced pork | other | pork | gf
+Boricha | 3.00 | Barley tea | other | none | vg gf
+Sikhye | 5.00 | Sweet rice drink | other | none | vg gf
+
+@ maialino-vicino
+name: Maialino (vicino)
+address: 2 Lexington Ave, New York, NY 10010
+ll: 40.73842, -73.98576
+hood: Gramercy
+cuisine: italian
+detail: Roman trattoria from Union Square Hospitality in the Gramercy Park Hotel area
+price: 3
+google: 4.5
+rec: USHG's Roman trattoria; the cacio e pepe and suckling pig are the moves (Infatuation)
+hours: 07:30-22:00
+platforms: uber, doordash
+--
+*Cacio e Pepe | 28.00 | Tonnarelli, pecorino, black pepper | noodles | none | v
+*Maialino al Forno | 58.00 | Roast suckling pig, roasted potatoes | other | pork | gf
+Malfatti al Maialino | 32.00 | Torn pasta, suckling pig ragù, arugula | noodles | pork
+Bucatini all'Amatriciana | 28.00 | Bucatini, guanciale, tomato, pecorino | noodles | pork
+Spaghetti alla Carbonara | 29.00 | Spaghetti, guanciale, egg, pecorino | noodles | pork
+Rigatoni alla Gricia | 27.00 | Rigatoni, guanciale, pecorino | noodles | pork
+Pollo alla Diavola | 36.00 | Spicy grilled chicken, potatoes | other | chicken | gf s2
+Branzino | 42.00 | Roasted branzino, salsa verde | other | fish | gf
+Carciofi alla Giudia | 18.00 | Crispy fried artichokes | other | none | vg gf
+Insalata di Rucola | 16.00 | Arugula, parmigiano, lemon | salad | none | v gf
+Burrata | 22.00 | Burrata, tomatoes, basil | other | none | v gf
+Polpette | 18.00 | Meatballs in tomato sauce | other | beef
+Olive Oil Cake | 13.00 | Olive oil cake, mascarpone | other | egg | v
+Tiramisù | 14.00 | Classic tiramisù | other | none | v
+Ricotta Pancakes | 22.00 | Ricotta pancakes, maple, berries | other | egg | v
+
+@ sarabeth-s-park-ave-south
+name: Sarabeth's (Park Avenue South)
+address: 381 Park Ave S, New York, NY 10016
+ll: 40.74249, -73.98442
+hood: NoMad
+cuisine: american
+detail: Brunch institution; lemon ricotta pancakes and preserves
+price: 3
+google: 4.4
+hours: 08:00-21:00
+platforms: uber, doordash
+chain: yes
+source: https://www.sarabethsrestaurants.com/menus
+--
+*Lemon Ricotta Pancakes | 24.00 | Lemon ricotta pancakes, berries, maple | other | egg | v
+*Eggs Benedict | 26.00 | Poached eggs, Canadian bacon, hollandaise on English muffin | other | egg
+Fat & Fluffy French Toast | 22.00 | Thick-cut French toast, maple | other | egg | v
+Smoked Salmon Eggs Benedict | 28.00 | Poached eggs, smoked salmon, hollandaise
+Goldie Lox Omelette | 26.00 | Scrambled eggs, smoked salmon, cream cheese | other | egg
+Avocado Toast | 20.00 | Avocado, radish, chili on multigrain | sandwich | none | vg s1
+Chicken Pot Pie | 30.00 | Chicken pot pie with vegetables | other | chicken
+Grilled Salmon | 36.00 | Salmon, quinoa, greens | other | fish | gf
+Turkey Club | 24.00 | Turkey, bacon, lettuce, tomato on toast
+Sarabeth's Burger | 26.00 | Beef patty, cheddar, fries
+Chicken Cobb Salad | 26.00 | Chicken, bacon, egg, avocado, blue cheese | salad | chicken | gf
+Tomato Soup | 12.00 | Cream of tomato soup | soup | none | v gf
+Porridge | 14.00 | Oatmeal, wheat berries, brown sugar, cream | other | none | v
+Blueberry Muffin | 6.00 | Blueberry muffin | other | none | v
+Fresh Orange Juice | 8.00 | Orange juice | other | none | vg gf
+
+@ chama-mama-chelsea
+name: Chama Mama (Chelsea)
+address: 149 W 14th St, New York, NY 10011
+ll: 40.73842, -73.99892
+hood: Chelsea
+cuisine: mediterranean
+detail: Georgian khachapuri, khinkali and natural wines
+price: 2
+google: 4.6
+rec: The Adjaruli khachapuri is a must; a cheerful intro to Georgian food (Infatuation)
+hours: 11:30-22:30
+platforms: uber, doordash
+chain: yes
+source: https://www.chamamama.com/menu
+--
+*Adjaruli Khachapuri | 24.00 | Boat-shaped bread with melted cheese, butter and egg yolk | other | egg | v
+*Khinkali (5) | 18.00 | Beef and pork soup dumplings | other | beef
+Imeruli Khachapuri | 20.00 | Round bread stuffed with cheese | other | none | v
+Megruli Khachapuri | 22.00 | Cheese-stuffed bread topped with more cheese | other | none | v
+Mushroom Khinkali (5) | 16.00 | Mushroom dumplings | other | none | vg
+Lobio | 14.00 | Stewed kidney beans with herbs and cornbread | other | none | vg gf
+Pkhali Trio | 16.00 | Spinach, beet and eggplant walnut pâtés | other | none | vg gf
+Badrijani Nigvzit | 14.00 | Eggplant rolls with walnut paste | other | none | vg gf
+Chicken Tabaka | 26.00 | Flattened fried chicken with garlic sauce | other | chicken | gf
+Chakapuli | 28.00 | Lamb stew with tarragon and sour plums | soup | lamb | gf
+Mtsvadi | 30.00 | Grilled pork skewers with pomegranate | other | pork | gf
+Ojakhuri | 26.00 | Pan-fried pork with potatoes and onions | other | pork | gf
+Georgian Salad | 14.00 | Tomato, cucumber, walnut dressing | salad | none | vg gf
+Churchkhela | 8.00 | Walnut and grape candy | other | none | vg gf
+Tarragon Lemonade | 6.00 | Georgian tarragon soda | other | none | vg gf
+
+@ jack-s-wife-freda-chelsea
+name: Jack's Wife Freda (Chelsea)
+address: 116 8th Ave, New York, NY 10011
+ll: 40.74092, -74.00144
+hood: Chelsea
+cuisine: mediterranean
+detail: All-day South African-Israeli-inflected café; green shakshuka and rosewater waffles
+price: 2
+google: 4.4
+hours: 08:30-22:00
+platforms: uber, doordash
+chain: yes
+source: https://jackswifefreda.com/menu
+--
+*Green Shakshuka | 19.00 | Baked eggs in tomatillo and green pepper sauce, challah | other | egg | v
+*Rosewater Waffle | 17.00 | Waffle with lemon curd, berries, honey syrup | other | egg | v
+Shakshuka | 19.00 | Baked eggs in spiced tomato sauce, challah | other | egg | v s1
+Cantaloupe & Feta Salad | 15.00 | Cantaloupe, feta, mint, olive oil | salad | none | v gf
+Chicken Kebab | 25.00 | Grilled chicken skewers, Israeli salad, tahini | other | chicken | gf
+Peri Peri Chicken | 26.00 | Grilled chicken with peri peri sauce | other | chicken | gf s2
+Madame Freda | 18.00 | Duck prosciutto, cheddar béchamel, fried egg on sourdough
+Mediterranean Breakfast | 19.00 | Eggs, labneh, salad, avocado, pita | other | egg | v
+Grilled Halloumi | 14.00 | Halloumi, grapes, honey | other | none | v gf
+Lamb Burger | 26.00 | Lamb patty, harissa mayo, fries | burger | lamb | s1
+Tuna Niçoise | 24.00 | Seared tuna, egg, olives, greens | salad | fish | gf
+Falafel Salad | 19.00 | Falafel, greens, tahini, Israeli salad | salad | none | vg
+Matzo Ball Soup | 12.00 | Chicken broth, matzo ball | soup | chicken
+Malabi | 9.00 | Rosewater milk pudding | other | none | v gf
+Mint Lemonade | 6.00 | Lemonade with mint | other | none | vg gf
+
+@ ramen-ishida-chelsea
+name: Ramen Ishida (Chelsea)
+address: 104 8th Ave, New York, NY 10011
+ll: 40.74052, -74.00169
+hood: Chelsea
+cuisine: japanese
+detail: Small-batch ramen; shio and shoyu with house noodles
+price: 2
+google: 4.6
+hours: 12:00-22:00
+platforms: uber, doordash
+--
+*Shio Ramen | 19.00 | Clear chicken and dashi salt broth, chashu, egg | noodles | pork
+*Shoyu Ramen | 19.00 | Soy-based clear broth, chashu, menma, scallion | noodles | pork
+Spicy Miso Ramen | 20.00 | Miso chili broth, ground pork | noodles | pork | s2
+Vegan Ramen | 19.00 | Vegetable shoyu broth, tofu, greens | noodles | tofu | vg
+Chicken Paitan Ramen | 20.00 | Creamy chicken broth | noodles | chicken
+Tsukemen | 21.00 | Dipping ramen with thick noodles and rich broth | noodles | pork
+Mazemen | 19.00 | Brothless noodles with pork, egg yolk, scallion | noodles | pork
+Chashu Don | 10.00 | Rice topped with chashu | rice | pork
+Gyoza (5) | 8.00 | Pan-fried pork dumplings | other | pork
+Karaage | 9.00 | Japanese fried chicken | other | chicken
+Ajitama Egg | 2.50 | Marinated soft egg | other | egg | v gf
+Edamame | 5.00 | Steamed soybeans | other | none | vg gf
+Cucumber Salad | 6.00 | Cucumber with sesame dressing | salad | none | vg
+Matcha Ice Cream | 6.00 | Green tea ice cream | other | none | v gf
+
+@ da-andrea-chelsea
+name: Da Andrea (Chelsea)
+address: 160 8th Ave, New York, NY 10011
+ll: 40.74207, -74.00061
+hood: Chelsea
+cuisine: italian
+detail: Homey Emilia-Romagna trattoria with house-made pasta
+price: 2
+google: 4.6
+hours: 12:00-22:30
+platforms: uber, doordash
+--
+*Tagliatelle alla Bolognese | 24.00 | Tagliatelle, beef and pork ragù | noodles | beef
+*Gnocchi al Pesto | 22.00 | Potato gnocchi, basil pesto | noodles | none | v
+Lasagna Bolognese | 24.00 | Layered pasta, ragù, béchamel | noodles | beef
+Tortelli di Zucca | 23.00 | Pumpkin tortelli, butter, sage | noodles | none | v
+Pappardelle ai Funghi | 24.00 | Pappardelle, wild mushrooms | noodles | none | v
+Spaghetti alle Vongole | 26.00 | Spaghetti, clams, garlic, white wine | noodles | shrimp
+Pollo alla Griglia | 26.00 | Grilled chicken, roasted potatoes | other | chicken | gf
+Branzino | 32.00 | Roasted branzino, vegetables | other | fish | gf
+Scaloppine al Limone | 28.00 | Veal scaloppine, lemon, capers | other | beef
+Insalata Mista | 12.00 | Mixed greens | salad | none | vg gf
+Burrata | 18.00 | Burrata, tomatoes, basil | other | none | v gf
+Piadina Prosciutto | 16.00 | Flatbread with prosciutto and squacquerone
+Tiramisù | 11.00 | Classic tiramisù | other | none | v
+Panna Cotta | 10.00 | Vanilla panna cotta, berries | other | none | v gf
+Affogato | 8.00 | Gelato with espresso | other | none | v gf
+
+@ murray-s-bagels-chelsea
+name: Murray's Bagels (Chelsea)
+address: 500 6th Ave, New York, NY 10011
+ll: 40.73633, -73.99717
+hood: Chelsea
+cuisine: bakery
+detail: Hand-rolled bagels, never toasted; smoked fish and spreads
+price: 2
+google: 4.5
+rec: Old-school hand-rolled bagels; famously refuses to toast (Eater NY)
+hours: 06:00-16:00
+platforms: uber, doordash
+categories: coffee, meal
+--
+*Bagel with Cream Cheese | 5.50 | Bagel with plain cream cheese | sandwich | none | v
+*Nova Salmon Sandwich | 17.50 | Nova, cream cheese, tomato, onion, capers on a bagel
+Bacon Egg & Cheese | 9.50 | Bacon, egg, cheese on a bagel
+Egg & Cheese | 7.50 | Egg, cheese on a bagel | sandwich | egg | v
+Whitefish Salad Sandwich | 14.50 | Whitefish salad on a bagel
+Tuna Salad Sandwich | 12.50 | Tuna salad, lettuce, tomato on a bagel
+Turkey Sandwich | 13.50 | Turkey, lettuce, tomato on a bagel
+Bagel with Scallion Cream Cheese | 6.00 | Scallion cream cheese | sandwich | none | v
+Bagel with Vegetable Cream Cheese | 6.00 | Vegetable cream cheese | sandwich | none | v
+Bagel with Butter | 4.00 | Buttered bagel | sandwich | none | v
+Sable Sandwich | 21.00 | Smoked sable, cream cheese on a bagel
+Lox Platter | 26.00 | Nova, cream cheese, tomato, onion, capers, two bagels | other | fish
+Black & White Cookie | 4.00 | Black and white cookie | other | none | v
+Drip Coffee | 3.00 | Brewed coffee | other | none | vg gf
+Fresh Orange Juice | 5.50 | Orange juice | other | none | vg gf
+
+@ modern-bread-and-bagel-chelsea
+name: Modern Bread and Bagel (Chelsea)
+address: 139 W 14th St, New York, NY 10011
+ll: 40.73825, -73.99851
+hood: Chelsea
+cuisine: bakery
+detail: Fully gluten-free bakery and café; bagels, babka and sandwiches
+price: 2
+google: 4.5
+hours: 08:00-18:00
+platforms: uber, doordash
+allergen_info: yes
+categories: coffee, meal
+source: https://modernbreadandbagel.com/menu
+--
+*Gluten-Free Bagel with Cream Cheese | 7.50 | GF bagel, cream cheese | sandwich | none | v gf
+*Lox Bagel | 19.00 | GF bagel, nova, cream cheese, tomato, onion, capers | sandwich | fish | gf
+Bacon Egg & Cheese | 12.00 | Bacon, egg, cheese on a GF bagel | sandwich | pork | gf
+Avocado Toast | 14.00 | Avocado, radish, chili on GF sourdough | sandwich | none | vg gf s1
+Chicken Salad Sandwich | 15.00 | Chicken salad on GF bread | sandwich | chicken | gf
+Turkey Club | 16.00 | Turkey, bacon, lettuce, tomato on GF bread | sandwich | chicken | gf
+Grilled Cheese | 12.00 | Cheddar on GF sourdough | sandwich | none | v gf
+Chocolate Babka Slice | 6.00 | GF chocolate babka | other | none | v gf
+Cinnamon Roll | 6.00 | GF cinnamon roll | other | none | v gf
+Chocolate Chip Cookie | 4.50 | GF chocolate chip cookie | other | none | v gf
+Blueberry Muffin | 5.00 | GF blueberry muffin | other | none | v gf
+Challah Loaf | 14.00 | GF challah | other | egg | v gf
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Fresh Juice | 7.00 | Orange or green juice | other | none | vg gf

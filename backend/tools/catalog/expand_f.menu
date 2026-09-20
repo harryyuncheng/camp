@@ -1,0 +1,409 @@
+@ oiji-mi
+--
+Truffle Kimbap | 24.00 | Seaweed rice roll with truffle and pickled radish | rice | none | v
+Yukhoe | 32.00 | Korean beef tartare, pear, egg yolk, sesame | other | beef | gf
+Tteokgalbi | 42.00 | Grilled short rib patties, ssamjang | other | beef
+Dubu Jorim | 22.00 | Braised tofu in soy chili glaze | other | tofu | vg s1
+Mandu | 24.00 | Pork and kimchi dumplings | other | pork | s1
+Bibim Guksu | 26.00 | Cold spicy noodles with vegetables | noodles | none | vg s2
+Doenjang Jjigae | 24.00 | Soybean paste stew with tofu and vegetables | soup | tofu | v
+Sesame Leaf Fried Chicken | 32.00 | Fried chicken with perilla and soy glaze | other | chicken
+Grilled Black Cod | 48.00 | Gochujang-glazed black cod | other | fish | gf s1
+Kimchi Fried Rice | 26.00 | Kimchi, pork belly, egg, rice | rice | pork | s1
+Banchan Selection | 16.00 | Assorted seasonal banchan | other | none | v s1
+Hotteok | 14.00 | Sweet pancake with brown sugar and walnuts | other | none | v
+Sujeonggwa | 8.00 | Cinnamon-ginger punch with persimmon | other | none | vg gf
+
+@ atoboy
+--
+Tofu with Perilla | 16.00 | Silken tofu, perilla oil, soy | other | tofu | vg gf
+Eggplant with Sesame | 16.00 | Roasted eggplant, sesame, soy glaze | other | none | vg
+Cabbage with Anchovy | 16.00 | Charred cabbage, anchovy butter | other | fish | gf
+Mushrooms with Egg Yolk | 18.00 | Roasted mushrooms, cured egg yolk, chili | other | egg | v gf s1
+Squid with Chili | 22.00 | Grilled squid, gochugaru, lime | other | shrimp | gf s2
+Chicken Thigh Ssam | 24.00 | Grilled chicken, lettuce wraps, ssamjang | other | chicken | gf s1
+Short Rib with Radish | 28.00 | Braised short rib, radish, soy | other | beef
+Rice with Seaweed | 8.00 | Steamed rice, gim, sesame | rice | none | vg gf
+Kimchi | 6.00 | House kimchi | other | none | s2 nv +fish
+Yuja Sorbet | 12.00 | Yuzu sorbet, meringue | other | egg | v gf
+Chocolate Bingsu | 14.00 | Shaved milk ice, chocolate, injeolmi | other | none | v gf
+Barley Tea | 4.00 | Roasted barley tea | other | none | vg
+
+@ casa-mono
+--
+Jamón Ibérico | 36.00 | Hand-cut Ibérico ham | other | pork | gf
+Croquetas de Jamón | 16.00 | Ham croquettes | other | pork
+Pulpo a la Gallega | 28.00 | Octopus, potato, paprika | other | shrimp | gf
+Gambas al Ajillo | 24.00 | Shrimp, garlic, guindilla | other | shrimp | gf s1
+Foie Gras with Cinco Cebollas | 34.00 | Seared foie gras, five onions | other | chicken | gf
+Bone Marrow with Radish Salad | 26.00 | Roasted bone marrow, radish, herbs | other | beef
+Sweetbreads with Fennel | 28.00 | Crispy sweetbreads, fennel, orange | other | beef | gf
+Duck Confit | 32.00 | Confit duck leg, romesco | other | chicken | gf
+Razor Clams a la Plancha | 26.00 | Seared razor clams, salsa verde | other | shrimp | gf
+Mushroom Fideos | 26.00 | Toasted noodles with mushrooms and egg | noodles | egg | v
+Manchego with Membrillo | 16.00 | Aged manchego, quince paste | other | none | v gf
+Churros con Chocolate | 12.00 | Churros with chocolate | other | none | v
+Crema Catalana | 12.00 | Catalan burnt custard | other | egg | v gf
+
+@ rolf-s-german-restaurant
+--
+Bratwurst Sandwich | 18.00 | Grilled bratwurst, sauerkraut, mustard on a roll
+Currywurst | 18.00 | Sliced bratwurst in curry ketchup, fries | other | pork | s1
+Schweinshaxe | 38.00 | Roasted pork knuckle, sauerkraut, potato | other | pork | gf
+Rouladen | 32.00 | Beef rolls stuffed with bacon and pickle, gravy, spaetzle | other | beef
+Chicken Schnitzel | 28.00 | Breaded chicken cutlet, lemon, potato salad | other | chicken
+Pork Schnitzel Sandwich | 20.00 | Breaded pork cutlet, lettuce, remoulade on a roll
+Spaetzle with Mushrooms | 22.00 | Egg noodles, mushroom cream sauce | noodles | egg | v
+Sauerkraut | 8.00 | Braised sauerkraut | other | none | vg gf
+Red Cabbage | 8.00 | Braised red cabbage with apple | other | none | vg gf
+German Potato Salad | 8.00 | Warm potato salad, vinegar, bacon | other | pork | gf
+Cucumber Salad | 8.00 | Cucumber, dill, sour cream | salad | none | v gf
+Apple Strudel | 12.00 | Apple strudel, vanilla sauce | other | none | v
+Black Forest Cake | 12.00 | Chocolate cherry cream cake | other | none | v
+Spezi | 5.00 | Cola-orange soda | other | none | vg gf
+
+@ bar-jam-n
+--
+Jamón Ibérico de Bellota | 38.00 | Hand-sliced acorn-fed Ibérico ham | other | pork | gf
+Croquetas de Jamón | 14.00 | Ham croquettes | other | pork
+Tortilla Española | 12.00 | Potato and onion omelette | other | egg | v gf
+Boquerones | 14.00 | Marinated white anchovies | other | fish | gf
+Gambas al Ajillo | 18.00 | Shrimp, garlic, chili, olive oil | other | shrimp | gf s1
+Pimientos de Padrón | 12.00 | Blistered padrón peppers | other | none | vg gf s1
+Bocadillo de Chorizo | 14.00 | Chorizo on baguette
+Bocadillo de Queso | 13.00 | Manchego, tomato on baguette | sandwich | none | v
+Ensalada Mixta | 12.00 | Lettuce, tomato, onion, olives, tuna | salad | fish | gf
+Gazpacho | 10.00 | Chilled tomato soup | soup | none | vg gf
+Pan con Tomate y Jamón | 16.00 | Tomato bread with ham
+Tabla de Quesos | 22.00 | Spanish cheese board, membrillo | other | none | v
+Flan | 9.00 | Vanilla flan | other | egg | v gf
+
+@ coppelia
+--
+Pernil Sandwich | 16.00 | Slow-roasted pork, garlic mojo on Cuban bread
+Media Noche | 15.00 | Ham, roast pork, swiss, pickles on sweet bread
+Picadillo | 19.00 | Ground beef stew, olives, raisins, rice, beans | other | beef | gf
+Vaca Frita | 24.00 | Crispy shredded beef, onions, rice, beans | other | beef | gf
+Pollo a la Plancha | 22.00 | Grilled chicken, rice, black beans, plantains | other | chicken | gf
+Pescado Frito | 26.00 | Fried whole fish, tostones | other | fish | gf
+Chicharrón de Pollo | 18.00 | Fried marinated chicken chunks | other | chicken | gf
+Bistec Encebollado | 24.00 | Steak with onions, rice, beans | other | beef | gf
+Tostones | 8.00 | Fried green plantains, mojo | other | none | vg gf
+Maduros | 7.00 | Sweet fried plantains | other | none | vg gf
+Yuca Fries | 8.00 | Fried yuca, cilantro aioli | other | none | v gf
+Black Bean Soup | 10.00 | Cuban black bean soup | soup | none | vg gf
+Café Cubano | 4.00 | Sweet Cuban espresso | other | none | vg gf
+Flan | 9.00 | Caramel flan | other | egg | v gf
+Tres Leches | 10.00 | Three milk cake | other | none | v
+
+@ sappe
+--
+Tom Yum Goong | 14.00 | Spicy lemongrass shrimp soup | soup | shrimp | gf s2
+Som Tum Thai | 14.00 | Green papaya salad, peanuts, dried shrimp | salad | shrimp | gf s2
+Larb Moo | 15.00 | Minced pork salad, toasted rice, lime, chili | salad | pork | gf s2
+Chicken Satay (4) | 13.00 | Grilled chicken skewers, peanut sauce | other | chicken | gf
+Crispy Pork Belly with Kale | 22.00 | Fried pork belly, kale, garlic, chili | other | pork | s2
+Pad See Ew Chicken | 19.00 | Wide rice noodles, egg, Chinese broccoli | noodles | chicken | gf
+Massaman Curry Beef | 22.00 | Beef in mild peanut curry with potato | curry | beef | gf s1
+Panang Curry Chicken | 21.00 | Chicken in rich panang curry | curry | chicken | gf s2
+Khao Soi Tofu | 19.00 | Northern curry noodle soup with tofu | noodles | tofu | vg s2
+Pad Kee Mao Shrimp | 21.00 | Drunken noodles with shrimp, basil, chili | noodles | shrimp | s2
+Grilled Pork Neck | 20.00 | Grilled pork jowl, jaew dipping sauce | other | pork | gf s2
+Sticky Rice | 4.00 | Steamed sticky rice | rice | none | vg gf
+Mango Sticky Rice | 11.00 | Sweet coconut sticky rice, mango | other | none | vg gf
+Thai Iced Tea | 5.50 | Thai tea with milk | other | none | v gf
+Thai Iced Coffee | 5.50 | Thai coffee with condensed milk | other | none | v gf
+
+@ wolfgang-s-steakhouse-park-avenue
+--
+Porterhouse for Two | 149.00 | Dry-aged USDA prime porterhouse | other | beef | gf
+Ribeye | 68.00 | Dry-aged bone-in ribeye | other | beef | gf
+Filet Mignon | 62.00 | Prime filet mignon | other | beef | gf
+Sizzling Bacon | 8.00 | Thick-cut sizzling Canadian bacon | other | pork | gf
+Shrimp Cocktail | 26.00 | Jumbo shrimp, cocktail sauce | other | shrimp | gf
+Crab Cakes | 30.00 | Jumbo lump crab cakes | other | shrimp
+Wedge Salad | 18.00 | Iceberg, blue cheese, bacon, tomato | salad | pork | gf
+Lamb Chops | 62.00 | Grilled lamb chops, mint sauce | other | lamb | gf
+Chilean Sea Bass | 52.00 | Broiled sea bass, lemon butter | other | fish | gf
+German Potatoes | 16.00 | Pan-fried potatoes and onions | other | none | vg gf
+Creamed Spinach | 16.00 | Creamed spinach | other | none | v gf
+Onion Rings | 15.00 | Beer-battered onion rings | other | none | v
+Mac & Cheese | 18.00 | Baked macaroni and cheese | other | none | v
+New York Cheesecake | 15.00 | Classic cheesecake | other | none | v
+Key Lime Pie | 14.00 | Key lime pie | other | egg | v
+
+@ cho-dang-gol
+--
+Dubu Kimchi | 22.00 | Warm tofu with stir-fried kimchi and pork | other | tofu | s2
+Bossam | 36.00 | Boiled pork belly, cabbage, oyster kimchi | other | pork | s1
+Galbi Jjim | 42.00 | Braised short rib | other | beef
+Kimchi Jjigae | 20.00 | Kimchi stew with pork and tofu | soup | pork | s2
+Yukgaejang | 22.00 | Spicy shredded beef soup | soup | beef | s2
+Haemul Pajeon | 24.00 | Seafood scallion pancake | other | shrimp
+Kimchi Jeon | 18.00 | Kimchi pancake | other | none | v s1
+Dolsot Bibimbap | 22.00 | Stone pot rice, vegetables, egg | rice | egg | v s1
+Mandu (8) | 16.00 | Pork and vegetable dumplings | other | pork
+Bulgogi | 30.00 | Soy-marinated beef, rice | other | beef
+Spicy Pork Bulgogi | 28.00 | Gochujang pork | other | pork | s2
+Homemade Tofu Plate | 16.00 | Fresh house tofu, soy sauce, sesame | other | tofu | vg gf
+Sikhye | 5.00 | Sweet rice drink | other | none | vg gf
+Steamed Rice | 3.00 | White rice | rice | none | vg gf
+
+@ txikito
+--
+Txipirones | 22.00 | Squid ribbons, pine nuts, onion | other | shrimp | gf
+Tortilla de Bacalao | 16.00 | Salt cod omelette | other | fish | gf
+Morcilla | 18.00 | Basque blood sausage, piquillo peppers | other | pork | gf
+Txistorra | 16.00 | Basque chorizo, pan con tomate | other | pork
+Chuletón (per lb) | 65.00 | Basque-style bone-in ribeye | other | beef | gf
+Lengua | 20.00 | Braised beef tongue, salsa verde | other | beef | gf
+Merluza | 32.00 | Hake in salsa verde with clams | other | fish | gf
+Kokotxas | 34.00 | Hake cheeks al pil pil | other | fish | gf
+Pimientos Rellenos | 18.00 | Stuffed piquillo peppers with crab | other | shrimp
+Ensalada Txikito | 14.00 | Greens, anchovy, olive vinaigrette | salad | fish | gf
+Arroz con Leche | 10.00 | Rice pudding | other | none | v gf
+Gâteau Basque | 12.00 | Basque cake with cherry | other | egg | v
+Idiazabal | 14.00 | Basque sheep cheese, membrillo | other | none | v gf
+
+@ franchia-vegan-cafe
+--
+Vegetable Dumplings (6) | 12.00 | Steamed vegetable dumplings | other | none | vg
+Vegan Kimchi Pancake | 14.00 | Kimchi jeon | other | none | vg s1
+Tofu Bibimbap | 19.00 | Rice, vegetables, tofu, gochujang | rice | tofu | vg s1
+Soy Bulgogi Bibimbap | 20.00 | Rice, vegetables, soy protein bulgogi | rice | tofu | vg s1
+Vegan Kimchi Fried Rice | 18.00 | Kimchi, vegetables, rice | rice | none | vg s1
+Vegan Ramen | 18.00 | Miso broth, noodles, tofu, mushrooms | noodles | tofu | vg
+Japchae | 18.00 | Glass noodles with vegetables | noodles | none | vg
+Vegan Chicken Teriyaki | 21.00 | Soy chicken in teriyaki sauce, rice | other | tofu | vg
+Spicy Tofu Stew | 19.00 | Soft tofu stew, vegetables | soup | tofu | vg s2
+Mushroom Hot Pot | 24.00 | Assorted mushrooms in vegetable broth | soup | none | vg gf
+Avocado Roll | 12.00 | Avocado, cucumber, sushi rice | rice | none | vg gf
+Green Tea Noodle Salad | 17.00 | Chilled green tea noodles, vegetables, sesame dressing | noodles | none | vg
+Vegan Cheesecake | 10.00 | Cashew cheesecake | other | none | vg
+Green Tea Ice Cream | 8.00 | Vegan matcha ice cream | other | none | vg gf
+Iced Green Tea | 5.00 | Cold-brewed green tea | other | none | vg gf
+
+@ joe-s-pizza-union-square
+--
+White Slice | 4.75 | Ricotta, mozzarella, garlic | pizza | none | v
+Mushroom Slice | 4.75 | Cheese slice with mushrooms | pizza | none | v
+Sausage Slice | 5.00 | Cheese slice with Italian sausage | pizza | pork
+Pepperoni Pie | 30.00 | 18-inch pie with pepperoni | pizza | pork
+Sicilian Pie | 34.00 | Thick-crust square pie | pizza | none | v
+Mushroom Pie | 30.00 | 18-inch pie with mushrooms | pizza | none | v
+Fresh Mozzarella Pie | 32.00 | Fresh mozzarella, basil, tomato | pizza | none | v
+Garlic Knots (6) | 5.00 | Garlic knots with marinara | other | none | v
+Calzone | 10.00 | Ricotta and mozzarella calzone | other | none | v
+Caesar Salad | 9.00 | Romaine, parmesan, croutons | salad | none | nv
+Canned Soda | 2.00 | Soft drink | other | none | vg gf
+Bottled Water | 2.00 | Bottled water | other | none | vg gf
+
+@ time-out-market-union-square
+--
+Lobster Roll | 32.00 | Maine lobster, butter, brioche | sandwich | shrimp
+Neapolitan Margherita | 18.00 | Wood-fired margherita pizza | pizza | none | v
+Pepperoni Pizza | 20.00 | Wood-fired pepperoni pie | pizza | pork
+Chicken Tikka Bowl | 17.00 | Chicken tikka, rice, raita, pickles | bowl | chicken | gf s1
+Pork Belly Bao (2) | 14.00 | Steamed buns, pork belly, hoisin, cucumber | sandwich | pork
+Fried Chicken Sandwich | 16.00 | Crispy chicken, pickles, slaw on a bun
+Poke Bowl | 18.00 | Salmon poke, sushi rice, avocado, edamame | bowl | fish
+Falafel Plate | 15.00 | Falafel, hummus, salad, pita | other | none | vg
+Birria Tacos (3) | 17.00 | Beef birria, consommé, corn tortillas | taco | beef | gf s1
+Truffle Fries | 10.00 | Fries, truffle oil, parmesan | other | none | v gf
+Ice Cream Sandwich | 8.00 | Cookie ice cream sandwich | other | none | v
+Fresh Juice | 8.00 | Cold-pressed juice | other | none | vg gf
+
+@ salinas
+--
+Jamón Ibérico | 34.00 | Acorn-fed Ibérico ham | other | pork | gf
+Gambas al Ajillo | 22.00 | Shrimp, garlic, chili, olive oil | other | shrimp | gf s1
+Pulpo a la Brasa | 28.00 | Grilled octopus, potato, paprika | other | shrimp | gf
+Paella de Mariscos | 48.00 | Seafood paella with shrimp, clams, mussels | rice | shrimp | gf
+Fideuà | 44.00 | Toasted noodle paella with seafood and aioli | noodles | shrimp
+Arroz Negro | 42.00 | Squid ink rice, cuttlefish, aioli | rice | shrimp | gf
+Cordero | 42.00 | Roasted lamb, romesco | other | lamb | gf
+Lubina | 40.00 | Roasted sea bass, salsa verde | other | fish | gf
+Pimientos de Padrón | 14.00 | Blistered padrón peppers | other | none | vg gf s1
+Ensalada Salinas | 16.00 | Greens, manchego, marcona almonds, sherry vinaigrette | salad | none | v gf
+Tortilla Española | 14.00 | Potato omelette, aioli | other | egg | v gf
+Churros | 12.00 | Churros with chocolate | other | none | v
+Crema Catalana | 12.00 | Catalan custard | other | egg | v gf
+
+@ xi-an-famous-foods-union-square
+--
+Spicy Cumin Lamb Noodles in Soup (N1S) | 15.25 | Hand-ripped noodles in soup with cumin lamb | noodles | lamb | s2
+Spicy & Tingly Beef Hand-Ripped Noodles (N4) | 14.75 | Hand-ripped noodles, beef, chili oil, Sichuan pepper | noodles | beef | s3
+Spicy Hot Oil Seared Hand-Ripped Noodles (N5) | 12.25 | Noodles seared with hot chili oil, garlic, scallion | noodles | none | vg s3
+Mt. Qi Vegetables Hand-Ripped Noodles (N6) | 12.75 | Noodles with tofu, cabbage, potato in vinegar sauce | noodles | tofu | vg s1
+Spicy Cumin Lamb Noodles (dry, N1) | 14.75 | Hand-ripped noodles with cumin lamb | noodles | lamb | s2
+Concubine's Chicken Hand-Ripped Noodles (N7) | 13.75 | Noodles with tingly chicken | noodles | chicken | s2
+Spinach Hand-Ripped Noodles (N8) | 12.25 | Cold noodles with spinach in vinegar sauce | noodles | none | vg s1
+Spicy Cumin Lamb Skewer (1) | 4.50 | Grilled cumin lamb skewer | other | lamb | gf s2
+Spicy & Tingly Beef Burger (B3) | 8.75 | Beef in Sichuan pepper on flatbread | sandwich | beef | s3
+Spicy Tiger Vegetables Salad (A2) | 8.50 | Cilantro, celery, pepper, scallion, chili | salad | none | vg gf s2
+Spicy & Sour Pork Dumplings (F3, 8 pc) | 11.75 | Pork dumplings in hot-sour sauce | other | pork | s2
+Lamb Pao-Mo Soup (S1) | 14.75 | Lamb soup with crumbled flatbread | soup | lamb | s1
+Chang-an Spicy Tofu (A4) | 8.50 | Tofu cubes in chili sauce | other | tofu | vg gf s2
+Canned Soda | 2.00 | Soft drink | other | none | vg gf
+
+@ dos-toros-taqueria-union-square
+prices: menu
+source: https://www.dostoros.com/menu
+--
+Carne Asada Burrito | 15.25 | Grilled steak, rice, beans, salsa, cheese, crema in a flour tortilla | wrap | beef
+Veggie Burrito | 12.50 | Grilled peppers and onions, rice, beans, guacamole, salsa | wrap | none | v
+Carnitas Bowl | 14.25 | Braised pork over rice and beans, salsa, cheese | bowl | pork | gf
+Pollo Asado Bowl | 13.75 | Grilled chicken over rice and beans, pico, cheese | bowl | chicken | gf
+Carne Asada Tacos (3) | 14.00 | Grilled steak, onion, cilantro, salsa on corn tortillas | taco | beef | gf
+Carnitas Tacos (3) | 13.00 | Braised pork, onion, cilantro, salsa on corn tortillas | taco | pork | gf
+Veggie Tacos (3) | 12.00 | Peppers, onions, guacamole, salsa on corn tortillas | taco | none | vg gf
+Pollo Asado Quesadilla | 13.75 | Grilled chicken, jack cheese, flour tortilla
+Cheese Quesadilla | 10.50 | Jack cheese in a flour tortilla | other | none | v
+Carne Asada Salad | 15.25 | Grilled steak over romaine, beans, salsa, cheese, guacamole | salad | beef | gf
+Nachos with Carnitas | 14.50 | Chips, melted cheese, pork, beans, salsa, crema | other | pork
+Chips & Guacamole | 6.50 | Tortilla chips with fresh guacamole | other | none | vg gf
+Chips & Queso | 6.50 | Chips with warm queso | other | none | v gf
+Churro | 3.50 | Cinnamon-sugar churro | other | none | v
+Mexican Coke | 3.75 | Cane-sugar Coca-Cola | other | none | vg gf
+Jarritos | 3.50 | Mexican soda | other | none | vg gf
+
+@ peacefood
+--
+Chickpea Fries (large) | 14.00 | Fried chickpea batons, dill and cashew dip | other | none | vg gf
+Shanghai Dumplings | 14.00 | Steamed vegetable dumplings | other | none | vg
+Peacefood Salad | 16.00 | Mixed greens, roasted vegetables, avocado, tahini | salad | none | vg gf
+Kale Caesar | 15.00 | Kale, cashew caesar, croutons | salad | none | vg
+Seitan Medallions | 20.00 | Grilled seitan, sautéed kale, mashed potatoes | other | tofu | vg
+Vegetable Chili | 14.00 | Bean and vegetable chili, avocado | soup | none | vg gf s1
+Baked Mac & Cheese | 16.00 | Cashew cheese macaroni | other | none | vg
+Tempeh Reuben | 17.00 | Tempeh, sauerkraut, vegan cheese, Russian dressing on rye | sandwich | tofu | vg
+Vegan Pizza | 18.00 | Cashew mozzarella, tomato, basil | pizza | none | vg
+Quinoa Bowl | 17.00 | Quinoa, roasted vegetables, avocado, tahini | bowl | none | vg gf
+Chocolate Ganache Cake | 9.00 | Vegan chocolate cake | other | none | vg
+Key Lime Pie | 9.00 | Vegan key lime pie | other | none | vg
+Green Smoothie | 9.00 | Kale, banana, mango, almond milk | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+
+@ cafe-china
+--
+Scallion Pancake | 8.00 | Crispy scallion pancake | other | none | vg
+Wontons in Chili Oil | 12.00 | Pork wontons, chili oil | other | pork | s2
+Cold Cucumber with Garlic | 9.00 | Smashed cucumber, garlic, chili | salad | none | vg gf s1
+Sliced Pork Belly with Garlic | 14.00 | Poached pork belly, garlic chili sauce | other | pork | gf s2
+Twice Cooked Pork | 22.00 | Pork belly, leeks, chili bean paste | other | pork | s2
+Cumin Lamb | 26.00 | Stir-fried lamb with cumin and chili | other | lamb | gf s2
+Kung Pao Chicken | 21.00 | Chicken, peanuts, dried chili | other | chicken | s2
+Dry Fried String Beans | 18.00 | Green beans with minced pork | other | pork | gf s1
+Fish Fillets in Pickled Cabbage Soup | 26.00 | Poached fish, pickled mustard greens | soup | fish | gf s1
+Cumin Cauliflower | 18.00 | Wok-fried cauliflower with cumin | other | none | vg gf s1
+Beef with Broccoli | 22.00 | Sliced beef, broccoli | other | beef
+Yangzhou Fried Rice | 16.00 | Fried rice with shrimp, pork, egg | rice | shrimp
+Hot & Sour Soup | 8.00 | Tofu, mushroom, egg, vinegar | soup | egg | v s1
+Steamed Rice | 3.00 | White rice | rice | none | vg gf
+Sesame Balls | 7.00 | Fried glutinous rice balls with red bean | other | none | vg gf
+
+@ sullivan-street-bakery-chelsea
+--
+Pizza Patate | 6.50 | Thin potato and rosemary pizza slice | pizza | none | vg
+Pizza Zucchine | 6.50 | Zucchini, gruyère, breadcrumbs | pizza | none | v
+Pizza Cavolfiore | 6.50 | Cauliflower, parmesan, chili | pizza | none | v s1
+Pane Pugliese | 8.00 | Rustic Italian loaf | other | none | vg
+Filone | 6.00 | Classic Italian white loaf | other | none | vg
+Ciabatta | 5.00 | Airy ciabatta | other | none | vg
+Cornetto | 4.50 | Italian croissant | other | none | v
+Canelé | 4.50 | Caramelized custard cake | other | egg | v
+Truffle Egg Toast | 14.00 | Fontina, egg, truffle oil on toast | sandwich | egg | v
+Caprese Panino | 13.00 | Mozzarella, tomato, basil on ciabatta | sandwich | none | v
+Tuna Panino | 14.00 | Tuna, olives, capers, arugula on ciabatta
+Soup of the Day | 8.00 | Rotating seasonal soup with bread | soup | none | v
+Espresso | 3.00 | Double espresso | other | none | vg gf
+Cappuccino | 4.75 | Espresso with steamed milk foam | other | none | v gf
+Ricotta Cheesecake | 6.50 | Italian ricotta cheesecake | other | none | v
+
+@ semma
+--
+Nathai Pirattal | 26.00 | Snails in black pepper masala | other | none | nv gf s2
+Kudal Varuval | 22.00 | Goat intestine stir-fry, curry leaf | other | lamb | gf s3
+Kari Dosa | 22.00 | Dosa layered with egg and minced goat | other | lamb | s2
+Vazhakkai Varuval | 18.00 | Crispy plantain fry | other | none | vg gf s1
+Aatu Kaal Paya | 26.00 | Goat trotter soup with idiyappam | soup | lamb | gf s2
+Meen Kozhambu | 34.00 | Fish in tamarind chili gravy | curry | fish | gf s2
+Nandu Masala | 38.00 | Whole crab in Chettinad masala | other | shrimp | gf s2
+Idiyappam | 8.00 | Steamed string hoppers | other | none | vg gf
+Parotta (2) | 8.00 | Layered flatbread | other | none | v
+Paruppu Sadam | 14.00 | Lentil rice with ghee | rice | none | v gf
+Kaikari Biryani | 26.00 | Vegetable biryani | rice | none | v gf s1
+Kozhi Biryani | 32.00 | Chicken biryani | rice | chicken | gf s1
+Thayir Sadam | 12.00 | Yogurt rice | rice | none | v gf
+Jigarthanda | 12.00 | Madurai almond milk drink with ice cream | other | none | v gf
+Kaapi | 6.00 | South Indian filter coffee | other | none | v gf
+
+@ 2nd-ave-deli-murray-hill
+--
+Pastrami Reuben | 28.00 | Pastrami, sauerkraut, Russian dressing on grilled rye
+Corned Beef Reuben | 28.00 | Corned beef, sauerkraut, Russian dressing on grilled rye
+Tongue Sandwich | 26.00 | Pickled tongue on rye | sandwich | beef
+Salami Sandwich | 20.00 | Kosher salami on rye | sandwich | beef
+Chicken in the Pot | 32.00 | Chicken, matzo ball, noodles, vegetables in broth | soup | chicken
+Stuffed Cabbage | 26.00 | Beef-stuffed cabbage in sweet-sour tomato sauce | other | beef | gf
+Brisket Platter | 34.00 | Braised brisket, gravy, potato | other | beef | gf
+Chicken Schnitzel | 30.00 | Breaded chicken cutlet | other | chicken
+Potato Knish | 8.00 | Baked potato knish | other | none | vg
+Kasha Varnishkes | 12.00 | Buckwheat groats with bowtie noodles and onions | noodles | none | vg
+Potato Latkes (3) | 14.00 | Fried potato pancakes, applesauce | other | egg | v
+Health Salad | 9.00 | Shredded cabbage slaw in vinegar | salad | none | vg gf
+Half Sour Pickles | 5.00 | House half sour pickles | other | none | vg gf
+Dr. Brown's Cel-Ray | 3.50 | Celery soda | other | none | vg gf
+Chocolate Babka | 8.00 | Chocolate babka slice | other | none | v
+
+@ tao-downtown
+--
+Tuna Tartare | 28.00 | Yellowfin tuna, avocado, sesame crisps | other | fish
+Peking Duck (half) | 58.00 | Roast duck, pancakes, hoisin, scallion | other | chicken
+Lobster Wontons | 32.00 | Lobster dumplings, shiitake ginger broth | other | shrimp
+Crispy Orange Chicken | 34.00 | Crispy chicken in orange glaze | other | chicken
+Wok Charred Miso Sea Bass | 52.00 | Miso-glazed sea bass, snap peas | other | fish
+Kung Pao Chicken | 32.00 | Chicken, peanuts, dried chili | other | chicken | s2
+Beef and Broccoli | 38.00 | Sliced beef, broccoli, oyster sauce | other | beef
+Mongolian Filet Mignon | 58.00 | Filet, mushrooms, scallions | other | beef
+Lo Mein | 24.00 | Egg noodles, vegetables, soy | noodles | none | v
+Wasabi Crusted Filet Mignon | 62.00 | Filet with wasabi crust, tempura onion rings | other | beef | s1
+Edamame | 12.00 | Steamed soybeans | other | none | vg gf
+Coconut Rice | 10.00 | Steamed coconut jasmine rice | rice | none | vg gf
+Giant Fortune Cookie | 18.00 | Fortune cookie with white and dark chocolate mousse | other | egg | v
+Mochi Ice Cream | 14.00 | Assorted mochi ice cream | other | none | v gf
+
+@ han-dynasty-east-village
+--
+Cucumbers in Garlic Sauce | 9.95 | Smashed cucumber, garlic, chili | salad | none | vg gf s1
+Wontons in Chili Oil | 10.95 | Pork wontons, chili oil | other | pork | s2
+Cold Sesame Noodles | 10.95 | Chilled noodles in sesame sauce | noodles | none | vg
+Dry Pepper Chicken | 20.95 | Crispy chicken with dried chilies | other | chicken | s3
+Twice Cooked Pork | 19.95 | Pork belly, leeks, chili bean paste | other | pork | s2
+Hot Sauce Style Fish | 26.95 | Fish fillets in hot chili oil | other | fish | s3
+Kung Pao Shrimp | 22.95 | Shrimp, peanuts, chili | other | shrimp | s2
+Salt & Pepper Style Tofu | 17.95 | Crispy tofu, salt, pepper, chili | other | tofu | vg s1
+Garlic Sauce Eggplant | 17.95 | Braised eggplant | other | none | vg s1
+Beef with Broccoli | 19.95 | Sliced beef, broccoli | other | beef
+Pork Fried Rice | 14.95 | Fried rice with pork and egg | rice | pork
+Dan Dan Noodles (vegetarian) | 13.95 | Noodles with spicy sesame-chili sauce | noodles | none | vg s2
+Hot & Sour Soup | 6.95 | Tofu, mushroom, egg, vinegar | soup | egg | v s1
+Steamed Rice | 2.50 | White rice | rice | none | vg gf
+
+@ grill-21
+--
+Chicken Inasal | 18.00 | Grilled annatto-marinated chicken, rice | other | chicken | gf
+Bistek Tagalog | 19.00 | Beef in soy-citrus sauce with onions | other | beef
+Pork BBQ Skewers (3) | 12.00 | Sweet soy-marinated grilled pork skewers | other | pork
+Sinigang na Baboy | 19.00 | Sour tamarind pork soup with vegetables | soup | pork | gf
+Bulalo | 22.00 | Beef bone marrow soup with corn and cabbage | soup | beef | gf
+Crispy Pata | 34.00 | Deep-fried pork knuckle | other | pork | gf
+Beef Kaldereta | 20.00 | Beef stew in tomato-liver sauce | other | beef | gf s1
+Pancit Palabok | 17.00 | Rice noodles in shrimp gravy, egg, chicharrón | noodles | shrimp
+Garlic Rice | 4.00 | Sinangag fried garlic rice | rice | none | vg gf
+Lumpiang Sariwa | 10.00 | Fresh vegetable spring roll, peanut sauce | other | none | vg
+Ensaladang Talong | 9.00 | Grilled eggplant salad with tomato and onion | salad | none | vg gf
+Halo-Halo | 10.00 | Shaved ice, sweet beans, jellies, leche flan, ube ice cream | other | egg | v gf
+Leche Flan | 7.00 | Filipino caramel custard | other | egg | v gf
+Turon (2) | 6.00 | Fried banana and jackfruit rolls | other | none | vg
+Calamansi Juice | 5.00 | Filipino lime juice | other | none | vg gf

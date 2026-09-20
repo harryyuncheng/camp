@@ -32,6 +32,7 @@ Everything camp coordinates is an **order** in one of two categories: **Coffee &
 - **New order** on Today starts a group at any café or restaurant that serves the chosen category.
 - **You → Standing orders** schedules a repeating order: category, label, time, weekdays, an optional place and usual item. The backend puts you in a matching group each morning (creating one if needed) and the Mac mirrors it as a repeating event in the **camp** calendar.
 - The catalog now holds real Flatiron cafés and bakeries as well as restaurants (`backend/src/camp/providers/fixtures/ramp_hq_cafes.json`); bakery-cafés such as Maman, Ole & Steen and Levain belong to both categories.
+- The catalog covers ~310 places with full menus (~6 k dishes): everything within walking distance of Ramp HQ plus destination picks across Manhattan and north Brooklyn inside the 6 km delivery radius (Katz's, Via Carota, Peter Luger, Joe's Shanghai, Los Tacos No. 1, …). It is generated from `backend/tools/catalog/*.menu` by `backend/tools/build_catalog.py`; see `backend/PLAN.md` → "Catalog expansion".
 
 ## Configuration workspace
 

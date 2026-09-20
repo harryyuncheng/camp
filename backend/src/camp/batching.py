@@ -30,10 +30,23 @@ class Candidate:
     items: dict[str, MenuItem]
     scores: dict[str, dict[str, float]]
     meal: str
+    _by_restaurant: dict[str, dict[str, list[tuple[str, float]]]] = field(default_factory=dict, repr=False, compare=False)
 
     def best_global(self, uid: str) -> float:
         sc = self.scores[uid]
         return max(sc.values()) if sc else 0.0
+
+    def options(self, uid: str, rid: str) -> list[tuple[str, float]]:
+        """(item_id, score) pairs of `uid` at restaurant `rid`, best first."""
+        idx = self._by_restaurant.get(uid)
+        if idx is None:
+            idx = {}
+            for iid, s in self.scores[uid].items():
+                idx.setdefault(self.items[iid].restaurant_id, []).append((iid, s))
+            for opts in idx.values():
+                opts.sort(key=lambda p: p[1], reverse=True)
+            self._by_restaurant[uid] = idx
+        return idx.get(rid, [])
 
 
 @dataclass
@@ -61,13 +74,12 @@ def _assign(c: Candidate, R: list[str], n_seed: dict[str, int] | None = None, it
             for rid in R:
                 rest = c.restaurants[rid]
                 share = fee_share(rest, n[rid])
-                for iid, s in c.scores[uid].items():
-                    if c.items[iid].restaurant_id != rid:
-                        continue
-                    if total_cost_cents(c.items[iid], rest, share) > u.budget(c.meal):
-                        continue
-                    if best is None or s > best:
+                for iid, s in c.options(uid, rid):
+                    if best is not None and s <= best:
+                        break
+                    if total_cost_cents(c.items[iid], rest, share) <= u.budget(c.meal):
                         best, best_pair = s, (rid, iid)
+                        break
             if best_pair:
                 assign[uid] = best_pair
                 picks_by_r[best_pair[0]].append((best, uid, best_pair[1]))
