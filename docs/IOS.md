@@ -1,6 +1,6 @@
 # camp for iPhone
 
-The native iPhone app and embedded WidgetKit extension share camp’s existing workspace, meal model, branding and App Intents. iOS 17 is the minimum for interactive meal buttons. Lunches sync with the Mac through the recommender backend while camp is in the foreground (see README → Mac ↔ iPhone sync); a lunch chosen in the Mac notch starts the phone's Live Activity, and Lock Screen taps update the notch.
+The native iPhone app and embedded WidgetKit extension share camp’s existing workspace, meal model, branding and App Intents. iOS 17 is the minimum for interactive meal buttons. Lunches sync with the Mac through the recommender backend while camp is in the foreground (see the [architecture notes](../ARCHITECTURE.md)); a lunch chosen in the Mac notch starts the phone's Live Activity, and Lock Screen taps update the notch.
 
 ## Develop on this Mac
 

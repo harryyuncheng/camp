@@ -1,6 +1,6 @@
 # camp integration plan
 
-> Historical planning document. For implemented behavior, see [README](../README.md) and [architecture](../ARCHITECTURE.md). The workspace now has five tabs, shared Mac notch/group joining, group creation, typed lunch timing, Ramp sandbox, Mac location and Mac calendars. Production orchestration, checkout and cross-device sync remain future work.
+> Historical planning document. For implemented behavior, see the [app guide](APP-GUIDE.md) and [architecture](../ARCHITECTURE.md). The workspace now has five tabs, shared Mac notch/group joining, group creation, typed lunch timing, Ramp sandbox, Mac location and Mac calendars. Production orchestration, checkout and cross-device sync remain future work.
 
 Goal: make it easy for employees to join a compatible pending office group order, reducing company delivery costs and coordination time. Presence, calendars, and preferences determine who can join and when; recommendations fill a shared cart. Group ordering is core scope, not a later enhancement.
 

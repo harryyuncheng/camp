@@ -78,8 +78,8 @@ authoritative payer/office mappings.
 
 ## Everything else
 
-See the repository `README.md` ("Recommendation core") for the recommender, the `PLAN.md` for its design, and
-`ARCHITECTURE.md` for what the native apps read and write.
+See [`PLAN.md`](PLAN.md) for the recommender design and the repository's
+[`ARCHITECTURE.md`](../ARCHITECTURE.md) for what the native apps read and write.
 
 ## Correctness checks
 
