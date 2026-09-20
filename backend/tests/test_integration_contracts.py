@@ -1,7 +1,7 @@
 import importlib
 import os
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
-from datetime import timedelta
+from datetime import datetime, timedelta
 from multiprocessing import get_context
 from threading import Barrier
 from urllib.parse import urlsplit, urlunsplit
@@ -12,7 +12,7 @@ import pytest
 from fastapi.testclient import TestClient
 from psycopg import sql
 
-from camp import feedback
+from camp import feedback, offers
 from camp.contracts import MealContext, OfficeRef
 from camp.groups import CreateGroupReq, GroupService, JoinGroupReq, ScheduleReq
 from camp.models import (
@@ -104,8 +104,15 @@ def test_durable_offer_survives_copy_and_ends_without_resurrection(world, monkey
         destination.close()
 
 
+class _TenAM(datetime):
+    @classmethod
+    def now(cls, tz=None):
+        return datetime.now(tz).replace(hour=10, minute=0, second=0, microsecond=0)
+
+
 def test_live_offer_expiration_and_terminal_state(world, monkeypatch):
     _, store, _, users, _ = world
+    monkeypatch.setattr(offers, "datetime", _TenAM)
     offer = issue(store, users[0], monkeypatch)
     record = store.get(OfferRecord, offer.offer_id)
     record.now_minutes = None
