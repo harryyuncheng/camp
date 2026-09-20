@@ -323,16 +323,29 @@ class GroupService:
                                                                baseline_cents=o.subtotal_cents + r.fees.delivery_fee_cents, item_price_cents=o.item_cents) for o in opts]))
         return out
 
+    def _live(self, office: OfficeRef, day: str) -> list[LunchGroup]:
+        return [g for g in self.store.groups_for(office.id, day) if g.status != "cancelled"]
+
     def today(self, office: OfficeRef, user_id: Optional[str], day: Optional[str] = None, seed_if_empty: bool = True) -> GroupsResponse:
         day = day or _date.today().isoformat()
-        groups = [g for g in self.store.groups_for(office.id, day) if g.status != "cancelled"]
+        groups = self._live(office, day)
         if not groups and seed_if_empty:
-            groups = self.seed(office, day, exclude_user=user_id)
+            groups = self.seed_if_empty(office, day, exclude_user=user_id)
         if user_id and self.materialize_schedules(office, user_id, day):
-            groups = [g for g in self.store.groups_for(office.id, day) if g.status != "cancelled"]
+            groups = self._live(office, day)
         wires = [self.wire(g, user_id) for g in groups]
         return GroupsResponse(date=day, office_id=office.id, user_id=user_id, groups=wires,
                               people_ordering=sum(w.participants for w in wires), total_savings_cents=sum(w.savings_cents for w in wires))
+
+    def seed_if_empty(self, office: OfficeRef, day: str, exclude_user: Optional[str]) -> list[LunchGroup]:
+        """Seed the day exactly once however many first loads race for it. The check and the writes share one
+        transaction, and the store's unique index on seeded groups rejects a second set from another process:
+        the loser rolls back (groups, orders and synthetic colleagues alike) and returns the winner's rows."""
+        try:
+            with self.store.transaction():
+                return self._live(office, day) or self.seed(office, day, exclude_user=exclude_user)
+        except self.store.integrity_error:
+            return self._live(office, day)
 
     def seed(self, office: OfficeRef, day: str, exclude_user: Optional[str], n_groups: int = 3) -> list[LunchGroup]:
         rests, items = self._catalog()

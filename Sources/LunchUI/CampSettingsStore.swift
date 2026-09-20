@@ -82,16 +82,24 @@ public final class CampSettingsStore: ObservableObject {
 
     private var officeRef: OfficeRef { OfficeRef(policy: saved.office) }
 
-    /// Reloads today's groups; membership (which group and meal are yours) comes back with them.
+    /// Reloads today's groups; membership (which group and meal are yours) comes back with them. Callers that
+    /// overlap (app launch and the Today page both refresh on startup) share one request instead of racing.
     public func refreshGroups() async {
-        groupsBusy = true
-        defer { groupsBusy = false }
-        do {
-            let response = try await client().groups(office: officeRef, userId: recommenderUserID)
-            apply(groups: response)
-            groupsError = nil
-        } catch { groupsError = "Couldn’t load group orders: \(error.localizedDescription)" }
+        if let inflight = groupsRefresh { await inflight.value; return }
+        let task = Task { @MainActor [self] in
+            groupsBusy = true
+            defer { groupsBusy = false }
+            do {
+                let response = try await client().groups(office: officeRef, userId: recommenderUserID)
+                apply(groups: response)
+                groupsError = nil
+            } catch { groupsError = "Couldn’t load group orders: \(error.localizedDescription)" }
+        }
+        groupsRefresh = task
+        defer { groupsRefresh = nil }
+        await task.value
     }
+    private var groupsRefresh: Task<Void, Never>?
 
     public func loadRestaurants() async {
         guard restaurants.isEmpty else { return }

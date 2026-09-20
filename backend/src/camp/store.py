@@ -10,7 +10,8 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
-from typing import Any, Iterable, TypeVar
+from contextlib import contextmanager
+from typing import Any, Iterable, Iterator, TypeVar
 
 from pydantic import BaseModel
 
@@ -36,6 +37,11 @@ INDEXED: dict[str, list[str]] = {
 
 DEFAULT_SQLITE = "camp.db"
 
+# One backend-seeded group per office, day, restaurant and category. Two first loads racing for an empty day both
+# try to seed; the second insert fails on this index and the caller re-reads instead of leaving a second set.
+SEED_INDEX = "groups_seed_idx"
+SEED_KEY = ("office_id", "date", "restaurant_id", "category")
+
 
 class Store:
     def __init__(self, path_or_url: str = ":memory:"):
@@ -49,7 +55,16 @@ class Store:
         else:
             self.conn = sqlite3.connect(path_or_url, check_same_thread=False)
         self._lock = threading.RLock()
+        self._tx_depth = 0
         self._migrate()
+
+    @property
+    def integrity_error(self) -> type[Exception]:
+        """The backend's constraint-violation exception (what a seed that lost the race to another request raises)."""
+        if self.pg:
+            import psycopg
+            return psycopg.IntegrityError
+        return sqlite3.IntegrityError
 
     @classmethod
     def from_env(cls) -> "Store":
@@ -70,6 +85,54 @@ class Store:
                 for col in INDEXED[t]:
                     cur.execute(f"CREATE INDEX IF NOT EXISTS {t}_{col}_idx ON {t} (json_extract(data, '$.{col}'))")
         self.conn.commit()
+        try:
+            self._create_seed_index()
+        except self.integrity_error:
+            self.conn.rollback()
+            self.dedupe_seeded_groups()
+            self._create_seed_index()
+
+    def _create_seed_index(self) -> None:
+        cur = self.conn.cursor()
+        if self.pg:
+            cols = ", ".join(f"(data->>'{c}')" for c in SEED_KEY)
+            cur.execute(f"CREATE UNIQUE INDEX IF NOT EXISTS {SEED_INDEX} ON groups ({cols}) "
+                        f"WHERE (data->>'seeded') = 'true' AND (data->>'status') <> 'cancelled'")
+        else:
+            cols = ", ".join(f"json_extract(data, '$.{c}')" for c in SEED_KEY)
+            cur.execute(f"CREATE UNIQUE INDEX IF NOT EXISTS {SEED_INDEX} ON groups ({cols}) "
+                        f"WHERE json_extract(data, '$.seeded') = 1 AND json_extract(data, '$.status') <> 'cancelled'")
+        self.conn.commit()
+
+    def dedupe_seeded_groups(self) -> int:
+        """Collapse seeded groups that share a SEED_KEY into the oldest one. Members the keeper lacks move over with
+        their orders; members it already has get their duplicate orders cancelled. Returns the number of rows removed."""
+        keepers: dict[tuple, LunchGroup] = {}
+        removed = 0
+        with self.transaction():
+            for g in sorted(self.all(LunchGroup), key=lambda g: g.created_at):
+                if not g.seeded or g.status == "cancelled":
+                    continue
+                key = (g.office_id, g.date, g.restaurant_id, g.category)
+                keeper = keepers.setdefault(key, g)
+                if keeper is g:
+                    continue
+                have = {m.user_id for m in keeper.members}
+                for m in g.members:
+                    orders = [o for oid in (m.order_ids or ([m.order_id] if m.order_id else [])) if (o := self.get(Order, oid))]
+                    if m.user_id in have:
+                        for o in orders:
+                            o.status = "cancelled"
+                    else:
+                        for o in orders:
+                            o.group_id = keeper.id
+                        keeper.members.append(m)
+                        have.add(m.user_id)
+                    self.put_many(orders)
+                self.delete(LunchGroup, g.id)
+                removed += 1
+            self.put_many(keepers.values())
+        return removed
 
     # ------------------------------------------------------------ helpers
     def _q(self, sql: str) -> str:
@@ -87,6 +150,35 @@ class Store:
             return [cls.model_validate(r[0]) for r in rows]           # JSONB comes back parsed
         return [cls.model_validate_json(r[0]) for r in rows]
 
+    @contextmanager
+    def transaction(self) -> Iterator[None]:
+        """Group several writes so they commit together or not at all; nests (inner blocks join the outer one)."""
+        with self._lock:
+            if self.pg:
+                with self.conn.transaction():
+                    self._tx_depth += 1
+                    try:
+                        yield
+                    finally:
+                        self._tx_depth -= 1
+                return
+            self._tx_depth += 1
+            try:
+                yield
+            except BaseException:
+                if self._tx_depth == 1:
+                    self.conn.rollback()
+                raise
+            else:
+                if self._tx_depth == 1:
+                    self.conn.commit()
+            finally:
+                self._tx_depth -= 1
+
+    def _commit(self) -> None:
+        if not self._tx_depth:
+            self.conn.commit()
+
     # ------------------------------------------------------------ CRUD
     def put(self, obj: BaseModel) -> None:
         self.put_many([obj])
@@ -102,21 +194,23 @@ class Store:
                 return
             cur = self.conn.cursor()
             for o in objs:
-                cur.execute(f"INSERT OR REPLACE INTO {TABLES[type(o)]} (id, data) VALUES (?, ?)", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
-            self.conn.commit()
+                # upsert by id only: INSERT OR REPLACE would silently evict a row that clashes on any other unique index
+                cur.execute(f"INSERT INTO {TABLES[type(o)]} (id, data) VALUES (?, ?) ON CONFLICT (id) DO UPDATE SET data = excluded.data",
+                            (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
+            self._commit()
 
     def delete_all(self, cls: type[BaseModel]) -> int:
         with self._lock:
             cur = self.conn.cursor()
             cur.execute(f"DELETE FROM {TABLES[cls]}")
-            self.conn.commit()
+            self._commit()
             return cur.rowcount
 
     def delete(self, cls: type[BaseModel], id: str) -> bool:
         with self._lock:
             cur = self.conn.cursor()
             cur.execute(self._q(f"DELETE FROM {TABLES[cls]} WHERE id = %s"), (id,))
-            self.conn.commit()
+            self._commit()
             return cur.rowcount > 0
 
     def get(self, cls: type[T], id: str) -> T | None:
