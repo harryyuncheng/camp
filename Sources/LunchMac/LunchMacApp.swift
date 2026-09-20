@@ -65,7 +65,10 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         settings.requestLeftGroup = { [weak self] groupID in self?.model.forgetGroup(groupID) }
         panel = NotchPanelController(model: model)
         settings.onOffer = { [weak self] session in self?.model.offer(session) }
-        model.onTransition = { [weak self] session in self?.settings.reportLunch(session) }
+        model.onBackendTransition = { [weak self] session in
+            guard let self else { throw CancellationError() }
+            try await self.settings.recordLunch(session)
+        }
         model.sync.onStatus = { [weak self] status in self?.settings.syncStatus = status }
         settings.onConnectionsChanged = { [weak self] connections in
             guard let self else { return }

@@ -17,7 +17,7 @@ from typing import Iterable, Iterator, TypeVar
 import psycopg
 from pydantic import BaseModel
 
-from .models import (Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, RampOverageRequest, Restaurant,
+from .models import (Batch, FeedbackEvent, LunchGroup, MenuItem, OfferRecord, Order, RampAttempt, RampOverageRequest, Restaurant,
                      ScheduledOrder, SyncState, User)
 
 T = TypeVar("T", bound=BaseModel)
@@ -26,13 +26,14 @@ TABLES: dict[type[BaseModel], str] = {
     User: "users", Restaurant: "restaurants", MenuItem: "items",
     Order: "orders", Batch: "batches", FeedbackEvent: "events",
     LunchGroup: "groups", RampAttempt: "ramp_attempts", RampOverageRequest: "ramp_overages",
-    SyncState: "sync", ScheduledOrder: "schedules",
+    SyncState: "sync", ScheduledOrder: "schedules", OfferRecord: "offers",
 }
 # JSON keys promoted to indexed columns per table (used by the convenience queries)
 INDEXED: dict[str, list[str]] = {
     "users": ["office_id"], "items": ["restaurant_id"], "orders": ["user_id", "date"],
     "events": ["user_id"], "batches": ["office_id", "date"], "restaurants": [],
     "groups": ["office_id", "date"], "ramp_attempts": [], "ramp_overages": ["ramp_user_id"], "sync": [], "schedules": ["user_id"],
+    "offers": ["user_id", "date"],
 }
 
 DEFAULT_SQLITE = "camp.db"
@@ -82,6 +83,8 @@ class Store:
         with self._lock:
             if self.pg:
                 with self.conn.transaction():
+                    # One writer for synchronous read/modify/write operations across connections.
+                    self.conn.execute("SELECT pg_advisory_xact_lock(1128353104)")
                     yield
                 return
             depth = self._transaction_depth
@@ -119,6 +122,14 @@ class Store:
     # ------------------------------------------------------------ CRUD
     def put(self, obj: BaseModel) -> None:
         self.put_many([obj])
+
+    def insert_event(self, event: FeedbackEvent) -> bool:
+        with self.transaction():
+            cur = self.conn.cursor()
+            value = "%s::jsonb" if self.pg else "%s"
+            cur.execute(self._q(f"INSERT INTO events (id, data) VALUES (%s, {value}) ON CONFLICT (id) DO NOTHING"),
+                        (event.id, event.model_dump_json()))
+            return cur.rowcount == 1
 
     def put_many(self, objs: Iterable[BaseModel]) -> None:
         with self.transaction():

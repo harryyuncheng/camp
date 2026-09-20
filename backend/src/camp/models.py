@@ -13,6 +13,8 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
+from .contracts import MealOffer, OfficeRef
+
 
 def new_id(prefix: str) -> str:
     return f"{prefix}_{uuid.uuid4().hex[:10]}"
@@ -256,6 +258,29 @@ class Recommendation(BaseModel):
     breakdown: dict[str, float] = Field(default_factory=dict)
     novel: bool = False                    # never eaten this item/cuisine before (for ε learning)
     explanation: str = ""
+
+
+class OfferRecord(BaseModel):
+    id: str
+    user_id: str
+    order_id: Optional[str] = None
+    default_item_id: Optional[str] = None
+    shown: list[str]
+    novel: bool = False
+    meal: Meal
+    date: str
+    location: LocationKind
+    fee_share: dict[str, int]
+    plan_key: tuple[str, str, str]
+    office: OfficeRef
+    context: Context
+    now_minutes: Optional[int] = None
+    wire: Optional[MealOffer] = None
+    created_at: datetime = Field(default_factory=utcnow)
+    updated_at: datetime = Field(default_factory=utcnow)
+    state: Literal["offered", "confirmed", "delivered", "ended"] = "offered"
+    selected_option_id: Optional[str] = None
+    ended: bool = False
 
 
 class OrderLine(BaseModel):

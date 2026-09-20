@@ -609,10 +609,8 @@ public final class CampSettingsStore: ObservableObject {
         catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run camp serve" }
     }
 
-    /// Called by the platform shell when the lunch card changes phase. Only sessions that came from
-    /// the recommender (option ids match the latest offer) are reported; demo lunches are ignored.
-    public func reportLunch(_ session: LunchSession) {
-        guard let offer = latestOffer, Set(session.options.map(\.id)) == Set(offer.options.map(\.id)) else { return }
+    public func recordLunch(_ session: LunchSession) async throws {
+        guard let offerID = session.offerID else { return }
         let event: String
         switch session.phase {
         case .confirmed: event = "confirmed"
@@ -620,15 +618,9 @@ public final class CampSettingsStore: ObservableObject {
         case .ended: event = "ended"
         default: return
         }
-        guard lastLunchPhase != "\(offer.offerId):\(event)" else { return }
-        lastLunchPhase = "\(offer.offerId):\(event)"
-        Task {
-            do { lastLunchReport = try await client().lunchEvent(offerId: offer.offerId, optionId: session.selectedOptionID, event: event); await refreshLedger() }
-            catch {
-                if lastLunchPhase == "\(offer.offerId):\(event)" { lastLunchPhase = nil }
-                recommenderError = "Couldn’t record your order: \(error.localizedDescription)"
-            }
-        }
+        lastLunchReport = try await client().lunchEvent(offerId: offerID, optionId: session.selectedOptionID, event: event)
+        lastLunchPhase = "\(offerID):\(event)"
+        await refreshLedger()
     }
 
     /// Asks the recommender for an offer built from the saved configuration and shows it on the lunch card.

@@ -107,7 +107,7 @@ public struct MealOffer: Codable, Equatable {
         return LunchSession(office: office, options: options.map {
             LunchOption(id: $0.id, name: $0.name, detail: "\($0.restaurant) · \($0.detail)", symbol: $0.symbol,
                         priceCents: $0.priceCents, baselineCents: $0.baselineCents)
-        }, closesAt: closes, arrivesAt: arrives)
+        }, closesAt: closes, arrivesAt: arrives, offerID: offerId)
     }
 }
 

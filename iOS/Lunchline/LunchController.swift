@@ -114,6 +114,21 @@ final class LunchController: ObservableObject {
                 if let userID = self.group?.userId { UserDefaults.standard.set(userID, forKey: "camp.recommender.userID") }
             }
         }
+        if let offerID = next.offerID {
+            let lifecycle: String?
+            switch next.phase {
+            case .confirmed: lifecycle = "confirmed"
+            case .delivered: lifecycle = "delivered"
+            case .ended: lifecycle = "ended"
+            default: lifecycle = nil
+            }
+            if let lifecycle {
+                let configuration = try ConfigurationFile.applicationDefault.load() ?? CampConfiguration()
+                let client = try RecommendationClient(urlString: configuration.connections.recommendationURL,
+                                                       token: configuration.connections.recommendationToken)
+                _ = try await client.lunchEvent(offerId: offerID, optionId: next.selectedOptionID, event: lifecycle)
+            }
+        }
         if let failure = await sync.publish(next, group: group, previous: current) { throw failure }
         try store.save(next, group: group)
         session = next

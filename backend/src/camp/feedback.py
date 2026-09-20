@@ -34,7 +34,13 @@ def _decay(u: User) -> None:
 
 def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
     """Apply one event to the user's profile. Returns a human-readable log of what changed."""
-    previous = store.get(FeedbackEvent, ev.id)
+    with store.transaction():
+        return _apply_event(store, ev)
+
+
+def _apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
+    inserted = store.insert_event(ev)
+    previous = None if inserted else store.get(FeedbackEvent, ev.id)
     if previous:
         if (previous.user_id, previous.type, previous.order_id, previous.item_id) != (ev.user_id, ev.type, ev.order_id, ev.item_id):
             raise ValueError("event ID belongs to a different feedback event")
@@ -178,7 +184,10 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
         log.append(f"meta {w}: autonomy={u.traits.autonomy:.2f} suggest_only={u.suggest_only}")
 
     ev.applied = not ev.needs_confirmation
-    store.put_many([ev, u, *([rest] if ev.type == "logistics" and rest else [])])
+    store.put(ev)
+    store.put(u)
+    if ev.type == "logistics" and rest:
+        store.put(rest)
     return log
 
 

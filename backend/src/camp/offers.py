@@ -1,4 +1,4 @@
-"""MealContext → MealOffer bridge for the native app, plus the in-memory debug state."""
+"""MealContext → durable MealOffer bridge, plus in-memory debug state."""
 from __future__ import annotations
 
 import statistics
@@ -10,7 +10,7 @@ from typing import Any
 from . import batching, catalog, explain, feedback as fb, filters, scoring, synth
 from .contracts import MealContext, MealOffer, MealOfferOption, OfficeRef
 from .filters import haversine_km
-from .models import Batch, Context, FeedbackEvent, LatLng, MealWindow, MenuItem, Order, OrderLine, Restaurant, Restriction, User, new_id
+from .models import Batch, Context, FeedbackEvent, LatLng, MealWindow, MenuItem, OfferRecord, Order, OrderLine, Restaurant, Restriction, User, new_id, utcnow
 from .pipeline import MealPlan, plan_home, plan_office
 from .store import Store
 
@@ -30,7 +30,7 @@ class OfferService:
         self.store = store
         self.plans: dict[tuple[str, str, str], MealPlan] = {}
         self.last: dict[str, Any] = {"context": None, "offer": None, "seeded": []}
-        self.offers: dict[str, dict] = {}     # offer_id -> {user_id, order_id, default_item_id, shown, novel}
+        self.offers: dict[str, dict] = {}     # legacy caller-supplied mappings, promoted on the first event
 
     # ------------------------------------------------------------ world + user sync
     def ensure_world(self, office: OfficeRef) -> None:
@@ -43,15 +43,22 @@ class OfferService:
             users, _, _ = synth.make_world(16, None, seed=seed, center=loc)
             for u in users:
                 u.office_id = office.id
+                u.synthetic = True
             self.store.put_many(users)
             self.last["seeded"].append(f"seeded {len(users)} colleagues at {office.name}")
             self.plans.clear()
 
     def user_for(self, ctx: MealContext) -> tuple[User, bool]:
+        with self.store.transaction():
+            return self._user_for(ctx)
+
+    def _user_for(self, ctx: MealContext) -> tuple[User, bool]:
         u = self.store.get(User, ctx.user_id) if ctx.user_id else None
+        if ctx.user_id and (u is None or u.synthetic or u.office_id != ctx.office.id):
+            raise ValueError("unknown user for this office")
         created = False
         if u is None:
-            u = next((x for x in self.store.all(User) if x.name == ctx.display_name and x.office_id == ctx.office.id), None)
+            u = next((x for x in self.store.all(User) if not x.synthetic and x.name == ctx.display_name and x.office_id == ctx.office.id), None)
         if u is None:
             u = User(name=ctx.display_name, office_id=ctx.office.id, home=LatLng(lat=ctx.office.latitude, lng=ctx.office.longitude))
             created = True
@@ -100,6 +107,10 @@ class OfferService:
                        order_time_minutes=now, exploration=EXPLORATION, nonce=new_id("n"))
 
     def offer(self, ctx: MealContext, force: bool = False) -> MealOffer:   # force kept for API compatibility
+        with self.store.transaction():
+            return self._offer(ctx)
+
+    def _offer(self, ctx: MealContext) -> MealOffer:
         self.ensure_world(ctx.office)
         u, _ = self.user_for(ctx)
         c = self._context(ctx)
@@ -140,20 +151,28 @@ class OfferService:
                           suggest_only=u.id in plan.suggest_only,
                           note="" if options else "No feasible meals: " + self._why_empty(u, plan))
         my_order = next((o for o in plan.orders if o.user_id == u.id), None)
-        self.offers[offer.offer_id] = dict(user_id=u.id, order_id=my_order.id if my_order else None, default_item_id=options[0].item_id if options else None,
+        self.store.put(OfferRecord(id=offer.offer_id, wire=offer,
+                                           user_id=u.id, order_id=my_order.id if my_order else None, default_item_id=options[0].item_id if options else None,
                                            shown=[o.item_id for o in options], novel=options[0].novel if options else False, meal=ctx.meal, date=c.date,
                                            location=location, fee_share=share, plan_key=key, office=ctx.office.model_dump(),
-                                           context=c.model_dump(), now_minutes=ctx.now_minutes)
+                                           context=c.model_dump(), now_minutes=ctx.now_minutes))
         self.last["context"], self.last["offer"], self.last["plan_key"] = ctx.model_dump(by_alias=True), offer.model_dump(by_alias=True), key
         return offer
 
     # ------------------------------------------------------------ lunch lifecycle from the card
     def lunch_event(self, offer_id: str, option_id: str | None, event: str, rating: int | None = None) -> dict:
+        with self.store.transaction():
+            return self._lunch_event(offer_id, option_id, event, rating)
+
+    def _lunch_event(self, offer_id: str, option_id: str | None, event: str, rating: int | None = None) -> dict:
         """confirmed → the pick becomes the order + accept/change events. delivered → order delivered (+ optional rating).
         ended (before confirm) → skip event, ignored per §6.1."""
-        meta = self.offers.get(offer_id)
-        if not meta:
+        record = self.store.get(OfferRecord, offer_id)
+        if record is None and offer_id in self.offers:
+            record = OfferRecord(id=offer_id, **self.offers[offer_id])
+        if record is None:
             return {"error": "unknown offer; request a new lunch offer"}
+        meta = record.model_dump()
         if event not in ("confirmed", "delivered", "ended"):
             return {"error": "unknown event"}
         if rating is not None and (event != "delivered" or rating not in range(5)):
@@ -176,6 +195,8 @@ class OfferService:
                     return {"error": "offer is already confirmed with another option"}
                 return dict(orderId=order.id, status=order.status, events=[], profileUpdates=["already confirmed"],
                             learned=fb.learned_view(u), epsilon=round(u.traits.epsilon, 3), autonomy=u.traits.autonomy)
+            if record.wire and record.now_minutes is None and utcnow() >= datetime.fromisoformat(record.wire.closes_at):
+                return {"error": "offer has expired; request a new offer"}
             item = items.get(option_id or "")
             if not item or item.restaurant_id not in rests:
                 return {"error": "unknown option"}
@@ -204,7 +225,12 @@ class OfferService:
                 meta["order_id"] = order.id
             order.line, order.fee_share_cents = line, fee
             order.total_cents = filters.total_cost_cents(item, r, fee)
+            order.baseline_cents = filters.total_cost_cents(item, r, r.fees.delivery_fee_cents)
+            order.item_name, order.restaurant_name = item.name, r.name
+            order.item_symbol = _SYMBOL.get((item.tags.dish_type if item.tags else "") or "", "fork.knife")
+            order.office_id, order.office_name = office.id, office.name
             order.status = "confirmed"
+            meta["selected_option_id"] = item.id
             if batch:
                 regret = batch.regret.get(u.id, -1)
                 if regret > batching.DELTA_REGRET:
@@ -220,6 +246,8 @@ class OfferService:
                 events.append(FeedbackEvent(id=f"{offer_id}:confirmed", user_id=u.id, type="change_item" if same_r else "change_restaurant", order_id=order.id, item_id=item.id,
                                             payload=dict(from_item_id=default_id, old_was_novel=meta["novel"], shown_item_ids=meta["shown"]), source="tap"))
         elif event == "delivered":
+            if meta["ended"]:
+                return {"error": "offer has ended"}
             if not order or order.status != "confirmed":
                 return {"error": "confirm the offer before marking it delivered"}
             if rating is not None:
@@ -234,6 +262,8 @@ class OfferService:
                 events.append(FeedbackEvent(id=f"{offer_id}:ended", user_id=u.id, type="skip", order_id=order.id, source="tap"))
         for ev in events:
             logs += fb.apply_event(self.store, ev)
+        meta["state"], meta["updated_at"] = event, utcnow()
+        self.store.put(OfferRecord.model_validate(meta))
         # the profile and history changed: the next offer must re-plan instead of reusing today's cached batch
         self.plans.pop(meta.get("plan_key"), None)
         u = self.store.get(User, u.id)

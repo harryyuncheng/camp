@@ -78,6 +78,7 @@ class GroupOptionWire(Wire):
     price_cents: int                       # all-in with the delivery fee shared across current participants
     baseline_cents: int                    # all-in ordering alone
     item_price_cents: int
+    delivery_share_cents: int = 0
 
 
 class GroupMemberWire(Wire):
@@ -129,6 +130,7 @@ class MenuItemWire(Wire):
     symbol: str
     price_cents: int                       # all-in with the delivery share (same basis as GroupOptionWire.price_cents)
     item_price_cents: int
+    delivery_share_cents: int = 0
     popular: bool = False
     drink: bool = False
     score: Optional[float] = None          # recommender score for this user (None when there is no user yet)
@@ -333,7 +335,8 @@ class GroupService:
                               people=sum(1 for m in g.members if m.user_id != user_id),
                               delivery=window_label(g.delivery_minutes), arrival_minutes=g.delivery_minutes,
                               options=[GroupOptionWire(id=o.id, name=o.name, detail=o.detail, symbol=o.symbol, price_cents=o.subtotal_cents + share,
-                                                       baseline_cents=o.subtotal_cents + fee, item_price_cents=o.item_cents) for o in options],
+                                                       baseline_cents=o.subtotal_cents + fee, item_price_cents=o.item_cents,
+                                                       delivery_share_cents=share) for o in options],
                               restaurant_id=g.restaurant_id, participants=g.participants, savings_cents=g.savings_cents,
                               delivery_fee_cents=fee, status=g.status, seeded=g.seeded,
                               members=[GroupMemberWire(user_id=m.user_id, display_name=m.display_name, option_id=m.option_id,
@@ -355,7 +358,8 @@ class GroupService:
             out.append(RestaurantWire(id=r.id, name=r.name, cuisine=cuisine_label(r), symbol=opts[0].symbol if opts else "fork.knife",
                                       rating=r.rating, review_count=r.review_count, categories=list(r.categories),
                                       options=[GroupOptionWire(id=o.id, name=o.name, detail=o.detail, symbol=o.symbol, price_cents=o.subtotal_cents + r.fees.delivery_fee_cents,
-                                                               baseline_cents=o.subtotal_cents + r.fees.delivery_fee_cents, item_price_cents=o.item_cents) for o in opts]))
+                                                               baseline_cents=o.subtotal_cents + r.fees.delivery_fee_cents, item_price_cents=o.item_cents,
+                                                               delivery_share_cents=r.fees.delivery_fee_cents) for o in opts]))
         return out
 
     def today(self, office: OfficeRef, user_id: Optional[str], day: Optional[str] = None, seed_if_empty: bool = True) -> GroupsResponse:
@@ -623,6 +627,7 @@ class GroupService:
             return MenuItemWire(id=i.id, name=i.name, detail=(i.description or ", ".join(i.ingredients[:3]))[:80], symbol=symbol_for(i),
                                 price_cents=(option.subtotal_cents if option else i.price_cents + r.fees.per_item_overhead(i.price_cents)) + share,
                                 item_price_cents=option.item_cents if option else i.price_cents,
+                                delivery_share_cents=share,
                                 popular=i.popular, drink=is_drink(i), score=round(sc[0], 3) if sc else None, reason=reason)
         wires = [wire(i) for i in menu]
         if scores:
@@ -672,13 +677,13 @@ class GroupService:
         self.store.put(s)
         return self.schedule_wire(s)
 
-    def set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str]) -> ScheduleWire:
+    def set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str], user_id: Optional[str] = None) -> ScheduleWire:
         with self.store.transaction():
-            return self._set_schedule_event(schedule_id, calendar_event_id)
+            return self._set_schedule_event(schedule_id, calendar_event_id, user_id)
 
-    def _set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str]) -> ScheduleWire:
+    def _set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str], user_id: Optional[str]) -> ScheduleWire:
         s = self.store.get(ScheduledOrder, schedule_id)
-        if not s:
+        if not s or (user_id is not None and s.user_id != user_id):
             raise LookupError("unknown schedule")
         s.calendar_event_id = calendar_event_id
         self.store.put(s)

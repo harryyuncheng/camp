@@ -222,7 +222,10 @@ def health():
 
 @app.post("/v1/meal-offers", response_model=MealOffer)
 def meal_offers(ctx: MealContext, force: bool = False):
-    return offers.offer(ctx, force=force)
+    try:
+        return offers.offer(ctx, force=force)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 class LunchEventReq(Wire):
@@ -317,10 +320,14 @@ async def debug_feedback(req: DebugFeedbackReq):
 def profile_put(ctx: MealContext):
     """The Settings page saves here. Same mapping as an offer request (name, diet, allergies, dislikes, window, budget),
     plus the raw preferences kept on the user so another device can read them back."""
-    offers.ensure_world(ctx.office)
-    u, created = offers.user_for(ctx)
-    u.app_settings = ctx.model_dump(by_alias=True, exclude={"user_id", "now_minutes"})
-    store.put(u)
+    try:
+        with store.transaction():
+            offers.ensure_world(ctx.office)
+            u, created = offers.user_for(ctx)
+            u.app_settings = ctx.model_dump(by_alias=True, exclude={"user_id", "now_minutes"})
+            store.put(u)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
     return dict(userId=u.id, created=created, learned=fb.learned_view(u), restrictions=[r.model_dump() for r in u.restrictions],
                 budgetCents=u.budget_cents.get(ctx.meal, 0))
 
@@ -342,7 +349,10 @@ def groups_today(officeId: str = "demo-office", userId: Optional[str] = None, da
                  latitude: float = Query(40.7424, ge=-90, le=90), longitude: float = Query(-73.9913, ge=-180, le=180),
                  officeName: str = "Office"):
     office = OfficeRef(id=officeId, name=officeName, latitude=latitude, longitude=longitude, delivery_start=deliveryStart)
-    return groups.today(office, userId, date.isoformat() if date else None)
+    try:
+        return groups.today(office, userId, date.isoformat() if date else None)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.get("/v1/restaurants", response_model=list[RestaurantWire])
@@ -368,6 +378,8 @@ def restaurant_menu(restaurant_id: str, userId: Optional[str] = None, groupId: O
         return groups.menu(restaurant_id, userId, groupId)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 # ---------------------------------------------------------------- standing orders (You → Schedule a new order)
@@ -386,13 +398,14 @@ def schedules_add(req: ScheduleReq):
 
 
 class ScheduleEventReq(Wire):
+    user_id: str = Field(min_length=1)
     calendar_event_id: Optional[str] = None
 
 
 @app.put("/v1/schedules/{schedule_id}/event", response_model=ScheduleWire)
 def schedules_event(schedule_id: str, req: ScheduleEventReq):
     try:
-        return groups.set_schedule_event(schedule_id, req.calendar_event_id)
+        return groups.set_schedule_event(schedule_id, req.calendar_event_id, req.user_id)
     except LookupError as e:
         raise HTTPException(404, str(e))
 
@@ -429,6 +442,8 @@ def groups_leave(group_id: str, user_id: str):
         return groups.leave(group_id, user_id)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.get("/v1/ledger/{user_id}", response_model=LedgerWire)
@@ -437,6 +452,8 @@ def ledger(user_id: str, officeName: str = "", month: Optional[str] = Query(None
         return groups.ledger(user_id, officeName, month)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 # ---------------------------------------------------------------- Ramp sandbox (formerly backend/server.py on :8787)

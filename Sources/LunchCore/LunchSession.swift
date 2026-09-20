@@ -69,6 +69,7 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
     public var category: String?
     /// Where the order is from ("Dig", "Blue Bottle"), when known.
     public var place: String?
+    public var offerID: String?
     public var kind: OrderCategory { OrderCategory(wire: category) }
     public private(set) var phase: LunchPhase = .choosing
     public private(set) var selectedOptionID: String?
@@ -81,7 +82,7 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
     public var isFinished: Bool { phase == .delivered || phase == .ended }
 
     public init(id: UUID = UUID(), office: String, options: [LunchOption],
-                closesAt: Date, arrivesAt: Date, category: OrderCategory = .meal, place: String? = nil) {
+                closesAt: Date, arrivesAt: Date, category: OrderCategory = .meal, place: String? = nil, offerID: String? = nil) {
         self.id = id
         self.office = office
         self.options = options
@@ -89,6 +90,7 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
         self.arrivesAt = arrivesAt
         self.category = category.rawValue
         self.place = place
+        self.offerID = offerID
     }
 
     public func isExpired(at now: Date = .now) -> Bool {

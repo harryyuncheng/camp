@@ -60,7 +60,8 @@ final class MacLunchModel: ObservableObject {
             guard let dish = match.restaurant.options.first, items[dish.id] == nil else { continue }
             let detail = dish.detail.isEmpty ? match.restaurant.name : "\(match.restaurant.name) · \(dish.detail)"
             options.append(LunchOption(id: dish.id, name: dish.name, detail: detail, symbol: dish.symbol,
-                                       priceCents: dish.priceCents, baselineCents: dish.baselineCents))
+                                       priceCents: dish.priceCents, baselineCents: dish.baselineCents,
+                                       deliveryShareCents: dish.deliveryShareCents))
             items[dish.id] = (match.restaurant, dish)
         }
         guard let first = options.first, let place = items[first.id]?.place else {
@@ -105,6 +106,7 @@ final class MacLunchModel: ObservableObject {
     private var scheduledLunch: Task<Void, Never>?
     /// Fires after every successful transition (confirm, delivered, end) so the shell can report it.
     var onTransition: ((LunchSession) -> Void)?
+    var onBackendTransition: ((LunchSession) async throws -> Void)?
     /// Shared session through the backend. Every local offer/transition is published; records from the
     /// phone arrive through `applyRemote`. The delegate configures it from the saved connection settings.
     let sync = LunchSyncCoordinator(device: "mac")
@@ -178,7 +180,8 @@ final class MacLunchModel: ObservableObject {
         let previous = session
         do {
             let next = try session.applying(event, expectedRevision: revision)
-            if localDemo {
+            let confirmingCraving = localDemo && !cravingItems.isEmpty && next.phase == .confirmed
+            if localDemo && !confirmingCraving {
                 try store.save(next, group: demoGroup)
                 session = next
                 onTransition?(next)
@@ -197,13 +200,19 @@ final class MacLunchModel: ObservableObject {
                                 return
                             }
                             group = created
-                        } else if let currentGroup = group, let onJoin {
+                        } else if let currentGroup = group {
+                            guard let onJoin else { throw LunchError.missingSession }
                             group = try await onJoin(next.selectedOptions, currentGroup)
                         }
                     }
-                    if let failure = await sync.publish(next, group: group, previous: previous) { throw failure }
+                    if next.offerID != nil {
+                        guard let onBackendTransition else { throw LunchError.missingSession }
+                        try await onBackendTransition(next)
+                    }
+                    if let failure = await sync.publish(next, group: group, previous: confirmingCraving ? nil : previous) { throw failure }
                     try store.save(next, group: group)
                     demoGroup = group
+                    localDemo = false
                     session = next
                     onTransition?(next)
                     error = nil

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
+		A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
+		A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
 		0521A5F43F49DCBEBFD4063E /* Sources/LunchUI/CampTodayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */; };
 		06BA6B0F22EF2FCD81A68C02 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
 		084EB0A92AD93CBA356E561A /* Sources/LunchUI/CampComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */; };
@@ -431,6 +434,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */,
+				A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */,
+				A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */,
 				2401BF6CC6E2F5E7E69150BC /* Sources/LunchCore/LunchSession.swift in Sources */,
 				5CB3F5F2FF0B5E1CA0DA7E2C /* Sources/LunchCore/SessionFile.swift in Sources */,
 				A0FCD6E20BE285115E786C78 /* Sources/LunchUI/LunchCard.swift in Sources */,

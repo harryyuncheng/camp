@@ -158,6 +158,7 @@ private struct CampGroupMenuSheet: View {
     @State private var selection: [LunchOption] = []
     @State private var loadingMenu = true
     @State private var menuLoadError: String?
+    @State private var confirmationError: String?
     @Environment(\.dismiss) private var dismiss
     private var menu: LunchMenu? { store.menu(for: group) }
     private var topIDs: Set<String> { Set(menu?.top.map(\.id) ?? []) }
@@ -173,7 +174,7 @@ private struct CampGroupMenuSheet: View {
                     }
                 }
                 Spacer()
-                Button("Done") { dismiss() }.buttonStyle(CampActionStyle(primary: false))
+                Button("Done") { dismiss() }.buttonStyle(CampActionStyle(primary: false)).disabled(store.groupMutationBusy)
             }
             if let sources = menu?.ratings, !sources.isEmpty {
                 Text(sources.sorted { $0.key < $1.key }.map { "\($0.key.capitalized) \(String(format: "%.1f", $0.value))" }.joined(separator: " · "))
@@ -210,10 +211,18 @@ private struct CampGroupMenuSheet: View {
             CampCartSummary(store: store, selection: selection)
             Text("Menu prices are estimates. Camp calculates shared delivery when your order is recorded. No purchase.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
+            if let confirmationError { Text(confirmationError).font(.callout).foregroundStyle(.red) }
             Button(confirmTitle) {
-                store.join(selection, group: group); dismiss()
-            }.buttonStyle(CampActionStyle()).disabled(selection.isEmpty)
+                Task {
+                    do {
+                        let updated = try await store.joinConfirmed(selection, group: group)
+                        if let first = store.myOptions(in: updated).first { store.requestConfirmedDemoGroup?(updated, first) }
+                        dismiss()
+                    } catch { confirmationError = error.localizedDescription }
+                }
+            }.buttonStyle(CampActionStyle()).disabled(selection.isEmpty || store.groupMutationBusy)
         }.padding(24).frame(idealWidth: 460, maxWidth: 520, idealHeight: 700).foregroundStyle(CampPalette.ink).background(.white)
+            .interactiveDismissDisabled(store.groupMutationBusy)
             .onAppear { selection = store.myOptions(in: group) }
             .task { await loadMenu() }
     }
@@ -322,7 +331,7 @@ private struct CampCreateGroupSheet: View {
                     }
                     working = false
                 }
-            }.buttonStyle(CampActionStyle()).disabled(meals.isEmpty || deliveryMinutes == nil || working || store.cravingBusy)
+            }.buttonStyle(CampActionStyle()).disabled(meals.isEmpty || deliveryMinutes == nil || working || store.cravingBusy || store.groupMutationBusy)
         }.padding(24).frame(idealWidth: 440, maxWidth: 480, idealHeight: 700)
             .foregroundStyle(CampPalette.ink).background(.white)
             .interactiveDismissDisabled(working)

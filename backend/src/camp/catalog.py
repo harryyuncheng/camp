@@ -14,7 +14,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 from .filters import haversine_km
-from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, Batch, FeeSchedule, LatLng, LunchGroup, MenuItem, Order, Restaurant
+from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, Batch, FeeSchedule, LatLng, LunchGroup, MenuItem, OfferRecord, Order, Restaurant, ScheduledOrder
 
 RAMP_HQ = LatLng(lat=40.7424, lng=-73.9913)          # 28 W 23rd St, Flatiron
 FIXTURES = Path(__file__).parent / "providers" / "fixtures"
@@ -142,6 +142,8 @@ def ensure_current(store, center: LatLng | None = None, seed: int = 0) -> bool:
     protected = {line.restaurant_id for order in store.all(Order) for line in (order.line, order.default_line)}
     protected.update(br.restaurant_id for batch in store.all(Batch) for br in batch.restaurants)
     protected.update(group.restaurant_id for group in store.all(LunchGroup))
+    protected.update(schedule.restaurant_id for schedule in store.all(ScheduledOrder) if schedule.restaurant_id)
+    protected.update(option.restaurant_id for offer in store.all(OfferRecord) if offer.wire for option in offer.wire.options)
     want_ids = {r.id for r in want}
     changed = False
     for r in have:
