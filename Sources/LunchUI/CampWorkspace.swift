@@ -45,14 +45,7 @@ public struct CampWorkspace: View {
 
     private var pageHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(kicker).font(.system(size: 10, weight: .semibold)).tracking(1.5).foregroundStyle(CampPalette.muted)
-                Spacer()
-                CampBadge(text: "UI prototype")
-            }
             Text(title).font(.system(size: compact ? 29 : 34, weight: .semibold, design: .rounded)).tracking(-0.8)
-            Text(subtitle).font(.system(size: 13)).foregroundStyle(CampPalette.muted)
-                .fixedSize(horizontal: false, vertical: true)
             if !store.hasChanges, let status = store.statusMessage {
                 Label(status, systemImage: "checkmark.circle.fill").font(.caption).foregroundStyle(CampPalette.green)
             }
@@ -66,7 +59,6 @@ public struct CampWorkspace: View {
                     Image(systemName: "tent.fill").foregroundStyle(CampPalette.green)
                     Text("camp").font(.system(size: 32, weight: .bold, design: .rounded)).tracking(-1.5)
                 }
-                Text("Corporate Autonomous\nMeal Protocol").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }.padding(.top, 8)
             VStack(spacing: 7) {
                 ForEach(CampSection.allCases) { section in
@@ -84,10 +76,8 @@ public struct CampWorkspace: View {
             Spacer()
             VStack(alignment: .leading, spacing: 12) {
                 Label(store.draft.office.name, systemImage: "building.2").font(.system(size: 12, weight: .medium))
-                Text("One office. Fewer delivery fees.").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
                 Divider()
                 Toggle("Demo admin", isOn: $store.isDemoAdmin).font(.system(size: 11)).toggleStyle(.switch).controlSize(.small)
-                Text("Preview role only").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }
         }.frame(width: 190).padding(22).background(.white)
             .overlay(alignment: .trailing) { CampPalette.border.frame(width: 1) }
@@ -134,31 +124,13 @@ public struct CampWorkspace: View {
             .overlay(alignment: .top) { CampPalette.border.frame(height: 1) }
     }
 
-    private var kicker: String {
-        switch store.section {
-        case .today: return "THE OFFICE LUNCH, TOGETHER"
-        case .you: return "ON YOUR TERMS"
-        case .office: return "THE WAY YOUR TEAM ORDERS"
-        case .spending: return "LUNCH SPENDING"
-        case .connections: return "READY WHEN YOU ARE"
-        }
-    }
     private var title: String {
         switch store.section {
         case .today: return "A better lunch break."
-        case .you: return "Make camp yours."
-        case .office: return "Your office, in sync."
-        case .spending: return "Lunch spend, at a glance."
-        case .connections: return "Connect the pieces."
-        }
-    }
-    private var subtitle: String {
-        switch store.section {
-        case .today: return "Join your team’s order. Share the delivery, keep your own taste."
-        case .you: return "Your preferences help camp find the right meal and moment."
-        case .office: return "Set the boundaries for simpler, more economical group orders."
-        case .spending: return "A visual preview of a company lunch card and its activity."
-        case .connections: return "Configure the experience now. Live integrations will come next."
+        case .you: return "Your preferences"
+        case .office: return "Office"
+        case .spending: return "Spending"
+        case .connections: return "Connections"
         }
     }
 }

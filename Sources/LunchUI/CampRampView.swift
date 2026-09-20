@@ -121,7 +121,7 @@ struct CampRampView: View {
     @ObservedObject var store: CampSettingsStore
     @StateObject private var ramp = CampRampModel()
     var body: some View {
-        CampCard("Ramp sandbox", subtitle: "Real sandbox connection · company-funded spending permission") {
+        CampCard("Ramp sandbox") {
             if let snapshot = ramp.snapshot {
                 HStack { Label(snapshot.company, systemImage: "creditcard").font(.headline); Spacer(); CampBadge(text: "Sandbox connected", active: true) }
                 Text("Server allocation cap: \(LunchStyle.money(snapshot.groupCapCents)). Office demo settings cannot raise this cap.").font(.caption).foregroundStyle(CampPalette.muted)
@@ -131,7 +131,6 @@ struct CampRampView: View {
             Button(ramp.busy ? "Working…" : "Connect / refresh sandbox") {
                 Task { await ramp.connect(store.draft.connections.backendURL) }
             }.buttonStyle(CampActionStyle()).disabled(ramp.busy)
-            Text("Uses your camp backend URL below, or http://127.0.0.1:8787 when blank. Client credentials stay on the backend.").font(.caption).foregroundStyle(CampPalette.muted)
             if let error = ramp.error { Text(error).font(.callout).foregroundStyle(.red).textSelection(.enabled) }
             if let snapshot = ramp.snapshot, !ramp.hasPending {
                 Divider()
@@ -145,7 +144,7 @@ struct CampRampView: View {
                 }
                 Button("Use demo group total · \(LunchStyle.money(store.group.totalCents))") { ramp.amountCents = store.group.totalCents }
                     .buttonStyle(.plain).font(.caption)
-                Text("Creates one restaurant-only fund, with a total and per-transaction cap, and a lock date 24 hours from creation. This is a sandbox allocation, not a food order or charge. The group cart and per-person budget ledger are not connected yet.")
+                Text("Restaurant-only sandbox fund, capped per purchase and in total. Locks after 24 hours. No food order or charge.")
                     .font(.caption).foregroundStyle(CampPalette.muted)
                 Button("Create sandbox fund") { Task { await ramp.prepare(store.draft.connections.backendURL) } }
                     .buttonStyle(CampActionStyle()).disabled(ramp.busy || ramp.ownerID.isEmpty || ramp.amountCents > snapshot.groupCapCents)
@@ -175,7 +174,7 @@ struct CampRampView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("\(value.state) · \(value.currency) \(String(format: "%.2f", Double(value.amountCents) / 100))").font(.callout.weight(.semibold))
             Text("Fund: \(value.id)").font(.caption).textSelection(.enabled)
-            if value.cards.isEmpty { Text("No linked card returned. Card credential handoff is a separate integration step.").font(.caption) }
+            if value.cards.isEmpty { Text("No linked card returned.").font(.caption) }
             ForEach(value.cards) { card in Text("Linked virtual card · •••• \(card.lastFour)").font(.caption) }
         }.foregroundStyle(CampPalette.muted)
     }

@@ -118,3 +118,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Card backgrounds draw a rounded shape without masking all child views. The map keeps its in-visible-rect tracking area rather than removing/recreating it on each layout; inactive pointer exits no longer publish redundant state.
 - Release build succeeded and the rebuilt app was relaunched. Repeated Office down/up scrolling reached both ends with the map, policy cards and selected time values present.
 - No automated tests were added or run. Smoothness improvement is not quantified; iOS and the permission-gated live calendar were not exercised.
+
+## Workspace copy cleanup — September 19
+
+- Reviewed Today, You, Office, Spending and Connections plus shared map, calendar and Ramp cards.
+- Removed repeated header kickers/taglines, the global prototype badge, metric footnotes and redundant helper paragraphs. Simplified card titles and notification toggles; removed the explanatory-only spending card.
+- Kept actionable map/scroll instructions, permission and error messages, demo/live connection distinctions, dietary limitations and sandbox fund consequences. Backend setup retains the default URL without a hardcoded connection-status badge.
+- macOS release build succeeded. No automated tests were added or run; iPhone build is not supported by the installed Xcode version.

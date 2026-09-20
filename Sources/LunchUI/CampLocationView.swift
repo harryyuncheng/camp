@@ -33,7 +33,7 @@ struct CampLocationView: View {
         return !location.officeConfirmed || latitude != office.latitude || longitude != office.longitude || Int(radius) != office.radiusMeters
     }
     var body: some View {
-        CampCard("Your office", subtitle: "Click the map to place your office circle. Adjust its size, then confirm.") {
+        CampCard("Your office", subtitle: "Place the circle, adjust its radius, then confirm.") {
             HStack {
                 CampTextField(title: "Search an address or place", text: $query).onSubmit { search() }
                 Button(searching ? "Searching…" : "Search") { search() }.disabled(searching || query.trimmingCharacters(in: .whitespaces).isEmpty)

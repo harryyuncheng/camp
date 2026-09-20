@@ -13,10 +13,10 @@ struct CampTodayPage: View {
         VStack(spacing: 20) {
             groupHero
             HStack(spacing: 12) {
-                metric("Delivery saved", value: LunchStyle.money(store.group.deliverySavingsCents), note: "fixture comparison", symbol: "arrow.down.right")
-                metric("Sharing delivery", value: "\(store.group.participantCount) people", note: "one office order", symbol: "person.2")
+                metric("Delivery saved", value: LunchStyle.money(store.group.deliverySavingsCents), symbol: "arrow.down.right")
+                metric("Sharing delivery", value: "\(store.group.participantCount) people", symbol: "person.2")
             }
-            CampCard("Your place at the table", subtitle: "An invitation to join, never an automatic purchase.") {
+            CampCard("Your meal") {
                 if let meal = store.selectedMeal {
                     HStack(spacing: 12) {
                         Image(systemName: meal.symbol).font(.title2).foregroundStyle(CampPalette.green)
@@ -42,7 +42,7 @@ struct CampTodayPage: View {
                         .disabled(store.groupStage != .collecting)
                 }
             }
-            CampCard("A little context", subtitle: "These signals will eventually help camp time your invitation.") {
+            CampCard("Your day") {
                 CampLiveSignalRow(store: store, isLocation: true)
                 Divider()
                 contextRow("Your lunch window", detail: "\(CampTimePicker.label(store.draft.personal.lunchStart)) – \(CampTimePicker.label(store.draft.personal.lunchEnd))", symbol: "calendar")
@@ -50,13 +50,11 @@ struct CampTodayPage: View {
                 CampLiveSignalRow(store: store, isLocation: false)
             }
             CampCalendarView(store: store)
-            CampCard("Where the savings come from", subtitle: "Illustrative delivery-fee comparison for the same meals. Not a live quote.") {
+            CampCard("Delivery savings", subtitle: "Example delivery fees · not a live quote.") {
                 costRow("Separate deliveries · \(store.group.participantCount) × $6", cents: store.group.separateDeliveryCents)
                 costRow("One shared delivery", cents: store.group.sharedDeliveryCents)
                 Divider()
                 costRow("Estimated company delivery savings", cents: store.group.deliverySavingsCents, emphasized: true)
-                Text("Food, taxes, service fees, tips and discounts can affect total savings. This example compares delivery fees only.")
-                    .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
                 DisclosureGroup("View illustrative group total") {
                     VStack(spacing: 12) {
                         costRow("Food", cents: store.group.foodCents)
@@ -68,7 +66,7 @@ struct CampTodayPage: View {
                     }.padding(.top, 12)
                 }.font(.system(size: 12))
             }
-            CampCard("Try the flow", subtitle: "Local preview controls. No order is placed or payment taken.") {
+            CampCard("Demo controls", subtitle: "No orders or payments.") {
                 Picker("Group state", selection: $store.groupStage) {
                     ForEach(DemoGroupStage.allCases) { Text($0.rawValue).tag($0) }
                 }.pickerStyle(.segmented)
@@ -77,7 +75,7 @@ struct CampTodayPage: View {
                     Spacer()
                     Button("Reset group") { store.resetGroup() }.buttonStyle(.plain).font(.caption)
                 }
-                Text("The existing notch / Live Activity demo is a separate local preview. It isn’t linked to this group cart yet.")
+                Text("Activity preview runs separately from this group.")
                     .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
             }
         }.sheet(isPresented: $choosingMeal) { mealChooser }
@@ -93,7 +91,7 @@ struct CampTodayPage: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(store.groupStage == .delivered ? "Lunch has landed." : "The Green Table")
                     .font(.system(size: compact ? 27 : 32, weight: .semibold, design: .rounded)).tracking(-0.7)
-                Text("A fictional neighborhood kitchen. One delivery to \(store.draft.office.name).")
+                Text("One delivery to \(store.draft.office.name).")
                     .font(.system(size: 12)).foregroundStyle(CampPalette.ink.opacity(0.7))
             }
             HStack(spacing: 8) {
@@ -122,12 +120,11 @@ struct CampTodayPage: View {
             .background(CampPalette.lime).clipShape(RoundedRectangle(cornerRadius: 23))
     }
 
-    private func metric(_ title: String, value: String, note: String, symbol: String) -> some View {
+    private func metric(_ title: String, value: String, symbol: String) -> some View {
         VStack(alignment: .leading, spacing: 9) {
             Image(systemName: symbol).foregroundStyle(CampPalette.green)
             Text(value).font(.system(size: compact ? 22 : 27, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8).lineLimit(1)
             Text(title).font(.system(size: 11, weight: .medium))
-            Text(note).font(.system(size: 10)).foregroundStyle(CampPalette.muted)
         }.frame(maxWidth: .infinity, alignment: .leading).padding(18).background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 18))
     }
@@ -158,7 +155,7 @@ struct CampTodayPage: View {
                 Spacer()
                 Button { choosingMeal = false } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(CampPalette.muted) }.buttonStyle(.plain)
             }
-            Text("Demo meals from the same kitchen, delivered together. Dietary preferences aren’t applied to these fixtures.")
+            Text("Demo meals · dietary preferences aren’t applied.")
                 .font(.system(size: 12)).foregroundStyle(CampPalette.muted)
             ForEach(DemoLunch.make().options) { option in
                 Button {
@@ -176,7 +173,7 @@ struct CampTodayPage: View {
                     }.padding(17).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 13))
                 }.buttonStyle(.plain)
             }
-            Text("Selecting a meal joins the local demo group. No checkout takes place.")
+            Text("Joins the demo group. No purchase.")
                 .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
         }.padding(26).frame(maxWidth: 480).foregroundStyle(CampPalette.ink).background(.white)
         #if os(macOS)

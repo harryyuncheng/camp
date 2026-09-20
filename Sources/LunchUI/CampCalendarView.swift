@@ -17,7 +17,7 @@ struct CampCalendarView: View {
     }
     var body: some View {
         #if os(macOS)
-        CampCard("Today’s calendar", subtitle: "See your blockers and a suggested time for lunch.") {
+        CampCard("Today’s calendar") {
             if calendar.enabled && calendar.canRead {
                 Button { choosingCalendars.toggle() } label: {
                     HStack {
@@ -50,11 +50,11 @@ struct CampCalendarView: View {
                     Toggle("All-day events block lunch", isOn: Binding(get: { calendar.blockAllDay }, set: { calendar.setBlockAllDay($0) }))
                 } label: { Image(systemName: "ellipsis.circle").font(.title3) }.menuStyle(.borderlessButton).fixedSize()
             }
-            Text("Lunch is a suggestion, not a calendar event. Busy blocks include your meeting buffer. Adjust lunch timing in You.")
+            Text("Lunch is suggested, not booked. Change timing in You.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
         }
         #else
-        CampCard("Calendars") { Text("Connect your calendars in the Mac app. iPhone calendar access is not connected yet.").font(.callout) }
+        CampCard("Calendars") { Text("Connect calendars in the Mac app.").font(.callout) }
         #endif
     }
     #if os(macOS)

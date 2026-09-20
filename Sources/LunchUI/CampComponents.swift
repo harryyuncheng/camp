@@ -85,14 +85,16 @@ struct CampTextField: View {
 
 struct CampToggle: View {
     let title: String
-    let detail: String
+    var detail: String? = nil
     @Binding var value: Bool
     var body: some View {
         Toggle(isOn: $value) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title).font(.system(size: 13, weight: .medium))
-                Text(detail).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+                if let detail {
+                    Text(detail).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }.toggleStyle(.switch).tint(CampPalette.green)
     }
