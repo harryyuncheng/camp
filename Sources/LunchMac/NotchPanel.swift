@@ -261,12 +261,41 @@ private struct NotchContent: View {
                     .help("Return to menu bar").accessibilityLabel("Return to menu bar")
             }.foregroundStyle(.white.opacity(0.65)).buttonStyle(.plain)
                 .padding(.horizontal, 18).padding(.top, 8)
-            LocalLunchCard(session: model.session, embedded: true) { event in
-                // Only the meal card changes; the hosting view and shell survive.
-                withAnimation(.easeInOut(duration: 0.18)) {
-                    model.send(event, revision: model.session.revision)
+            if model.choosingGroup {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("Join lunch?").font(.system(size: 22, weight: .semibold, design: .rounded))
+                        Spacer()
+                        Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
+                    }
+                    ForEach(DemoLunchGroup.all) { group in
+                        Button { model.chooseGroup(group) } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: group.symbol).foregroundStyle(LunchStyle.lime).frame(width: 24)
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(group.name).font(.system(size: 13, weight: .semibold))
+                                    Text("\(group.people) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.caption)
+                            }.frame(maxWidth: .infinity)
+                        }.buttonStyle(MealButtonStyle())
+                    }
+                }.foregroundStyle(.white).padding(20)
+            } else {
+                if let group = model.demoGroup, model.session.phase == .choosing || model.session.phase == .reviewing {
+                    HStack {
+                        Button("‹ Groups") { model.triggerDemo() }.buttonStyle(.plain)
+                        Spacer()
+                        Text(group.name)
+                    }.font(.caption).foregroundStyle(LunchStyle.lime).padding(.horizontal, 24).padding(.top, 12)
                 }
-            }.padding(.horizontal, 8).padding(.top, 4)
+                LocalLunchCard(session: model.session, embedded: true) { event in
+                    withAnimation(.easeInOut(duration: 0.18)) {
+                        model.send(event, revision: model.session.revision)
+                    }
+                }.padding(.horizontal, 8).padding(.top, 4)
+            }
             if let error = model.error {
                 Text(error).font(.caption).foregroundStyle(.orange).padding(.horizontal, 20).padding(.top, 8)
             }
@@ -308,6 +337,7 @@ private struct NotchContent: View {
     }
 
     private func pillTitle(at now: Date) -> String {
+        if model.choosingGroup { return "Join a lunch group" }
         if model.session.isExpired(at: now) { return "Lunch window closed" }
         switch model.session.phase {
         case .choosing: return "Lunch is ready"

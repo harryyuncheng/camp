@@ -149,12 +149,16 @@ public enum DemoGroupStage: String, CaseIterable, Identifiable {
 public struct DemoGroupSummary {
     public let selectedMeal: LunchOption?
     public let stage: DemoGroupStage
-    public init(selectedMeal: LunchOption?, stage: DemoGroupStage) {
+    private let otherParticipants: Int
+    private let otherFoodCents: Int
+    public init(selectedMeal: LunchOption?, stage: DemoGroupStage, otherParticipants: Int = 3, otherFoodCents: Int = 3420) {
+        self.otherParticipants = max(1, otherParticipants)
+        self.otherFoodCents = max(0, otherFoodCents)
         self.selectedMeal = selectedMeal
         self.stage = stage
     }
-    public var participantCount: Int { 3 + (selectedMeal == nil ? 0 : 1) }
-    public var foodCents: Int { 3420 + (selectedMeal?.priceCents ?? 0) }
+    public var participantCount: Int { otherParticipants + (selectedMeal == nil ? 0 : 1) }
+    public var foodCents: Int { otherFoodCents + (selectedMeal?.priceCents ?? 0) }
     public var taxCents: Int { Int((Double(foodCents) * 0.08).rounded()) }
     public var sharedDeliveryCents: Int { 600 }
     public var separateDeliveryCents: Int { participantCount * 600 }

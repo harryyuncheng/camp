@@ -118,3 +118,33 @@ public enum DemoLunch {
         ], closesAt: now.addingTimeInterval(8 * 60), arrivesAt: now.addingTimeInterval(35 * 60))
     }
 }
+
+
+public struct DemoLunchGroup: Identifiable, Hashable, Sendable {
+    public let id: String
+    public let name: String
+    public let cuisine: String
+    public let symbol: String
+    public let people: Int
+    public let delivery: String
+    public let options: [LunchOption]
+    public var deliverySavingsCents: Int { people * 600 - 600 }
+    public func arrival(on date: Date = .now) -> Date {
+        let minutes = id == "green-table" ? 750 : id == "noodle-club" ? 765 : 780
+        return Calendar.current.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: date) ?? date
+    }
+
+    public static let all: [DemoLunchGroup] = [
+        .init(id: "green-table", name: "The Green Table", cuisine: "Bowls & seasonal plates", symbol: "leaf.fill", people: 3, delivery: "12:30–12:45 PM", options: DemoLunch.make().options),
+        .init(id: "noodle-club", name: "Noodle Club", cuisine: "Noodles & dumplings", symbol: "flame.fill", people: 4, delivery: "12:45–1:00 PM", options: [
+            .init(id: "miso", name: "Miso ramen", detail: "Mushrooms · corn · spring onion", symbol: "flame.fill", priceCents: 1350, baselineCents: 1650),
+            .init(id: "sesame", name: "Sesame noodles", detail: "Chilled noodles · cucumber", symbol: "leaf.fill", priceCents: 1150, baselineCents: 1450),
+            .init(id: "dumplings", name: "Dumpling bowl", detail: "Pork dumplings · rice · slaw", symbol: "fork.knife", priceCents: 1250, baselineCents: 1550)
+        ]),
+        .init(id: "sandwich-social", name: "Sandwich Social", cuisine: "Sandwiches & salads", symbol: "sun.max.fill", people: 2, delivery: "1:00–1:15 PM", options: [
+            .init(id: "turkey", name: "Turkey club", detail: "Avocado · tomato · sourdough", symbol: "sun.max.fill", priceCents: 1200, baselineCents: 1500),
+            .init(id: "caprese", name: "Caprese baguette", detail: "Mozzarella · basil · tomato", symbol: "leaf.fill", priceCents: 1100, baselineCents: 1400),
+            .init(id: "caesar", name: "Chicken Caesar", detail: "Romaine · parmesan · croutons", symbol: "fork.knife", priceCents: 1300, baselineCents: 1600)
+        ])
+    ]
+}

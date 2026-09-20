@@ -132,3 +132,11 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Clock parsing accepts AM/PM, 24-hour times and compact digits; unsuffixed hours use 24-hour interpretation. Duration stays within 15–120 minutes and buffer within 0–60 minutes. Invalid text remains visible with a hint and does not replace the last valid draft value. Escape restores the previous value on macOS.
 - Existing Save/Discard and cross-field lunch-window validation remain in use. Office time dropdowns are unchanged.
 - macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## Today group-order demo — September 19
+
+- Today now starts with a clickable completed coffee order and a demo receipt, followed by three lunch groups with distinct menus, participant counts and delivery windows.
+- Preview lunch invitation opens group choices in the notch. Choosing a group leads to meals, review and confirmation; confirmation updates Today through the shared settings store. Existing delayed trigger and confirmation retraction remain in use.
+- Today’s View menu opens the chosen group in the Mac notch. Other workspace hosts without the Mac callback use an in-app menu sheet with explicit confirmation. One lunch choice is active at a time; choosing another group replaces it. Leave clears it.
+- Fixture spending totals use the chosen group’s participants and sample food subtotal. Coffee, menus, delivery windows and prices are demo fixtures; no ordering or payments occur. Demo join state is in-memory, not synced or restored across launches.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.

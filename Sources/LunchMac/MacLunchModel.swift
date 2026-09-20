@@ -11,6 +11,17 @@ extension Notification.Name {
 @MainActor
 final class MacLunchModel: ObservableObject {
     @Published private(set) var session = DemoLunch.make()
+    @Published var choosingGroup = true
+    @Published private(set) var demoGroup: DemoLunchGroup?
+    var officeName = "HackMIT HQ"
+    var onJoin: ((LunchOption, DemoLunchGroup) -> Void)?
+    func chooseGroup(_ group: DemoLunchGroup) {
+        scheduledLunch?.cancel(); scheduled = false
+        demoGroup = group; choosingGroup = false
+        let now = Date()
+        offer(LunchSession(office: officeName, options: group.options,
+                           closesAt: now.addingTimeInterval(8 * 60), arrivesAt: group.arrival(on: now)))
+    }
     @Published var error: String?
     @Published var scheduled = false
     private let store: SessionFile
@@ -36,6 +47,7 @@ final class MacLunchModel: ObservableObject {
     func triggerDemo() {
         scheduledLunch?.cancel()
         scheduled = false
+        choosingGroup = true; demoGroup = nil
         offer(DemoLunch.make())
     }
 
@@ -47,7 +59,7 @@ final class MacLunchModel: ObservableObject {
             catch { return }
             guard let self, !Task.isCancelled else { return }
             self.scheduled = false
-            self.offer(DemoLunch.make())
+            self.triggerDemo()
         }
     }
 
@@ -56,6 +68,10 @@ final class MacLunchModel: ObservableObject {
             let next = try session.applying(event, expectedRevision: revision)
             try store.save(next)
             session = next
+            if next.phase == .confirmed,
+               let option = next.selectedOption, let group = demoGroup {
+                onJoin?(option, group)
+            }
             error = nil
         } catch { self.error = error.localizedDescription }
     }

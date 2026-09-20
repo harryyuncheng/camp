@@ -7,202 +7,135 @@ struct CampTodayPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     let previewActivity: () -> Void
-    @State private var choosingMeal = false
+    @State private var showingCoffee = false
+    @State private var choosingGroup: DemoLunchGroup?
 
     var body: some View {
-        VStack(spacing: 20) {
-            groupHero
-            HStack(spacing: 12) {
-                metric("Delivery saved", value: LunchStyle.money(store.group.deliverySavingsCents), symbol: "arrow.down.right")
-                metric("Sharing delivery", value: "\(store.group.participantCount) people", symbol: "person.2")
-            }
-            CampCard("Your meal") {
-                if let meal = store.selectedMeal {
-                    HStack(spacing: 12) {
-                        Image(systemName: meal.symbol).font(.title2).foregroundStyle(CampPalette.green)
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(meal.name).font(.system(size: 15, weight: .semibold))
-                            Text("\(LunchStyle.money(meal.priceCents)) meal · fees added at checkout")
-                                .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-                        }
-                        Spacer()
-                        CampBadge(text: "Joined", active: true)
-                    }
-                    if store.groupStage == .collecting {
-                        HStack {
-                            Button("Change meal") { choosingMeal = true }.buttonStyle(CampActionStyle(primary: false))
-                            Spacer()
-                            Button("Leave demo group") { store.selectedMeal = nil }.buttonStyle(.plain).font(.caption).foregroundStyle(CampPalette.muted)
-                        }
-                    }
-                } else {
-                    Text(store.groupStage == .collecting ? "Three teammates are already in. Add your meal before the group closes." : "This demo order is closed. Start a new group below to try joining.")
-                        .font(.system(size: 13)).foregroundStyle(CampPalette.muted)
-                    Button("Choose a meal") { choosingMeal = true }.buttonStyle(CampActionStyle())
-                        .disabled(store.groupStage != .collecting)
-                }
-            }
-            CampCard("Your day") {
-                CampLiveSignalRow(store: store, isLocation: true)
-                Divider()
-                contextRow("Your lunch window", detail: "\(CampTimePicker.label(store.draft.personal.lunchStart)) – \(CampTimePicker.label(store.draft.personal.lunchEnd))", symbol: "calendar")
-                Divider()
-                CampLiveSignalRow(store: store, isLocation: false)
-            }
-            CampCalendarView(store: store)
-            CampCard("Delivery savings", subtitle: "Example delivery fees · not a live quote.") {
-                costRow("Separate deliveries · \(store.group.participantCount) × $6", cents: store.group.separateDeliveryCents)
-                costRow("One shared delivery", cents: store.group.sharedDeliveryCents)
-                Divider()
-                costRow("Estimated company delivery savings", cents: store.group.deliverySavingsCents, emphasized: true)
-                DisclosureGroup("View illustrative group total") {
-                    VStack(spacing: 12) {
-                        costRow("Food", cents: store.group.foodCents)
-                        costRow("Estimated tax", cents: store.group.taxCents)
-                        costRow("Delivery", cents: store.group.sharedDeliveryCents)
-                        costRow("Service fee", cents: store.group.serviceCents)
-                        costRow("Tip", cents: store.group.tipCents)
-                        costRow("Group total", cents: store.group.totalCents, emphasized: true)
-                    }.padding(.top, 12)
-                }.font(.system(size: 12))
-            }
-            CampCard("Demo controls", subtitle: "No orders or payments.") {
-                Picker("Group state", selection: $store.groupStage) {
-                    ForEach(DemoGroupStage.allCases) { Text($0.rawValue).tag($0) }
-                }.pickerStyle(.segmented)
-                HStack {
-                    Button("Preview activity", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
-                    Spacer()
-                    Button("Reset group") { store.resetGroup() }.buttonStyle(.plain).font(.caption)
-                }
-                Text("Activity preview runs separately from this group.")
-                    .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-            }
-        }.sheet(isPresented: $choosingMeal) { mealChooser }
-    }
-
-    private var groupHero: some View {
         VStack(alignment: .leading, spacing: 20) {
+            Button { showingCoffee = true } label: {
+                HStack(spacing: 16) {
+                    Image(systemName: "cup.and.saucer.fill").font(.title2)
+                        .foregroundStyle(CampPalette.green).frame(width: 52, height: 52)
+                        .background(CampPalette.lime.opacity(0.4)).clipShape(RoundedRectangle(cornerRadius: 14))
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Morning coffee").font(.system(size: 17, weight: .semibold, design: .rounded))
+                        Text("Corner Coffee · Today, 9:15 AM").font(.caption).foregroundStyle(CampPalette.muted)
+                    }
+                    Spacer()
+                    CampBadge(text: "Completed", active: true)
+                    Image(systemName: "chevron.right").font(.caption).foregroundStyle(CampPalette.muted)
+                }.padding(22).frame(maxWidth: .infinity, alignment: .leading)
+                    .background(RoundedRectangle(cornerRadius: 20).fill(.white))
+                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(CampPalette.border))
+                    .contentShape(Rectangle())
+            }.buttonStyle(.plain).accessibilityLabel("Morning coffee, completed today at 9:15 AM. View demo order")
+
             HStack {
-                Label("OFFICE GROUP ORDER", systemImage: "bag").font(.system(size: 10, weight: .semibold)).tracking(1)
+                Text("Lunch groups").font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
-                CampBadge(text: "Demo · \(store.groupStage.rawValue.lowercased())", active: true)
+                CampBadge(text: "Demo")
+            }.padding(.top, 6)
+            if let group = store.selectedGroup, let meal = store.selectedMeal {
+                HStack(spacing: 12) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(CampPalette.green)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("You’re joining \(group.name)").font(.callout.weight(.semibold))
+                        Text("\(meal.name) · \(LunchStyle.money(meal.priceCents))").font(.caption).foregroundStyle(CampPalette.muted)
+                    }
+                    Spacer()
+                    Button("Leave") { store.resetGroup() }.buttonStyle(.plain).font(.caption)
+                }.padding(18).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            VStack(alignment: .leading, spacing: 6) {
-                Text(store.groupStage == .delivered ? "Lunch has landed." : "The Green Table")
-                    .font(.system(size: compact ? 27 : 32, weight: .semibold, design: .rounded)).tracking(-0.7)
-                Text("One delivery to \(store.draft.office.name).")
-                    .font(.system(size: 12)).foregroundStyle(CampPalette.ink.opacity(0.7))
-            }
-            HStack(spacing: 8) {
-                ForEach(["S", "J", "M"], id: \.self) { letter in
-                    Text(letter).font(.system(size: 12, weight: .semibold)).frame(width: 30, height: 30)
-                        .background(.white.opacity(0.55)).clipShape(Circle())
+            ForEach(DemoLunchGroup.all) { group in
+                CampCard(group.name, subtitle: group.cuisine) {
+                    HStack(spacing: 16) {
+                        Label("\(group.people + (store.selectedGroupID == group.id ? 1 : 0)) people", systemImage: "person.2")
+                        Spacer()
+                        Label(group.delivery, systemImage: "bag")
+                    }.font(.system(size: 12)).foregroundStyle(CampPalette.muted)
+                    HStack {
+                        Text("\(LunchStyle.money(group.deliverySavingsCents)) shared delivery savings")
+                            .font(.system(size: 12, weight: .medium)).foregroundStyle(CampPalette.green)
+                        Spacer(minLength: 12)
+                        Button(store.selectedGroupID == group.id ? "Change meal" : "View menu") {
+                            if let request = store.requestDemoGroup { request(group) }
+                            else { choosingGroup = group }
+                        }.buttonStyle(CampActionStyle())
+                    }
                 }
-                Text(store.selectedMeal == nil ? "+ your seat" : "+ you’re in")
-                    .font(.system(size: 12, weight: .medium)).padding(.leading, 4)
+            }
+            HStack {
+                Text("Sample orders and prices. No purchases.").font(.caption).foregroundStyle(CampPalette.muted)
                 Spacer()
+                #if os(macOS)
+                Button("Preview lunch invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
+                #endif
             }
-            Rectangle().fill(CampPalette.ink.opacity(0.12)).frame(height: 1)
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("ORDER CUTOFF").font(.system(size: 9, weight: .medium)).tracking(1)
-                    Text(CampTimePicker.label(store.draft.office.cutoff)).font(.system(size: 17, weight: .semibold, design: .rounded))
-                }
-                Spacer()
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("DELIVERY WINDOW").font(.system(size: 9, weight: .medium)).tracking(1)
-                    Text("\(CampTimePicker.label(store.draft.office.deliveryStart))–\(CampTimePicker.label(store.draft.office.deliveryEnd))")
-                        .font(.system(size: compact ? 12 : 17, weight: .semibold, design: .rounded))
-                }
-            }
-        }.padding(24).frame(maxWidth: .infinity, alignment: .leading)
-            .background(CampPalette.lime).clipShape(RoundedRectangle(cornerRadius: 23))
-    }
-
-    private func metric(_ title: String, value: String, symbol: String) -> some View {
-        VStack(alignment: .leading, spacing: 9) {
-            Image(systemName: symbol).foregroundStyle(CampPalette.green)
-            Text(value).font(.system(size: compact ? 22 : 27, weight: .semibold, design: .rounded)).minimumScaleFactor(0.8).lineLimit(1)
-            Text(title).font(.system(size: 11, weight: .medium))
-        }.frame(maxWidth: .infinity, alignment: .leading).padding(18).background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 18))
-    }
-
-    private func contextRow(_ title: String, detail: String, symbol: String) -> some View {
-        HStack(spacing: 12) {
-            Image(systemName: symbol).frame(width: 22).foregroundStyle(CampPalette.green)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.system(size: 12, weight: .medium))
-                Text(detail).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-            }
-            Spacer()
+        }
+        .sheet(isPresented: $showingCoffee) { coffeeDetail }
+        .sheet(item: $choosingGroup) { group in
+            CampDemoGroupMenu(store: store, group: group)
         }
     }
 
-    private func costRow(_ title: String, cents: Int, emphasized: Bool = false) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(title).font(.system(size: 12, weight: emphasized ? .semibold : .regular))
-            Spacer(minLength: 12)
-            Text(LunchStyle.money(cents)).font(.system(size: 13, weight: .semibold)).monospacedDigit()
-        }.foregroundStyle(emphasized ? CampPalette.green : CampPalette.ink)
-    }
-
-    private var mealChooser: some View {
-        VStack(alignment: .leading, spacing: 20) {
+    private var coffeeDetail: some View {
+        VStack(alignment: .leading, spacing: 22) {
             HStack {
-                Text("Find your lunch.").font(.system(size: 25, weight: .semibold, design: .rounded))
+                Label("Morning coffee", systemImage: "cup.and.saucer.fill").font(.title2.weight(.semibold))
                 Spacer()
-                Button { choosingMeal = false } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(CampPalette.muted) }.buttonStyle(.plain)
+                Button("Done") { showingCoffee = false }.buttonStyle(.plain)
             }
-            Text("Demo meals · dietary preferences aren’t applied.")
-                .font(.system(size: 12)).foregroundStyle(CampPalette.muted)
-            ForEach(DemoLunch.make().options) { option in
-                Button {
-                    store.join(option)
-                    choosingMeal = false
-                } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: option.symbol).foregroundStyle(CampPalette.green).frame(width: 28)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(option.name).font(.system(size: 14, weight: .semibold))
-                            Text(option.detail).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-                        }
-                        Spacer()
-                        Text(LunchStyle.money(option.priceCents)).font(.system(size: 13, weight: .semibold))
-                    }.padding(17).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 13))
-                }.buttonStyle(.plain)
+            CampBadge(text: "Completed · Demo", active: true)
+            Text("Corner Coffee").font(.headline)
+            Text("Today, 9:15 AM · \(store.draft.office.name)").font(.callout).foregroundStyle(CampPalette.muted)
+            Divider()
+            Group {
+            row("Oat latte", "US$5.50")
+            row("Butter croissant", "US$3.00")
+            row("Your shared delivery fee", "US$1.00")
+            Divider()
+            row("Your total", "US$9.50")
             }
-            Text("Joins the demo group. No purchase.")
-                .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-        }.padding(26).frame(maxWidth: 480).foregroundStyle(CampPalette.ink).background(.white)
-        #if os(macOS)
-        .frame(width: 450)
-        #endif
+            Text("4 teammates · one delivery").font(.callout).foregroundStyle(CampPalette.green)
+            Text("Demo receipt · no payment was taken.").font(.caption).foregroundStyle(CampPalette.muted)
+        }.padding(26).frame(idealWidth: 440, maxWidth: 480)
+            .foregroundStyle(CampPalette.ink).background(CampPalette.background)
+    }
+    private func row(_ title: String, _ value: String) -> some View {
+        HStack { Text(title); Spacer(); Text(value).monospacedDigit() }.font(.callout)
     }
 }
 
-private struct CampLiveSignalRow: View {
-    let store: CampSettingsStore
-    let isLocation: Bool
-    #if os(macOS)
-    @ObservedObject private var location: MacOfficeLocation
-    @ObservedObject private var calendar: MacLunchCalendar
-    #endif
-    init(store: CampSettingsStore, isLocation: Bool) {
-        self.store = store; self.isLocation = isLocation
-        #if os(macOS)
-        self.location = store.location; self.calendar = store.lunchCalendar
-        #endif
-    }
+private struct CampDemoGroupMenu: View {
+    @ObservedObject var store: CampSettingsStore
+    let group: DemoLunchGroup
+    @State private var selection: LunchOption?
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: isLocation ? "location" : "clock").frame(width: 22).foregroundStyle(CampPalette.green)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(isLocation ? "Office presence" : "Calendar availability").font(.system(size: 12, weight: .medium))
-                Text(isLocation ? store.officePresenceLabel : store.lunchAvailabilityLabel).font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+        VStack(alignment: .leading, spacing: 18) {
+            HStack {
+                Text(group.name).font(.title2.weight(.semibold))
+                Spacer()
+                Button("Done") { dismiss() }.buttonStyle(.plain)
             }
-            Spacer()
-        }
+            Text("\(group.people) joining · \(group.delivery)").font(.caption).foregroundStyle(CampPalette.muted)
+            ForEach(group.options) { option in
+                Button { selection = option } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: selection?.id == option.id ? "checkmark.circle.fill" : "circle").foregroundStyle(CampPalette.green)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(option.name).font(.callout.weight(.semibold))
+                            Text(option.detail).font(.caption).foregroundStyle(CampPalette.muted)
+                        }
+                        Spacer()
+                        Text(LunchStyle.money(option.priceCents)).font(.callout)
+                    }.padding(14).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 12)).contentShape(Rectangle())
+                }.buttonStyle(.plain)
+            }
+            Text("Demo menu · dietary preferences aren’t applied. No purchase.").font(.caption).foregroundStyle(CampPalette.muted)
+            Button(store.selectedGroupID == nil ? "Confirm & join group" : "Confirm lunch choice") {
+                if let selection { store.join(selection, group: group); dismiss() }
+            }.buttonStyle(CampActionStyle()).disabled(selection == nil)
+        }.padding(24).frame(idealWidth: 440, maxWidth: 480).foregroundStyle(CampPalette.ink).background(.white)
     }
 }

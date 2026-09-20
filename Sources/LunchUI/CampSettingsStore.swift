@@ -25,6 +25,15 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var isDemoAdmin = true
     @Published public var statusMessage: String?
     @Published public var saveError: String?
+    @Published public var selectedGroupID: String?
+    public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
+    public var selectedGroup: DemoLunchGroup? { DemoLunchGroup.all.first { $0.id == selectedGroupID } }
+    public func join(_ option: LunchOption, group: DemoLunchGroup) {
+        guard group.options.contains(option) else { return }
+        selectedGroupID = group.id
+        selectedMeal = option
+        groupStage = .collecting
+    }
     @Published public var selectedMeal: LunchOption?
     @Published public var groupStage = DemoGroupStage.collecting
     @Published public var previewConnections: Set<String> = []
@@ -85,7 +94,12 @@ public final class CampSettingsStore: ObservableObject {
     #endif
 
     public var hasChanges: Bool { draft != saved }
-    public var group: DemoGroupSummary { DemoGroupSummary(selectedMeal: selectedMeal, stage: groupStage) }
+    public var group: DemoGroupSummary {
+        let group = selectedGroup ?? DemoLunchGroup.all[0]
+        return DemoGroupSummary(selectedMeal: selectedMeal, stage: groupStage,
+                                otherParticipants: group.people,
+                                otherFoodCents: group.people * (group.options.first?.priceCents ?? 1140))
+    }
     public var validationErrors: [String] {
         var errors = draft.validationErrors
         if !isDemoAdmin && draft.office != saved.office { errors.append("Office changes require demo-admin mode. Discard them or enable it before saving.") }
@@ -107,7 +121,7 @@ public final class CampSettingsStore: ObservableObject {
     }
 
     public func discard() { draft = saved; saveError = nil; statusMessage = nil }
-    public func resetGroup() { selectedMeal = nil; groupStage = .collecting }
+    public func resetGroup() { selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting }
     public func join(_ option: LunchOption) {
         guard groupStage == .collecting else { return }
         selectedMeal = option
