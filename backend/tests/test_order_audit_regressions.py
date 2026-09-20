@@ -1,3 +1,7 @@
+from concurrent.futures import ThreadPoolExecutor
+from threading import Barrier
+from time import sleep
+
 import pytest
 from pydantic import ValidationError
 
@@ -382,3 +386,53 @@ def test_unknown_menu_user_is_rejected(world):
 def test_invalid_fee_amounts_are_rejected(changes):
     with pytest.raises(ValidationError):
         FeeSchedule(**changes)
+
+
+def test_concurrent_joins_preserve_every_member_and_order(world, monkeypatch):
+    store, svc, restaurant, users, items = world
+    group = create(svc, users[0], restaurant, items[:1])
+    read = store.get
+    ready = Barrier(len(users) - 1)
+
+    def delayed_read(model, identifier):
+        row = read(model, identifier)
+        if model is LunchGroup and identifier == group.id:
+            sleep(0.01)
+        return row
+
+    monkeypatch.setattr(store, "get", delayed_read)
+
+    def join(user):
+        ready.wait(timeout=5)
+        return svc.join(group.id, JoinGroupReq(office=OFFICE, user_id=user.id, option_id=items[0].id))
+
+    with ThreadPoolExecutor(max_workers=len(users) - 1) as pool:
+        list(pool.map(join, users[1:]))
+    stored = store.get(LunchGroup, group.id)
+    orders = [o for o in store.all(Order) if o.status == "confirmed"]
+    assert {m.user_id for m in stored.members} == {u.id for u in users}
+    assert len(orders) == len(users)
+    assert {m.order_id for m in stored.members} == {o.id for o in orders}
+    assert sum(o.fee_share_cents for o in orders) == restaurant.fees.delivery_fee_cents
+
+
+def test_schedule_receipt_failure_rolls_back_membership_and_orders(world, monkeypatch):
+    store, svc, restaurant, users, _ = world
+    schedule = svc.add_schedule(ScheduleReq(office=OFFICE, user_id=users[0].id, restaurant_id=restaurant.id,
+                                          time_minutes=750, weekdays=[0]))
+    write = store.put
+
+    def fail_receipt(row):
+        if isinstance(row, ScheduledOrder) and row.materialized_dates:
+            raise RuntimeError("receipt write failed")
+        write(row)
+
+    with monkeypatch.context() as context:
+        context.setattr(store, "put", fail_receipt)
+        with pytest.raises(RuntimeError, match="receipt write failed"):
+            svc.materialize_schedules(OFFICE, users[0].id, DAY)
+    assert store.count(LunchGroup) == 0
+    assert store.count(Order) == 0
+    assert store.get(ScheduledOrder, schedule.id).materialized_dates == []
+    assert svc.materialize_schedules(OFFICE, users[0].id, DAY)
+    assert store.count(Order) == 1

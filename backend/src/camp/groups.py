@@ -243,6 +243,10 @@ class GroupService:
                             item_cents=i.price_cents, subtotal_cents=i.price_cents + r.fees.per_item_overhead(i.price_cents)) for i in picks]
 
     def resolve_user(self, user_id: Optional[str], display_name: str, office: OfficeRef) -> User:
+        with self.store.transaction():
+            return self._resolve_user(user_id, display_name, office)
+
+    def _resolve_user(self, user_id: Optional[str], display_name: str, office: OfficeRef) -> User:
         u = self.store.get(User, user_id) if user_id else None
         if user_id and u is None:
             raise ValueError("unknown user")
@@ -355,6 +359,10 @@ class GroupService:
         return out
 
     def today(self, office: OfficeRef, user_id: Optional[str], day: Optional[str] = None, seed_if_empty: bool = True) -> GroupsResponse:
+        with self.store.transaction():
+            return self._today(office, user_id, day, seed_if_empty)
+
+    def _today(self, office: OfficeRef, user_id: Optional[str], day: Optional[str], seed_if_empty: bool) -> GroupsResponse:
         day = self._day(day)
         if user_id:
             self.resolve_user(user_id, "", office)
@@ -368,6 +376,10 @@ class GroupService:
                               people_ordering=sum(w.participants for w in wires), total_savings_cents=sum(w.savings_cents for w in wires))
 
     def seed(self, office: OfficeRef, day: str, exclude_user: Optional[str], n_groups: int = 3) -> list[LunchGroup]:
+        with self.store.transaction():
+            return self._seed(office, day, exclude_user, n_groups)
+
+    def _seed(self, office: OfficeRef, day: str, exclude_user: Optional[str], n_groups: int) -> list[LunchGroup]:
         day = self._day(day)
         rests, items = self._catalog()
         colleagues = [u for u in self.store.users_in_office(office.id) if u.synthetic and u.id != exclude_user]
@@ -421,6 +433,10 @@ class GroupService:
 
     # ---- commands
     def create(self, req: CreateGroupReq, day: Optional[str] = None) -> LunchGroupWire:
+        with self.store.transaction():
+            return self._create(req, day)
+
+    def _create(self, req: CreateGroupReq, day: Optional[str]) -> LunchGroupWire:
         day = self._day(day)
         rests, items = self._catalog()
         r = rests.get(req.restaurant_id)
@@ -450,6 +466,10 @@ class GroupService:
         return self.wire(g, u.id)
 
     def join(self, group_id: str, req: JoinGroupReq) -> LunchGroupWire:
+        with self.store.transaction():
+            return self._join(group_id, req)
+
+    def _join(self, group_id: str, req: JoinGroupReq) -> LunchGroupWire:
         g = self.store.get(LunchGroup, group_id)
         if not g or g.status == "cancelled":
             raise LookupError("group not found")
@@ -481,6 +501,10 @@ class GroupService:
         return self.wire(g, u.id)
 
     def leave(self, group_id: str, user_id: str) -> LunchGroupWire:
+        with self.store.transaction():
+            return self._leave(group_id, user_id)
+
+    def _leave(self, group_id: str, user_id: str) -> LunchGroupWire:
         g = self.store.get(LunchGroup, group_id)
         if not g:
             raise LookupError("group not found")
@@ -620,6 +644,10 @@ class GroupService:
         return [self.schedule_wire(s) for s in self.store.schedules_for(user_id)]
 
     def add_schedule(self, req: ScheduleReq) -> ScheduleWire:
+        with self.store.transaction():
+            return self._add_schedule(req)
+
+    def _add_schedule(self, req: ScheduleReq) -> ScheduleWire:
         if not 300 <= req.time_minutes <= 1320:
             raise ValueError("pick a time between 5 AM and 10 PM")
         if not req.weekdays or any(d < 0 or d > 6 for d in req.weekdays):
@@ -645,6 +673,10 @@ class GroupService:
         return self.schedule_wire(s)
 
     def set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str]) -> ScheduleWire:
+        with self.store.transaction():
+            return self._set_schedule_event(schedule_id, calendar_event_id)
+
+    def _set_schedule_event(self, schedule_id: str, calendar_event_id: Optional[str]) -> ScheduleWire:
         s = self.store.get(ScheduledOrder, schedule_id)
         if not s:
             raise LookupError("unknown schedule")
@@ -653,6 +685,10 @@ class GroupService:
         return self.schedule_wire(s)
 
     def remove_schedule(self, schedule_id: str, user_id: str) -> Optional[ScheduleWire]:
+        with self.store.transaction():
+            return self._remove_schedule(schedule_id, user_id)
+
+    def _remove_schedule(self, schedule_id: str, user_id: str) -> Optional[ScheduleWire]:
         s = self.store.get(ScheduledOrder, schedule_id)
         if not s or s.user_id != user_id:
             raise LookupError("unknown schedule")
@@ -662,6 +698,10 @@ class GroupService:
     def materialize_schedules(self, office: OfficeRef, user_id: str, day: str) -> bool:
         """For each active schedule that falls on `day`, make sure the user is in a group at that place and time. A group
         the user is already in for that category is left alone (they may have changed their mind). Returns True on a change."""
+        with self.store.transaction():
+            return self._materialize_schedules(office, user_id, day)
+
+    def _materialize_schedules(self, office: OfficeRef, user_id: str, day: str) -> bool:
         day = self._day(day)
         weekday = _date.fromisoformat(day).weekday()
         u = self.resolve_user(user_id, "", office)
