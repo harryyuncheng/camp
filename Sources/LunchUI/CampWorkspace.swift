@@ -6,10 +6,14 @@ import LunchCore
 public struct CampWorkspace: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
-    let previewActivity: () -> Void
+    let activityError: String?
+    let previewActivity: (() -> Void)?
+    private let phoneSections: [CampSection] = [.today, .you, .spending]
+    private let moreSections: [CampSection] = [.office, .connections, .demo]
 
-    public init(store: CampSettingsStore, compact: Bool = false, previewActivity: @escaping () -> Void) {
-        self.store = store; self.compact = compact; self.previewActivity = previewActivity
+    public init(store: CampSettingsStore, compact: Bool = false, activityError: String? = nil,
+                previewActivity: (() -> Void)? = nil) {
+        self.store = store; self.compact = compact; self.activityError = activityError; self.previewActivity = previewActivity
     }
 
     public var body: some View {
@@ -29,7 +33,12 @@ public struct CampWorkspace: View {
                     VStack(alignment: .leading, spacing: 22) {
                         pageHeader
                         switch store.section {
-                        case .today: CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
+                        case .today:
+                            if let activityError {
+                                Label(activityError, systemImage: "exclamationmark.circle")
+                                    .font(.callout).foregroundStyle(.red)
+                            }
+                            CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
                         case .spending: CampSpendingPage(store: store, compact: compact)
@@ -100,7 +109,7 @@ public struct CampWorkspace: View {
             Spacer()
             Menu {
                 Toggle("Demo admin", isOn: $store.isDemoAdmin)
-                Button("Preview activity", action: previewActivity)
+                if let previewActivity { Button("Preview activity", action: previewActivity) }
             } label: {
                 CampBadge(text: store.isDemoAdmin ? "Demo admin" : "Member", active: store.isDemoAdmin)
             }
@@ -109,16 +118,32 @@ public struct CampWorkspace: View {
 
     private var phoneTabs: some View {
         HStack(spacing: 0) {
-            ForEach(CampSection.allCases) { section in
+            ForEach(phoneSections) { section in
                 Button { store.section = section } label: {
-                    VStack(spacing: 5) {
-                        Image(systemName: section.symbol).font(.system(size: 18))
-                        Text(section.rawValue).font(.system(size: 10, weight: .medium))
-                    }.frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
-                        .foregroundStyle(store.section == section ? CampPalette.green : CampPalette.muted)
+                    phoneTabLabel(section.rawValue, symbol: section.symbol, selected: store.section == section)
                 }.buttonStyle(.plain).accessibilityLabel(section.rawValue)
+                    .accessibilityAddTraits(store.section == section ? [.isSelected] : [])
             }
+            Menu {
+                ForEach(moreSections) { section in
+                    Button { store.section = section } label: {
+                        Label(section.rawValue, systemImage: store.section == section ? "checkmark" : section.symbol)
+                    }
+                }
+            } label: {
+                phoneTabLabel("More", symbol: "ellipsis", selected: moreSections.contains(store.section))
+            }
+            .accessibilityLabel("More sections")
+            .accessibilityValue(moreSections.contains(store.section) ? store.section.rawValue : "")
         }.background(.white).overlay(alignment: .top) { CampPalette.border.frame(height: 1) }
+    }
+
+    private func phoneTabLabel(_ title: String, symbol: String, selected: Bool) -> some View {
+        VStack(spacing: 5) {
+            Image(systemName: symbol).font(.system(size: 18))
+            Text(title).font(.system(size: 10, weight: .medium))
+        }.frame(maxWidth: .infinity).padding(.vertical, 12).contentShape(Rectangle())
+            .foregroundStyle(selected ? CampPalette.green : CampPalette.muted)
     }
 
     private var saveBar: some View {

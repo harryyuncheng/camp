@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import os
-from datetime import date
+import secrets
+from datetime import date as Date
+from typing import Literal, Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 
 from . import feedback as fb
 from . import catalog, synth
@@ -15,11 +17,11 @@ from .ai.feedback_parse import parse_feedback
 from .ai.modifications import modify
 from .ai.tagging import tag_menu
 from .explain import explain_llm
-from .models import ORDER_CATEGORIES, Context, FeedbackEvent, LunchGroup, MenuItem, Order, Restaurant, User
+from .apns import APNsClient, APNsConfig
+from .models import ORDER_CATEGORIES, ActivityPushToken, Context, EventType, FeedbackEvent, LunchGroup, MenuItem, Order, Restaurant, User
 from .pipeline import plan_home, plan_office
 from .providers import providers_from_env, sync_catalog
-from typing import Literal, Optional
-
+from .cli import _load_env_file
 from .contracts import MealContext, MealOffer, OfficeRef, Wire
 from .groups import (CreateGroupReq, GroupService, GroupsResponse, JoinGroupReq, LedgerWire, LunchGroupWire, MenuWire, RestaurantWire,
                      ScheduleReq, ScheduleWire)
@@ -30,23 +32,43 @@ from .search import CravingReq, CravingResponse, CravingService
 from .store import Store
 from .sync import LunchSyncService, SyncConflict
 
-def _load_env_file(path: str | None = None) -> None:
-    """backend/.env → os.environ (setdefault, so the shell wins). Same convention as server.py."""
-    from pathlib import Path
-    p = Path(path or os.getenv("CAMP_ENV_FILE") or Path(__file__).resolve().parents[2] / ".env")
-    if p.exists():
-        for line in p.read_text().splitlines():
-            if "=" in line and not line.lstrip().startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
-
-
 _load_env_file()
 app = FastAPI(title="CAMP recommender")
 store = Store.from_env()
 clf = default_classifier()
 offers = OfferService(store)
 lunch_sync = LunchSyncService(store)
+apns = APNsClient(APNsConfig.from_env())
+
+
+async def _push_live_activity(record: dict, device: str) -> None:
+    """Fans an accepted write out to every registered Live Activity token except the device that wrote it.
+
+    This is what makes a Mac-side change reach a *locked* phone: the long-poll in `LunchSyncCoordinator`
+    only runs while camp is foregrounded, but APNs delivers to the activity without waking the app.
+    """
+    if not apns.enabled:
+        return
+    session = record.get("session") or {}
+    session_id = record.get("sessionId")
+    if not isinstance(session_id, str):
+        return
+    row = store.get(ActivityPushToken, session_id)
+    if row is None or row.device == device:
+        return
+    finished = str(session.get("phase", "")) in ("delivered", "ended")
+    status, reason = await apns.send(
+        row.push_token, session,
+        event="end" if finished else "update",
+        stale_at=session.get("closesAt"),
+        dismiss_at=session.get("deliveredAt") or session.get("arrivesAt"),
+    )
+    # 410 Gone means the activity is over on the phone; stop pushing to a dead token.
+    if status == 410 or finished:
+        store.delete(ActivityPushToken, session_id)
+
+
+lunch_sync.on_change = _push_live_activity
 groups = GroupService(store)
 onboarding = OnboardingService(store, offers)
 cravings = CravingService(store)
@@ -58,21 +80,24 @@ async def require_camp_token(request: Request, call_next):
     """Set CAMP_TOKEN when binding beyond loopback (`--host 0.0.0.0` for the phone): every request must carry
     it as X-Camp-Token. Unset, the service stays open, which is only acceptable on 127.0.0.1."""
     token = os.getenv("CAMP_TOKEN", "")
-    if token and request.headers.get("x-camp-token", "") != token:
+    if token and not secrets.compare_digest(request.headers.get("x-camp-token", "").encode(), token.encode()):
         return JSONResponse({"detail": "X-Camp-Token header missing or wrong"}, status_code=401)
+    if not token and (request.headers.get("origin") or request.headers.get("sec-fetch-site") == "cross-site"):
+        return JSONResponse({"detail": "Browser requests require CAMP_TOKEN."}, status_code=403)
     return await call_next(request)
 if not store.all(User):
     u, r, i = synth.make_world(int(os.getenv("CAMP_USERS", "40")), None, 0)
-    store.put_many(u); store.put_many(r); store.put_many(i)
+    with store.transaction():
+        store.put_many(u); store.put_many(r); store.put_many(i)
 elif catalog.ensure_current(store):
     print("camp: replaced the stored restaurant catalog with the Ramp HQ dataset")
 
 
 class RecommendReq(BaseModel):
     office_id: str = "hq"
-    meal: str = "lunch"
-    date: str | None = None
-    temp_c: float = 18.0
+    meal: Literal["lunch", "dinner"] = "lunch"
+    date: Date | None = None
+    temp_c: float = Field(default=18.0, allow_inf_nan=False)
     raining: bool = False
 
 
@@ -83,16 +108,48 @@ class FeedbackReq(BaseModel):
     tap: dict | None = None            # {"type": "accept"|"change_item"|..., ...payload}
     confirm_constraint: bool = False
 
+    @field_validator("tap")
+    @classmethod
+    def validate_tap(cls, tap: dict | None) -> dict | None:
+        if tap is None:
+            return tap
+        FeedbackEvent(user_id="validation", type=tap.get("type"), item_id=tap.get("item_id"))
+        kind: EventType = tap["type"]
+        if kind == "preference":
+            if not isinstance(tap.get("attribute"), str) or not tap["attribute"].strip():
+                raise ValueError("preference needs an attribute")
+            if tap.get("direction") not in ("more", "less", "never"):
+                raise ValueError("preference needs direction more, less or never")
+        if kind == "constraint":
+            which = tap.get("which")
+            if not isinstance(which, str) or ":" not in which:
+                raise ValueError("constraint needs which as allergen:name or diet:name")
+            prefix, value = which.split(":", 1)
+            if prefix not in ("allergen", "diet") or not value or tap.get("action") not in ("add", "remove"):
+                raise ValueError("invalid constraint or action")
+        for field in ("overall", "portion", "temperature"):
+            if field in tap and (type(tap[field]) is not int or not 0 <= tap[field] <= 4):
+                raise ValueError(f"{field} must be an integer from 0 to 4")
+        for field in ("addons", "shown_item_ids"):
+            if field in tap and (not isinstance(tap[field], list) or not all(isinstance(x, str) for x in tap[field])):
+                raise ValueError(f"{field} must be a list of strings")
+        if tap.get("from_item_id") is not None and not isinstance(tap["from_item_id"], str):
+            raise ValueError("from_item_id must be a string")
+        for field in ("severe", "confirmed", "too_heavy", "repeated", "old_was_novel", "novel"):
+            if field in tap and type(tap[field]) is not bool:
+                raise ValueError(f"{field} must be a boolean")
+        return tap
+
 
 class ModifyReq(BaseModel):
     order_id: str
     text: str
-    now_minutes: int = 10 * 60
+    now_minutes: int = Field(default=10 * 60, ge=0, lt=1440)
 
 
 @app.post("/batch/run")
 async def batch_run(req: RecommendReq):
-    d = date.fromisoformat(req.date) if req.date else date.today()
+    d = req.date or Date.today()
     ctx = Context(date=d.isoformat(), meal=req.meal, weekday=d.weekday(), temp_c=req.temp_c, raining=req.raining)
     plan = plan_office(store, req.office_id, synth.OFFICE, ctx)
     items = {i.id: i for i in store.all(MenuItem)}
@@ -110,7 +167,7 @@ async def recommend_home(user_id: str, req: RecommendReq):
     u = store.get(User, user_id)
     if not u:
         raise HTTPException(404)
-    d = date.fromisoformat(req.date) if req.date else date.today()
+    d = req.date or Date.today()
     ctx = Context(date=d.isoformat(), meal=req.meal, weekday=d.weekday(), temp_c=req.temp_c, raining=req.raining)
     plan = plan_home(store, u, synth.OFFICE, ctx)
     return dict(recommendations=plan.recommendations[u.id], orders=plan.orders)
@@ -131,7 +188,11 @@ async def modify_order(req: ModifyReq):
 
 @app.post("/feedback")
 async def feedback(req: FeedbackReq):
+    if store.get(User, req.user_id) is None:
+        raise HTTPException(404, "unknown user")
     o = store.get(Order, req.order_id) if req.order_id else None
+    if req.order_id and (o is None or o.user_id != req.user_id):
+        raise HTTPException(404, "unknown order for this user")
     logs, clarify, events = [], None, []
     if req.tap:
         t = dict(req.tap)
@@ -142,13 +203,14 @@ async def feedback(req: FeedbackReq):
         res = await parse_feedback(clf, req.text, req.user_id, req.order_id, o.line.item_id if o else None, o.line.restaurant_id if o else None)
         clarify = res.clarify
         events += res.events
-    for ev in events:
-        if ev.type == "constraint" and req.confirm_constraint:
-            ev.payload["confirmed"] = True
-            ev.needs_confirmation = False
-        if ev.type == "change_item" and ev.payload.get("needs_modification_pipeline"):
-            continue   # handled by /modify
-        logs += fb.apply_event(store, ev)
+    with store.transaction():
+        for ev in events:
+            if ev.type == "constraint" and req.confirm_constraint:
+                ev.payload["confirmed"] = True
+                ev.needs_confirmation = False
+            if ev.type == "change_item" and ev.payload.get("needs_modification_pipeline"):
+                continue   # handled by /modify
+            logs += fb.apply_event(store, ev)
     return dict(events=[dict(type=e.type, scope=e.scope, confidence=e.confidence, payload=e.payload, needs_confirmation=e.needs_confirmation) for e in events],
                 clarify=clarify, profile_updates=logs, learned=fb.learned_view(store.get(User, req.user_id)))
 
@@ -174,7 +236,7 @@ def users():
 
 
 @app.post("/catalog/sync")
-async def catalog_sync(radius_km: float = 6.0, tag: bool = False):
+async def catalog_sync(radius_km: float = Query(6.0, gt=0, le=50, allow_inf_nan=False), tag: bool = False):
     provs = providers_from_env()
     tagger = (lambda items: tag_menu(clf, items)) if tag else None
     rep = await sync_catalog(store, provs, synth.OFFICE, radius_km, tagger=tagger)
@@ -187,21 +249,24 @@ async def catalog_sync(radius_km: float = 6.0, tag: bool = False):
 @app.get("/v1/health")
 def health():
     return dict(service="camp-recommender", version="0.2.0", classifier=type(clf).__name__,
-                database="postgres" if store.pg else "sqlite", databaseUrl=store.url.split("@")[-1] if store.pg else store.url,
+                database="postgres" if store.pg else "sqlite",
                 providers=[p.name for p in providers_from_env()], users=len(store.all(User)), restaurants=len(store.all(Restaurant)),
                 items=len(store.all(MenuItem)), orders=store.count(Order), groups=store.count(LunchGroup), ramp=ramp.configured)
 
 
 @app.post("/v1/meal-offers", response_model=MealOffer)
 def meal_offers(ctx: MealContext, force: bool = False):
-    return offers.offer(ctx, force=force)
+    try:
+        return offers.offer(ctx, force=force)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 class LunchEventReq(Wire):
     offer_id: str
     option_id: Optional[str] = None
     event: Literal["confirmed", "delivered", "ended"]
-    rating: Optional[int] = None       # 0..4, optional post-meal thumbs
+    rating: Optional[int] = Field(default=None, ge=0, le=4, strict=True)
 
 
 @app.post("/v1/lunch-events")
@@ -223,12 +288,12 @@ class DebugFeedbackReq(BaseModel):
 class LunchSyncPublish(Wire):
     record: dict                              # LunchSyncRecord as the Swift app encodes it (opaque here)
     expected_session_id: Optional[str] = None  # what the device believed was current
-    expected_revision: Optional[int] = None
-    device: str = "unknown"
+    expected_revision: Optional[int] = Field(default=None, ge=0, strict=True)
+    device: str = Field(default="unknown", min_length=1, max_length=128)
 
 
 @app.get("/v1/lunch-session")
-async def lunch_session(since: Optional[int] = None, wait: float = 0):
+async def lunch_session(since: Optional[int] = Query(None, ge=0), wait: float = Query(0, allow_inf_nan=False)):
     """Current shared lunch. With `since=<seq>` this long-polls up to `wait` seconds (max 30) for a change."""
     return await lunch_sync.wait_for_change(since, min(max(wait, 0), 30))
 
@@ -241,6 +306,30 @@ async def lunch_session_publish(req: LunchSyncPublish):
         raise HTTPException(422, str(e))
     except SyncConflict as e:
         return JSONResponse({"detail": str(e), "seq": e.seq, "record": e.record, "records": e.records}, status_code=409)
+
+
+class ActivityTokenReq(Wire):
+    session_id: str = Field(min_length=1, max_length=128)
+    push_token: str = Field(min_length=1, max_length=512)
+    device: str = Field(default="iphone", min_length=1, max_length=128)
+    environment: str = Field(default="sandbox", pattern="^(sandbox|production)$")
+
+
+@app.post("/v1/lunch-session/push-token")
+def lunch_session_push_token(req: ActivityTokenReq):
+    """The phone registers its Live Activity's APNs token here, and again whenever iOS rotates it."""
+    if not all(c in "0123456789abcdefABCDEF" for c in req.push_token):
+        raise HTTPException(422, "push_token must be hex")
+    store.put(ActivityPushToken(id=req.session_id, push_token=req.push_token.lower(),
+                                device=req.device, environment=req.environment))
+    return {"registered": req.session_id, "pushEnabled": apns.enabled}
+
+
+@app.delete("/v1/lunch-session/push-token")
+def lunch_session_drop_push_token(sessionId: str):
+    """Called when the activity ends on the phone."""
+    store.delete(ActivityPushToken, sessionId)
+    return {"dropped": sessionId}
 
 
 @app.delete("/v1/lunch-session")
@@ -260,21 +349,24 @@ def debug_user(user_id: str):
 
 
 @app.get("/v1/debug/events")
-def debug_events(limit: int = 50):
+def debug_events(limit: int = Query(50, ge=1, le=500)):
     evs = sorted(store.all(FeedbackEvent), key=lambda e: e.created_at)[-limit:]
     return [e.model_dump() for e in evs]
 
 
 @app.post("/v1/debug/feedback")
 async def debug_feedback(req: DebugFeedbackReq):
+    if store.get(User, req.user_id) is None:
+        raise HTTPException(404, "unknown user")
     res = await parse_feedback(clf, req.text, req.user_id)
     logs = []
-    for ev in res.events:
-        if ev.type == "constraint" and req.confirm_constraint:
-            ev.payload["confirmed"] = True; ev.needs_confirmation = False
-        if ev.type == "change_item":
-            continue
-        logs += fb.apply_event(store, ev)
+    with store.transaction():
+        for ev in res.events:
+            if ev.type == "constraint" and req.confirm_constraint:
+                ev.payload["confirmed"] = True; ev.needs_confirmation = False
+            if ev.type == "change_item":
+                continue
+            logs += fb.apply_event(store, ev)
     u = store.get(User, req.user_id)
     return dict(events=[dict(type=e.type, scope=e.scope, confidence=e.confidence, payload=e.payload, needsConfirmation=e.needs_confirmation) for e in res.events],
                 clarify=res.clarify, profileUpdates=logs, learned=fb.learned_view(u) if u else None, backend=type(clf).__name__)
@@ -286,10 +378,14 @@ async def debug_feedback(req: DebugFeedbackReq):
 def profile_put(ctx: MealContext):
     """The Settings page saves here. Same mapping as an offer request (name, diet, allergies, dislikes, window, budget),
     plus the raw preferences kept on the user so another device can read them back."""
-    offers.ensure_world(ctx.office)
-    u, created = offers.user_for(ctx)
-    u.app_settings = ctx.model_dump(by_alias=True, exclude={"user_id", "now_minutes"})
-    store.put(u)
+    try:
+        with store.transaction():
+            offers.ensure_world(ctx.office)
+            u, created = offers.user_for(ctx)
+            u.app_settings = ctx.model_dump(by_alias=True, exclude={"user_id", "now_minutes"})
+            store.put(u)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
     return dict(userId=u.id, created=created, learned=fb.learned_view(u), restrictions=[r.model_dump() for r in u.restrictions],
                 budgetCents=u.budget_cents.get(ctx.meal, 0))
 
@@ -331,14 +427,19 @@ def onboarding_reset(user_id: str):
 # ---------------------------------------------------------------- lunch groups (Today page)
 
 @app.get("/v1/groups", response_model=GroupsResponse)
-def groups_today(officeId: str = "demo-office", userId: Optional[str] = None, date: Optional[str] = None, deliveryStart: int = 750,
-                 latitude: float = 40.7424, longitude: float = -73.9913, officeName: str = "Office"):
+def groups_today(officeId: str = "demo-office", userId: Optional[str] = None, date: Optional[Date] = None,
+                 deliveryStart: int = Query(750, ge=0, lt=1440),
+                 latitude: float = Query(40.7424, ge=-90, le=90), longitude: float = Query(-73.9913, ge=-180, le=180),
+                 officeName: str = "Office"):
     office = OfficeRef(id=officeId, name=officeName, latitude=latitude, longitude=longitude, delivery_start=deliveryStart)
-    return groups.today(office, userId, date)
+    try:
+        return groups.today(office, userId, date.isoformat() if date else None)
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.get("/v1/restaurants", response_model=list[RestaurantWire])
-def restaurants(limit: int = 12, category: Optional[str] = None):
+def restaurants(limit: int = Query(12, ge=1, le=100), category: Optional[str] = None):
     """Best-rated catalog places; `category=coffee|meal` narrows to places that take that kind of order."""
     if category is not None and category not in ORDER_CATEGORIES:
         raise HTTPException(422, "category must be coffee or meal")
@@ -360,6 +461,8 @@ def restaurant_menu(restaurant_id: str, userId: Optional[str] = None, groupId: O
         return groups.menu(restaurant_id, userId, groupId)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 # ---------------------------------------------------------------- standing orders (You → Schedule a new order)
@@ -378,13 +481,14 @@ def schedules_add(req: ScheduleReq):
 
 
 class ScheduleEventReq(Wire):
+    user_id: str = Field(min_length=1)
     calendar_event_id: Optional[str] = None
 
 
 @app.put("/v1/schedules/{schedule_id}/event", response_model=ScheduleWire)
 def schedules_event(schedule_id: str, req: ScheduleEventReq):
     try:
-        return groups.set_schedule_event(schedule_id, req.calendar_event_id)
+        return groups.set_schedule_event(schedule_id, req.calendar_event_id, req.user_id)
     except LookupError as e:
         raise HTTPException(404, str(e))
 
@@ -398,9 +502,9 @@ def schedules_remove(schedule_id: str, userId: str):
 
 
 @app.post("/v1/groups", response_model=LunchGroupWire)
-def groups_create(req: CreateGroupReq, date: Optional[str] = None):
+def groups_create(req: CreateGroupReq, date: Optional[Date] = None):
     try:
-        return groups.create(req, date)
+        return groups.create(req, date.isoformat() if date else None)
     except ValueError as e:
         raise HTTPException(422, str(e))
 
@@ -421,14 +525,18 @@ def groups_leave(group_id: str, user_id: str):
         return groups.leave(group_id, user_id)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 @app.get("/v1/ledger/{user_id}", response_model=LedgerWire)
-def ledger(user_id: str, officeName: str = "", month: Optional[str] = None):
+def ledger(user_id: str, officeName: str = "", month: Optional[str] = Query(None, pattern=r"^\d{4}-(0[1-9]|1[0-2])$")):
     try:
         return groups.ledger(user_id, officeName, month)
     except LookupError as e:
         raise HTTPException(404, str(e))
+    except ValueError as e:
+        raise HTTPException(422, str(e))
 
 
 # ---------------------------------------------------------------- Ramp sandbox (formerly backend/server.py on :8787)
@@ -449,11 +557,8 @@ def ramp_snapshot(request: Request):
 
 
 @app.post("/v1/ramp/allocations")
-async def ramp_allocate(request: Request):
+def ramp_allocate(request: Request, body: dict):
     _ramp_guard(request)
-    body = await request.json()
-    if not isinstance(body, dict):
-        raise HTTPException(400, "Expected a JSON object.")
     try:
         return ramp.allocate(body)
     except Problem as e:
@@ -471,11 +576,8 @@ def ramp_limits(user_id: str, request: Request):
 
 
 @app.post("/v1/ramp/overages")
-async def ramp_request_overage(request: Request):
+def ramp_request_overage(request: Request, body: dict):
     _ramp_guard(request)
-    body = await request.json()
-    if not isinstance(body, dict):
-        raise HTTPException(400, "Expected a JSON object.")
     try:
         return ramp.request_overage(body)
     except Problem as e:
@@ -483,11 +585,8 @@ async def ramp_request_overage(request: Request):
 
 
 @app.post("/v1/ramp/overages/{request_id}/decision")
-async def ramp_decide_overage(request_id: str, request: Request):
+def ramp_decide_overage(request_id: str, request: Request, body: dict):
     _ramp_guard(request)
-    body = await request.json()
-    if not isinstance(body, dict):
-        raise HTTPException(400, "Expected a JSON object.")
     try:
         return ramp.decide_overage(request_id, body)
     except Problem as e:

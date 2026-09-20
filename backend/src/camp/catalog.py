@@ -13,7 +13,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, FeeSchedule, LatLng, MenuItem, Restaurant
+from .filters import haversine_km
+from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, Batch, FeeSchedule, LatLng, LunchGroup, MenuItem, OfferRecord, Order, Restaurant, ScheduledOrder
 
 RAMP_HQ = LatLng(lat=40.7424, lng=-73.9913)          # 28 W 23rd St, Flatiron
 FIXTURES = Path(__file__).parent / "providers" / "fixtures"
@@ -133,30 +134,37 @@ def translate(loc: LatLng, center: LatLng | None) -> LatLng:
 
 
 def ensure_current(store, center: LatLng | None = None, seed: int = 0) -> bool:
-    """Replace whatever restaurants/items the store holds with this catalog when they differ (older synthetic worlds,
-    a previous catalog version, or a catalog seeded around a different office). Users and feedback events are kept;
-    orders and batches that pointed at the old items are dropped. Returns True when it re-seeded."""
-    from .filters import haversine_km
-    from .models import Batch, Order
-    want, _ = to_models(seed=seed, center=center)
+    """Fill missing fixture records without overwriting stored quotes, tags, or order history."""
+    want, items = to_models(seed=seed, center=center)
     have = store.all(Restaurant)
-    # with no office given (server startup) only the membership is checked: the stored catalog may legitimately be
-    # centred on whichever office last requested an offer
-    same = ({r.id for r in have} == {r.id for r in want}
-            and (center is None or all(haversine_km(r.location, center) <= 8 for r in have)))
-    if same:
-        return False
-    _, items = to_models(seed=seed, center=center)
-    have_ids, want_ids = {r.id for r in have}, {r.id for r in want}
-    if have_ids <= want_ids and (center is None or all(haversine_km(r.location, center) <= 8 for r in have)):
-        # The catalog only grew (e.g. cafés joined the meal places): upsert in place and keep every order and batch,
-        # since nothing they point at is going away.
-        store.put_many(want); store.put_many(items)
-        return True
-    for cls in (Restaurant, MenuItem, Order, Batch):
-        store.delete_all(cls)
-    store.put_many(want); store.put_many(items)
-    return True
+    have_by_id = {r.id: r for r in have}
+    have_items = {i.id for i in store.all(MenuItem)}
+    protected = {line.restaurant_id for order in store.all(Order) for line in (order.line, order.default_line)}
+    protected.update(br.restaurant_id for batch in store.all(Batch) for br in batch.restaurants)
+    protected.update(group.restaurant_id for group in store.all(LunchGroup))
+    protected.update(schedule.restaurant_id for schedule in store.all(ScheduledOrder) if schedule.restaurant_id)
+    protected.update(option.restaurant_id for offer in store.all(OfferRecord) if offer.wire for option in offer.wire.options)
+    want_ids = {r.id for r in want}
+    changed = False
+    for r in have:
+        if r.id not in want_ids and r.platform == "mock" and not r.platform_ids and r.id not in protected:
+            for item in store.items_for(r.id):
+                store.delete(MenuItem, item.id)
+            store.delete(Restaurant, r.id)
+            changed = True
+    updates = []
+    for r in want:
+        previous = have_by_id.get(r.id)
+        if previous is None:
+            updates.append(r)
+        elif center is not None and haversine_km(previous.location, center) > 8:
+            previous.location = r.location
+            updates.append(previous)
+    missing = [item for item in items if item.id not in have_items]
+    if updates or missing:
+        store.put_many([*updates, *missing])
+        changed = True
+    return changed
 
 
 def to_models(n: int | None = None, seed: int = 0, center: LatLng | None = None, lunch_only: bool = True,

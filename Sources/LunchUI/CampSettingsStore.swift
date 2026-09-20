@@ -33,6 +33,8 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var groupsSummary: LunchGroupsResponse?
     @Published public var groupsError: String?
     @Published public var groupsBusy = false
+    @Published public private(set) var groupMutationBusy = false
+    private var groupsRevision = 0
     /// Places the create-order sheet and the scheduler can start an order at (`GET /v1/restaurants`, both categories).
     @Published public var restaurants: [LunchRestaurant] = []
     /// The last free-text craving search (`POST /v1/craving`): for when none of today's places appeal.
@@ -46,10 +48,11 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var schedules: [LunchSchedule] = []
     @Published public var scheduleError: String?
     @Published public var scheduleBusy = false
+    private var schedulesRevision = 0
     public var peopleOrdering: Int { groupsSummary?.peopleOrdering ?? lunchGroups.reduce(0) { $0 + participantCount(for: $1) } }
     public var totalSavingsCents: Int { groupsSummary?.totalSavingsCents ?? lunchGroups.reduce(0) { $0 + savingsCents(for: $1) } }
     /// Every group the user is in today, one per category at most, nearest arrival first.
-    public var myGroups: [DemoLunchGroup] { lunchGroups.filter { $0.myOptionId != nil || ($0.id == selectedGroupID && selectedMeal != nil) }.sorted { $0.arrivalMinutes < $1.arrivalMinutes } }
+    public var myGroups: [DemoLunchGroup] { lunchGroups.filter { !$0.myOptionIdList.isEmpty }.sorted { $0.arrivalMinutes < $1.arrivalMinutes } }
     public func myOption(in group: DemoLunchGroup) -> LunchOption? { myOptions(in: group).first }
     /// Everything the user ordered from this group: a main plus any sides or drinks that fit their budget.
     public func myOptions(in group: DemoLunchGroup) -> [LunchOption] {
@@ -74,9 +77,13 @@ public final class CampSettingsStore: ObservableObject {
     public func fitsBudget(_ option: LunchOption, with selection: [LunchOption]) -> Bool {
         if selection.contains(where: { $0.id == option.id }) { return true }
         if selection.isEmpty { return true }
-        return selection.reduce(option.priceCents) { $0 + $1.priceCents } <= personBudgetCents
+        return selectionTotalCents(selection + [option]) <= personBudgetCents
     }
-    public func selectionTotalCents(_ selection: [LunchOption]) -> Int { selection.reduce(0) { $0 + $1.priceCents } }
+    public func selectionTotalCents(_ selection: [LunchOption]) -> Int {
+        selection.enumerated().reduce(0) { total, entry in
+            total + entry.element.priceCents - (entry.offset == 0 ? 0 : entry.element.deliveryShareCents ?? 0)
+        }
+    }
     public func restaurants(for category: OrderCategory) -> [LunchRestaurant] { restaurants.filter { $0.serves(category) } }
     public func savingsCents(for group: DemoLunchGroup) -> Int { max(0, participantCount(for: group) - 1) * (group.deliveryFeeCents ?? 600) }
 
@@ -84,13 +91,16 @@ public final class CampSettingsStore: ObservableObject {
 
     /// Reloads today's groups; membership (which group and meal are yours) comes back with them.
     public func refreshGroups() async {
+        groupsRevision += 1
+        let revision = groupsRevision
         groupsBusy = true
-        defer { groupsBusy = false }
+        defer { if revision == groupsRevision { groupsBusy = false } }
         do {
             let response = try await client().groups(office: officeRef, userId: recommenderUserID)
+            guard revision == groupsRevision else { return }
             apply(groups: response)
             groupsError = nil
-        } catch { groupsError = "Couldn’t load group orders: \(error.localizedDescription)" }
+        } catch { if revision == groupsRevision { groupsError = "Couldn’t load group orders: \(error.localizedDescription)" } }
     }
 
     public func loadRestaurants() async {
@@ -135,7 +145,7 @@ public final class CampSettingsStore: ObservableObject {
         lunchGroups = response.groups.sorted { ($0.arrivalMinutes, $0.name) < ($1.arrivalMinutes, $1.name) }
         // The "selected" group is the nearest upcoming order the user is in; the notch shows that one first.
         let now = Calendar.current.component(.hour, from: .now) * 60 + Calendar.current.component(.minute, from: .now)
-        let mine = lunchGroups.filter { $0.myOptionId != nil }
+        let mine = lunchGroups.filter { !$0.myOptionIdList.isEmpty }
         if let next = mine.first(where: { $0.arrivalMinutes >= now - 30 }) ?? mine.first {
             selectedGroupID = next.id
             selectedMeals = next.myOptionIdList.compactMap { id in next.options.first { $0.id == id } }
@@ -155,9 +165,14 @@ public final class CampSettingsStore: ObservableObject {
     /// Replaces one group in the list with what the backend returned and re-derives membership from it. Joining a
     /// group leaves only the other groups in the same category; a coffee and a meal stay active together.
     private func merge(_ group: DemoLunchGroup) {
+        groupsRevision += 1
+        groupsBusy = false
         if let i = lunchGroups.firstIndex(where: { $0.id == group.id }) { lunchGroups[i] = group } else { lunchGroups.append(group) }
-        if group.myOptionId != nil {
-            for i in lunchGroups.indices where lunchGroups[i].id != group.id && lunchGroups[i].kind == group.kind { lunchGroups[i].myOptionId = nil }
+        if !group.myOptionIdList.isEmpty {
+            for i in lunchGroups.indices where lunchGroups[i].id != group.id && lunchGroups[i].kind == group.kind {
+                lunchGroups[i].myOptionId = nil
+                lunchGroups[i].myOptionIds = []
+            }
             selectedGroupID = group.id
             selectedMeals = group.myOptionIdList.compactMap { id in group.options.first { $0.id == id } }
         } else if selectedGroupID == group.id {
@@ -175,9 +190,12 @@ public final class CampSettingsStore: ObservableObject {
         await createGroup(restaurant: restaurant, arrivalMinutes: arrivalMinutes, meals: [meal], category: category)
     }
     @discardableResult
-    public func createGroup(restaurant: LunchRestaurant, arrivalMinutes: Int, meals: [LunchOption], category: OrderCategory) async -> Bool {
-        guard let first = meals.first, meals.allSatisfy({ restaurant.options.contains($0) }),
+    public func createGroup(restaurant: LunchRestaurant, arrivalMinutes: Int, meals: [LunchOption], category: OrderCategory,
+                            presentConfirmation: Bool = true) async -> Bool {
+        guard !groupMutationBusy, let first = meals.first, meals.allSatisfy({ restaurant.options.contains($0) }),
               (300...1320).contains(arrivalMinutes), restaurant.serves(category) else { return false }
+        groupMutationBusy = true
+        defer { groupMutationBusy = false }
         do {
             let group = try await client().createGroup(office: officeRef, restaurantId: restaurant.id, deliveryMinutes: arrivalMinutes,
                                                        optionIds: meals.map(\.id), userId: recommenderUserID, displayName: saved.personal.displayName,
@@ -185,8 +203,9 @@ public final class CampSettingsStore: ObservableObject {
             if let me = group.userId { remember(userId: me) }
             merge(group)
             groupsError = nil
-            requestConfirmedDemoGroup?(group, first)
+            if presentConfirmation { requestConfirmedDemoGroup?(group, first) }
             await refreshGroups()
+            await refreshLedger()
             return true
         } catch { groupsError = "Couldn’t create the order: \(error.localizedDescription)"; return false }
     }
@@ -203,9 +222,10 @@ public final class CampSettingsStore: ObservableObject {
         #if os(macOS)
         guard lunchCalendar.canWrite else { return }
         var events = orderEvents
-        let mine = Dictionary(uniqueKeysWithValues: lunchGroups.filter { $0.myOptionId != nil }.map { ($0.id, $0) })
+        let mine = Dictionary(uniqueKeysWithValues: lunchGroups.filter { !$0.myOptionIdList.isEmpty }.map { ($0.id, $0) })
         for (groupId, eventId) in events where mine[groupId] == nil {
-            lunchCalendar.removeOrderEvent(id: eventId); events[groupId] = nil
+            do { try lunchCalendar.removeOrderEvent(id: eventId); events[groupId] = nil }
+            catch { statusMessage = "Order synced; calendar cleanup failed: \(error.localizedDescription)" }
         }
         for (groupId, group) in mine where events[groupId] == nil {
             let item = myOptions(in: group).map(\.name).joined(separator: " · ")
@@ -213,17 +233,44 @@ public final class CampSettingsStore: ObservableObject {
                                        start: lunchCalendar.date(minutes: group.arrivalMinutes),
                                        durationMinutes: group.kind == .coffee ? 15 : saved.personal.lunchDuration,
                                        notes: item.isEmpty ? "Group order via camp" : "\(item) · group order via camp")
-            if let id = try? lunchCalendar.addOrderEvent(order) { events[groupId] = id }
+            do { events[groupId] = try lunchCalendar.addOrderEvent(order) }
+            catch { statusMessage = "Order synced; calendar block failed: \(error.localizedDescription)" }
         }
         orderEvents = events
         #endif
     }
 
     // MARK: standing orders (You → Schedule a new order)
+    private var scheduleEvents: [String: String] {
+        get { UserDefaults.standard.dictionary(forKey: "camp.calendar.schedule-events.v1") as? [String: String] ?? [:] }
+        set { UserDefaults.standard.set(newValue, forKey: "camp.calendar.schedule-events.v1") }
+    }
     public func refreshSchedules() async {
+        schedulesRevision += 1
+        let revision = schedulesRevision
         guard let userId = recommenderUserID else { schedules = []; return }
-        do { schedules = try await client().schedules(userId: userId); scheduleError = nil }
-        catch { scheduleError = "Couldn’t load your standing orders: \(error.localizedDescription)" }
+        do {
+            let response = try await client().schedules(userId: userId)
+            guard revision == schedulesRevision else { return }
+            schedules = response
+            scheduleError = nil
+            #if os(macOS)
+            if lunchCalendar.canWrite {
+                var events = scheduleEvents
+                for schedule in schedules {
+                    if events[schedule.id] == nil, let id = schedule.calendarEventId, lunchCalendar.ownsOrderEvent(id: id) {
+                        events[schedule.id] = id
+                    }
+                }
+                for (scheduleID, eventID) in events where !schedules.contains(where: { $0.id == scheduleID }) {
+                    do { try lunchCalendar.removeOrderEvent(id: eventID); events[scheduleID] = nil }
+                    catch { scheduleError = "Calendar cleanup failed: \(error.localizedDescription)" }
+                }
+                scheduleEvents = events
+            }
+            #endif
+        }
+        catch { if revision == schedulesRevision { scheduleError = "Couldn’t load your standing orders: \(error.localizedDescription)" } }
     }
 
     /// Saves a standing order on the backend, then mirrors it as a recurring event in the camp calendar (Mac only)
@@ -234,65 +281,90 @@ public final class CampSettingsStore: ObservableObject {
         guard !scheduleBusy, (300...1320).contains(timeMinutes), !weekdays.isEmpty else { return false }
         scheduleBusy = true
         defer { scheduleBusy = false }
+        if recommenderUserID == nil {
+            await syncProfile()
+            guard recommenderUserID != nil else { scheduleError = "Connect and sync your profile before scheduling."; return false }
+        }
         do {
-            var schedule = try await client().addSchedule(office: officeRef, userId: recommenderUserID, displayName: saved.personal.displayName,
+            let schedule = try await client().addSchedule(office: officeRef, userId: recommenderUserID, displayName: saved.personal.displayName,
                                                           category: category, label: label, restaurantId: restaurant?.id, optionId: option?.id,
                                                           timeMinutes: timeMinutes, weekdays: weekdays)
+            schedulesRevision += 1
+            schedules.append(schedule)
+            schedules.sort { $0.timeMinutes < $1.timeMinutes }
+            await refreshSchedules()
+            await refreshGroups()
             #if os(macOS)
             if lunchCalendar.canWrite {
                 let title = restaurant.map { "\(schedule.label) · \($0.name)" } ?? schedule.label
                 let order = CampOrderEvent(title: title, start: lunchCalendar.nextOccurrence(minutes: timeMinutes, weekdays: weekdays),
                                            durationMinutes: category == .coffee ? 15 : saved.personal.lunchDuration,
                                            notes: "Standing \(category.label.lowercased()) order via camp", weekdays: weekdays)
-                if let eventId = try? lunchCalendar.addOrderEvent(order) {
-                    schedule = (try? await client().setScheduleEvent(schedule.id, eventId: eventId)) ?? schedule
-                    if schedule.calendarEventId == nil { schedule.calendarEventId = eventId }
-                }
+                do { scheduleEvents[schedule.id] = try lunchCalendar.addOrderEvent(order) }
+                catch { scheduleError = "Standing order saved; calendar block failed: \(error.localizedDescription)" }
             }
             #endif
-            schedules.append(schedule)
-            schedules.sort { $0.timeMinutes < $1.timeMinutes }
-            scheduleError = nil
-            await refreshSchedules()
-            await refreshGroups()          // the backend materialises today's occurrence into a group straight away
             return true
         } catch { scheduleError = "Couldn’t schedule the order: \(error.localizedDescription)"; return false }
     }
 
     public func removeSchedule(_ schedule: LunchSchedule) async {
-        guard let userId = recommenderUserID else { return }
-        #if os(macOS)
-        if let eventId = schedule.calendarEventId { lunchCalendar.removeOrderEvent(id: eventId) }
-        #endif
-        do { _ = try await client().removeSchedule(schedule.id, userId: userId); schedules.removeAll { $0.id == schedule.id }; scheduleError = nil }
+        guard !scheduleBusy, let userId = recommenderUserID else { return }
+        scheduleBusy = true
+        defer { scheduleBusy = false }
+        do {
+            _ = try await client().removeSchedule(schedule.id, userId: userId)
+            schedulesRevision += 1
+            schedules.removeAll { $0.id == schedule.id }
+            scheduleError = nil
+            #if os(macOS)
+            if let eventId = scheduleEvents[schedule.id] {
+                do { try lunchCalendar.removeOrderEvent(id: eventId); scheduleEvents[schedule.id] = nil }
+                catch { scheduleError = "Standing order removed; calendar cleanup failed: \(error.localizedDescription)" }
+            }
+            #endif
+        }
         catch { scheduleError = "Couldn’t remove the standing order: \(error.localizedDescription)" }
     }
     @Published public var selectedGroupID: String?
     public var requestConfirmedDemoGroup: ((DemoLunchGroup, LunchOption) -> Void)?
     public var requestEndDemoGroup: (() -> Void)?
+    public var requestLeftGroup: ((String) -> Void)?
     public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
     public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
-    /// Joins (or changes the meal in) a group. Optimistic locally, then `POST /v1/groups/{id}/join` makes it the
-    /// backend's truth: the member row and a confirmed Order for this lunch.
+    /// Joins (or changes the meal in) a group after the backend acknowledges the selection.
     public func join(_ option: LunchOption, group: DemoLunchGroup) { join([option], group: group) }
     /// Joins with a whole selection (`POST /v1/groups/{id}/join`): one delivery share for the person, one confirmed
     /// Order per item. The selection replaces whatever they had in this group before.
     public func join(_ options: [LunchOption], group: DemoLunchGroup) {
-        guard !options.isEmpty, options.allSatisfy({ group.options.contains($0) }) else { return }
-        if !lunchGroups.contains(where: { $0.id == group.id }) { lunchGroups.append(group) }
-        selectedGroupID = group.id
-        selectedMeals = options
-        groupStage = .collecting
         Task {
             do {
-                let updated = try await client().joinGroup(group.id, office: officeRef, optionIds: options.map(\.id),
-                                                           userId: recommenderUserID, displayName: saved.personal.displayName)
-                if let me = updated.userId { remember(userId: me) }
-                merge(updated)
-                groupsError = nil
-                await refreshGroups()
-                await refreshLedger()
+                let updated = try await joinConfirmed(options, group: group)
+                if let first = myOptions(in: updated).first { requestConfirmedDemoGroup?(updated, first) }
             } catch { groupsError = "Couldn’t join \(group.name): \(error.localizedDescription)" }
+        }
+    }
+
+    @discardableResult
+    public func joinConfirmed(_ options: [LunchOption], group: DemoLunchGroup) async throws -> DemoLunchGroup {
+        guard !groupMutationBusy else { throw LunchError.busy }
+        let available = Set(group.options.map(\.id) + (menu(for: group)?.items.map(\.id) ?? []) + (menu(for: group)?.top.map(\.id) ?? []))
+        guard !options.isEmpty, Set(options.map(\.id)).count == options.count,
+              options.allSatisfy({ available.contains($0.id) }) else { throw LunchError.unknownOption }
+        groupMutationBusy = true
+        defer { groupMutationBusy = false }
+        do {
+            let updated = try await client().joinGroup(group.id, office: officeRef, optionIds: options.map(\.id),
+                                                       userId: recommenderUserID, displayName: saved.personal.displayName)
+            if let me = updated.userId { remember(userId: me) }
+            merge(updated)
+            groupsError = nil
+            await refreshGroups()
+            await refreshLedger()
+            return updated
+        } catch {
+            groupsError = "Couldn’t join \(group.name): \(error.localizedDescription)"
+            throw error
         }
     }
     /// The first item of `selectedMeals`; the notch and the Live Activity show one meal.
@@ -328,7 +400,7 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var ledger: LunchLedgerResponse?
     @Published public var ledgerError: String?
     /// The Ramp employee whose real limits bound this device's spending (Connections → Ramp employee).
-    public var rampEmployeeID: String { draft.connections.rampEmployeeReference }
+    public var rampEmployeeID: String { saved.connections.rampEmployeeReference }
     /// `GET /v1/ramp/limits/{employee}`: the employee's live Ramp limits and their overage requests. nil until the
     /// Ramp card is connected, or when Ramp holds no limit for them.
     @Published var rampLimits: RampSpendLimits?        // internal: the Ramp wire types stay inside this module
@@ -409,6 +481,8 @@ public final class CampSettingsStore: ObservableObject {
     }
     private var saved = CampConfiguration()
     private let file: ConfigurationFile
+    private var profileSyncing = false
+    private var profileSyncRequested = false
 
     public init(file: ConfigurationFile = .applicationDefault) {
         self.file = file
@@ -453,9 +527,13 @@ public final class CampSettingsStore: ObservableObject {
     }
 
     public func save() {
+        guard !groupMutationBusy, !scheduleBusy else { saveError = "Wait for the current order change before saving settings."; return }
         guard validationErrors.isEmpty else { saveError = validationErrors.joined(separator: "\n"); return }
         do {
             try file.save(draft)
+            groupsRevision += 1
+            groupsBusy = false
+            schedulesRevision += 1
             saved = draft
             #if os(macOS)
             lunchCalendar.configure(saved.personal, timezone: saved.office.timezone)
@@ -471,13 +549,26 @@ public final class CampSettingsStore: ObservableObject {
     /// `PUT /v1/profile`: the saved preferences become the user row's settings, so the recommender, the groups and
     /// any other device read the same profile.
     public func syncProfile() async {
-        do {
-            let result = try await client().putProfile(MealContext(configuration: saved, userId: recommenderUserID,
-                                                                   budgetCentsOverride: rampLimits?.perOrderCents))
-            remember(userId: result.userId)
-            statusMessage = "Saved · profile synced to the backend"
-            await refreshAll()
-        } catch { statusMessage = "Saved on this device · backend offline (\(error.localizedDescription))" }
+        profileSyncRequested = true
+        guard !profileSyncing else { return }
+        profileSyncing = true
+        defer { profileSyncing = false }
+        while profileSyncRequested {
+            profileSyncRequested = false
+            let configuration = saved
+            do {
+                let client = try RecommendationClient(urlString: configuration.connections.recommendationURL,
+                                                       token: configuration.connections.recommendationToken)
+                let result = try await client.putProfile(MealContext(configuration: configuration, userId: recommenderUserID,
+                                                                      budgetCentsOverride: rampLimits?.perOrderCents))
+                guard configuration == saved else { continue }
+                remember(userId: result.userId)
+                statusMessage = "Saved · profile synced to the backend"
+                await refreshAll()
+            } catch {
+                if configuration == saved { statusMessage = "Saved on this device · profile sync failed (\(error.localizedDescription))" }
+            }
+        }
     }
 
     public func discard() { draft = saved; saveError = nil; statusMessage = nil }
@@ -489,14 +580,20 @@ public final class CampSettingsStore: ObservableObject {
     /// Leaves one group (`DELETE /v1/groups/{id}/members/{me}`): the member row goes, the order is cancelled and the
     /// calendar block is removed. Other categories' orders are untouched.
     public func leave(_ group: DemoLunchGroup) {
-        if selectedGroupID == group.id { selectedGroupID = nil; selectedMeals = []; groupStage = .collecting; requestEndDemoGroup?() }
-        if let i = lunchGroups.firstIndex(where: { $0.id == group.id }) { lunchGroups[i].myOptionId = nil }
-        syncOrderEvents()
-        guard let userId = recommenderUserID else { return }
         Task {
-            do { merge(try await client().leaveGroup(group.id, userId: userId)); groupsError = nil; await refreshGroups(); await refreshLedger() }
+            do { try await leaveConfirmed(group); requestLeftGroup?(group.id) }
             catch { groupsError = "Couldn’t leave the group: \(error.localizedDescription)" }
         }
+    }
+    public func leaveConfirmed(_ group: DemoLunchGroup) async throws {
+        guard !groupMutationBusy else { throw LunchError.busy }
+        guard let userId = recommenderUserID else { throw LunchError.missingSession }
+        groupMutationBusy = true
+        defer { groupMutationBusy = false }
+        merge(try await client().leaveGroup(group.id, userId: userId))
+        groupsError = nil
+        await refreshGroups()
+        await refreshLedger()
     }
     public func join(_ option: LunchOption) {
         guard groupStage == .collecting else { return }
@@ -505,21 +602,22 @@ public final class CampSettingsStore: ObservableObject {
 
     // MARK: recommender
     public func client() throws -> RecommendationClient {
-        try RecommendationClient(urlString: draft.connections.recommendationURL, token: draft.connections.recommendationToken)
+        try RecommendationClient(urlString: saved.connections.recommendationURL, token: saved.connections.recommendationToken)
     }
 
     public func connectRecommender() async {
         guard !recommenderBusy else { return }
         recommenderBusy = true; recommenderError = nil
         defer { recommenderBusy = false }
-        do { recommenderHealth = try await client().health() }
+        do {
+            recommenderHealth = try await RecommendationClient(urlString: draft.connections.recommendationURL,
+                                                               token: draft.connections.recommendationToken).health()
+        }
         catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run camp serve" }
     }
 
-    /// Called by the platform shell when the lunch card changes phase. Only sessions that came from
-    /// the recommender (option ids match the latest offer) are reported; demo lunches are ignored.
-    public func reportLunch(_ session: LunchSession) {
-        guard let offer = latestOffer, Set(session.options.map(\.id)) == Set(offer.options.map(\.id)) else { return }
+    public func recordLunch(_ session: LunchSession) async throws {
+        guard let offerID = session.offerID else { return }
         let event: String
         switch session.phase {
         case .confirmed: event = "confirmed"
@@ -527,12 +625,9 @@ public final class CampSettingsStore: ObservableObject {
         case .ended: event = "ended"
         default: return
         }
-        guard lastLunchPhase != "\(offer.offerId):\(event)" else { return }
-        lastLunchPhase = "\(offer.offerId):\(event)"
-        Task {
-            do { lastLunchReport = try await client().lunchEvent(offerId: offer.offerId, optionId: session.selectedOptionID, event: event); await refreshLedger() }
-            catch { recommenderError = "Couldn’t record your order: \(error.localizedDescription)" }
-        }
+        lastLunchReport = try await client().lunchEvent(offerId: offerID, optionId: session.selectedOptionID, event: event)
+        lastLunchPhase = "\(offerID):\(event)"
+        await refreshLedger()
     }
 
     /// Asks the recommender for an offer built from the saved configuration and shows it on the lunch card.
@@ -541,12 +636,12 @@ public final class CampSettingsStore: ObservableObject {
         recommenderBusy = true; recommenderError = nil
         defer { recommenderBusy = false }
         do {
-            let context = MealContext(configuration: draft, userId: recommenderUserID,
+            let context = MealContext(configuration: saved, userId: recommenderUserID,
                                       budgetCentsOverride: rampLimits?.perOrderCents)
             let offer = try await client().mealOffer(context, force: force)
             latestOffer = offer
             remember(userId: offer.userId)
-            if let session = offer.lunchSession(office: draft.office.name) { onOffer?(session) }
+            if let session = offer.lunchSession(office: saved.office.name) { onOffer?(session) }
             else { recommenderError = offer.note.isEmpty ? "The recommender returned no options." : offer.note }
         } catch { recommenderError = error.localizedDescription }
     }

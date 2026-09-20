@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Foundation-only client for the Python recommender (`uv run camp serve`).
 public struct RecommendationClient {
@@ -131,8 +134,10 @@ public struct RecommendationClient {
         if let optionId { body["optionId"] = optionId }
         return try await send("v1/schedules", body: json(body))
     }
-    public func setScheduleEvent(_ scheduleId: String, eventId: String?) async throws -> LunchSchedule {
-        try await send("v1/schedules/\(scheduleId)/event", method: "PUT", body: json(["calendarEventId": eventId as Any]))
+    public func setScheduleEvent(_ scheduleId: String, eventId: String?, userId: String) async throws -> LunchSchedule {
+        var body = ["userId": userId]
+        if let eventId { body["calendarEventId"] = eventId }
+        return try await send("v1/schedules/\(scheduleId)/event", method: "PUT", body: json(body))
     }
     public func removeSchedule(_ scheduleId: String, userId: String) async throws -> LunchSchedule {
         try await send("v1/schedules/\(scheduleId)", method: "DELETE", query: ["userId": userId])
@@ -161,4 +166,3 @@ public struct RecommendationClient {
         return try await send("v1/debug/feedback", body: JSONSerialization.data(withJSONObject: payload))
     }
 }
-
