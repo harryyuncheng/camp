@@ -15,8 +15,8 @@ def explain_template(u: User, item: MenuItem, rec: Recommendation) -> str:
     return f"{item.name}: {why or 'a solid pick'}."
 
 
-async def explain_llm(u: User, item: MenuItem, rec: Recommendation, model: str = "anthropic:claude-haiku-4-5-20251001") -> str:
-    if not os.getenv("ANTHROPIC_API_KEY"):
+async def explain_llm(u: User, item: MenuItem, rec: Recommendation, model: str = "openai:gpt-4.1-mini") -> str:
+    if not os.getenv("OPENAI_API_KEY"):
         return explain_template(u, item, rec)
     from pydantic_ai import Agent
     agent = Agent(model, instructions="Write one friendly sentence (max 18 words) telling the user why this lunch was picked for them. "

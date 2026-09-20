@@ -62,7 +62,7 @@ final class NotchPanelController {
         panel.hasShadow = false
         panel.animationBehavior = .none
         panel.isMovable = false
-        panel.setAccessibilityLabel("camp lunch choices")
+        panel.setAccessibilityLabel("camp order choices")
 
         let host = NSHostingView(rootView: NotchContent(
             model: model, motion: motion,
@@ -208,6 +208,25 @@ private struct BodyHeightKey: PreferenceKey {
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
 }
 
+/// Natural height of each expanded screen, keyed by screen. During a crossfade both the outgoing and the
+/// incoming screen are mounted; the stage sizes itself to the incoming one only, so the shell animates
+/// straight to the new height instead of growing to the taller of the two and then settling.
+private struct StageHeightKey: PreferenceKey {
+    static var defaultValue: [String: CGFloat] = [:]
+    static func reduce(value: inout [String: CGFloat], nextValue: () -> [String: CGFloat]) {
+        value.merge(nextValue()) { $1 }
+    }
+}
+
+private extension View {
+    func measuringStage(_ key: String) -> some View {
+        fixedSize(horizontal: false, vertical: true)
+            .background(GeometryReader { proxy in
+                Color.clear.preference(key: StageHeightKey.self, value: [key: proxy.size.height])
+            })
+    }
+}
+
 private struct NotchContent: View {
     @ObservedObject var model: MacLunchModel
     @ObservedObject var motion: PanelMotion
@@ -216,6 +235,9 @@ private struct NotchContent: View {
     let collapse: () -> Void
     let hide: () -> Void
     let measured: (CGFloat) -> Void
+    @State private var stageHeights: [String: CGFloat] = [:]
+
+    private var stageKey: String { model.choosingGroup ? "groups" : "meal-\(model.session.phase)" }
 
     var body: some View {
         // Both presentations remain mounted. Opacity changes and the shell's
@@ -257,21 +279,23 @@ private struct NotchContent: View {
                     .tracking(-0.5).foregroundStyle(.white)
                 Spacer()
                 Button(action: collapse) { Image(systemName: "chevron.up").frame(width: 24, height: 22) }
-                    .help("Collapse lunch").accessibilityLabel("Collapse lunch")
+                    .help("Collapse order").accessibilityLabel("Collapse order")
                 Button(action: hide) { Image(systemName: "xmark").frame(width: 24, height: 22) }
                     .help("Return to menu bar").accessibilityLabel("Return to menu bar")
             }.foregroundStyle(.white.opacity(0.65)).buttonStyle(.plain)
                 .padding(.horizontal, 18).padding(.top, 8)
-            // A stable stage prevents a second shell resize after navigation.
-            // Only the contents crossfade; the header and footer stay anchored.
+            // The stage always takes the natural height of the screen being shown. Contents crossfade;
+            // the header and footer stay anchored while the shell animates to the new height.
             ZStack(alignment: .top) {
                 if model.choosingGroup {
-                    groupPicker.transition(.opacity)
+                    groupPicker.measuringStage("groups").transition(.opacity)
                 } else {
-                    mealContent.id(model.session.phase).transition(.opacity)
+                    mealContent.measuringStage(stageKey).id(model.session.phase).transition(.opacity)
                 }
             }
-            .frame(height: 260, alignment: .top)
+            .frame(height: stageHeights[stageKey], alignment: .top)
+            .clipped()
+            .onPreferenceChange(StageHeightKey.self) { stageHeights.merge($0) { $1 } }
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.choosingGroup)
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.24), value: model.session.phase)
             if let error = model.error {
@@ -282,13 +306,18 @@ private struct NotchContent: View {
                      model.scheduled ? "Next demo arrives in 5 seconds" : "\(model.session.office) · sample prices")
                     .font(.system(size: 10)).foregroundStyle(.white.opacity(0.45))
                 Spacer()
+                if let next = model.others.first {
+                    Button("Next: \(next.session.kind.label.lowercased()) \(next.session.arrivesAt.formatted(date: .omitted, time: .shortened))") { model.show(next) }
+                        .font(.system(size: 10, weight: .medium)).foregroundStyle(LunchStyle.lime)
+                        .help("Show the next order")
+                }
                 if model.session.phase == .confirmed {
                     Button("Simulate arrival") { model.send(.markDelivered, revision: model.session.revision) }
                         .font(.system(size: 10, weight: .medium)).foregroundStyle(LunchStyle.lime)
                 }
                 Menu {
-                    Button("New demo lunch") { model.triggerDemo() }
-                    Button("Lunch in 5 seconds") { hide(); model.triggerAfterDelay() }
+                    Button("New demo order") { model.triggerDemo() }
+                    Button("Order in 5 seconds") { hide(); model.triggerAfterDelay() }
                     Divider()
                     Button("Quit camp") { NSApplication.shared.terminate(nil) }
                 } label: {
@@ -302,7 +331,7 @@ private struct NotchContent: View {
     private var groupPicker: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text("Join lunch?").font(.system(size: 22, weight: .semibold, design: .rounded))
+                Text("Join an order?").font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
                 Text("DEMO").font(.caption2).foregroundStyle(LunchStyle.muted)
             }
@@ -314,7 +343,7 @@ private struct NotchContent: View {
                         Image(systemName: group.symbol).foregroundStyle(LunchStyle.lime).frame(width: 24)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(group.name).font(.system(size: 13, weight: .semibold))
-                            Text("\(group.people + (model.joinedGroupID == group.id ? 1 : 0)) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
+                            Text("\(group.kind.label) · \(group.people + (model.joinedGroupID == group.id ? 1 : 0)) joining · \(group.delivery)").font(.caption2).foregroundStyle(LunchStyle.muted)
                         }
                         Spacer()
                         Image(systemName: "chevron.right").font(.caption)
@@ -357,18 +386,19 @@ private struct NotchContent: View {
                     .foregroundStyle(.white.opacity(0.45))
             }.foregroundStyle(.white).frame(maxWidth: .infinity).frame(height: 32)
                 .contentShape(Rectangle())
-        }.buttonStyle(.plain).accessibilityLabel("Expand lunch choices")
+        }.buttonStyle(.plain).accessibilityLabel("Expand order choices")
     }
 
     private func pillTitle(at now: Date) -> String {
-        if model.choosingGroup { return "Join a lunch group" }
-        if model.session.isExpired(at: now) { return "Lunch window closed" }
+        if model.choosingGroup { return "Join a group order" }
+        let what = model.session.kind == .coffee ? "Coffee" : "Lunch"
+        if model.session.isExpired(at: now) { return "\(what) window closed" }
         switch model.session.phase {
-        case .choosing: return "Lunch is ready"
-        case .reviewing: return "Confirm your lunch"
-        case .confirmed: return "Lunch confirmed"
-        case .delivered: return "Lunch has landed"
-        case .ended: return "Lunch ended"
+        case .choosing: return "\(what) is ready"
+        case .reviewing: return "Confirm your \(what.lowercased())"
+        case .confirmed: return "\(what) confirmed"
+        case .delivered: return "\(what) has landed"
+        case .ended: return "\(what) ended"
         }
     }
 }

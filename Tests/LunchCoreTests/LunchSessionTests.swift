@@ -91,21 +91,31 @@ final class LunchSessionTests: XCTestCase {
     }
 }
 
-final class LunchLedgerTests: XCTestCase {
-    func testConfirmedLunchIsRecordedOnceAndUpdatedOnDelivery() throws {
-        var session = DemoLunch.make()
-        XCTAssertNil(LunchLedger.applying(session, to: [], restaurant: "Demo", source: "demo"))   // nothing before confirm
-        session = try session.applying(.select("green-bowl"))
-        session = try session.applying(.confirm)
-        let confirmed = try XCTUnwrap(LunchLedger.applying(session, to: [], restaurant: "The Green Table", source: "demo"))
-        XCTAssertEqual(confirmed.count, 1)
-        XCTAssertEqual(confirmed[0].restaurant, "The Green Table")
-        XCTAssertEqual(confirmed[0].amountCents, 1140)
-        XCTAssertEqual(confirmed[0].status, "confirmed")
-        session = try session.applying(.markDelivered)
-        let delivered = try XCTUnwrap(LunchLedger.applying(session, to: confirmed, restaurant: "The Green Table", source: "demo"))
-        XCTAssertEqual(delivered.count, 1)
-        XCTAssertEqual(delivered[0].status, "delivered")
-        XCTAssertEqual(LunchLedger.spentCents(delivered), 1140)
+final class BackendContractTests: XCTestCase {
+    func testGroupAndLedgerPayloadsDecode() throws {
+        let group = """
+        {"id":"g_1","name":"CAVA","cuisine":"Mediterranean","symbol":"leaf.fill","people":4,"delivery":"12:30–12:45 PM","arrivalMinutes":750,
+         "options":[{"id":"i_1","name":"Greens bowl","detail":"x","symbol":"leaf.fill","priceCents":1881,"baselineCents":2331,"itemPriceCents":1295}],
+         "restaurantId":"r_1","participants":5,"savingsCents":1796,"deliveryFeeCents":449,"totalCents":9405,"status":"collecting","seeded":true,
+         "members":[{"userId":"u_1","displayName":"Ana","optionId":"i_1"}],"myOptionId":"i_1","userId":"u_me"}
+        """
+        let g = try JSONDecoder().decode(DemoLunchGroup.self, from: Data(group.utf8))
+        XCTAssertEqual(g.options[0].priceCents, 1881)
+        XCTAssertEqual(g.deliverySavingsCents, 1796)
+        XCTAssertEqual(g.myOptionId, "i_1")
+        XCTAssertEqual(g.userId, "u_me")
+        // a group written by an older build (no server fields) still decodes, e.g. from a sync record
+        let legacy = try JSONDecoder().decode(DemoLunchGroup.self, from: JSONEncoder().encode(
+            DemoLunchGroup(id: "x", name: "n", cuisine: "c", symbol: "s", people: 2, delivery: "d", options: g.options)))
+        XCTAssertEqual(legacy.deliverySavingsCents, 600)
+
+        let ledger = """
+        {"userId":"u_me","month":"2026-09","spentMonthCents":1881,"savedMonthCents":450,"monthlyBudgetCents":40000,
+         "entries":[{"id":"o_1","date":"2026-09-20T16:02:11+00:00","office":"HQ","restaurant":"CAVA","item":"Greens bowl","symbol":"leaf.fill",
+                     "amountCents":1881,"baselineCents":2331,"status":"confirmed","source":"group"}]}
+        """
+        let l = try LunchLedgerResponse.decoder.decode(LunchLedgerResponse.self, from: Data(ledger.utf8))
+        XCTAssertEqual(l.entries[0].savingsCents, 450)
+        XCTAssertEqual(Calendar(identifier: .gregorian).component(.year, from: l.entries[0].date), 2026)
     }
 }

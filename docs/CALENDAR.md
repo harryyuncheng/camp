@@ -38,4 +38,4 @@ The timeline uses the office timezone and actual day length, including daylight-
 
 The calendar viewport is 340 points high, matching the map. It forwards scrolling to the page until clicked. Moving the pointer outside or clicking **Done with calendar** returns to page scrolling.
 
-Calendar views now appear in You and Connections. EventKit reads execute in a private actor; only anonymous snapshots return to the main-actor service. Today no longer embeds the calendar.
+The calendar view appears in Connections only. EventKit reads execute in a private actor; only anonymous snapshots return to the main-actor service. Today no longer embeds the calendar.

@@ -213,3 +213,21 @@ port 8788; the in-app flow (Connect → Request lunch offer → Demo tab) was no
 - Connected iPhone 16 Pro on iOS 26.6.2 is wired and paired, but reports Developer Mode disabled and no mounted developer image. Device installation/runtime verification blocked pending phone setup and signing team. No local signing override exists.
 - No macOS upgrade requirement established by this attempt. Existing SwiftUI deprecation and ActivityKit concurrency warnings remain.
 - No app installed, no phone reboot triggered, no simulator/UI interaction or automated tests run. Updated docs/IOS.md with partner handoff steps.
+
+## 2026-09-20 · single database
+
+Backend: `uv run pytest` → 28 passed (new `tests/test_groups.py` covers seeding, join/create/leave with consistent
+orders, the HTTP contract for profile/groups/ledger/restaurants, the Ramp native-client guard and the attempt ledger
+across restarts; `test_sync.py` now persists through the store). Against the live Postgres.app database, `/v1/health`
+reports `database: postgres` and the `groups`, `ramp_attempts` and `sync` tables were created on startup; a curl
+end-to-end run (PUT profile → GET groups → join → GET ledger → psql shows the member and confirmed order → leave)
+passed. Swift: `swift build` clean, `swift test` 17 passed (ledger test replaced by a backend-payload decoding test),
+`scripts/build-ios.sh` succeeded. Not verified: the Mac app driven interactively against the new Today page. Ramp
+`/v1/ramp` returned "Ramp returned HTTP 400" with the configured sandbox credentials; the retired `server.py` from git
+returned the same, so this is the sandbox application's scopes/credentials, not the port.
+
+## Notch panel auto-resizes to each screen — 2026-09-20
+
+- Replaced the fixed 260-point expanded stage with per-screen height measurement. Each screen (group picker, choosing, reviewing, confirmed, delivered, ended) reports its natural height; the stage adopts the incoming screen's height only, so the shell animates directly to the new size rather than growing to the taller of the two crossfading screens and settling afterwards.
+- Header and footer remain anchored; contents still crossfade over 0.24 seconds; Reduce Motion still disables the content animation. Group list keeps its capped scrolling height.
+- `swift build` and `swift test` pass (14 tests). Visual review on the notch pending relaunch.

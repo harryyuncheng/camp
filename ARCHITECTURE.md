@@ -40,14 +40,16 @@ The controller rejects concurrent commands while publishing an update. Buttons e
 
 `SessionFile` atomically writes a versioned JSON envelope. Unknown versions and corruption produce errors rather than silently replacing a saved choice. Mac data lives in Application Support/LunchlineMac; iPhone data is inside the app container. No credentials are stored.
 
-The two devices do not currently share state. A backend should become the authority before enabling cross-device confirmation or real money movement.
+Server-owned state lives in the backend database (`backend/src/camp/store.py`: Postgres via `CAMP_DATABASE_URL`, SQLite otherwise): users and their saved preferences, the catalog, orders, batches, feedback events, lunch groups, Ramp allocation attempts and the shared lunch session. The Swift app never caches these beyond the current screen; every Today/Spending render reads them back through the API, so a change in the database is what the UI shows. Device-only state stays on the device deliberately: calendar selection, the confirmed geofence, connection URLs and the locally persisted lunch session.
+
+The two devices share one lunch through the recommender backend (`LunchSyncCoordinator` in `SessionFile.swift`, `backend/src/camp/sync.py`, persisted in the `sync` table). `LunchSession.applying` stays the single transition implementation; a device publishes the resulting session plus its demo group as a `LunchSyncRecord` with the revision it started from, and the backend compare-and-swaps: same lunch → the expected revision must match and move forward, different lunch → it replaces the current one. A 409 carries the newer record, which the device adopts. Each app long-polls `GET /v1/lunch-session?since=<seq>` (held up to 25 s server-side) and applies records through `MacLunchModel.applyRemote` / `LunchController.applyRemote`; echoes of a device's own write have an equal revision and are ignored. The Mac's group-picker placeholder (`triggerDemo`) is deliberately not published; the phone hears about the lunch when a group is chosen. Identity is a single implicit user for now; real money still needs a server-issued idempotency key and authoritative quotes.
 
 ## Next integration steps
 
 1. Define a backend lunch-offer response with session ID, quote IDs, explicit currency, dietary information, all-in totals, delivery window, and quote expiry.
 2. Map a validated offer into `LunchSession` and call the platform's offer/start entry point. On Mac, `offer(_:)` already provides the auto-expansion seam.
 3. Add a confirmation service with a submitting state, authoritative price checks, idempotency, retryable errors, and a receipt. Only show an order as placed after the provider acknowledges it.
-4. Add backend event delivery and reconcile revisions across devices. APNs would handle iPhone Live Activity updates; choose a separate transport for the running Mac app.
+4. Add APNs push-to-update for the iPhone Live Activity so the Lock Screen changes while camp is backgrounded; today the phone syncs only while foregrounded. The Mac already receives changes through the long-poll.
 5. Add reminder preferences, quiet hours, and a rule for incoming offers when one is already confirmed.
 
 ## Primary Apple references
@@ -70,7 +72,7 @@ Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fe
 
 ## Ramp bridge
 
-`backend/server.py` owns Ramp OAuth, read projections and durable sandbox allocation attempts. `CampRampView`/`CampRampModel` connect through a loopback camp endpoint and persist only the non-sensitive pending request in UserDefaults. The server enforces its own allocation cap and active employee lookup; demo office policy is not an authorization source. This local service is not suitable for remote deployment until camp authentication and office membership exist. See `backend/README.md` for its contract and limitations.
+`backend/src/camp/ramp.py` (mounted at `/v1/ramp` in the FastAPI service; `backend/server.py` is retired) owns Ramp OAuth, read projections and durable sandbox allocation attempts in the `ramp_attempts` table. `CampRampView`/`CampRampModel` use the recommender URL and token and persist only the non-sensitive pending request in UserDefaults. The server enforces its own allocation cap and active employee lookup; demo office policy is not an authorization source. This local service is not suitable for remote deployment until camp authentication and office membership exist. See `backend/README.md` for its contract and limitations.
 
 ## Recommender bridge
 
@@ -81,9 +83,10 @@ it unchanged. `CampSettingsStore.onOffer` is the seam the Mac delegate uses to c
 Demo tab (`CampDemoPage`, bottom-aligned in the sidebar) shows the live offer and renders backend debug JSON loosely via `JSONValue`.
 The recommender's offline catalog is real restaurants around Ramp HQ (`backend/src/camp/catalog.py`, see `backend/PLAN.md`);
 when the app's office is elsewhere the catalog geometry is re-centred on it, so demo distances stay realistic.
-Every confirmed lunch (recommender offer or demo group) is also written to a local `LunchLedger` in UserDefaults by
-`CampSettingsStore.recordLunch`; the Spending page derives monthly spend, savings and recent activity from it and shows
-sample rows only until the first lunch is recorded. Nothing is charged.
+Every confirmed lunch is an `Order` row: recommender picks through `POST /v1/lunch-events`, group lunches through the
+group join. The Spending page reads `GET /v1/ledger/{user}` (monthly spend, delivery savings versus ordering alone,
+budget = 20 × the user's per-meal budget, recent activity). Saving settings calls `PUT /v1/profile`, which stores the
+app's preferences on the user row and applies them the same way an offer request does. Nothing is charged.
 
 ## Mac location
 
@@ -94,13 +97,13 @@ sample rows only until the first lunch is recorded. Nothing is charged.
 `MacLunchCalendar` owns EventKit access and publishes only calendar choices, anonymous free intervals and current availability. `CampSettingsStore` configures it from successfully saved lunch preferences and office timezone and exposes it to directly observing calendar views. Calendar selection persists separately in UserDefaults; access is always checked against the OS. `CampCalendarView` replaces fixture calendar switches and connection previews. The service does not write events or upload event content. See `docs/CALENDAR.md` for interval rules and the macOS 14 runtime compatibility path.
 
 
-## Shared demo group flow
+## Shared group flow
 
-`CampSettingsStore.lunchGroups` starts from `DemoLunchGroup.all`. Creation appends a UUID-backed group with a chosen fixture restaurant/menu and delivery time; joining stores one selected group ID and meal. Other participant counts are fixture data. `peopleOrdering` and `totalSavingsCents` derive from all lunch groups plus the current user's single membership. Coffee is a separate receipt fixture and is excluded from these totals.
+`CampSettingsStore.lunchGroups` is `GET /v1/groups` for the saved office and today (`backend/src/camp/groups.py`, `groups` table). Creation is `POST /v1/groups` at a catalog restaurant; joining is `POST /v1/groups/{id}/join`, which the backend treats as one lunch per person per day (it leaves any other group) and which upserts a confirmed `Order` for the member; leaving is a `DELETE` that cancels it. Participant counts, delivery-fee shares, per-option prices, `peopleOrdering` and `totalSavingsCents` are computed server-side from real membership. `DemoLunchGroup` keeps its historical name as the Swift shape of a group row; `people` excludes the current user so the optimistic local join still renders correctly.
 
 The Mac delegate subscribes the model to the workspace group list and joined-group ID. Today routes View menu through `requestDemoGroup` to `MacLunchModel.chooseGroup`. The notch first offers groups, then uses the existing revision-checked meal session for selection/review/confirmation. Successful confirmation calls `onJoin`, updating the workspace. The list scrolls within a bounded height. Compact hosts without this callback use a menu sheet and explicit local confirmation.
 
-Groups and workspace membership are not persisted. `SessionFile` still persists the meal session, but not its group context. After relaunch, the group picker starts fresh; a persisted meal does not restore workspace membership. Replacing this split persistence is required before shipping or syncing devices.
+Groups and membership persist in the database; after relaunch the group picker and Today reload them and membership comes back with `myOptionId`. `SessionFile` still persists the local meal session for the notch and Live Activity.
 
 ## Rendering and input
 

@@ -46,8 +46,8 @@ def _rec(u: User, it: MenuItem, s: float, br: dict[str, float], h: scoring.Histo
 def plan_office(store: Store, office_id: str, office_loc: LatLng, ctx: Context, live_location: dict[str, LocationKind] | None = None) -> MealPlan:
     users = [u for u in store.users_in_office(office_id)
              if u.location_for(ctx.weekday, ctx.meal, (live_location or {}).get(u.id)) == "office"]
-    rests = {r.id: r for r in store.all(Restaurant)}
-    items_all = store.all(MenuItem)
+    rests = {r.id: r for r in store.all(Restaurant) if "meal" in r.categories}      # coffee-only places never make a meal offer
+    items_all = [i for i in store.all(MenuItem) if i.restaurant_id in rests]
     items = {i.id: i for i in items_all}
     # non-budget filters first (fee share 0 = most permissive); the optimizer re-checks budget per fee share
     feas = filters.feasible(users, rests, items_all, ctx, office_loc, lambda u: "office", lambda u, r: 0)
@@ -108,8 +108,8 @@ def plan_office(store: Store, office_id: str, office_loc: LatLng, ctx: Context, 
 
 def plan_home(store: Store, u: User, office_loc: LatLng, ctx: Context) -> MealPlan:
     """Home orders skip the optimizer: argmax over the feasible set with the full delivery fee."""
-    rests = {r.id: r for r in store.all(Restaurant)}
-    items_all = store.all(MenuItem)
+    rests = {r.id: r for r in store.all(Restaurant) if "meal" in r.categories}      # coffee-only places never make a meal offer
+    items_all = [i for i in store.all(MenuItem) if i.restaurant_id in rests]
     items = {i.id: i for i in items_all}
     feas = filters.feasible([u], rests, items_all, ctx, office_loc, lambda _: "home", lambda _, r: r.fees.delivery_fee_cents)
     h = _history(store, u, items, rests, ctx)

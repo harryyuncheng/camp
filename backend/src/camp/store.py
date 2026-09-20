@@ -14,18 +14,22 @@ from typing import Any, Iterable, TypeVar
 
 from pydantic import BaseModel
 
-from .models import Batch, FeedbackEvent, MenuItem, Order, Restaurant, User
+import threading
+
+from .models import Batch, FeedbackEvent, LunchGroup, MenuItem, Order, RampAttempt, Restaurant, ScheduledOrder, SyncState, User
 
 T = TypeVar("T", bound=BaseModel)
 
 TABLES: dict[type[BaseModel], str] = {
     User: "users", Restaurant: "restaurants", MenuItem: "items",
     Order: "orders", Batch: "batches", FeedbackEvent: "events",
+    LunchGroup: "groups", RampAttempt: "ramp_attempts", SyncState: "sync", ScheduledOrder: "schedules",
 }
 # JSON keys promoted to indexed columns per table (used by the convenience queries)
 INDEXED: dict[str, list[str]] = {
     "users": ["office_id"], "items": ["restaurant_id"], "orders": ["user_id", "date"],
     "events": ["user_id"], "batches": ["office_id", "date"], "restaurants": [],
+    "groups": ["office_id", "date"], "ramp_attempts": [], "sync": [], "schedules": ["user_id"],
 }
 
 DEFAULT_SQLITE = "camp.db"
@@ -37,9 +41,12 @@ class Store:
         self.pg = path_or_url.startswith(("postgres://", "postgresql://"))
         if self.pg:
             import psycopg
-            self.conn = psycopg.connect(path_or_url, autocommit=False)
+            # autocommit: a plain SELECT must not leave a transaction open (that held an ACCESS SHARE lock on every
+            # table and blocked schema migrations from any other process). Writes use an explicit transaction below.
+            self.conn = psycopg.connect(path_or_url, autocommit=True)
         else:
             self.conn = sqlite3.connect(path_or_url, check_same_thread=False)
+        self._lock = threading.RLock()
         self._migrate()
 
     @classmethod
@@ -70,9 +77,10 @@ class Store:
         return f"{col} = %s" if self.pg else f"json_extract(data, '$.{col}') = ?"
 
     def _rows(self, cls: type[T], sql: str, params: tuple = ()) -> list[T]:
-        cur = self.conn.cursor()
-        cur.execute(self._q(sql), params)
-        rows = cur.fetchall()
+        with self._lock:
+            cur = self.conn.cursor()
+            cur.execute(self._q(sql), params)
+            rows = cur.fetchall()
         if self.pg:
             return [cls.model_validate(r[0]) for r in rows]           # JSONB comes back parsed
         return [cls.model_validate_json(r[0]) for r in rows]
@@ -82,22 +90,32 @@ class Store:
         self.put_many([obj])
 
     def put_many(self, objs: Iterable[BaseModel]) -> None:
-        cur = self.conn.cursor()
-        for o in objs:
-            t = TABLES[type(o)]
-            payload = o.model_dump_json()
+        with self._lock:
             if self.pg:
-                cur.execute(f"INSERT INTO {t} (id, data) VALUES (%s, %s::jsonb) "
-                            f"ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()", (o.id, payload))  # type: ignore[attr-defined]
-            else:
-                cur.execute(f"INSERT OR REPLACE INTO {t} (id, data) VALUES (?, ?)", (o.id, payload))  # type: ignore[attr-defined]
-        self.conn.commit()
+                with self.conn.transaction():
+                    cur = self.conn.cursor()
+                    for o in objs:
+                        cur.execute(f"INSERT INTO {TABLES[type(o)]} (id, data) VALUES (%s, %s::jsonb) "
+                                    f"ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
+                return
+            cur = self.conn.cursor()
+            for o in objs:
+                cur.execute(f"INSERT OR REPLACE INTO {TABLES[type(o)]} (id, data) VALUES (?, ?)", (o.id, o.model_dump_json()))  # type: ignore[attr-defined]
+            self.conn.commit()
 
     def delete_all(self, cls: type[BaseModel]) -> int:
-        cur = self.conn.cursor()
-        cur.execute(f"DELETE FROM {TABLES[cls]}")
-        self.conn.commit()
-        return cur.rowcount
+        with self._lock:
+            cur = self.conn.cursor()
+            cur.execute(f"DELETE FROM {TABLES[cls]}")
+            self.conn.commit()
+            return cur.rowcount
+
+    def delete(self, cls: type[BaseModel], id: str) -> bool:
+        with self._lock:
+            cur = self.conn.cursor()
+            cur.execute(self._q(f"DELETE FROM {TABLES[cls]} WHERE id = %s"), (id,))
+            self.conn.commit()
+            return cur.rowcount > 0
 
     def get(self, cls: type[T], id: str) -> T | None:
         rows = self._rows(cls, f"SELECT data FROM {TABLES[cls]} WHERE id = %s", (id,))
@@ -107,9 +125,10 @@ class Store:
         return self._rows(cls, f"SELECT data FROM {TABLES[cls]}")
 
     def count(self, cls: type[BaseModel]) -> int:
-        cur = self.conn.cursor()
-        cur.execute(f"SELECT count(*) FROM {TABLES[cls]}")
-        return int(cur.fetchone()[0])
+        with self._lock:
+            cur = self.conn.cursor()
+            cur.execute(f"SELECT count(*) FROM {TABLES[cls]}")
+            return int(cur.fetchone()[0])
 
     # ------------------------------------------------------------ indexed queries
     def users_in_office(self, office_id: str) -> list[User]:
@@ -123,6 +142,15 @@ class Store:
 
     def events_for(self, user_id: str) -> list[FeedbackEvent]:
         return self._rows(FeedbackEvent, f"SELECT data FROM events WHERE {self._where('events', 'user_id')}", (user_id,))
+
+    def schedules_for(self, user_id: str) -> list[ScheduledOrder]:
+        return sorted(self._rows(ScheduledOrder, f"SELECT data FROM schedules WHERE {self._where('schedules', 'user_id')}", (user_id,)),
+                      key=lambda s: (s.time_minutes, s.created_at))
+
+    def groups_for(self, office_id: str, date: str) -> list[LunchGroup]:
+        rows = self._rows(LunchGroup, f"SELECT data FROM groups WHERE {self._where('groups', 'office_id')} AND {self._where('groups', 'date')}",
+                          (office_id, date))
+        return sorted(rows, key=lambda g: (g.delivery_minutes, g.created_at))
 
     # ------------------------------------------------------------ ops
     def copy_from(self, other: "Store") -> dict[str, int]:

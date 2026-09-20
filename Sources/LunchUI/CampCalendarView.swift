@@ -47,10 +47,11 @@ struct CampCalendarView: View {
                 Menu {
                     Button("Calendar settings") { calendar.openSettings() }
                     if calendar.enabled { Button("Pause calendar access") { calendar.pause() } }
-                    Toggle("All-day events block lunch", isOn: Binding(get: { calendar.blockAllDay }, set: { calendar.setBlockAllDay($0) }))
+                    Toggle("All-day events block orders", isOn: Binding(get: { calendar.blockAllDay }, set: { calendar.setBlockAllDay($0) }))
                 } label: { Image(systemName: "ellipsis.circle").font(.title3) }.menuStyle(.borderlessButton).fixedSize()
             }
-            Text("Lunch is suggested, not booked. Change timing in You.")
+            Text(calendar.campCalendarID == nil ? "The meal window is suggested. Orders you join are written to a “camp” calendar. Change timing in You."
+                 : "Orders you join and standing orders are written to your “camp” calendar. Change timing in You.")
                 .font(.caption).foregroundStyle(CampPalette.muted)
         }
         #else
@@ -109,7 +110,7 @@ private struct CampDayTimeline: View {
             }
             HStack(spacing: 14) {
                 Label("Busy + buffer", systemImage: "square.fill").foregroundStyle(Color(red: 0.45, green: 0.52, blue: 0.65))
-                Label("Suggested lunch", systemImage: "square.fill").foregroundStyle(CampPalette.green)
+                Label("Suggested meal", systemImage: "square.fill").foregroundStyle(CampPalette.green)
             }.font(.caption)
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
@@ -129,7 +130,7 @@ private struct CampDayTimeline: View {
                                     .offset(x: 56, y: y(block.start))
                             }
                             if let lunch {
-                                blockView("Lunch · suggested", interval: lunch, isLunch: true)
+                                blockView("Meal · suggested", interval: lunch, isLunch: true)
                                     .frame(width: max(0, geometry.size.width - 66), height: max(12, y(lunch.end) - y(lunch.start)), alignment: .topLeading)
                                     .offset(x: 56, y: y(lunch.start))
                             }
@@ -161,7 +162,7 @@ private struct CampDayTimeline: View {
                     .onChange(of: day.start) { _ in scroll(proxy) }
             }
             if let lunch {
-                Text("Suggested lunch: \(calendar.label(lunch))").font(.callout.weight(.medium)).foregroundStyle(CampPalette.green)
+                Text("Suggested meal: \(calendar.label(lunch))").font(.callout.weight(.medium)).foregroundStyle(CampPalette.green)
             } else { Text(calendar.summary).font(.callout).foregroundStyle(CampPalette.muted) }
         }
     }

@@ -39,6 +39,13 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         panel = NotchPanelController(model: model)
         settings.onOffer = { [weak self] session in self?.model.offer(session) }
         model.onTransition = { [weak self] session in self?.settings.reportLunch(session) }
+        model.sync.onStatus = { [weak self] status in self?.settings.syncStatus = status }
+        settings.onConnectionsChanged = { [weak self] connections in
+            guard let self else { return }
+            self.model.sync.configure(urlString: connections.recommendationURL, token: connections.recommendationToken)
+            self.model.sync.start()
+        }
+        Task { await settings.refreshAll() }     // groups + ledger from the backend for the notch picker and Today
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         let logo = NSImage(size: NSSize(width: 22, height: 16), flipped: true) { rect in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
@@ -55,9 +62,9 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         add("Settings", action: #selector(openSettings), to: menu)
         add("iPhone layout preview", action: #selector(openPhonePreview), to: menu)
         menu.addItem(.separator())
-        add("Show lunch", action: #selector(show), to: menu)
-        add("Trigger new lunch now", action: #selector(trigger), to: menu)
-        add("Trigger lunch in 5 seconds", action: #selector(schedule), to: menu)
+        add("Show order", action: #selector(show), to: menu)
+        add("Trigger new order now", action: #selector(trigger), to: menu)
+        add("Trigger order in 5 seconds", action: #selector(schedule), to: menu)
         menu.addItem(.separator())
         add("Collapse to pill", action: #selector(collapse), to: menu)
         add("Hide panel", action: #selector(hide), to: menu)
@@ -67,7 +74,7 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.target = self
         statusItem.button?.action = #selector(statusClicked)
         statusItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
-        statusItem.button?.toolTip = "camp · click to show lunch, right-click for controls"
+        statusItem.button?.toolTip = "camp · click to show your order, right-click for controls"
         openWorkspace()
     }
 

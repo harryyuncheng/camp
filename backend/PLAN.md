@@ -51,7 +51,7 @@ fallback classifier. No model ever picks a meal directly.
 4. **Jev adapter** — Uses pydantic-ai. Each "question set" is a pydantic model; Jev answers all fields in one request (docs say
    multiple fields per model are fine, one request per route). Confidence taken from `provider_details['confidence']`,
    per-field probabilities from `provider_details['probabilities']` when present, else the response-level confidence is used for
-   every field. LLM fallback = `anthropic:claude-haiku-4-5-20251001` with the same output schema; its confidence is a fixed 0.7
+   every field. LLM fallback = `openai:gpt-4.1-mini` with the same output schema; its confidence is a fixed 0.7
    (LLMs are not calibrated) so it lands in "medium" routing. `MockClassifier` is keyword-driven for offline tests.
 5. **Feedback processor** — All updates are additive on per-attribute affinity weights with time decay γ per day. Stated
    preferences and revealed (behavioural) preferences are separate dicts on the profile.

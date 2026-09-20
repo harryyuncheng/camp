@@ -1,7 +1,7 @@
 """`classify(state, schema) → typed answer + probabilities`, behind one interface (§7).
 
 JevClassifier   — TypeSafe Jev via pydantic-ai. Primary.
-LLMClassifier   — Claude with structured output, same schemas. Fallback + 'other' extraction.
+LLMClassifier   — OpenAI with structured output, same schemas. Fallback + 'other' extraction.
 MockClassifier  — keyword rules, offline. Used in tests and the synthetic eval.
 RoutedClassifier— Jev first, LLM on error/timeout.
 """
@@ -75,7 +75,7 @@ class JevClassifier:
 # ------------------------------------------------------------ LLM fallback
 
 class LLMClassifier:
-    def __init__(self, model_name: str = "anthropic:claude-haiku-4-5-20251001"):
+    def __init__(self, model_name: str = "openai:gpt-4.1-mini"):
         self.model_name = model_name
 
     async def ask(self, state: str, schema: type[T]) -> Answer[T]:
@@ -133,10 +133,10 @@ class RoutedClassifier:
 
 
 def default_classifier() -> Classifier:
-    """Jev if TYPESAFE_API_KEY is set (LLM fallback if ANTHROPIC_API_KEY too), else mock."""
+    """Jev if TYPESAFE_API_KEY is set (LLM fallback if OPENAI_API_KEY too), else mock."""
     if os.getenv("TYPESAFE_API_KEY"):
         jev = JevClassifier()
-        return RoutedClassifier(jev, LLMClassifier()) if os.getenv("ANTHROPIC_API_KEY") else jev
-    if os.getenv("ANTHROPIC_API_KEY"):
+        return RoutedClassifier(jev, LLMClassifier()) if os.getenv("OPENAI_API_KEY") else jev
+    if os.getenv("OPENAI_API_KEY"):
         return LLMClassifier()
     return MockClassifier()

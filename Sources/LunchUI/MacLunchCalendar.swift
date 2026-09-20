@@ -12,9 +12,107 @@ public struct CampCalendarChoice: Identifiable, Sendable {
     public let account: String
 }
 
-/// Reads local calendar events; only anonymous busy/free intervals leave this object.
+/// An order block camp writes to its own calendar: a one-off ("Meal · Dig, 12:30") or a standing order on weekdays.
+public struct CampOrderEvent: Sendable {
+    public var title: String
+    public var start: Date
+    public var durationMinutes: Int
+    public var notes: String = ""
+    /// Backend weekday numbers (0 = Monday). Empty → a single event on `start`'s day.
+    public var weekdays: [Int] = []
+    public init(title: String, start: Date, durationMinutes: Int, notes: String = "", weekdays: [Int] = []) {
+        self.title = title; self.start = start; self.durationMinutes = durationMinutes; self.notes = notes; self.weekdays = weekdays
+    }
+}
+
+/// Reads local calendar events for availability; only anonymous busy/free intervals leave this object. Writes go
+/// exclusively to the dedicated "camp" calendar it creates, so nothing of the user's own calendars is ever changed.
 @MainActor
 public final class MacLunchCalendar: ObservableObject {
+    public static let campCalendarTitle = "camp"
+    private let campCalendarKey = "camp.calendar.camp-id.v1"
+    /// Identifier of the "camp" calendar once created; its events never count as busy time.
+    @Published public private(set) var campCalendarID: String? = UserDefaults.standard.string(forKey: "camp.calendar.camp-id.v1")
+    public var canWrite: Bool { canRead }
+
+    /// The "camp" calendar, created on first use in the iCloud account when there is one, else locally.
+    public func campCalendar() throws -> EKCalendar {
+        guard canWrite else { throw CampCalendarError.noAccess }
+        if let id = campCalendarID, let existing = events.calendar(withIdentifier: id) { return existing }
+        if let existing = events.calendars(for: .event).first(where: { $0.title == Self.campCalendarTitle && $0.allowsContentModifications }) {
+            remember(calendar: existing); return existing
+        }
+        let calendar = EKCalendar(for: .event, eventStore: events)
+        calendar.title = Self.campCalendarTitle
+        calendar.cgColor = NSColor(red: 0.42, green: 0.62, blue: 0.16, alpha: 1).cgColor
+        let sources = events.sources
+        calendar.source = sources.first { $0.sourceType == .calDAV && $0.title.localizedCaseInsensitiveContains("icloud") }
+            ?? events.defaultCalendarForNewEvents?.source
+            ?? sources.first { $0.sourceType == .local }
+            ?? sources.first { $0.sourceType == .calDAV }
+        guard calendar.source != nil else { throw CampCalendarError.noSource }
+        try events.saveCalendar(calendar, commit: true)
+        remember(calendar: calendar)
+        return calendar
+    }
+    private func remember(calendar: EKCalendar) {
+        campCalendarID = calendar.calendarIdentifier
+        UserDefaults.standard.set(calendar.calendarIdentifier, forKey: campCalendarKey)
+    }
+
+    /// Writes an order block into the camp calendar and returns its EventKit identifier.
+    @discardableResult
+    public func addOrderEvent(_ order: CampOrderEvent) throws -> String {
+        let calendar = try campCalendar()
+        let event = EKEvent(eventStore: events)
+        event.calendar = calendar
+        event.title = order.title
+        event.notes = order.notes.isEmpty ? nil : order.notes
+        event.startDate = order.start
+        event.endDate = order.start.addingTimeInterval(Double(max(5, order.durationMinutes)) * 60)
+        event.availability = .busy
+        event.timeZone = TimeZone(identifier: timezone)
+        let days = order.weekdays.filter { (0...6).contains($0) }
+        if !days.isEmpty {
+            // Backend weekdays are 0 = Monday; EKWeekday is 1 = Sunday.
+            let ek = days.compactMap { EKWeekday(rawValue: ($0 + 1) % 7 + 1) }.map { EKRecurrenceDayOfWeek($0) }
+            event.recurrenceRules = [EKRecurrenceRule(recurrenceWith: .weekly, interval: 1, daysOfTheWeek: ek, daysOfTheMonth: nil,
+                                                      monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: nil)]
+        }
+        try events.save(event, span: .futureEvents, commit: true)
+        refresh()
+        return event.eventIdentifier
+    }
+
+    /// Removes an order block (and every future occurrence of a standing one). Missing events are not an error.
+    public func removeOrderEvent(id: String) {
+        guard canWrite, let event = events.event(withIdentifier: id) else { return }
+        try? events.remove(event, span: .futureEvents, commit: true)
+        refresh()
+    }
+
+    /// A date on `day` at `minutes` from midnight in the office timezone.
+    public func date(minutes: Int, on day: Date = .now) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: timezone) ?? .current
+        return calendar.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: day) ?? day
+    }
+
+    /// The next occurrence of `minutes` on one of `weekdays` (0 = Monday), today included if still ahead.
+    public func nextOccurrence(minutes: Int, weekdays: [Int], from now: Date = .now) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: timezone) ?? .current
+        let allowed = Set(weekdays.isEmpty ? Array(0...6) : weekdays)
+        for offset in 0..<8 {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: now) else { continue }
+            let weekday = (calendar.component(.weekday, from: day) + 5) % 7      // Sunday=1 → 6, Monday=2 → 0
+            guard allowed.contains(weekday) else { continue }
+            let at = date(minutes: minutes, on: day)
+            if at > now { return at }
+        }
+        return date(minutes: minutes, on: now)
+    }
+
     @Published public private(set) var enabled: Bool
     @Published public private(set) var requesting = false
     @Published public private(set) var permission = "Not connected"
@@ -22,7 +120,7 @@ public final class MacLunchCalendar: ObservableObject {
     @Published public private(set) var selected: Set<String>
     @Published public private(set) var blockAllDay: Bool
     @Published public private(set) var summary = "Calendar not connected"
-    @Published public private(set) var detail = "Connect your Mac calendars to find time for lunch."
+    @Published public private(set) var detail = "Connect your Mac calendars to find time for your orders."
     @Published public private(set) var freeWindows: [DateInterval] = []
     @Published public private(set) var busyBlocks: [DateInterval] = []
     @Published public private(set) var timelineDay: DateInterval?
@@ -70,6 +168,15 @@ public final class MacLunchCalendar: ObservableObject {
     }
     public var canRead: Bool { EKEventStore.authorizationStatus(for: .event) == .authorized }
     public var missingSelections: Set<String> { selected.subtracting(Set(calendars.map(\.id))) }
+    public enum CampCalendarError: LocalizedError {
+        case noAccess, noSource
+        public var errorDescription: String? {
+            switch self {
+            case .noAccess: return "Connect your Mac calendars first (Connections → Connect calendars)."
+            case .noSource: return "No calendar account can hold the camp calendar. Add an account in the Calendar app."
+            }
+        }
+    }
     public func configure(_ preferences: PersonalPreferences, timezone: String) {
         self.preferences = preferences; self.timezone = timezone; refresh()
     }
@@ -121,7 +228,7 @@ public final class MacLunchCalendar: ObservableObject {
     public func refresh() {
         refreshTask?.cancel(); revision += 1
         guard !sleeping else { return }
-        guard enabled else { clear("Calendar not connected", "Connect your Mac calendars to find time for lunch."); return }
+        guard enabled else { clear("Calendar not connected", "Connect your Mac calendars to find time for your orders."); return }
         switch EKEventStore.authorizationStatus(for: .event) {
         case .authorized: permission = "Full access"
         case .denied: permission = "Denied"
@@ -130,7 +237,7 @@ public final class MacLunchCalendar: ObservableObject {
         @unknown default: permission = "Full access required"
         }
         guard canRead else {
-            calendars = []; clear("Calendar access needed", "Allow full calendar access in macOS settings. camp only reads availability and never changes events."); return
+            calendars = []; clear("Calendar access needed", "Allow full calendar access in macOS settings. camp reads availability and writes only to its own “camp” calendar."); return
         }
         var calendar = Calendar(identifier: .gregorian)
         guard let zone = TimeZone(identifier: timezone) else { clear("Invalid timezone", "Set the office timezone in Office."); return }
@@ -139,21 +246,22 @@ public final class MacLunchCalendar: ObservableObject {
         guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: day),
               let start = calendar.date(bySettingHour: preferences.lunchStart / 60, minute: preferences.lunchStart % 60, second: 0, of: day),
               let end = calendar.date(bySettingHour: preferences.lunchEnd / 60, minute: preferences.lunchEnd % 60, second: 0, of: day), start < end else {
-            clear("Invalid lunch window", "Save a valid lunch window in You."); return
+            clear("Invalid meal window", "Save a valid meal window in You."); return
         }
         let buffer = Double(preferences.meetingBuffer * 60)
         let expectedRevision = revision
         let selectedIDs = selected
         let includeAllDay = blockAllDay
+        let ownCalendar = campCalendarID
         refreshTask = Task { [weak self, reader] in
-            let result = await reader.read(selected: selectedIDs, blockAllDay: includeAllDay,
+            let result = await reader.read(selected: selectedIDs, blockAllDay: includeAllDay, ignoring: ownCalendar,
                                            from: day.addingTimeInterval(-buffer), to: tomorrow.addingTimeInterval(buffer), buffer: buffer)
             guard let self, !Task.isCancelled, self.revision == expectedRevision, self.enabled, !self.sleeping else { return }
             guard self.canRead else {
                 self.calendars = []; self.clear("Calendar access needed", "Calendar permission changed. Reconnect before using availability."); return
             }
             self.calendars = result.calendars
-            guard !self.selected.isEmpty else { self.clear("Choose calendars", "Select the calendars that should block lunch."); return }
+            guard !self.selected.isEmpty else { self.clear("Choose calendars", "Select the calendars that should block your orders."); return }
             guard self.missingSelections.isEmpty else { self.clear("Calendar unavailable", "A selected calendar is missing. Restore it in Calendar or remove it below."); return }
             let busy = result.busy
             var merged: [DateInterval] = []
@@ -177,9 +285,9 @@ public final class MacLunchCalendar: ObservableObject {
             if cursor < end { gaps.append(DateInterval(start: cursor, end: end)) }
             freeWindows = gaps.filter { $0.duration >= Double(self.preferences.lunchDuration * 60) }
             checkedAt = now
-            if now >= end { summary = "Today’s lunch window has ended" }
-            else if freeWindows.isEmpty { summary = "No lunch window available" }
-            else { summary = "\(freeWindows.count) lunch \(freeWindows.count == 1 ? "window" : "windows") available" }
+            if now >= end { summary = "Today’s meal window has ended" }
+            else if freeWindows.isEmpty { summary = "No meal window available" }
+            else { summary = "\(freeWindows.count) meal \(freeWindows.count == 1 ? "window" : "windows") available" }
             detail = "\(preferences.lunchDuration) minutes to eat · \(preferences.meetingBuffer)-minute meeting buffer · \(zone.identifier)"
         }
     }
@@ -197,15 +305,16 @@ private struct CampCalendarRead: Sendable {
 private actor CampCalendarReader {
     private lazy var events = EKEventStore()
     func reset() { events.reset() }
-    func read(selected: Set<String>, blockAllDay: Bool, from: Date, to: Date, buffer: TimeInterval) -> CampCalendarRead {
+    func read(selected: Set<String>, blockAllDay: Bool, ignoring: String?, from: Date, to: Date, buffer: TimeInterval) -> CampCalendarRead {
         guard !Task.isCancelled, EKEventStore.authorizationStatus(for: .event) == .authorized else {
             return CampCalendarRead(calendars: [], busy: [])
         }
         let sources = events.calendars(for: .event)
         let calendars = sources.map { CampCalendarChoice(id: $0.calendarIdentifier, name: $0.title, account: $0.source.title) }
             .sorted { ($0.account, $0.name, $0.id) < ($1.account, $1.name, $1.id) }
-        let chosen = sources.filter { selected.contains($0.calendarIdentifier) }
-        guard !Task.isCancelled, !chosen.isEmpty, chosen.count == selected.count else { return CampCalendarRead(calendars: calendars, busy: []) }
+        // camp's own order blocks must not count as busy time, or every scheduled order would block itself.
+        let chosen = sources.filter { selected.contains($0.calendarIdentifier) && $0.calendarIdentifier != ignoring }
+        guard !Task.isCancelled, !chosen.isEmpty, chosen.count == selected.subtracting([ignoring ?? ""]).count else { return CampCalendarRead(calendars: calendars, busy: []) }
         let predicate = events.predicateForEvents(withStart: from, end: to, calendars: chosen)
         let busy = events.events(matching: predicate).compactMap { event -> DateInterval? in
             guard event.status != .canceled, event.availability != .free,

@@ -84,7 +84,14 @@ struct LunchlineApp: App {
                     guard let session = model.session, !session.isFinished else { return }
                     run { try await model.handle(.end, sessionID: session.id.uuidString, revision: session.revision) }
                 }
+                model.onRemoteLunch = { showingActivity = true }
+                model.sync.onStatus = { status in settings.syncStatus = status }
+                settings.onConnectionsChanged = { connections in
+                    model.sync.configure(urlString: connections.recommendationURL, token: connections.recommendationToken)
+                    if scenePhase == .active { model.sync.start() }
+                }
                 await model.refresh()
+                await settings.refreshAll()
                 syncMembership()
             }
             .onReceive(model.$session) { _ in
@@ -92,7 +99,10 @@ struct LunchlineApp: App {
                 Task { @MainActor in syncMembership() }
             }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active { Task { await model.refresh(); syncMembership() } }
+                // The long-poll only runs while the app is on screen; iOS suspends it otherwise, and the
+                // first fetch after returning catches up on anything the Mac did meanwhile.
+                if phase == .active { model.sync.start(); Task { await model.refresh(); syncMembership() } }
+                else { model.sync.stop() }
             }
             .onOpenURL { url in
                 guard ["camp", "lunchline"].contains(url.scheme ?? ""), url.host == "lunch" else { return }

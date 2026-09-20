@@ -21,6 +21,17 @@ public struct LunchOption: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
+/// What an order is for. Two categories for now; a place can serve both.
+public enum OrderCategory: String, Codable, CaseIterable, Identifiable, Sendable {
+    case coffee, meal
+    public var id: String { rawValue }
+    public var label: String { self == .coffee ? "Coffee & tea" : "Meal" }
+    public var symbol: String { self == .coffee ? "cup.and.saucer.fill" : "fork.knife" }
+    /// Default arrival time when the user hasn't typed one, minutes from midnight.
+    public var defaultMinutes: Int { self == .coffee ? 9 * 60 : 12 * 60 + 30 }
+    public init(wire: String?) { self = OrderCategory(rawValue: wire ?? "") ?? .meal }
+}
+
 public enum LunchPhase: String, Codable, Sendable {
     case choosing, reviewing, confirmed, delivered, ended
 }
@@ -34,11 +45,11 @@ public enum LunchError: LocalizedError, Equatable {
 
     public var errorDescription: String? {
         switch self {
-        case .expired: return "This lunch window has closed. Start a new demo lunch."
-        case .invalidTransition: return "That action is no longer available for this lunch."
-        case .unknownOption: return "This meal is no longer available."
-        case .staleAction: return "Your lunch has changed. Please use the latest options."
-        case .missingSession: return "This lunch is no longer active. Open camp to start another."
+        case .expired: return "This order window has closed. Start a new demo order."
+        case .invalidTransition: return "That action is no longer available for this order."
+        case .unknownOption: return "This item is no longer available."
+        case .staleAction: return "Your order has changed. Please use the latest options."
+        case .missingSession: return "This order is no longer active. Open camp to start another."
         case .busy: return "Your last action is still finishing. Try again in a moment."
         }
     }
@@ -52,6 +63,11 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
     public let options: [LunchOption]
     public let closesAt: Date
     public let arrivesAt: Date
+    /// "coffee" or "meal". Optional so sessions saved by older builds decode; read `kind`.
+    public var category: String?
+    /// Where the order is from ("Dig", "Blue Bottle"), when known.
+    public var place: String?
+    public var kind: OrderCategory { OrderCategory(wire: category) }
     public private(set) var phase: LunchPhase = .choosing
     public private(set) var selectedOptionID: String?
     public private(set) var revision: Int = 0
@@ -60,12 +76,14 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
     public var isFinished: Bool { phase == .delivered || phase == .ended }
 
     public init(id: UUID = UUID(), office: String, options: [LunchOption],
-                closesAt: Date, arrivesAt: Date) {
+                closesAt: Date, arrivesAt: Date, category: OrderCategory = .meal, place: String? = nil) {
         self.id = id
         self.office = office
         self.options = options
         self.closesAt = closesAt
         self.arrivesAt = arrivesAt
+        self.category = category.rawValue
+        self.place = place
     }
 
     public func isExpired(at now: Date = .now) -> Bool {
@@ -120,6 +138,9 @@ public enum DemoLunch {
 }
 
 
+/// A pending office lunch group as the backend serves it (`GET /v1/groups`). The name is historical: groups used to be
+/// Swift fixtures. Every field the card renders comes from the `groups` table; `people` excludes the current user so
+/// the notch and Today page can add themselves while a join is in flight.
 public struct DemoLunchGroup: Codable, Identifiable, Hashable, Sendable {
     public let id: String
     public let name: String
@@ -129,98 +150,150 @@ public struct DemoLunchGroup: Codable, Identifiable, Hashable, Sendable {
     public let delivery: String
     public let options: [LunchOption]
     public let arrivalMinutes: Int
+    /// "coffee" or "meal"; absent in records written by older builds.
+    public var category: String?
+    public var kind: OrderCategory { OrderCategory(wire: category) }
+    // Server-only fields (absent when a group is rebuilt locally, e.g. from a sync record written by an older build).
+    public var restaurantId: String?
+    public var participants: Int?
+    public var savingsCents: Int?
+    public var deliveryFeeCents: Int?
+    public var totalCents: Int?
+    public var status: String?
+    public var seeded: Bool?
+    public var myOptionId: String?
+    /// The backend's id for the requesting user; set on join/create so a first-time user learns their row id.
+    public var userId: String?
+
     public init(id: String, name: String, cuisine: String, symbol: String, people: Int,
-                delivery: String, options: [LunchOption], arrivalMinutes: Int? = nil) {
+                delivery: String, options: [LunchOption], arrivalMinutes: Int? = nil, category: OrderCategory = .meal) {
         self.id = id; self.name = name; self.cuisine = cuisine; self.symbol = symbol
         self.people = people; self.delivery = delivery; self.options = options
-        self.arrivalMinutes = arrivalMinutes ?? (id == "noodle-club" ? 765 : id == "sandwich-social" ? 780 : 750)
+        self.arrivalMinutes = arrivalMinutes ?? 750
+        self.category = category.rawValue
     }
-    public var deliverySavingsCents: Int { max(0, people - 1) * 600 }
+    /// Delivery-fee savings from sharing one delivery, as the backend computed them from real membership.
+    public var deliverySavingsCents: Int { savingsCents ?? max(0, people - 1) * (deliveryFeeCents ?? 600) }
     public func arrival(on date: Date = .now) -> Date {
         let minutes = arrivalMinutes
         return Calendar.current.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: date) ?? date
     }
+}
 
-    public static let all: [DemoLunchGroup] = [
-        .init(id: "green-table", name: "The Green Table", cuisine: "Bowls & seasonal plates", symbol: "leaf.fill", people: 3, delivery: "12:30–12:45 PM", options: DemoLunch.make().options),
-        .init(id: "noodle-club", name: "Noodle Club", cuisine: "Noodles & dumplings", symbol: "flame.fill", people: 4, delivery: "12:45–1:00 PM", options: [
-            .init(id: "miso", name: "Miso ramen", detail: "Mushrooms · corn · spring onion", symbol: "flame.fill", priceCents: 1350, baselineCents: 1650),
-            .init(id: "sesame", name: "Sesame noodles", detail: "Chilled noodles · cucumber", symbol: "leaf.fill", priceCents: 1150, baselineCents: 1450),
-            .init(id: "dumplings", name: "Dumpling bowl", detail: "Pork dumplings · rice · slaw", symbol: "fork.knife", priceCents: 1250, baselineCents: 1550)
-        ]),
-        .init(id: "sandwich-social", name: "Sandwich Social", cuisine: "Sandwiches & salads", symbol: "sun.max.fill", people: 2, delivery: "1:00–1:15 PM", options: [
-            .init(id: "turkey", name: "Turkey club", detail: "Avocado · tomato · sourdough", symbol: "sun.max.fill", priceCents: 1200, baselineCents: 1500),
-            .init(id: "caprese", name: "Caprese baguette", detail: "Mozzarella · basil · tomato", symbol: "leaf.fill", priceCents: 1100, baselineCents: 1400),
-            .init(id: "caesar", name: "Chicken Caesar", detail: "Romaine · parmesan · croutons", symbol: "fork.knife", priceCents: 1300, baselineCents: 1600)
-        ])
-    ]
+/// `GET /v1/groups` for one office and day.
+public struct LunchGroupsResponse: Codable, Equatable, Sendable {
+    public let date: String
+    public let officeId: String
+    public let userId: String?
+    public let groups: [DemoLunchGroup]
+    public let peopleOrdering: Int
+    public let totalSavingsCents: Int
+}
+
+/// A restaurant from the catalog with the three items a new group would offer (`GET /v1/restaurants`).
+public struct LunchRestaurant: Codable, Identifiable, Hashable, Sendable {
+    public let id: String
+    public let name: String
+    public let cuisine: String
+    public let symbol: String
+    public let rating: Double?
+    public var reviewCount: Int?
+    public var categories: [String]?
+    public let options: [LunchOption]
+    public func serves(_ category: OrderCategory) -> Bool { (categories ?? ["meal"]).contains(category.rawValue) }
+}
+
+/// One line of a full menu (`GET /v1/restaurants/{id}/menu`). Prices are all-in with the group's delivery share.
+public struct LunchMenuItem: Codable, Identifiable, Hashable, Sendable {
+    public let id: String
+    public let name: String
+    public let detail: String
+    public let symbol: String
+    public let priceCents: Int
+    public let itemPriceCents: Int
+    public var popular: Bool?
+    public var drink: Bool?
+    public var score: Double?
+    public var reason: String?
+    /// The same item as a group option, so joining off the short list reuses the join path.
+    public var option: LunchOption { LunchOption(id: id, name: name, detail: detail, symbol: symbol, priceCents: priceCents, baselineCents: priceCents) }
+}
+
+/// A place's full menu with its public rating and the user's top picks first.
+public struct LunchMenu: Codable, Hashable, Sendable {
+    public let restaurantId: String
+    public let name: String
+    public let cuisine: String
+    public var category: String?
+    public let rating: Double?
+    public var reviewCount: Int?
+    public var ratings: [String: Double]?
+    public var recommendations: [String]?
+    public var address: String?
+    public let top: [LunchMenuItem]
+    public let items: [LunchMenuItem]
+    public var ratingLabel: String? {
+        guard let rating else { return nil }
+        let count = reviewCount ?? 0
+        return count > 0 ? String(format: "%.1f★ · %d reviews", rating, count) : String(format: "%.1f★", rating)
+    }
+}
+
+/// A standing order (`/v1/schedules`): a category, a place and a time on chosen weekdays, mirrored to the camp calendar.
+public struct LunchSchedule: Codable, Identifiable, Hashable, Sendable {
+    public let id: String
+    public let category: String
+    public let label: String
+    public var restaurantId: String?
+    public var restaurantName: String?
+    public var optionId: String?
+    public let timeMinutes: Int
+    public let weekdays: [Int]        // 0 = Monday, as the backend stores them
+    public let active: Bool
+    public var calendarEventId: String?
+    public var kind: OrderCategory { OrderCategory(wire: category) }
+    public static let weekdayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    public var weekdayLabel: String {
+        let days = weekdays.sorted()
+        if days == [0, 1, 2, 3, 4] { return "Weekdays" }
+        if days == [0, 1, 2, 3, 4, 5, 6] { return "Every day" }
+        return days.compactMap { Self.weekdayNames.indices.contains($0) ? Self.weekdayNames[$0] : nil }.joined(separator: " ")
+    }
 }
 
 
-/// One simulated lunch that reached "confirmed" (or later). Kept locally so the Spending page reflects what the
-/// demo actually did instead of fixtures. Amounts are the all-in card price at confirmation; nothing is charged.
+/// One confirmed lunch from the `orders` table (`GET /v1/ledger/{user}`), whichever surface confirmed it.
 public struct LunchLedgerEntry: Codable, Hashable, Identifiable, Sendable {
-    public let id: String                 // session id, so a later phase updates the same entry
-    public var date: Date
-    public var office: String
-    public var restaurant: String
-    public var item: String
-    public var symbol: String
-    public var amountCents: Int
-    public var baselineCents: Int
-    public var status: String             // confirmed | delivered
-    public var source: String             // recommender | demo
+    public let id: String                 // order id
+    public let date: Date
+    public let office: String
+    public let restaurant: String
+    public let item: String
+    public let symbol: String
+    public let amountCents: Int
+    public let baselineCents: Int
+    public let status: String             // confirmed | manual
+    public let source: String             // recommender | group | manual
 
     public var savingsCents: Int { max(0, baselineCents - amountCents) }
-
-    public init(id: String, date: Date, office: String, restaurant: String, item: String, symbol: String,
-                amountCents: Int, baselineCents: Int, status: String, source: String) {
-        self.id = id; self.date = date; self.office = office; self.restaurant = restaurant; self.item = item
-        self.symbol = symbol; self.amountCents = amountCents; self.baselineCents = baselineCents
-        self.status = status; self.source = source
-    }
 }
 
-public enum LunchLedger {
-    public static let defaultsKey = "camp.lunchLedger"
+public struct LunchLedgerResponse: Codable, Hashable, Sendable {
+    public let userId: String
+    public let entries: [LunchLedgerEntry]
+    public let spentMonthCents: Int
+    public let savedMonthCents: Int
+    public let monthlyBudgetCents: Int
+    public let month: String
 
-    public static func load(from defaults: UserDefaults = .standard) -> [LunchLedgerEntry] {
-        guard let data = defaults.data(forKey: defaultsKey) else { return [] }
-        return (try? decoder.decode([LunchLedgerEntry].self, from: data)) ?? []
-    }
-
-    public static func save(_ entries: [LunchLedgerEntry], to defaults: UserDefaults = .standard) {
-        if let data = try? encoder.encode(entries) { defaults.set(data, forKey: defaultsKey) }
-    }
-
-    /// Upserts the session's selected meal. Returns nil when the session has nothing to record
-    /// (not yet confirmed, or ended without confirming).
-    public static func applying(_ session: LunchSession, to entries: [LunchLedgerEntry], restaurant: String,
-                                source: String, now: Date = .now) -> [LunchLedgerEntry]? {
-        let status: String
-        switch session.phase {
-        case .confirmed: status = "confirmed"
-        case .delivered: status = "delivered"
-        default: return nil
+    public static let decoder: JSONDecoder = {
+        let d = JSONDecoder()
+        let iso = ISO8601DateFormatter()
+        d.dateDecodingStrategy = .custom { decoder in
+            let raw = try decoder.singleValueContainer().decode(String.self)
+            if let date = iso.date(from: raw) { return date }
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "bad date \(raw)"))
         }
-        guard let option = session.selectedOption else { return nil }
-        var next = entries
-        let id = session.id.uuidString
-        if let i = next.firstIndex(where: { $0.id == id }) {
-            next[i].status = status
-            next[i].item = option.name; next[i].amountCents = option.priceCents; next[i].baselineCents = option.baselineCents
-        } else {
-            next.append(LunchLedgerEntry(id: id, date: now, office: session.office, restaurant: restaurant, item: option.name,
-                                         symbol: option.symbol, amountCents: option.priceCents, baselineCents: option.baselineCents,
-                                         status: status, source: source))
-        }
-        return next.sorted { $0.date > $1.date }
-    }
-
-    public static func spentCents(_ entries: [LunchLedgerEntry], inMonthOf date: Date = .now, calendar: Calendar = .current) -> Int {
-        entries.filter { calendar.isDate($0.date, equalTo: date, toGranularity: .month) }.reduce(0) { $0 + $1.amountCents }
-    }
-
-    private static let encoder: JSONEncoder = { let e = JSONEncoder(); e.dateEncodingStrategy = .iso8601; return e }()
-    private static let decoder: JSONDecoder = { let d = JSONDecoder(); d.dateDecodingStrategy = .iso8601; return d }()
+        return d
+    }()
 }

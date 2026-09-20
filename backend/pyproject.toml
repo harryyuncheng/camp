@@ -5,7 +5,7 @@ description = "CAMP (Corporate Automatic Meal Protocol) recommendation core"
 requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.7",
-    "pydantic-ai-slim[typesafe,anthropic]>=2.40",
+    "pydantic-ai-slim[typesafe,openai]>=2.40",
     "fastapi>=0.115",
     "uvicorn>=0.30",
     "numpy>=1.26",

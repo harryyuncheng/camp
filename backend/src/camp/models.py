@@ -25,6 +25,8 @@ def utcnow() -> datetime:
 # ---------------------------------------------------------------- enums
 
 Meal = Literal["lunch", "dinner"]
+OrderCategory = Literal["coffee", "meal"]      # what an order is for: morning coffee/tea, or a meal
+ORDER_CATEGORIES: list[OrderCategory] = ["coffee", "meal"]
 LocationKind = Literal["office", "home"]
 Scope = Literal["meal", "today", "ongoing", "restaurant"]
 
@@ -131,6 +133,7 @@ class User(BaseModel):
         "dinner": MealWindow(start=18 * 60 + 30, end=20 * 60),
     })
     suggest_only: bool = False       # never auto-order (severe allergy w/o verified data, or high autonomy)
+    app_settings: dict = Field(default_factory=dict)   # the native app's saved personal preferences, as last PUT to /v1/profile
 
     def budget(self, meal: Meal) -> int:
         return self.budget_cents[meal]
@@ -187,6 +190,7 @@ class Restaurant(BaseModel):
     ratings: dict[str, float] = Field(default_factory=dict)      # source -> rating (google, yelp, infatuation/10 ...)
     recommendations: list[str] = Field(default_factory=list)     # press / guide mentions
     chain: bool = False
+    categories: list[str] = Field(default_factory=lambda: ["meal"])   # order categories served: "coffee" and/or "meal"
 
     def prep_minutes(self, n_items: int) -> float:
         return self.prep_base_minutes + self.prep_per_item_minutes * n_items
@@ -275,6 +279,8 @@ class Order(BaseModel):
     batch_id: Optional[str] = None
     status: Literal["proposed", "confirmed", "manual", "cancelled"] = "proposed"
     novel: bool = False
+    source: Literal["recommender", "group", "manual"] = "recommender"
+    group_id: Optional[str] = None         # LunchGroup the order belongs to, when it came from Today's groups
     created_at: datetime = Field(default_factory=utcnow)
 
 
@@ -317,4 +323,96 @@ class FeedbackEvent(BaseModel):
     source: Literal["tap", "nl", "implicit"] = "tap"
     applied: bool = False
     needs_confirmation: bool = False
+    created_at: datetime = Field(default_factory=utcnow)
+
+
+# ---------------------------------------------------------------- lunch groups (Today page)
+
+class GroupOption(BaseModel):
+    """One meal a group offers. `subtotal_cents` is item + tax/service/tip; the delivery share is added on the wire
+    from the group's current headcount, so prices shown in the app always reflect who has actually joined."""
+    id: str                                # MenuItem id
+    name: str
+    detail: str = ""
+    symbol: str = "fork.knife"
+    item_cents: int
+    subtotal_cents: int
+
+
+class GroupMember(BaseModel):
+    user_id: str
+    display_name: str
+    option_id: str
+    order_id: Optional[str] = None
+    joined_at: datetime = Field(default_factory=utcnow)
+
+
+class LunchGroup(BaseModel):
+    """A pending office group order for one restaurant and delivery slot. The backend is the authority for
+    membership; every join/leave also upserts the member's Order so spending history stays consistent."""
+    id: str = Field(default_factory=lambda: new_id("g"))
+    office_id: str
+    date: str                              # ISO date
+    meal: Meal = "lunch"
+    category: OrderCategory = "meal"
+    restaurant_id: str
+    name: str                              # restaurant name at creation
+    cuisine: str = ""
+    symbol: str = "fork.knife"
+    delivery_minutes: int = 750            # arrival, minutes from midnight
+    delivery_fee_cents: int = 600
+    options: list[GroupOption] = Field(default_factory=list)
+    members: list[GroupMember] = Field(default_factory=list)
+    created_by: Optional[str] = None
+    status: Literal["collecting", "locked", "placed", "cancelled"] = "collecting"
+    seeded: bool = False                   # created by the backend to populate an empty day (members are synthetic colleagues)
+    created_at: datetime = Field(default_factory=utcnow)
+
+    @property
+    def participants(self) -> int:
+        return len(self.members)
+
+    @property
+    def savings_cents(self) -> int:
+        return max(0, self.participants - 1) * self.delivery_fee_cents
+
+
+# ---------------------------------------------------------------- Ramp sandbox allocation attempts
+
+class RampAttempt(BaseModel):
+    """Idempotency ledger for sandbox fund issuance. `state`: submitting → ready | unknown."""
+    id: str                                # client request UUID
+    fingerprint: str                       # sha256(user_id:amount) so a retry cannot change owner or amount
+    payload: dict
+    state: Literal["submitting", "ready", "unknown"] = "submitting"
+    result: Optional[dict] = None
+    created_at: datetime = Field(default_factory=utcnow)
+
+
+# ---------------------------------------------------------------- shared lunch session (Mac <-> iPhone)
+
+class SyncState(BaseModel):
+    """The shared active orders. A single row (id 'lunch'); `seq` increases on every accepted write. `records` holds
+    one record per session (coffee and a meal can be active together); `record` is kept for rows written by older builds."""
+    id: str = "lunch"
+    seq: int = 0
+    record: Optional[dict] = None
+    records: list[dict] = Field(default_factory=list)
+
+
+class ScheduledOrder(BaseModel):
+    """A standing order the user asked camp to put on their calendar: e.g. coffee at 9:00 on weekdays, or a meal at
+    12:30 Mon/Wed/Fri. Each matching day, `GroupService.today` makes sure a group exists at that restaurant and time
+    and that the user is in it. The Mac mirrors it as a recurring event in the dedicated "camp" calendar."""
+    id: str = Field(default_factory=lambda: new_id("sch"))
+    user_id: str
+    office_id: str
+    category: OrderCategory = "meal"
+    label: str = ""                        # "Morning coffee", "Lunch"
+    restaurant_id: Optional[str] = None    # None: camp picks the best-rated place in the category that day
+    option_id: Optional[str] = None
+    time_minutes: int = 750                # arrival, minutes from midnight (office timezone)
+    weekdays: list[int] = Field(default_factory=lambda: [0, 1, 2, 3, 4])   # 0 = Monday
+    active: bool = True
+    calendar_event_id: Optional[str] = None   # EventKit identifier on the device that created the event
     created_at: datetime = Field(default_factory=utcnow)

@@ -1,802 +1,684 @@
 // !$*UTF8*$!
 {
-	"classes" = {
+	archiveVersion = 1;
+	classes = {
 	};
-	"objectVersion" = "56";
-	"archiveVersion" = "1";
-	"objects" = {
-		"B28B7AF69320201D1CF206EB" = {
-			"isa" = "PBXGroup";
-			"sourceTree" = "<group>";
-			"children" = ( "9CC96A862E315CEA26011611", "DCC1B620DEE03B35E7CF2E74", "A43475413C01569D52F67050", "190E8BA3AE3816B66EA1D32B", "67F9B074D11DC25998776042", "C23108729D1809B8323E9806", "DFC6123E3EDE61B71761EDCF", "FBDC4F23F93125BBEEAE800C" );
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0521A5F43F49DCBEBFD4063E /* Sources/LunchUI/CampTodayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */; };
+		06BA6B0F22EF2FCD81A68C02 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
+		084EB0A92AD93CBA356E561A /* Sources/LunchUI/CampComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */; };
+		154D5396210B2E6C2D783A9D /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
+		165D3E9AFD93955249CC0C09 /* Sources/LunchUI/CampRampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9AFA62E521BB23D4A22F0F /* Sources/LunchUI/CampRampView.swift */; };
+		18F9734F4BBA5E34E5D87C3E /* Sources/LunchUI/LunchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */; };
+		1C4A41E9B7351BF4031D2FA6 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC89544F8613FA89FB2E696 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift */; };
+		1E4189726F3CD230B9F8F5BD /* Sources/LunchUI/CampCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */; };
+		2382BA36E46D60D304F23A4B /* Sources/LunchMac/LunchMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07960C32B791871E30231B4A /* Sources/LunchMac/LunchMacApp.swift */; };
+		240063B556F9E11B2F978981 /* Sources/LunchUI/CampSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C7E6CE75D776F66843ABA /* Sources/LunchUI/CampSettingsStore.swift */; };
+		2401BF6CC6E2F5E7E69150BC /* Sources/LunchCore/LunchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */; };
+		265BC4FD28C528304F1AC67C /* campActivity.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FD0ACEAAE78F0A8F874D1410 /* campActivity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2711671EEDCA8A5EAACA74C0 /* Sources/LunchUI/CampRampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9AFA62E521BB23D4A22F0F /* Sources/LunchUI/CampRampView.swift */; };
+		2AD14B5DDF3D15C174E3218B /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
+		2D2E5B1E11A740622E56B89E /* Sources/LunchUI/CampSettingsPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F49884B2E24F4A5F8CF66 /* Sources/LunchUI/CampSettingsPages.swift */; };
+		2D7DF6816EE45C94177CADCE /* Sources/LunchUI/CampLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6AA6A83B3FA5C8D86A1969 /* Sources/LunchUI/CampLocationView.swift */; };
+		3285E0170E562511E3DAEC8F /* Sources/LunchCore/LunchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */; };
+		33DE390D3BE97859D1A17E59 /* Sources/LunchUI/CampSettingsPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085F49884B2E24F4A5F8CF66 /* Sources/LunchUI/CampSettingsPages.swift */; };
+		34A3E5CBD07A4E1CE41ED3C2 /* Sources/LunchMac/MacLunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2DC722DE4A06277A412087A /* Sources/LunchMac/MacLunchModel.swift */; };
+		351A36C57D9D91F2EAE5B5B8 /* Sources/LunchUI/MacLunchCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F80616DE11E7436BF60A1 /* Sources/LunchUI/MacLunchCalendar.swift */; };
+		3DD2D2F172EBF4D72CFF6EEB /* Sources/LunchUI/CampDemoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9DF5E3380E8E33D7117F8A /* Sources/LunchUI/CampDemoPage.swift */; };
+		4254B553E85F67D0CB65723E /* iOS/Lunchline/LunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */; };
+		426E20D9197D9964D65EDDBD /* Sources/LunchCore/SessionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26D3B98926EDBCF827C6F3E /* Sources/LunchCore/SessionFile.swift */; };
+		454ED271AE78F0A6BD930947 /* iOS/Lunchline/LunchIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E606B4FF8F8C5090B04EAFA /* iOS/Lunchline/LunchIntents.swift */; };
+		46DDCE5532D5270EB2CA571D /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
+		4F8BBA4C1CEF4D571502C32A /* Sources/LunchUI/CampDemoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9DF5E3380E8E33D7117F8A /* Sources/LunchUI/CampDemoPage.swift */; };
+		52327E969F7FFF5A3CD652BB /* Sources/LunchUI/LunchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */; };
+		579F35FB959BE87E23E04983 /* Sources/LunchUI/CampWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0BECA3D08637C07220DA0 /* Sources/LunchUI/CampWorkspace.swift */; };
+		57D1B32069E00B37F1D86247 /* Sources/LunchCore/LunchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */; };
+		5CB3F5F2FF0B5E1CA0DA7E2C /* Sources/LunchCore/SessionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26D3B98926EDBCF827C6F3E /* Sources/LunchCore/SessionFile.swift */; };
+		5EF3B6A558443AA4E5D4D0C6 /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
+		6F0BFE163AEB89E3E80B8606 /* Sources/LunchUI/CampComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */; };
+		6F451A906F4777AAE1E9FB10 /* Sources/LunchUI/MacOfficeLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC199CC655D0B90792C25FB /* Sources/LunchUI/MacOfficeLocation.swift */; };
+		765BDC8D5F2C61A76F445D2F /* Sources/LunchMac/NotchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49058F845BE9973095D1CDD /* Sources/LunchMac/NotchPanel.swift */; };
+		790F8993B353F73215A1A047 /* Sources/LunchUI/CampLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6AA6A83B3FA5C8D86A1969 /* Sources/LunchUI/CampLocationView.swift */; };
+		83B6D8C6688A94F2EC6D74E5 /* Sources/LunchUI/CampCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */; };
+		84AA6B5AE1FA6B38E43DF114 /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
+		A0FCD6E20BE285115E786C78 /* Sources/LunchUI/LunchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */; };
+		A265BFFF63667E8DCC32D510 /* iOS/Lunchline/LunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */; };
+		A4C01EBC144440E7AD392B0A /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
+		A9DE95356B439FB451D9337C /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
+		AF603027CCD2CA6E46E47AA6 /* Sources/LunchUI/CampWorkspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E0BECA3D08637C07220DA0 /* Sources/LunchUI/CampWorkspace.swift */; };
+		BB63300D203895586AE5AC9E /* iOS/Lunchline/LunchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCEB20316C7633D52C4D2C6 /* iOS/Lunchline/LunchAttributes.swift */; };
+		BCBFC11BB9E33315BFCFD6A2 /* Sources/LunchUI/CampSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C7E6CE75D776F66843ABA /* Sources/LunchUI/CampSettingsStore.swift */; };
+		C89A8BF92E99EC8E174D0A2C /* Sources/LunchUI/CampRecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEED9762D4AB10E29B61A08B /* Sources/LunchUI/CampRecommendationView.swift */; };
+		D09951732E04E924B5E4436A /* Sources/LunchCore/SessionFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26D3B98926EDBCF827C6F3E /* Sources/LunchCore/SessionFile.swift */; };
+		D392204FCB670BE1B4CCB69F /* Sources/LunchUI/CampTodayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */; };
+		D5DF6D00BED2E1C7F2A31E61 /* Sources/LunchUI/CampRecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEED9762D4AB10E29B61A08B /* Sources/LunchUI/CampRecommendationView.swift */; };
+		D9BDC7E9D7457A31DC0085DC /* Sources/LunchUI/MacLunchCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F80616DE11E7436BF60A1 /* Sources/LunchUI/MacLunchCalendar.swift */; };
+		DDEF661AB9289151461CFA2A /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
+		E70178078CD52B8140684DB4 /* iOS/Lunchline/LunchlineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AA5F8AA1D633656FEEC5F /* iOS/Lunchline/LunchlineApp.swift */; };
+		E8C7F4CE3CE32A9342E056AB /* iOS/Lunchline/LunchIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E606B4FF8F8C5090B04EAFA /* iOS/Lunchline/LunchIntents.swift */; };
+		EDAD23BA0F6BB767403393D1 /* Sources/LunchUI/MacOfficeLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC199CC655D0B90792C25FB /* Sources/LunchUI/MacOfficeLocation.swift */; };
+		F88349834F8DBF4194B573CB /* iOS/Lunchline/LunchAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCEB20316C7633D52C4D2C6 /* iOS/Lunchline/LunchAttributes.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D799BAE6088A90139B415FCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C0F1F64331852C8E91495225;
+			remoteInfo = LunchlineActivity;
 		};
-		"DCC1B620DEE03B35E7CF2E74" = {
-			"isa" = "PBXGroup";
-			"name" = "Shared UI";
-			"children" = ( "F73FC003BE3E8B8FE00C022C", "E79433541AC79D859BE6A6D7", "27E0BECA3D08637C07220DA0", "8E9B14129C271C243D1FD4DF", "0464AF5238C6985DD7EFE878", "085F49884B2E24F4A5F8CF66", "3D9C7E6CE75D776F66843ABA", "AA9AFA62E521BB23D4A22F0F", "0DC199CC655D0B90792C25FB", "6A6AA6A83B3FA5C8D86A1969", "573F80616DE11E7436BF60A1", "244E8CE46AB5991AF5BC98E2", "2A059DDC399512D1A862CA32", "F78F058109108A63C22D4B0F", "FEED9762D4AB10E29B61A08B", "4C9DF5E3380E8E33D7117F8A" );
-			"sourceTree" = "<group>";
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CFFF27C96089B93150F3553B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				265BC4FD28C528304F1AC67C /* campActivity.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		"C1C0345F7A51240D5683CAED" = {
-			"path" = "iOS/Lunchline/LunchController.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampComponents.swift; sourceTree = "<group>"; };
+		07960C32B791871E30231B4A /* Sources/LunchMac/LunchMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchMac/LunchMacApp.swift; sourceTree = "<group>"; };
+		085F49884B2E24F4A5F8CF66 /* Sources/LunchUI/CampSettingsPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampSettingsPages.swift; sourceTree = "<group>"; };
+		0DC199CC655D0B90792C25FB /* Sources/LunchUI/MacOfficeLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/MacOfficeLocation.swift; sourceTree = "<group>"; };
+		1E606B4FF8F8C5090B04EAFA /* iOS/Lunchline/LunchIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/Lunchline/LunchIntents.swift; sourceTree = "<group>"; };
+		244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampCalendarView.swift; sourceTree = "<group>"; };
+		27E0BECA3D08637C07220DA0 /* Sources/LunchUI/CampWorkspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampWorkspace.swift; sourceTree = "<group>"; };
+		282EC74C271C2C9D68B9D3D2 /* camp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = camp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/RecommendationContracts.swift; sourceTree = "<group>"; };
+		2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Shared.xcconfig; sourceTree = "<group>"; };
+		3D154C116223506B677623D8 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
+		3D9C7E6CE75D776F66843ABA /* Sources/LunchUI/CampSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampSettingsStore.swift; sourceTree = "<group>"; };
+		4C9DF5E3380E8E33D7117F8A /* Sources/LunchUI/CampDemoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampDemoPage.swift; sourceTree = "<group>"; };
+		573F80616DE11E7436BF60A1 /* Sources/LunchUI/MacLunchCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/MacLunchCalendar.swift; sourceTree = "<group>"; };
+		5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/CampConfiguration.swift; sourceTree = "<group>"; };
+		646A36D3D0F68D9DF6EBCBEB /* Config/Widget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Config/Widget-Info.plist"; sourceTree = "<group>"; };
+		6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/LunchSession.swift; sourceTree = "<group>"; };
+		6A240B6A6D849A971B181FFC /* camp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = camp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A6AA6A83B3FA5C8D86A1969 /* Sources/LunchUI/CampLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampLocationView.swift; sourceTree = "<group>"; };
+		6D21A735095178B70BD2BCB3 /* Config/Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Config/Mac-Info.plist"; sourceTree = "<group>"; };
+		6FCEB20316C7633D52C4D2C6 /* iOS/Lunchline/LunchAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/Lunchline/LunchAttributes.swift; sourceTree = "<group>"; };
+		8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampTodayPage.swift; sourceTree = "<group>"; };
+		990AA5F8AA1D633656FEEC5F /* iOS/Lunchline/LunchlineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/Lunchline/LunchlineApp.swift; sourceTree = "<group>"; };
+		A26D3B98926EDBCF827C6F3E /* Sources/LunchCore/SessionFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/SessionFile.swift; sourceTree = "<group>"; };
+		A2DC722DE4A06277A412087A /* Sources/LunchMac/MacLunchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchMac/MacLunchModel.swift; sourceTree = "<group>"; };
+		A49058F845BE9973095D1CDD /* Sources/LunchMac/NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchMac/NotchPanel.swift; sourceTree = "<group>"; };
+		AA4ACA445B3FBAF47CDE31AC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		AA9AFA62E521BB23D4A22F0F /* Sources/LunchUI/CampRampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampRampView.swift; sourceTree = "<group>"; };
+		BCC89544F8613FA89FB2E696 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/LunchlineActivity/LunchlineLiveActivity.swift; sourceTree = "<group>"; };
+		C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS/Lunchline/LunchController.swift; sourceTree = "<group>"; };
+		E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/NotchGeometry.swift; sourceTree = "<group>"; };
+		F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/LunchCard.swift; sourceTree = "<group>"; };
+		F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchCore/RecommendationClient.swift; sourceTree = "<group>"; };
+		F8B136C2FFBC6429D3F7E7FF /* Config/App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Config/App-Info.plist"; sourceTree = "<group>"; };
+		FD0ACEAAE78F0A8F874D1410 /* campActivity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = campActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEED9762D4AB10E29B61A08B /* Sources/LunchUI/CampRecommendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/LunchUI/CampRecommendationView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A258C94F312639AC340B4BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		"F88349834F8DBF4194B573CB" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6FCEB20316C7633D52C4D2C6";
+		AAE34FBDC2A50AD7E5488521 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		"34A3E5CBD07A4E1CE41ED3C2" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "A2DC722DE4A06277A412087A";
+		F51AA4771FEDD69D381F61D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		"AA4ACA445B3FBAF47CDE31AC" = {
-			"path" = "README.md";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "net.daringfireball.markdown";
-			"sourceTree" = "<group>";
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		190E8BA3AE3816B66EA1D32B /* iPhone app & intents */ = {
+			isa = PBXGroup;
+			children = (
+				6FCEB20316C7633D52C4D2C6 /* iOS/Lunchline/LunchAttributes.swift */,
+				C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */,
+				1E606B4FF8F8C5090B04EAFA /* iOS/Lunchline/LunchIntents.swift */,
+				990AA5F8AA1D633656FEEC5F /* iOS/Lunchline/LunchlineApp.swift */,
+			);
+			name = "iPhone app & intents";
+			sourceTree = "<group>";
 		};
-		"9CC96A862E315CEA26011611" = {
-			"isa" = "PBXGroup";
-			"name" = "Domain";
-			"children" = ( "6597358D8B6952CC9BE564C7", "A26D3B98926EDBCF827C6F3E", "5AB373237DCF91F0FBCEEB42" );
-			"sourceTree" = "<group>";
+		67F9B074D11DC25998776042 /* Live Activity */ = {
+			isa = PBXGroup;
+			children = (
+				BCC89544F8613FA89FB2E696 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift */,
+			);
+			name = "Live Activity";
+			sourceTree = "<group>";
 		};
-		"3285E0170E562511E3DAEC8F" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6597358D8B6952CC9BE564C7";
+		9CC96A862E315CEA26011611 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				6597358D8B6952CC9BE564C7 /* Sources/LunchCore/LunchSession.swift */,
+				A26D3B98926EDBCF827C6F3E /* Sources/LunchCore/SessionFile.swift */,
+				5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */,
+			);
+			name = Domain;
+			sourceTree = "<group>";
 		};
-		"AF603027CCD2CA6E46E47AA6" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "27E0BECA3D08637C07220DA0";
+		A43475413C01569D52F67050 /* Mac app & notch panel */ = {
+			isa = PBXGroup;
+			children = (
+				07960C32B791871E30231B4A /* Sources/LunchMac/LunchMacApp.swift */,
+				A2DC722DE4A06277A412087A /* Sources/LunchMac/MacLunchModel.swift */,
+				A49058F845BE9973095D1CDD /* Sources/LunchMac/NotchPanel.swift */,
+			);
+			name = "Mac app & notch panel";
+			sourceTree = "<group>";
 		};
-		"27E0BECA3D08637C07220DA0" = {
-			"path" = "Sources/LunchUI/CampWorkspace.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+		B28B7AF69320201D1CF206EB = {
+			isa = PBXGroup;
+			children = (
+				9CC96A862E315CEA26011611 /* Domain */,
+				DCC1B620DEE03B35E7CF2E74 /* Shared UI */,
+				A43475413C01569D52F67050 /* Mac app & notch panel */,
+				190E8BA3AE3816B66EA1D32B /* iPhone app & intents */,
+				67F9B074D11DC25998776042 /* Live Activity */,
+				C23108729D1809B8323E9806 /* Configuration */,
+				DFC6123E3EDE61B71761EDCF /* Guides */,
+				FBDC4F23F93125BBEEAE800C /* Products */,
+			);
+			sourceTree = "<group>";
 		};
-		"4254B553E85F67D0CB65723E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "C1C0345F7A51240D5683CAED";
+		C23108729D1809B8323E9806 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				F8B136C2FFBC6429D3F7E7FF /* Config/App-Info.plist */,
+				6D21A735095178B70BD2BCB3 /* Config/Mac-Info.plist */,
+				2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */,
+				646A36D3D0F68D9DF6EBCBEB /* Config/Widget-Info.plist */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
 		};
-		"6FCEB20316C7633D52C4D2C6" = {
-			"path" = "iOS/Lunchline/LunchAttributes.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+		DCC1B620DEE03B35E7CF2E74 /* Shared UI */ = {
+			isa = PBXGroup;
+			children = (
+				F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */,
+				E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */,
+				27E0BECA3D08637C07220DA0 /* Sources/LunchUI/CampWorkspace.swift */,
+				8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */,
+				0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */,
+				085F49884B2E24F4A5F8CF66 /* Sources/LunchUI/CampSettingsPages.swift */,
+				3D9C7E6CE75D776F66843ABA /* Sources/LunchUI/CampSettingsStore.swift */,
+				AA9AFA62E521BB23D4A22F0F /* Sources/LunchUI/CampRampView.swift */,
+				0DC199CC655D0B90792C25FB /* Sources/LunchUI/MacOfficeLocation.swift */,
+				6A6AA6A83B3FA5C8D86A1969 /* Sources/LunchUI/CampLocationView.swift */,
+				573F80616DE11E7436BF60A1 /* Sources/LunchUI/MacLunchCalendar.swift */,
+				244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */,
+				2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */,
+				F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */,
+				FEED9762D4AB10E29B61A08B /* Sources/LunchUI/CampRecommendationView.swift */,
+				4C9DF5E3380E8E33D7117F8A /* Sources/LunchUI/CampDemoPage.swift */,
+			);
+			name = "Shared UI";
+			sourceTree = "<group>";
 		};
-		"6D21A735095178B70BD2BCB3" = {
-			"path" = "Config/Mac-Info.plist";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "text.plist.xml";
-			"sourceTree" = "<group>";
+		DFC6123E3EDE61B71761EDCF /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				3D154C116223506B677623D8 /* ARCHITECTURE.md */,
+				AA4ACA445B3FBAF47CDE31AC /* README.md */,
+			);
+			name = Guides;
+			sourceTree = "<group>";
 		};
-		"2D7DF6816EE45C94177CADCE" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
+		FBDC4F23F93125BBEEAE800C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A240B6A6D849A971B181FFC /* camp.app */,
+				FD0ACEAAE78F0A8F874D1410 /* campActivity.appex */,
+				282EC74C271C2C9D68B9D3D2 /* camp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
-		"E8C7F4CE3CE32A9342E056AB" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "1E606B4FF8F8C5090B04EAFA";
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		126FF89BD8E90D15814EEE43 /* LunchlineMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72501118D5B0CAFD879A315F /* Build configuration list for PBXNativeTarget "LunchlineMac" */;
+			buildPhases = (
+				0915AB262380B81A5D8ECA36 /* Sources */,
+				F51AA4771FEDD69D381F61D4 /* Frameworks */,
+				29ED9DEFE7195C25E5D00780 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LunchlineMac;
+			productName = camp;
+			productReference = 282EC74C271C2C9D68B9D3D2 /* camp.app */;
+			productType = "com.apple.product-type.application";
 		};
-		"A49058F845BE9973095D1CDD" = {
-			"path" = "Sources/LunchMac/NotchPanel.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+		47EDF4E50B0AD3E039165C4C /* Lunchline */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 451EA8BF70963E7682491A3F /* Build configuration list for PBXNativeTarget "Lunchline" */;
+			buildPhases = (
+				B0BEDC9F63F601F12AFAAD4E /* Sources */,
+				AAE34FBDC2A50AD7E5488521 /* Frameworks */,
+				1F6D2E8FCAC3D9F321F16066 /* Resources */,
+				CFFF27C96089B93150F3553B /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DE58E2B17C19600779694943 /* PBXTargetDependency */,
+			);
+			name = Lunchline;
+			productName = camp;
+			productReference = 6A240B6A6D849A971B181FFC /* camp.app */;
+			productType = "com.apple.product-type.application";
 		};
-		"1C4A41E9B7351BF4031D2FA6" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "BCC89544F8613FA89FB2E696";
+		C0F1F64331852C8E91495225 /* LunchlineActivity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 364ED9C0A99D1DB68070A265 /* Build configuration list for PBXNativeTarget "LunchlineActivity" */;
+			buildPhases = (
+				F08676D07E9B6CAA7B5C33B3 /* Sources */,
+				8A258C94F312639AC340B4BA /* Frameworks */,
+				A0B8579CC04BC96BB8A9F0ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LunchlineActivity;
+			productName = campActivity;
+			productReference = FD0ACEAAE78F0A8F874D1410 /* campActivity.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
-		"E79433541AC79D859BE6A6D7" = {
-			"path" = "Sources/LunchUI/NotchGeometry.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"5823EF385173CCDE0A7BFB3C" = {
-			"baseConfigurationReference" = "2C94172D67DA116C7BB32C13";
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
-				"APPLICATION_EXTENSION_API_ONLY" = "YES";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/Widget-Info.plist";
-				"SKIP_INSTALL" = "YES";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"SWIFT_COMPILATION_MODE" = "wholemodule";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
-				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "iphoneos";
-				"PRODUCT_NAME" = "campActivity";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "$(BUNDLE_ID_PREFIX).activity";
-				"CURRENT_PROJECT_VERSION" = "1";
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98F54143AB4E86B28C3AFEE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
 			};
-			"name" = "Release";
+			buildConfigurationList = 247BF104A9AD002C539DA531 /* Build configuration list for PBXProject "Lunchline" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B28B7AF69320201D1CF206EB;
+			productRefGroup = FBDC4F23F93125BBEEAE800C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47EDF4E50B0AD3E039165C4C /* Lunchline */,
+				C0F1F64331852C8E91495225 /* LunchlineActivity */,
+				126FF89BD8E90D15814EEE43 /* LunchlineMac */,
+			);
 		};
-		"4DDD73B1B9F814279097EF97" = {
-			"baseConfigurationReference" = "2C94172D67DA116C7BB32C13";
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf";
-				"APPLICATION_EXTENSION_API_ONLY" = "YES";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/Widget-Info.plist";
-				"SKIP_INSTALL" = "YES";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
-				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "iphoneos";
-				"PRODUCT_NAME" = "campActivity";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "$(BUNDLE_ID_PREFIX).activity";
-				"CURRENT_PROJECT_VERSION" = "1";
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F6D2E8FCAC3D9F321F16066 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29ED9DEFE7195C25E5D00780 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0B8579CC04BC96BB8A9F0ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0915AB262380B81A5D8ECA36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3285E0170E562511E3DAEC8F /* Sources/LunchCore/LunchSession.swift in Sources */,
+				426E20D9197D9964D65EDDBD /* Sources/LunchCore/SessionFile.swift in Sources */,
+				52327E969F7FFF5A3CD652BB /* Sources/LunchUI/LunchCard.swift in Sources */,
+				2382BA36E46D60D304F23A4B /* Sources/LunchMac/LunchMacApp.swift in Sources */,
+				765BDC8D5F2C61A76F445D2F /* Sources/LunchMac/NotchPanel.swift in Sources */,
+				34A3E5CBD07A4E1CE41ED3C2 /* Sources/LunchMac/MacLunchModel.swift in Sources */,
+				A9DE95356B439FB451D9337C /* Sources/LunchUI/NotchGeometry.swift in Sources */,
+				DDEF661AB9289151461CFA2A /* Sources/LunchCore/CampConfiguration.swift in Sources */,
+				579F35FB959BE87E23E04983 /* Sources/LunchUI/CampWorkspace.swift in Sources */,
+				D392204FCB670BE1B4CCB69F /* Sources/LunchUI/CampTodayPage.swift in Sources */,
+				6F0BFE163AEB89E3E80B8606 /* Sources/LunchUI/CampComponents.swift in Sources */,
+				2D2E5B1E11A740622E56B89E /* Sources/LunchUI/CampSettingsPages.swift in Sources */,
+				BCBFC11BB9E33315BFCFD6A2 /* Sources/LunchUI/CampSettingsStore.swift in Sources */,
+				2711671EEDCA8A5EAACA74C0 /* Sources/LunchUI/CampRampView.swift in Sources */,
+				6F451A906F4777AAE1E9FB10 /* Sources/LunchUI/MacOfficeLocation.swift in Sources */,
+				790F8993B353F73215A1A047 /* Sources/LunchUI/CampLocationView.swift in Sources */,
+				D9BDC7E9D7457A31DC0085DC /* Sources/LunchUI/MacLunchCalendar.swift in Sources */,
+				83B6D8C6688A94F2EC6D74E5 /* Sources/LunchUI/CampCalendarView.swift in Sources */,
+				154D5396210B2E6C2D783A9D /* Sources/LunchCore/RecommendationContracts.swift in Sources */,
+				46DDCE5532D5270EB2CA571D /* Sources/LunchCore/RecommendationClient.swift in Sources */,
+				D5DF6D00BED2E1C7F2A31E61 /* Sources/LunchUI/CampRecommendationView.swift in Sources */,
+				4F8BBA4C1CEF4D571502C32A /* Sources/LunchUI/CampDemoPage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0BEDC9F63F601F12AFAAD4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57D1B32069E00B37F1D86247 /* Sources/LunchCore/LunchSession.swift in Sources */,
+				D09951732E04E924B5E4436A /* Sources/LunchCore/SessionFile.swift in Sources */,
+				18F9734F4BBA5E34E5D87C3E /* Sources/LunchUI/LunchCard.swift in Sources */,
+				F88349834F8DBF4194B573CB /* iOS/Lunchline/LunchAttributes.swift in Sources */,
+				A265BFFF63667E8DCC32D510 /* iOS/Lunchline/LunchController.swift in Sources */,
+				E8C7F4CE3CE32A9342E056AB /* iOS/Lunchline/LunchIntents.swift in Sources */,
+				E70178078CD52B8140684DB4 /* iOS/Lunchline/LunchlineApp.swift in Sources */,
+				A4C01EBC144440E7AD392B0A /* Sources/LunchUI/NotchGeometry.swift in Sources */,
+				5EF3B6A558443AA4E5D4D0C6 /* Sources/LunchCore/CampConfiguration.swift in Sources */,
+				AF603027CCD2CA6E46E47AA6 /* Sources/LunchUI/CampWorkspace.swift in Sources */,
+				0521A5F43F49DCBEBFD4063E /* Sources/LunchUI/CampTodayPage.swift in Sources */,
+				084EB0A92AD93CBA356E561A /* Sources/LunchUI/CampComponents.swift in Sources */,
+				33DE390D3BE97859D1A17E59 /* Sources/LunchUI/CampSettingsPages.swift in Sources */,
+				240063B556F9E11B2F978981 /* Sources/LunchUI/CampSettingsStore.swift in Sources */,
+				165D3E9AFD93955249CC0C09 /* Sources/LunchUI/CampRampView.swift in Sources */,
+				EDAD23BA0F6BB767403393D1 /* Sources/LunchUI/MacOfficeLocation.swift in Sources */,
+				2D7DF6816EE45C94177CADCE /* Sources/LunchUI/CampLocationView.swift in Sources */,
+				351A36C57D9D91F2EAE5B5B8 /* Sources/LunchUI/MacLunchCalendar.swift in Sources */,
+				1E4189726F3CD230B9F8F5BD /* Sources/LunchUI/CampCalendarView.swift in Sources */,
+				2AD14B5DDF3D15C174E3218B /* Sources/LunchCore/RecommendationContracts.swift in Sources */,
+				06BA6B0F22EF2FCD81A68C02 /* Sources/LunchCore/RecommendationClient.swift in Sources */,
+				C89A8BF92E99EC8E174D0A2C /* Sources/LunchUI/CampRecommendationView.swift in Sources */,
+				3DD2D2F172EBF4D72CFF6EEB /* Sources/LunchUI/CampDemoPage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F08676D07E9B6CAA7B5C33B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2401BF6CC6E2F5E7E69150BC /* Sources/LunchCore/LunchSession.swift in Sources */,
+				5CB3F5F2FF0B5E1CA0DA7E2C /* Sources/LunchCore/SessionFile.swift in Sources */,
+				A0FCD6E20BE285115E786C78 /* Sources/LunchUI/LunchCard.swift in Sources */,
+				BB63300D203895586AE5AC9E /* iOS/Lunchline/LunchAttributes.swift in Sources */,
+				4254B553E85F67D0CB65723E /* iOS/Lunchline/LunchController.swift in Sources */,
+				454ED271AE78F0A6BD930947 /* iOS/Lunchline/LunchIntents.swift in Sources */,
+				1C4A41E9B7351BF4031D2FA6 /* iOS/LunchlineActivity/LunchlineLiveActivity.swift in Sources */,
+				84AA6B5AE1FA6B38E43DF114 /* Sources/LunchUI/NotchGeometry.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DE58E2B17C19600779694943 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C0F1F64331852C8E91495225 /* LunchlineActivity */;
+			targetProxy = D799BAE6088A90139B415FCC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		262E02E3C63E2FBADCBCB6A2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
-			"name" = "Debug";
+			name = Debug;
 		};
-		"0464AF5238C6985DD7EFE878" = {
-			"path" = "Sources/LunchUI/CampComponents.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"579F35FB959BE87E23E04983" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "27E0BECA3D08637C07220DA0";
-		};
-		"A9DE95356B439FB451D9337C" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "E79433541AC79D859BE6A6D7";
-		};
-		"A0FCD6E20BE285115E786C78" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "F73FC003BE3E8B8FE00C022C";
-		};
-		"2C94172D67DA116C7BB32C13" = {
-			"path" = "Config/Shared.xcconfig";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "text.xcconfig";
-			"sourceTree" = "<group>";
-		};
-		"CB7935C116F2FEF4F69BC106" = {
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/../Frameworks";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/Mac-Info.plist";
-				"CODE_SIGN_IDENTITY" = "-";
-				"MACOSX_DEPLOYMENT_TARGET" = "13.0";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"EXECUTABLE_NAME" = "LunchlineMac";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
-				"SUPPORTED_PLATFORMS" = "macosx";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "macosx";
-				"PRODUCT_NAME" = "camp";
-				"ENABLE_HARDENED_RUNTIME" = "YES";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "com.example.camp.mac";
-				"CURRENT_PROJECT_VERSION" = "1";
+		4DDD73B1B9F814279097EF97 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DC92972HRX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Widget-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).activity";
+				PRODUCT_NAME = campActivity;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			"name" = "Debug";
+			name = Debug;
 		};
-		"98F54143AB4E86B28C3AFEE0" = {
-			"buildConfigurationList" = "247BF104A9AD002C539DA531";
-			"targets" = ( "47EDF4E50B0AD3E039165C4C", "C0F1F64331852C8E91495225", "126FF89BD8E90D15814EEE43" );
-			"developmentRegion" = "en";
-			"knownRegions" = ( "en", "Base" );
-			"isa" = "PBXProject";
-			"compatibilityVersion" = "Xcode 14.0";
-			"productRefGroup" = "FBDC4F23F93125BBEEAE800C";
-			"projectDirPath" = "";
-			"attributes" = {
-				"LastSwiftUpdateCheck" = "1430";
-				"BuildIndependentTargetsInParallel" = "YES";
-				"LastUpgradeCheck" = "1430";
+		5823EF385173CCDE0A7BFB3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = DC92972HRX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Widget-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).activity";
+				PRODUCT_NAME = campActivity;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
-			"hasScannedForEncodings" = "0";
-			"projectRoot" = "";
-			"mainGroup" = "B28B7AF69320201D1CF206EB";
+			name = Release;
 		};
-		"67F9B074D11DC25998776042" = {
-			"isa" = "PBXGroup";
-			"name" = "Live Activity";
-			"children" = ( "BCC89544F8613FA89FB2E696" );
-			"sourceTree" = "<group>";
-		};
-		"A26D3B98926EDBCF827C6F3E" = {
-			"path" = "Sources/LunchCore/SessionFile.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"0DC199CC655D0B90792C25FB" = {
-			"path" = "Sources/LunchUI/MacOfficeLocation.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"FBDC4F23F93125BBEEAE800C" = {
-			"isa" = "PBXGroup";
-			"name" = "Products";
-			"children" = ( "6A240B6A6D849A971B181FFC", "FD0ACEAAE78F0A8F874D1410", "282EC74C271C2C9D68B9D3D2" );
-			"sourceTree" = "<group>";
-		};
-		"247BF104A9AD002C539DA531" = {
-			"isa" = "XCConfigurationList";
-			"defaultConfigurationIsVisible" = "0";
-			"defaultConfigurationName" = "Release";
-			"buildConfigurations" = ( "262E02E3C63E2FBADCBCB6A2", "86E0D76135EE80816AB07AC0" );
-		};
-		"240063B556F9E11B2F978981" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "3D9C7E6CE75D776F66843ABA";
-		};
-		"CFFF27C96089B93150F3553B" = {
-			"buildActionMask" = "2147483647";
-			"dstSubfolderSpec" = "13";
-			"isa" = "PBXCopyFilesBuildPhase";
-			"runOnlyForDeploymentPostprocessing" = "0";
-			"dstPath" = "";
-			"files" = ( "265BC4FD28C528304F1AC67C" );
-			"name" = "Embed App Extensions";
-		};
-		"AA9AFA62E521BB23D4A22F0F" = {
-			"path" = "Sources/LunchUI/CampRampView.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"765BDC8D5F2C61A76F445D2F" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "A49058F845BE9973095D1CDD";
-		};
-		"265BC4FD28C528304F1AC67C" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "FD0ACEAAE78F0A8F874D1410";
-			"settings" = {
-				"ATTRIBUTES" = ( "RemoveHeadersOnCopy" );
+		600DD26EA427CA6A2C572315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_NAME = LunchlineMac;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.camp.mac;
+				PRODUCT_NAME = camp;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
+			name = Release;
 		};
-		"2382BA36E46D60D304F23A4B" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "07960C32B791871E30231B4A";
-		};
-		"085F49884B2E24F4A5F8CF66" = {
-			"path" = "Sources/LunchUI/CampSettingsPages.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"990AA5F8AA1D633656FEEC5F" = {
-			"path" = "iOS/Lunchline/LunchlineApp.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"0521A5F43F49DCBEBFD4063E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "8E9B14129C271C243D1FD4DF";
-		};
-		"451EA8BF70963E7682491A3F" = {
-			"isa" = "XCConfigurationList";
-			"defaultConfigurationIsVisible" = "0";
-			"defaultConfigurationName" = "Release";
-			"buildConfigurations" = ( "E3A6A7AF4978F5AEBB56C651", "897E2A5236ED94266684172E" );
-		};
-		"165D3E9AFD93955249CC0C09" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
-		};
-		"3D9C7E6CE75D776F66843ABA" = {
-			"path" = "Sources/LunchUI/CampSettingsStore.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"1F6D2E8FCAC3D9F321F16066" = {
-			"isa" = "PBXResourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"6F451A906F4777AAE1E9FB10" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "0DC199CC655D0B90792C25FB";
-		};
-		"454ED271AE78F0A6BD930947" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "1E606B4FF8F8C5090B04EAFA";
-		};
-		"6A240B6A6D849A971B181FFC" = {
-			"path" = "camp.app";
-			"isa" = "PBXFileReference";
-			"explicitFileType" = "wrapper.application";
-			"sourceTree" = "BUILT_PRODUCTS_DIR";
-		};
-		"F08676D07E9B6CAA7B5C33B3" = {
-			"isa" = "PBXSourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = ( "2401BF6CC6E2F5E7E69150BC", "5CB3F5F2FF0B5E1CA0DA7E2C", "A0FCD6E20BE285115E786C78", "BB63300D203895586AE5AC9E", "4254B553E85F67D0CB65723E", "454ED271AE78F0A6BD930947", "1C4A41E9B7351BF4031D2FA6", "84AA6B5AE1FA6B38E43DF114" );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"A2DC722DE4A06277A412087A" = {
-			"path" = "Sources/LunchMac/MacLunchModel.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"B0BEDC9F63F601F12AFAAD4E" = {
-			"isa" = "PBXSourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = ( "57D1B32069E00B37F1D86247", "D09951732E04E924B5E4436A", "18F9734F4BBA5E34E5D87C3E", "F88349834F8DBF4194B573CB", "A265BFFF63667E8DCC32D510", "E8C7F4CE3CE32A9342E056AB", "E70178078CD52B8140684DB4", "A4C01EBC144440E7AD392B0A", "5EF3B6A558443AA4E5D4D0C6", "AF603027CCD2CA6E46E47AA6", "0521A5F43F49DCBEBFD4063E", "084EB0A92AD93CBA356E561A", "33DE390D3BE97859D1A17E59", "240063B556F9E11B2F978981", "165D3E9AFD93955249CC0C09", "EDAD23BA0F6BB767403393D1", "2D7DF6816EE45C94177CADCE", "351A36C57D9D91F2EAE5B5B8", "1E4189726F3CD230B9F8F5BD", "2AD14B5DDF3D15C174E3218B", "06BA6B0F22EF2FCD81A68C02", "C89A8BF92E99EC8E174D0A2C", "3DD2D2F172EBF4D72CFF6EEB" );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"F73FC003BE3E8B8FE00C022C" = {
-			"path" = "Sources/LunchUI/LunchCard.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"126FF89BD8E90D15814EEE43" = {
-			"productType" = "com.apple.product-type.application";
-			"productReference" = "282EC74C271C2C9D68B9D3D2";
-			"buildConfigurationList" = "72501118D5B0CAFD879A315F";
-			"productName" = "camp";
-			"isa" = "PBXNativeTarget";
-			"buildPhases" = ( "0915AB262380B81A5D8ECA36", "F51AA4771FEDD69D381F61D4", "29ED9DEFE7195C25E5D00780" );
-			"dependencies" = (  );
-			"name" = "LunchlineMac";
-			"buildRules" = (  );
-		};
-		"47EDF4E50B0AD3E039165C4C" = {
-			"productType" = "com.apple.product-type.application";
-			"productReference" = "6A240B6A6D849A971B181FFC";
-			"buildConfigurationList" = "451EA8BF70963E7682491A3F";
-			"productName" = "camp";
-			"isa" = "PBXNativeTarget";
-			"buildPhases" = ( "B0BEDC9F63F601F12AFAAD4E", "AAE34FBDC2A50AD7E5488521", "1F6D2E8FCAC3D9F321F16066", "CFFF27C96089B93150F3553B" );
-			"dependencies" = ( "DE58E2B17C19600779694943" );
-			"name" = "Lunchline";
-			"buildRules" = (  );
-		};
-		"2D2E5B1E11A740622E56B89E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "085F49884B2E24F4A5F8CF66";
-		};
-		"BCC89544F8613FA89FB2E696" = {
-			"path" = "iOS/LunchlineActivity/LunchlineLiveActivity.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"BCBFC11BB9E33315BFCFD6A2" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "3D9C7E6CE75D776F66843ABA";
-		};
-		"E70178078CD52B8140684DB4" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "990AA5F8AA1D633656FEEC5F";
-		};
-		"262E02E3C63E2FBADCBCB6A2" = {
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
-				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
-				"SWIFT_VERSION" = "5.0";
-				"CLANG_ENABLE_MODULES" = "YES";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf";
+		86E0D76135EE80816AB07AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
-			"name" = "Debug";
+			name = Release;
 		};
-		"A0B8579CC04BC96BB8A9F0ED" = {
-			"isa" = "PBXResourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"D799BAE6088A90139B415FCC" = {
-			"isa" = "PBXContainerItemProxy";
-			"containerPortal" = "98F54143AB4E86B28C3AFEE0";
-			"remoteGlobalIDString" = "C0F1F64331852C8E91495225";
-			"remoteInfo" = "LunchlineActivity";
-			"proxyType" = "1";
-		};
-		"57D1B32069E00B37F1D86247" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6597358D8B6952CC9BE564C7";
-		};
-		"18F9734F4BBA5E34E5D87C3E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "F73FC003BE3E8B8FE00C022C";
-		};
-		"426E20D9197D9964D65EDDBD" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "A26D3B98926EDBCF827C6F3E";
-		};
-		"C23108729D1809B8323E9806" = {
-			"isa" = "PBXGroup";
-			"name" = "Configuration";
-			"children" = ( "F8B136C2FFBC6429D3F7E7FF", "6D21A735095178B70BD2BCB3", "2C94172D67DA116C7BB32C13", "646A36D3D0F68D9DF6EBCBEB" );
-			"sourceTree" = "<group>";
-		};
-		"5CB3F5F2FF0B5E1CA0DA7E2C" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "A26D3B98926EDBCF827C6F3E";
-		};
-		"FD0ACEAAE78F0A8F874D1410" = {
-			"path" = "campActivity.appex";
-			"isa" = "PBXFileReference";
-			"explicitFileType" = "wrapper.app-extension";
-			"sourceTree" = "BUILT_PRODUCTS_DIR";
-		};
-		"D09951732E04E924B5E4436A" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "A26D3B98926EDBCF827C6F3E";
-		};
-		"72501118D5B0CAFD879A315F" = {
-			"isa" = "XCConfigurationList";
-			"defaultConfigurationIsVisible" = "0";
-			"defaultConfigurationName" = "Release";
-			"buildConfigurations" = ( "CB7935C116F2FEF4F69BC106", "600DD26EA427CA6A2C572315" );
-		};
-		"84AA6B5AE1FA6B38E43DF114" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "E79433541AC79D859BE6A6D7";
-		};
-		"E3A6A7AF4978F5AEBB56C651" = {
-			"baseConfigurationReference" = "2C94172D67DA116C7BB32C13";
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				"SWIFT_ACTIVE_COMPILATION_CONDITIONS" = "DEBUG $(inherited)";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/App-Info.plist";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-Onone";
-				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "iphoneos";
-				"PRODUCT_NAME" = "camp";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "$(BUNDLE_ID_PREFIX)";
-				"CURRENT_PROJECT_VERSION" = "1";
+		897E2A5236ED94266684172E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = DC92972HRX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = camp;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX)";
+				PRODUCT_NAME = camp;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
-			"name" = "Debug";
+			name = Release;
 		};
-		"C0F1F64331852C8E91495225" = {
-			"productType" = "com.apple.product-type.app-extension";
-			"productReference" = "FD0ACEAAE78F0A8F874D1410";
-			"buildConfigurationList" = "364ED9C0A99D1DB68070A265";
-			"productName" = "campActivity";
-			"isa" = "PBXNativeTarget";
-			"buildPhases" = ( "F08676D07E9B6CAA7B5C33B3", "8A258C94F312639AC340B4BA", "A0B8579CC04BC96BB8A9F0ED" );
-			"dependencies" = (  );
-			"name" = "LunchlineActivity";
-			"buildRules" = (  );
-		};
-		"2711671EEDCA8A5EAACA74C0" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "AA9AFA62E521BB23D4A22F0F";
-		};
-		"364ED9C0A99D1DB68070A265" = {
-			"isa" = "XCConfigurationList";
-			"defaultConfigurationIsVisible" = "0";
-			"defaultConfigurationName" = "Release";
-			"buildConfigurations" = ( "4DDD73B1B9F814279097EF97", "5823EF385173CCDE0A7BFB3C" );
-		};
-		"790F8993B353F73215A1A047" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6A6AA6A83B3FA5C8D86A1969";
-		};
-		"3D154C116223506B677623D8" = {
-			"path" = "ARCHITECTURE.md";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "net.daringfireball.markdown";
-			"sourceTree" = "<group>";
-		};
-		"DDEF661AB9289151461CFA2A" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "5AB373237DCF91F0FBCEEB42";
-		};
-		"8A258C94F312639AC340B4BA" = {
-			"isa" = "PBXFrameworksBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"1E606B4FF8F8C5090B04EAFA" = {
-			"path" = "iOS/Lunchline/LunchIntents.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"2401BF6CC6E2F5E7E69150BC" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6597358D8B6952CC9BE564C7";
-		};
-		"29ED9DEFE7195C25E5D00780" = {
-			"isa" = "PBXResourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"6A6AA6A83B3FA5C8D86A1969" = {
-			"path" = "Sources/LunchUI/CampLocationView.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"8E9B14129C271C243D1FD4DF" = {
-			"path" = "Sources/LunchUI/CampTodayPage.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"52327E969F7FFF5A3CD652BB" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "F73FC003BE3E8B8FE00C022C";
-		};
-		"86E0D76135EE80816AB07AC0" = {
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
-				"SWIFT_COMPILATION_MODE" = "wholemodule";
-				"CLANG_ENABLE_OBJC_ARC" = "YES";
-				"SWIFT_VERSION" = "5.0";
-				"CLANG_ENABLE_MODULES" = "YES";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
+		CB7935C116F2FEF4F69BC106 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_NAME = LunchlineMac;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/Mac-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.camp.mac;
+				PRODUCT_NAME = camp;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			"name" = "Release";
+			name = Debug;
 		};
-		"646A36D3D0F68D9DF6EBCBEB" = {
-			"path" = "Config/Widget-Info.plist";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "text.plist.xml";
-			"sourceTree" = "<group>";
-		};
-		"084EB0A92AD93CBA356E561A" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "0464AF5238C6985DD7EFE878";
-		};
-		"F8B136C2FFBC6429D3F7E7FF" = {
-			"path" = "Config/App-Info.plist";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "text.plist.xml";
-			"sourceTree" = "<group>";
-		};
-		"BB63300D203895586AE5AC9E" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "6FCEB20316C7633D52C4D2C6";
-		};
-		"F51AA4771FEDD69D381F61D4" = {
-			"isa" = "PBXFrameworksBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"EDAD23BA0F6BB767403393D1" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "0DC199CC655D0B90792C25FB";
-		};
-		"33DE390D3BE97859D1A17E59" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "085F49884B2E24F4A5F8CF66";
-		};
-		"0915AB262380B81A5D8ECA36" = {
-			"isa" = "PBXSourcesBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = ( "3285E0170E562511E3DAEC8F", "426E20D9197D9964D65EDDBD", "52327E969F7FFF5A3CD652BB", "2382BA36E46D60D304F23A4B", "765BDC8D5F2C61A76F445D2F", "34A3E5CBD07A4E1CE41ED3C2", "A9DE95356B439FB451D9337C", "DDEF661AB9289151461CFA2A", "579F35FB959BE87E23E04983", "D392204FCB670BE1B4CCB69F", "6F0BFE163AEB89E3E80B8606", "2D2E5B1E11A740622E56B89E", "BCBFC11BB9E33315BFCFD6A2", "2711671EEDCA8A5EAACA74C0", "6F451A906F4777AAE1E9FB10", "790F8993B353F73215A1A047", "D9BDC7E9D7457A31DC0085DC", "83B6D8C6688A94F2EC6D74E5", "154D5396210B2E6C2D783A9D", "46DDCE5532D5270EB2CA571D", "D5DF6D00BED2E1C7F2A31E61", "4F8BBA4C1CEF4D571502C32A" );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"5EF3B6A558443AA4E5D4D0C6" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "5AB373237DCF91F0FBCEEB42";
-		};
-		"AAE34FBDC2A50AD7E5488521" = {
-			"isa" = "PBXFrameworksBuildPhase";
-			"buildActionMask" = "2147483647";
-			"files" = (  );
-			"runOnlyForDeploymentPostprocessing" = "0";
-		};
-		"DE58E2B17C19600779694943" = {
-			"isa" = "PBXTargetDependency";
-			"target" = "C0F1F64331852C8E91495225";
-			"targetProxy" = "D799BAE6088A90139B415FCC";
-		};
-		"6597358D8B6952CC9BE564C7" = {
-			"path" = "Sources/LunchCore/LunchSession.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"D392204FCB670BE1B4CCB69F" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "8E9B14129C271C243D1FD4DF";
-		};
-		"5AB373237DCF91F0FBCEEB42" = {
-			"path" = "Sources/LunchCore/CampConfiguration.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
-		};
-		"897E2A5236ED94266684172E" = {
-			"baseConfigurationReference" = "2C94172D67DA116C7BB32C13";
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/App-Info.plist";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"SWIFT_COMPILATION_MODE" = "wholemodule";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
-				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "iphoneos";
-				"PRODUCT_NAME" = "camp";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "$(BUNDLE_ID_PREFIX)";
-				"CURRENT_PROJECT_VERSION" = "1";
+		E3A6A7AF4978F5AEBB56C651 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C94172D67DA116C7BB32C13 /* Config/Shared.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DC92972HRX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = camp;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX)";
+				PRODUCT_NAME = camp;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			"name" = "Release";
+			name = Debug;
 		};
-		"07960C32B791871E30231B4A" = {
-			"path" = "Sources/LunchMac/LunchMacApp.swift";
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"sourceTree" = "<group>";
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		247BF104A9AD002C539DA531 /* Build configuration list for PBXProject "Lunchline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				262E02E3C63E2FBADCBCB6A2 /* Debug */,
+				86E0D76135EE80816AB07AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		"190E8BA3AE3816B66EA1D32B" = {
-			"isa" = "PBXGroup";
-			"name" = "iPhone app & intents";
-			"children" = ( "6FCEB20316C7633D52C4D2C6", "C1C0345F7A51240D5683CAED", "1E606B4FF8F8C5090B04EAFA", "990AA5F8AA1D633656FEEC5F" );
-			"sourceTree" = "<group>";
+		364ED9C0A99D1DB68070A265 /* Build configuration list for PBXNativeTarget "LunchlineActivity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DDD73B1B9F814279097EF97 /* Debug */,
+				5823EF385173CCDE0A7BFB3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		"A265BFFF63667E8DCC32D510" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "C1C0345F7A51240D5683CAED";
+		451EA8BF70963E7682491A3F /* Build configuration list for PBXNativeTarget "Lunchline" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3A6A7AF4978F5AEBB56C651 /* Debug */,
+				897E2A5236ED94266684172E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		"A43475413C01569D52F67050" = {
-			"isa" = "PBXGroup";
-			"name" = "Mac app & notch panel";
-			"children" = ( "07960C32B791871E30231B4A", "A2DC722DE4A06277A412087A", "A49058F845BE9973095D1CDD" );
-			"sourceTree" = "<group>";
+		72501118D5B0CAFD879A315F /* Build configuration list for PBXNativeTarget "LunchlineMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB7935C116F2FEF4F69BC106 /* Debug */,
+				600DD26EA427CA6A2C572315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		"600DD26EA427CA6A2C572315" = {
-			"isa" = "XCBuildConfiguration";
-			"buildSettings" = {
-				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/../Frameworks";
-				"DEBUG_INFORMATION_FORMAT" = "dwarf-with-dsym";
-				"MARKETING_VERSION" = "0.1.0";
-				"INFOPLIST_FILE" = "Config/Mac-Info.plist";
-				"CODE_SIGN_IDENTITY" = "-";
-				"MACOSX_DEPLOYMENT_TARGET" = "13.0";
-				"GENERATE_INFOPLIST_FILE" = "YES";
-				"SWIFT_COMPILATION_MODE" = "wholemodule";
-				"SWIFT_OPTIMIZATION_LEVEL" = "-O";
-				"EXECUTABLE_NAME" = "LunchlineMac";
-				"SUPPORTED_PLATFORMS" = "macosx";
-				"CODE_SIGN_STYLE" = "Automatic";
-				"SDKROOT" = "macosx";
-				"PRODUCT_NAME" = "camp";
-				"ENABLE_HARDENED_RUNTIME" = "YES";
-				"PRODUCT_BUNDLE_IDENTIFIER" = "com.example.camp.mac";
-				"CURRENT_PROJECT_VERSION" = "1";
-			};
-			"name" = "Release";
-		};
-		"A4C01EBC144440E7AD392B0A" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "E79433541AC79D859BE6A6D7";
-		};
-		"DFC6123E3EDE61B71761EDCF" = {
-			"isa" = "PBXGroup";
-			"name" = "Guides";
-			"children" = ( "3D154C116223506B677623D8", "AA4ACA445B3FBAF47CDE31AC" );
-			"sourceTree" = "<group>";
-		};
-		"6F0BFE163AEB89E3E80B8606" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "0464AF5238C6985DD7EFE878";
-		};
-		"282EC74C271C2C9D68B9D3D2" = {
-			"path" = "camp.app";
-			"isa" = "PBXFileReference";
-			"explicitFileType" = "wrapper.application";
-			"sourceTree" = "BUILT_PRODUCTS_DIR";
-		};
-		"573F80616DE11E7436BF60A1" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/MacLunchCalendar.swift";
-			"sourceTree" = "<group>";
-		};
-		"D9BDC7E9D7457A31DC0085DC" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "573F80616DE11E7436BF60A1";
-		};
-		"351A36C57D9D91F2EAE5B5B8" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "573F80616DE11E7436BF60A1";
-		};
-		"244E8CE46AB5991AF5BC98E2" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/CampCalendarView.swift";
-			"sourceTree" = "<group>";
-		};
-		"83B6D8C6688A94F2EC6D74E5" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "244E8CE46AB5991AF5BC98E2";
-		};
-		"1E4189726F3CD230B9F8F5BD" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "244E8CE46AB5991AF5BC98E2";
-		};
-		"2A059DDC399512D1A862CA32" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchCore/RecommendationContracts.swift";
-			"sourceTree" = "<group>";
-		};
-		"2AD14B5DDF3D15C174E3218B" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "2A059DDC399512D1A862CA32";
-		};
-		"154D5396210B2E6C2D783A9D" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "2A059DDC399512D1A862CA32";
-		};
-		"F78F058109108A63C22D4B0F" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchCore/RecommendationClient.swift";
-			"sourceTree" = "<group>";
-		};
-		"06BA6B0F22EF2FCD81A68C02" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "F78F058109108A63C22D4B0F";
-		};
-		"46DDCE5532D5270EB2CA571D" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "F78F058109108A63C22D4B0F";
-		};
-		"FEED9762D4AB10E29B61A08B" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/CampRecommendationView.swift";
-			"sourceTree" = "<group>";
-		};
-		"C89A8BF92E99EC8E174D0A2C" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "FEED9762D4AB10E29B61A08B";
-		};
-		"D5DF6D00BED2E1C7F2A31E61" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "FEED9762D4AB10E29B61A08B";
-		};
-		"4C9DF5E3380E8E33D7117F8A" = {
-			"isa" = "PBXFileReference";
-			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/CampDemoPage.swift";
-			"sourceTree" = "<group>";
-		};
-		"3DD2D2F172EBF4D72CFF6EEB" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "4C9DF5E3380E8E33D7117F8A";
-		};
-		"4F8BBA4C1CEF4D571502C32A" = {
-			"isa" = "PBXBuildFile";
-			"fileRef" = "4C9DF5E3380E8E33D7117F8A";
-		};
+/* End XCConfigurationList section */
 	};
-	"rootObject" = "98F54143AB4E86B28C3AFEE0";
+	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;
 }

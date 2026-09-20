@@ -106,6 +106,13 @@ public struct MealOffer: Codable, Equatable {
     }
 }
 
+/// `PUT /v1/profile`: the saved preferences now live on the user row.
+public struct ProfileSyncResponse: Codable, Equatable {
+    public let userId: String
+    public let created: Bool
+    public let budgetCents: Int
+}
+
 /// Loose JSON for the developer page, so backend debug payloads can change without Swift edits.
 public indirect enum JSONValue: Codable, Equatable {
     case string(String), number(Double), bool(Bool), null, array([JSONValue]), object([String: JSONValue])

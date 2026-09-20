@@ -1,6 +1,6 @@
 # camp for iPhone
 
-The native iPhone app and embedded WidgetKit extension share camp’s existing workspace, meal model, branding and App Intents. iOS 17 is the minimum for interactive meal buttons. This is a local demo companion; there is no Mac-to-phone synchronization yet.
+The native iPhone app and embedded WidgetKit extension share camp’s existing workspace, meal model, branding and App Intents. iOS 17 is the minimum for interactive meal buttons. Lunches sync with the Mac through the recommender backend while camp is in the foreground (see README → Mac ↔ iPhone sync); a lunch chosen in the Mac notch starts the phone's Live Activity, and Lock Screen taps update the notch.
 
 ## Develop on this Mac
 
@@ -29,7 +29,7 @@ The controller persists the meal session before publishing changes. Revision che
 
 The app supports Lock Screen and compact, minimal and expanded Dynamic Island presentations. The activity uses a short, phone-specific composition of the existing camp styling; the desktop card is too tall for the Lock Screen’s limited height. No notification permission is requested for locally started activities.
 
-Automatic invitations while the phone app is closed are a separate integration: use ActivityKit push-to-start (iOS 17.2+), per-device token registration, an authenticated backend and APNs credentials/capability. Server reconciliation must also propagate phone confirmations back to the shared order. Those services and push entitlements are deliberately not represented as connected in this local build. No background polling is used.
+Automatic invitations while the phone app is closed are a separate integration: use ActivityKit push-to-start (iOS 17.2+), per-device token registration, an authenticated backend and APNs credentials/capability. Server reconciliation must also propagate phone confirmations back to the shared order. Those services and push entitlements are deliberately not represented as connected in this local build. The shared-lunch long-poll runs only while the app is active; nothing polls in the background.
 
 ## Current verification and partner handoff
 
@@ -43,7 +43,7 @@ For a partner to continue:
 2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`, and fill in their team and unique bundle prefix. Never commit the local file.
 3. Select the **Lunchline** scheme and their trusted, unlocked phone with Developer Mode enabled. Let Xcode prepare the device and resolve automatic signing for both targets.
 4. Run, open Today → View menu, then lock the phone. Select a meal in the activity, confirm, reopen camp and check Today. Also try Create group, Leave and Simulate arrival.
-5. Automatic Mac-to-phone delivery is not implemented; start the invitation in the phone app for this demo.
+5. For Mac-to-phone delivery, run the backend with `--host 0.0.0.0` and `CAMP_TOKEN`, point the Demo → Recommendation service card on both devices at it, keep camp open on the phone and choose a group in the Mac notch. Background delivery still needs APNs push-to-update.
 
 The first sandboxed attempt could not access CoreDevice/Simulator services or compiler preview plugins; repeating outside that sandbox allowed both builds to succeed. This is distinct from an Xcode compatibility failure.
 

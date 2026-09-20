@@ -130,7 +130,7 @@ public struct CampWorkspace: View {
 
     private var title: String {
         switch store.section {
-        case .today: return "A better lunch break."
+        case .today: return "Orders, handled."
         case .you: return "Your preferences"
         case .office: return "Office"
         case .spending: return "Spending"

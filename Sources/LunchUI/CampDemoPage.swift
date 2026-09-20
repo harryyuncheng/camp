@@ -3,7 +3,8 @@ import SwiftUI
 import LunchCore
 #endif
 
-/// Demo page: everything added for demoing and testing the recommender — the live offer, the backend's
+/// Demo page: everything added for demoing and testing the recommender and the service bridges — the
+/// recommendation service, Ramp sandbox, ordering provider placeholder, then the live offer, the backend's
 /// filters, scores, office batch and feedback loop. Lives in its own sidebar tab; not employee-facing.
 struct CampDemoPage: View {
     @ObservedObject var store: CampSettingsStore
@@ -17,8 +18,9 @@ struct CampDemoPage: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            CampRecommendationView(store: store)
             if let offer = store.latestOffer { liveOffer(offer) }
-            CampCard("Backend", subtitle: "GET /v1/health and /v1/debug/snapshot") {
+            CampCard("Recommender debug", subtitle: "GET /v1/health and /v1/debug/snapshot") {
                 HStack {
                     Button(busy ? "Loading…" : "Refresh") { Task { await refresh() } }.buttonStyle(CampActionStyle()).disabled(busy)
                     Button("Re-run batch") { Task { await store.requestOffer(force: true); await refresh() } }.buttonStyle(CampActionStyle(primary: false)).disabled(busy || store.recommenderBusy)
@@ -35,6 +37,19 @@ struct CampDemoPage: View {
             if let user { userCard(user) }
             feedbackCard
             if let snapshot { CampCard("Raw snapshot") { JSONTree(value: snapshot, depth: 0) } }
+            CampRampView(store: store)
+            CampCard("Ordering", subtitle: "Placeholder · no ordering provider is integrated yet.") {
+                Picker("Provider", selection: $store.draft.connections.orderingProvider) {
+                    Text("Mock provider").tag("Mock provider")
+                    Text("DoorDash · planned").tag("DoorDash")
+                }
+                CampBadge(text: store.draft.connections.orderingProvider == "Mock provider" ? "Demo only" : "Not connected")
+                Text("No orders are submitted.").font(.callout).foregroundStyle(CampPalette.muted)
+            }
+            CampCard("Ramp bridge URL", subtitle: "The local Python server that holds the Ramp sandbox credentials.") {
+                CampTextField(title: "http://127.0.0.1:8787", text: $store.draft.connections.backendURL)
+                Text("Leave blank to use http://127.0.0.1:8787.").font(.caption).foregroundStyle(CampPalette.muted)
+            }
         }.task { await refresh() }
     }
 
@@ -162,7 +177,7 @@ struct CampDemoPage: View {
                 CampTextField(title: "e.g. \"Great but too salty\" or \"I'm allergic to shellfish\"", text: $feedbackText)
                 Button("Send") { Task { await sendFeedback() } }.buttonStyle(CampActionStyle()).disabled(feedbackText.isEmpty || store.recommenderUserID == nil)
             }
-            if store.recommenderUserID == nil { Text("Request a lunch offer first so the backend has a profile for you.").font(.caption).foregroundStyle(CampPalette.muted) }
+            if store.recommenderUserID == nil { Text("Request a meal offer first so the backend has a profile for you.").font(.caption).foregroundStyle(CampPalette.muted) }
             if let r = feedbackResult {
                 ForEach((r["events"]?.array ?? []).indices, id: \.self) { i in
                     let e = r["events"]!.array![i]

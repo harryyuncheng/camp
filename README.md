@@ -4,7 +4,7 @@
 
 ## Ramp sandbox integration
 
-The Connections screen now connects to Ramp through a local Python backend, lists active sandbox employees, and can create a bounded restaurant fund with linked-card references. Credentials stay on the backend. See [setup and API details](backend/README.md).
+The Demo tab connects to Ramp through a local Python backend, lists active sandbox employees, and can create a bounded restaurant fund with linked-card references. Credentials stay on the backend. See [setup and API details](backend/README.md).
 
 ```sh
 cp backend/.env.example backend/.env
@@ -12,7 +12,7 @@ cp backend/.env.example backend/.env
 python3 backend/server.py
 ```
 
-Open camp → Connections → **Connect / refresh sandbox**. Choose the company payer and allocation before clicking **Create sandbox fund**. No food order or charge is placed.
+Open camp → Demo → **Connect / refresh sandbox**. Choose the company payer and allocation before clicking **Create sandbox fund**. No food order or charge is placed.
 
 ## Mac office location
 
@@ -20,7 +20,7 @@ Office and Connections now use macOS Location Services. Use **Search** or **Find
 
 ## Mac calendars
 
-Open **Connections → Connect calendars**, allow full calendar access, and select the calendars that should block lunch. Google, Outlook and iCloud calendars work when already synced in the Mac Calendar app. Available windows appear in You and Connections. Your saved lunch duration, window and meeting buffer determine which gaps fit. camp does not create or edit events. See [calendar setup and behavior](docs/CALENDAR.md).
+Open **Connections → Connect calendars**, allow full calendar access, and select the calendars that should block lunch. Google, Outlook and iCloud calendars work when already synced in the Mac Calendar app. Available windows appear in Connections. Your saved lunch duration, window and meeting buffer determine which gaps fit. camp does not create or edit events. See [calendar setup and behavior](docs/CALENDAR.md).
 
 ## Configuration workspace
 
@@ -28,23 +28,25 @@ The Mac app now opens a light camp workspace with lime accents. The dark notch p
 
 The shared workspace has five SwiftUI screens:
 
-- **Today:** open a completed coffee receipt, browse three demo lunch groups, create a group, choose/change/leave a meal, and see lunch-group savings and participant totals.
+- **Today:** today's office lunch groups from the backend database, your confirmed lunch, create a group at a catalog restaurant, choose/change/leave a meal, and live savings and participant totals.
 - **You:** food preferences, editable lunch timing, calendar selection and notification preview settings.
 - **Office:** demo-admin toggle, address/geofence coordinates and radius, budgets, timing, fee sharing and group rules.
-- **Spending:** a credit-card-shaped preview, sample budget and transactions; no live card connection.
-- **Connections:** live Ramp sandbox bridge, Mac location and calendars, plus placeholders for recommendations and DoorDash.
+- **Spending:** a credit-card-shaped preview over your confirmed orders in the backend (`/v1/ledger`); no live card connection.
+- **Connections:** Mac calendars and location.
+- **Demo:** recommendation service, live offer and recommender debug views, Ramp sandbox bridge, and the DoorDash ordering placeholder.
 
-Use **Save** to persist settings on this device, or **Discard** to revert. Office settings become read-only when demo admin is off. There is no cross-device sync. Ramp makes sandbox API requests through the local bridge. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders and other connections are simulated; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
+Use **Save** to persist settings on this device and sync your profile to the backend (`PUT /v1/profile`), or **Discard** to revert. Office settings become read-only when demo admin is off. Ramp makes sandbox API requests through the backend's `/v1/ramp` endpoints. Mac presence uses on-device Location Services; calendar availability uses locally synced EventKit calendars. Group orders live in the backend's `groups` and `orders` tables; no food orders or payments are made. Mac notch confirmations update the workspace’s selected group and meal. iPhone group menus now start interactive Live Activities and confirmations update its local Today page. Mac and iPhone remain independent devices.
 
 The Mac **iPhone layout preview** uses the same compact SwiftUI workspace as the iPhone app. It is a layout preview, not an iOS simulator. Xcode 16.2 on this machine successfully builds both the simulator and physical-device app. Running on the connected phone still requires Developer Mode and signing.
 
 ## Today demo and editable timing
 
-- **Create group** selects a demo restaurant, delivery time and meal, then adds and joins a new group. One lunch choice is active at a time; joining a different group replaces it. New groups start with just you and zero delivery savings.
-- **Total savings** and **People ordering** summarize today's lunch groups, excluding coffee. Savings compare a $6 delivery for each person with one $6 shared delivery per nonempty group. They are demo estimates, not live quotes.
+- **Create group** picks a restaurant from the catalog (`GET /v1/restaurants`), a delivery time and a meal, then `POST /v1/groups` creates and joins it. One lunch per person per day: joining a different group leaves the previous one server-side. New groups start with just you and zero delivery savings.
+- **Total savings** and **People ordering** are computed by the backend from real membership: each group shares one delivery fee (the restaurant's own fee), so savings are `(participants − 1) × fee`. Prices are all-in estimates, not live quotes.
+- A day with no groups is seeded by the backend from the catalog with synthetic colleagues (flagged `seeded`), so the office is never empty on first run.
 - The notch lists the same groups, including newly created ones. **Preview lunch invitation** opens group selection; confirmation updates Today and retracts to the menu bar after three seconds.
 - In **You → Lunch timing**, type times such as `1pm`, `13:30` or `1330`, then press Enter or leave the field. Unsuffixed times use the 24-hour clock. Duration and buffer are typed in minutes. Invalid input leaves the last valid draft value unchanged; **Save** applies valid preferences to the calendar service.
-- Demo groups reset on restart. Settings persist locally. Rebuilding with the development signature may require reconnecting OS calendar/location permissions.
+- Groups, membership and orders persist in the database across restarts. Settings persist locally and are mirrored to your backend profile on Save. Rebuilding with the development signature may require reconnecting OS calendar/location permissions.
 
 ## Branding and layout
 
@@ -54,7 +56,7 @@ Spending's demo card uses a 1.586 aspect ratio, caps its width at 400 points and
 
 ## Native lunch assistant
 
-A small native lunch assistant POC. The Mac app opens an interactive panel beneath the notch when a lunch event arrives. Pick a lunch group, choose one of its meals, review the price, and confirm. Meal choices use fictional data; confirmation records a local choice and never places an order. Ramp sandbox account data is fetched separately in Connections.
+A small native lunch assistant POC. The Mac app opens an interactive panel beneath the notch when a lunch event arrives. Pick a lunch group, choose one of its meals, review the price, and confirm. Meal choices use fictional data; confirmation records a local choice and never places an order. Ramp sandbox account data is fetched separately on the Demo tab.
 
 ## Run the Mac app
 
@@ -131,7 +133,7 @@ The iPhone app can also supply Apple's mirrored Live Activity on macOS Tahoe 26+
 - Thirteen domain/geometry/timing tests cover state transitions, persistence, notch placement, and confirmation deadlines. Three AppKit lifecycle tests also check view identity, fixed top edge, actual window hiding, explicit reopening, and cancellation when a new offer arrives. AppKit tests require a macOS desktop session and skip without one.
 - Mac build and interaction results are recorded in `VALIDATION.md`.
 - Unsigned simulator and physical-device builds succeeded with Xcode 16.2. Live Activity interactions remain unverified; the connected phone needs Developer Mode enabled and a signing team configured.
-- Meals, coffee history, spending transactions, savings and arrival windows are demo fixtures. Ramp sandbox, Mac location and Mac calendar access are implemented separately. Recommendations, provider checkout and real payments are not connected.
+- Groups, orders, spending and savings are read from the backend database; menu prices are catalog estimates. The Live Activity's default lunch and the Spending card artwork remain demo visuals. Ramp sandbox, Mac location and Mac calendar access are implemented separately. Provider checkout and real payments are not connected.
 - The Mac panel is a normal floating utility window, not a system notification; Focus mode does not automatically suppress it. Add your own quiet-hours/Focus policy before real reminders.
 
 See `ARCHITECTURE.md` for state ownership and the integration boundary.
@@ -149,16 +151,21 @@ uv run camp run-batch --days 3            # office lunch batches on synthetic da
 uv run camp run-home                      # single home order (argmax, full fee)
 uv run camp feedback-demo                 # NL feedback → events → profile updates
 uv run camp eval --backends mock          # §8 harness; add jev,llm with keys set
-uv run uvicorn camp.api:app --port 8788  # recommender for the Mac/iOS app (Ramp bridge stays on 8787)
+uv run uvicorn camp.api:app --port 8788  # the one backend: recommender, groups, ledger, sync and Ramp bridge
+CAMP_TOKEN=pick-a-secret uv run uvicorn camp.api:app --host 0.0.0.0 --port 8788  # also reachable from the phone
 ```
 
-Database: the recommender stores users, catalog, orders, batches and feedback in Postgres when `CAMP_DATABASE_URL`
-is set (in `backend/.env` or the shell; local default `postgresql://localhost/camp`, e.g. Postgres.app), otherwise
-in the SQLite file named by `CAMP_DB` (default `camp.db`). Tests use in-memory SQLite plus one Postgres round-trip
-test that skips when no server is reachable. `uv run camp migrate --source camp.db` copies an old SQLite file into
-`CAMP_DATABASE_URL`. The Ramp bridge (`server.py`) keeps its own small SQLite ledger of allocation attempts.
+Database: everything server-owned lives in one Postgres database when `CAMP_DATABASE_URL` is set (in `backend/.env`
+or the shell; local default `postgresql://localhost/camp`, e.g. Postgres.app), otherwise in the SQLite file named by
+`CAMP_DB` (default `camp.db`). Tables (`backend/src/camp/store.py`, one JSONB document table each with generated index
+columns): `users` (profile + learned preferences + the app's saved settings), `restaurants`, `items`, `orders`, `batches`,
+`events` (feedback), `groups` (Today's lunch groups and membership), `ramp_attempts` (idempotent sandbox fund issuance)
+and `sync` (the current Mac ↔ iPhone lunch). Tests use in-memory SQLite plus one Postgres round-trip test that skips
+when no server is reachable. `uv run camp migrate --source camp.db` copies an old SQLite file into `CAMP_DATABASE_URL`.
+What stays on the device on purpose: OS permissions and their choices (calendar selection, the confirmed geofence),
+connection URLs, and the locally cached lunch session.
 
-Keys: `TYPESAFE_API_KEY` enables Jev (`typesafe:jev-latest` via pydantic-ai); `ANTHROPIC_API_KEY` enables the
+Keys: `TYPESAFE_API_KEY` enables Jev (`typesafe:jev-latest` via pydantic-ai); `OPENAI_API_KEY` enables the
 LLM fallback and "why this pick" text. With neither set, an offline keyword mock is used so everything still runs.
 
 Human labels for the eval go in `src/camp/eval/labels/{feedback,modifications,menu_tags}.csv`
@@ -183,14 +190,42 @@ need partner access.
 
 ## Native app ↔ recommender
 
-Two local services: `python3 backend/server.py` (Ramp sandbox bridge, port 8787) and
-`cd backend && uv run uvicorn camp.api:app --port 8788` (recommender). In the app, Connections → Recommendation
+One local service: `cd backend && uv run uvicorn camp.api:app --port 8788` (recommender, groups, ledger, sync and the
+Ramp sandbox bridge at `/v1/ramp`; `backend/server.py` is retired). In the app, Demo → Recommendation
 service → Connect, then **Request lunch offer**: the app sends a `MealContext` (saved preferences, allergies,
 lunch window, office policy, presence preview) and gets a `MealOffer` back (up to three options with all-in
 estimated prices under the office batch and an "ordered alone" baseline). On the Mac the offer opens in the notch
 panel through `MacLunchModel.offer(_:)`; on both platforms it also appears on the Demo tab.
 
-Contracts: `backend/src/camp/contracts.py` ↔ `Sources/LunchCore/RecommendationContracts.swift`.
+Contracts: `backend/src/camp/contracts.py` ↔ `Sources/LunchCore/RecommendationContracts.swift`; groups and ledger:
+`backend/src/camp/groups.py` ↔ `Sources/LunchCore/LunchSession.swift` (`DemoLunchGroup`, `LunchLedgerResponse`).
+
+Endpoints the app uses: `GET /v1/health`, `PUT /v1/profile`, `GET /v1/groups`, `GET /v1/restaurants`, `POST /v1/groups`,
+`POST /v1/groups/{id}/join`, `DELETE /v1/groups/{id}/members/{user}`, `GET /v1/ledger/{user}`, `POST /v1/meal-offers`,
+`POST /v1/lunch-events`, `GET|PUT|DELETE /v1/lunch-session`, `GET /v1/ramp`, `POST /v1/ramp/allocations`, `/v1/debug/*`.
+Change a row in Postgres (e.g. a group's members) and the Today page shows it on its next refresh.
+
+## Mac ↔ iPhone sync
+
+The recommender backend is also the authority for the *current lunch*. Whatever either device does — start a
+lunch, pick a meal, confirm, simulate arrival, end — is published to `PUT /v1/lunch-session` with the revision it
+started from, and the other device long-polls `GET /v1/lunch-session?since=<seq>` so the change lands within a round
+trip: a group chosen in the Mac notch starts the phone's Live Activity, a tap on the Lock Screen updates the notch.
+Stale writes get a 409 and the device adopts the newer record. Single user, one shared lunch; identity comes later.
+
+To connect the phone (same Wi-Fi, or the Mac joined to the phone's Personal Hotspot):
+
+1. Run the backend bound to the network with a token: `cd backend && CAMP_TOKEN=pick-a-secret uv run uvicorn
+   camp.api:app --host 0.0.0.0 --port 8788`. Never bind `0.0.0.0` without `CAMP_TOKEN`; the API fronts your keys.
+2. On the Mac, Demo → Recommendation service: `http://127.0.0.1:8788`, the token, **Save**.
+3. On the phone, the same card: `http://<mac-name>.local:8788` (`scutil --get LocalHostName` on the Mac; the `.local`
+   name survives switching between Wi-Fi and hotspot) or the Mac's LAN IP, the same token, **Save**. iOS asks for
+   local-network permission the first time. The badge reads **Live · <host>** on both devices when connected.
+
+Plain HTTP is accepted only for loopback, `.local` names and private ranges (`10.`, `172.16–31.`, `192.168.`, hotspot
+`172.20.10.x`); anything else must be HTTPS (`tailscale serve 8788` gives an HTTPS URL that needs no code change).
+The phone syncs while camp is in the foreground; the Lock Screen catches up when the app returns until APNs
+push-to-update is added. The backend keeps the record in the `sync` table of the shared database.
 
 **Demo tab**: the bottom-aligned sidebar tab (above the office name) collects everything added for demoing and
 testing the recommender. It shows the live offer and reads `/v1/debug/*`: the current office batch (restaurants, headcounts, fee shares, regret), your profile as the backend

@@ -46,12 +46,12 @@ public struct LunchCard<Actions: View>: View {
                 }
             }
             if expired {
-                status("This lunch window closed", detail: "Open camp to start a fresh demo.", symbol: "clock")
+                status("This order window closed", detail: "Open camp to start a fresh demo.", symbol: "clock")
             } else {
                 switch session.phase {
                 case .choosing:
                     HStack(alignment: .firstTextBaseline) {
-                        Text("Lunch, sorted.").font(.system(size: 21, weight: .semibold, design: .rounded))
+                        Text(session.kind == .coffee ? "Coffee, sorted." : "Lunch, sorted.").font(.system(size: 21, weight: .semibold, design: .rounded))
                         Spacer(minLength: 4)
                         arrival
                     }
@@ -70,16 +70,16 @@ public struct LunchCard<Actions: View>: View {
                         actions
                     }
                 case .confirmed:
-                    status("You're on the list.", detail: session.selectedOption?.name ?? "Lunch confirmed", symbol: "checkmark.circle.fill")
+                    status("You're on the list.", detail: session.selectedOption?.name ?? "Order confirmed", symbol: "checkmark.circle.fill")
                     HStack {
                         Text("Demo choice saved · no order placed")
                         Spacer(minLength: 4)
                         arrival
                     }.font(.caption2).foregroundStyle(LunchStyle.muted)
                 case .delivered:
-                    status("Lunch has landed.", detail: "Demo complete. Enjoy your break.", symbol: "bag.fill")
+                    status(session.kind == .coffee ? "Coffee has landed." : "Your meal has landed.", detail: "Demo complete. Enjoy your break.", symbol: "bag.fill")
                 case .ended:
-                    status("Lunch ended", detail: "Start a new session whenever you're ready.", symbol: "moon.fill")
+                    status("Order ended", detail: "Start a new session whenever you're ready.", symbol: "moon.fill")
                 }
             }
         }
@@ -138,7 +138,7 @@ public struct MealButtonStyle: ButtonStyle {
 public struct ConfirmLabel: View {
     public init() {}
     public var body: some View {
-        Text("Confirm lunch").font(.system(size: 13, weight: .semibold))
+        Text("Confirm order").font(.system(size: 13, weight: .semibold))
             .foregroundStyle(LunchStyle.ink).frame(maxWidth: .infinity).padding(.vertical, 11)
             .background(LunchStyle.lime).clipShape(RoundedRectangle(cornerRadius: 12))
     }

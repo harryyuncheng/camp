@@ -16,7 +16,12 @@ from pydantic import BaseModel, Field
 from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, FeeSchedule, LatLng, MenuItem, Restaurant
 
 RAMP_HQ = LatLng(lat=40.7424, lng=-73.9913)          # 28 W 23rd St, Flatiron
-DATASET = Path(__file__).parent / "providers" / "fixtures" / "ramp_hq_restaurants.json"
+FIXTURES = Path(__file__).parent / "providers" / "fixtures"
+DATASET = FIXTURES / "ramp_hq_restaurants.json"       # meal places (collected 2026-09-19)
+CAFES = FIXTURES / "ramp_hq_cafes.json"               # coffee / tea / bakeries (collected 2026-09-20); optional until present
+# Meal places from the restaurants file that also serve morning coffee and pastries.
+COFFEE_TOO = {"maman-nomad", "ole-steen", "bourke-street-bakery-nomad", "caf-chelsea", "pret-a-manger", "breads-bakery",
+              "daily-provisions-union-square", "sullivan-street-bakery-chelsea"}
 
 
 class CatalogDish(BaseModel):
@@ -61,6 +66,7 @@ class CatalogRestaurant(BaseModel):
     distance_km: float = 0.0
     dishes: list[CatalogDish] = Field(default_factory=list)
     sources: list[str] = Field(default_factory=list)
+    categories: list[str] = Field(default_factory=lambda: ["meal"])   # "coffee" and/or "meal"
 
     @property
     def rating(self) -> Optional[float]:
@@ -89,10 +95,32 @@ class CatalogRestaurant(BaseModel):
 
 @lru_cache(maxsize=1)
 def load() -> list[CatalogRestaurant]:
-    return [CatalogRestaurant.model_validate(r) for r in json.loads(DATASET.read_text())]
+    """Both fixture files, de-duplicated by id. Meal places that also do coffee get both categories."""
+    rows: dict[str, CatalogRestaurant] = {}
+    for path in (DATASET, CAFES):
+        if not path.exists():
+            continue
+        for raw in json.loads(path.read_text()):
+            r = CatalogRestaurant.model_validate(raw)
+            if r.id in rows:
+                continue
+            cats = list(dict.fromkeys(c for c in r.categories if c in ("coffee", "meal")))
+            if r.id in COFFEE_TOO or _looks_like_cafe(r):
+                cats = list(dict.fromkeys(["coffee", *cats]))
+            r.categories = cats or ["meal"]
+            rows[r.id] = r
+    return list(rows.values())
+
+
+def _looks_like_cafe(r: CatalogRestaurant) -> bool:
+    text = f"{r.name} {r.cuisine_detail}".lower()
+    return r.cuisine == "bakery" and any(w in text for w in ("coffee", "café", "cafe", "espresso", "bakery", "pastry"))
 
 
 def _hours_ok(r: CatalogRestaurant) -> bool:
+    """Meal-only places must serve lunch; a café is in regardless of its hours (coffee orders run all day)."""
+    if "coffee" in r.categories:
+        return True
     o, c = r.open_minutes
     return o <= 12 * 60 + 30 and c >= 13 * 60          # serves lunch
 
@@ -118,9 +146,15 @@ def ensure_current(store, center: LatLng | None = None, seed: int = 0) -> bool:
             and (center is None or all(haversine_km(r.location, center) <= 8 for r in have)))
     if same:
         return False
+    _, items = to_models(seed=seed, center=center)
+    have_ids, want_ids = {r.id for r in have}, {r.id for r in want}
+    if have_ids <= want_ids and (center is None or all(haversine_km(r.location, center) <= 8 for r in have)):
+        # The catalog only grew (e.g. cafés joined the meal places): upsert in place and keep every order and batch,
+        # since nothing they point at is going away.
+        store.put_many(want); store.put_many(items)
+        return True
     for cls in (Restaurant, MenuItem, Order, Batch):
         store.delete_all(cls)
-    _, items = to_models(seed=seed, center=center)
     store.put_many(want); store.put_many(items)
     return True
 
@@ -134,7 +168,9 @@ def to_models(n: int | None = None, seed: int = 0, center: LatLng | None = None,
     rows = [r for r in load() if r.dishes and (not lunch_only or _hours_ok(r))]
     rows.sort(key=lambda r: r.distance_km)
     if n is not None:
-        rows = rows[:n]
+        # Small worlds (tests, `camp synth`) are meal worlds: `n` counts the nearest meal places and cafés stay out,
+        # so the batching solver is exercised on lunches rather than on a latte-and-croissant "group order".
+        rows = [r for r in rows if "coffee" not in r.categories][:n]
     restaurants, items = [], []
     for c in rows:
         rr = random.Random(f"{seed}:{c.id}")
@@ -149,7 +185,8 @@ def to_models(n: int | None = None, seed: int = 0, center: LatLng | None = None,
                        address=c.address, neighborhood=c.neighborhood, cuisine_detail=c.cuisine_detail, price_level=c.price_level,
                        rating=c.rating, review_count=c.review_count,
                        ratings={k: v for k, v in (("google", c.google_rating), ("yelp", c.yelp_rating), *c.other_ratings.items()) if v},
-                       recommendations=c.recommendations, chain=c.chain, platform=c.platforms[0] if c.platforms else "mock",
+                       recommendations=c.recommendations, chain=c.chain, categories=list(c.categories),
+                       platform=c.platforms[0] if c.platforms else "mock",
                        platform_ids={p: f"{p}-{c.id}" for p in c.platforms})
         restaurants.append(r)
         for d in c.dishes:

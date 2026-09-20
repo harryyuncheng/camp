@@ -15,3 +15,5 @@ __pycache__/
 *.db
 *.sqlite3
 Config/Local.xcconfig
+
+backend/camp-sync.json
