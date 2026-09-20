@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
-		A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
-		A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
 		0521A5F43F49DCBEBFD4063E /* Sources/LunchUI/CampTodayPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B14129C271C243D1FD4DF /* Sources/LunchUI/CampTodayPage.swift */; };
 		06BA6B0F22EF2FCD81A68C02 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
 		084EB0A92AD93CBA356E561A /* Sources/LunchUI/CampComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464AF5238C6985DD7EFE878 /* Sources/LunchUI/CampComponents.swift */; };
@@ -48,6 +45,9 @@
 		83B6D8C6688A94F2EC6D74E5 /* Sources/LunchUI/CampCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E8CE46AB5991AF5BC98E2 /* Sources/LunchUI/CampCalendarView.swift */; };
 		84AA6B5AE1FA6B38E43DF114 /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
 		A0FCD6E20BE285115E786C78 /* Sources/LunchUI/LunchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73FC003BE3E8B8FE00C022C /* Sources/LunchUI/LunchCard.swift */; };
+		A10000000000000000000001 /* Sources/LunchCore/CampConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB373237DCF91F0FBCEEB42 /* Sources/LunchCore/CampConfiguration.swift */; };
+		A10000000000000000000002 /* Sources/LunchCore/RecommendationContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A059DDC399512D1A862CA32 /* Sources/LunchCore/RecommendationContracts.swift */; };
+		A10000000000000000000003 /* Sources/LunchCore/RecommendationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78F058109108A63C22D4B0F /* Sources/LunchCore/RecommendationClient.swift */; };
 		A265BFFF63667E8DCC32D510 /* iOS/Lunchline/LunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C0345F7A51240D5683CAED /* iOS/Lunchline/LunchController.swift */; };
 		A4C01EBC144440E7AD392B0A /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
 		A9DE95356B439FB451D9337C /* Sources/LunchUI/NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79433541AC79D859BE6A6D7 /* Sources/LunchUI/NotchGeometry.swift */; };
@@ -479,6 +479,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Widget-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -505,6 +506,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Widget-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -568,6 +570,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = camp;
@@ -621,6 +624,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = camp;

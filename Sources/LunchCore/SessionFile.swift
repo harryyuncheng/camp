@@ -173,6 +173,29 @@ public struct LunchSyncClient: Sendable {
         return try JSONDecoder().decode(LunchSyncSnapshot.self, from: data)
     }
 
+    private struct PushTokenBody: Encodable {
+        let sessionId: String
+        let pushToken: String
+        let device: String
+        let environment: String
+    }
+
+    /// Registers the Live Activity's APNs token so the backend can update it while the app is backgrounded.
+    /// `environment` must match the build: a development build's token is only valid on APNs sandbox.
+    public func registerPushToken(_ token: String, sessionId: String, environment: String) async throws {
+        let body = try JSONEncoder().encode(PushTokenBody(sessionId: sessionId, pushToken: token,
+                                                          device: device, environment: environment))
+        let (data, http) = try await send("POST", "v1/lunch-session/push-token", body: body, timeout: 15)
+        guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
+    }
+
+    /// Tells the backend to stop pushing: the activity has ended on this device.
+    public func dropPushToken(sessionId: String) async throws {
+        let (data, http) = try await send("DELETE", "v1/lunch-session/push-token",
+                                          query: ["sessionId": sessionId], timeout: 15)
+        guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
+    }
+
     /// Drops one order from the shared list (e.g. the user left the group).
     public func forget(sessionId: String) async throws -> LunchSyncSnapshot {
         let (data, http) = try await send("DELETE", "v1/lunch-session", query: ["sessionId": sessionId], timeout: 15)
@@ -276,6 +299,19 @@ public final class LunchSyncCoordinator {
         let records = snapshot.all
         applyAll?(records)
         for record in records { apply?(record) }
+    }
+
+    /// Registers a Live Activity push token. Independent of the CAS write path, so it never contends
+    /// with `publish`; a failure is non-fatal because the foreground long-poll still works.
+    public func registerPushToken(_ token: String, sessionId: String, environment: String) async {
+        guard let client else { return }
+        do { try await client.registerPushToken(token, sessionId: sessionId, environment: environment) }
+        catch { onStatus?("Live · push registration failed: \(error.localizedDescription)") }
+    }
+
+    public func dropPushToken(sessionId: String) async {
+        guard let client else { return }
+        try? await client.dropPushToken(sessionId: sessionId)
     }
 
     /// Removes an order from the shared list; the loop's `since` skips the echo.

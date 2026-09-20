@@ -462,6 +462,17 @@ class SyncState(BaseModel):
     records: list[dict] = Field(default_factory=list)
 
 
+class ActivityPushToken(BaseModel):
+    """A Live Activity's APNs push token, keyed by the session it renders. The phone registers one when
+    `Activity.request(pushType: .token)` hands it a token and re-registers whenever iOS rotates it; the
+    row is dropped when the activity ends or APNs reports the token gone (410)."""
+    id: str                      # the sessionId whose activity this token belongs to
+    push_token: str
+    device: str = "iphone"
+    environment: str = "sandbox"
+    updated_at: datetime = Field(default_factory=utcnow)
+
+
 class ScheduledOrder(BaseModel):
     """A standing order the user asked camp to put on their calendar: e.g. coffee at 9:00 on weekdays, or a meal at
     12:30 Mon/Wed/Fri. Each matching day, `GroupService.today` makes sure a group exists at that restaurant and time

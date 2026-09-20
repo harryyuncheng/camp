@@ -21,6 +21,7 @@ final class LunchController: ObservableObject {
 
     private let store = SessionFile.applicationStore(named: "Lunchline")
     private var observation: Task<Void, Never>?
+    private var pushRegistration: Task<Void, Never>?
     private var pendingRemote: [LunchSyncRecord]?
     private var records: [LunchSyncRecord] = []
 
@@ -239,9 +240,13 @@ final class LunchController: ObservableObject {
             await existing.end(nil, dismissalPolicy: .immediate)
         }
         hasLiveActivity = false
+        // `.token` makes ActivityKit mint an APNs token, which is what lets a Mac-side change reach this
+        // activity while camp is backgrounded or the phone is locked (the long-poll in `sync` is stopped
+        // there). Requesting it without the `aps-environment` entitlement can fail the request outright,
+        // so it stays off until the team can sign for push. See `pushToUpdateEnabled`.
         let created = try Activity.request(
             attributes: attributes,
-            content: content(for: next), pushType: nil
+            content: content(for: next), pushType: Self.pushToUpdateEnabled ? .token : nil
         )
         do { try store.save(next, group: group) }
         catch {
@@ -274,13 +279,45 @@ final class LunchController: ObservableObject {
 
     private func observe(_ activity: Activity<LunchAttributes>) {
         observation?.cancel()
+        pushRegistration?.cancel()
         hasLiveActivity = activity.activityState == .active || activity.activityState == .stale
+        let sessionID = activity.attributes.sessionID.uuidString
         observation = Task { [weak self] in
             for await state in activity.activityStateUpdates {
                 guard !Task.isCancelled else { return }
                 self?.hasLiveActivity = state == .active || state == .stale
+                if state == .ended || state == .dismissed {
+                    await self?.sync.dropPushToken(sessionId: sessionID)
+                }
             }
         }
+        // iOS delivers the token asynchronously and can rotate it at any time, so this stays subscribed
+        // for the life of the activity rather than reading a token once. Without `.token` above there is
+        // no token to receive, so the subscription is skipped entirely.
+        guard Self.pushToUpdateEnabled else { return }
+        pushRegistration = Task { [weak self] in
+            for await data in activity.pushTokenUpdates {
+                guard !Task.isCancelled else { return }
+                let hex = data.map { String(format: "%02x", $0) }.joined()
+                await self?.sync.registerPushToken(hex, sessionId: sessionID, environment: Self.apnsEnvironment)
+            }
+        }
+    }
+
+    /// Live Activity push-to-update. The backend half is built and dormant (`camp.apns`); turning this on
+    /// needs the Push Notifications capability, which requires a *paid* Apple Developer membership, plus
+    /// `Config/App.entitlements` wired back into the app target's `CODE_SIGN_ENTITLEMENTS`. Until then the
+    /// phone syncs by long-poll while foregrounded, which is unaffected by this flag.
+    static let pushToUpdateEnabled = false
+
+    /// A development build's push token is only valid against APNs sandbox; a TestFlight/App Store build
+    /// needs production. DEBUG is the signal available without an entitlement read.
+    private static var apnsEnvironment: String {
+        #if DEBUG
+        return "sandbox"
+        #else
+        return "production"
+        #endif
     }
 }
 

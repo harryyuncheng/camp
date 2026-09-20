@@ -17,7 +17,8 @@ from .ai.feedback_parse import parse_feedback
 from .ai.modifications import modify
 from .ai.tagging import tag_menu
 from .explain import explain_llm
-from .models import ORDER_CATEGORIES, Context, EventType, FeedbackEvent, LunchGroup, MenuItem, Order, Restaurant, User
+from .apns import APNsClient, APNsConfig
+from .models import ORDER_CATEGORIES, ActivityPushToken, Context, EventType, FeedbackEvent, LunchGroup, MenuItem, Order, Restaurant, User
 from .pipeline import plan_home, plan_office
 from .providers import providers_from_env, sync_catalog
 from .cli import _load_env_file
@@ -36,6 +37,37 @@ store = Store.from_env()
 clf = default_classifier()
 offers = OfferService(store)
 lunch_sync = LunchSyncService(store)
+apns = APNsClient(APNsConfig.from_env())
+
+
+async def _push_live_activity(record: dict, device: str) -> None:
+    """Fans an accepted write out to every registered Live Activity token except the device that wrote it.
+
+    This is what makes a Mac-side change reach a *locked* phone: the long-poll in `LunchSyncCoordinator`
+    only runs while camp is foregrounded, but APNs delivers to the activity without waking the app.
+    """
+    if not apns.enabled:
+        return
+    session = record.get("session") or {}
+    session_id = record.get("sessionId")
+    if not isinstance(session_id, str):
+        return
+    row = store.get(ActivityPushToken, session_id)
+    if row is None or row.device == device:
+        return
+    finished = str(session.get("phase", "")) in ("delivered", "ended")
+    status, reason = await apns.send(
+        row.push_token, session,
+        event="end" if finished else "update",
+        stale_at=session.get("closesAt"),
+        dismiss_at=session.get("deliveredAt") or session.get("arrivesAt"),
+    )
+    # 410 Gone means the activity is over on the phone; stop pushing to a dead token.
+    if status == 410 or finished:
+        store.delete(ActivityPushToken, session_id)
+
+
+lunch_sync.on_change = _push_live_activity
 groups = GroupService(store)
 cravings = CravingService(store)
 ramp = RampService(store)
@@ -272,6 +304,30 @@ async def lunch_session_publish(req: LunchSyncPublish):
         raise HTTPException(422, str(e))
     except SyncConflict as e:
         return JSONResponse({"detail": str(e), "seq": e.seq, "record": e.record, "records": e.records}, status_code=409)
+
+
+class ActivityTokenReq(Wire):
+    session_id: str = Field(min_length=1, max_length=128)
+    push_token: str = Field(min_length=1, max_length=512)
+    device: str = Field(default="iphone", min_length=1, max_length=128)
+    environment: str = Field(default="sandbox", pattern="^(sandbox|production)$")
+
+
+@app.post("/v1/lunch-session/push-token")
+def lunch_session_push_token(req: ActivityTokenReq):
+    """The phone registers its Live Activity's APNs token here, and again whenever iOS rotates it."""
+    if not all(c in "0123456789abcdefABCDEF" for c in req.push_token):
+        raise HTTPException(422, "push_token must be hex")
+    store.put(ActivityPushToken(id=req.session_id, push_token=req.push_token.lower(),
+                                device=req.device, environment=req.environment))
+    return {"registered": req.session_id, "pushEnabled": apns.enabled}
+
+
+@app.delete("/v1/lunch-session/push-token")
+def lunch_session_drop_push_token(sessionId: str):
+    """Called when the activity ends on the phone."""
+    store.delete(ActivityPushToken, sessionId)
+    return {"dropped": sessionId}
 
 
 @app.delete("/v1/lunch-session")

@@ -19,7 +19,7 @@ import asyncio
 import copy
 import json
 from datetime import datetime, timedelta, timezone
-from typing import Optional
+from typing import Awaitable, Callable, Optional
 
 from .models import SyncState
 from .store import Store
@@ -89,6 +89,9 @@ def nearest(records: list[dict]) -> Optional[dict]:
 class LunchSyncService:
     def __init__(self, store: Store | None = None):
         self.store = store
+        # Set by the API layer to fan an accepted write out to Live Activity push tokens. It runs detached
+        # so a slow or unreachable APNs never holds the compare-and-swap lock or delays the long-poll.
+        self.on_change: Optional[Callable[[dict, str], Awaitable[None]]] = None
         self.seq = 0
         self.records: list[dict] = []
         self._changed = asyncio.Condition()
@@ -141,7 +144,17 @@ class LunchSyncService:
             records = [r for r in self.records if r.get("sessionId") != session_id] + [stored]
             self._commit(self._prune(records))
             self._changed.notify_all()
+            self._fanout(stored, device)
             return self.snapshot()
+
+    def _fanout(self, stored: dict, device: str) -> None:
+        """Schedules the push-to-update for `stored`. Detached on purpose; failures are logged by the sender."""
+        if self.on_change is None:
+            return
+        try:
+            asyncio.get_running_loop().create_task(self.on_change(stored, device))
+        except RuntimeError:  # no loop (tests calling publish synchronously) - nothing to push to
+            pass
 
     async def clear(self, session_id: Optional[str] = None) -> dict:
         """Forget one order, or every order when `session_id` is None."""
