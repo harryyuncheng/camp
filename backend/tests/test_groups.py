@@ -1,5 +1,6 @@
 """Lunch groups, spending ledger, profile and Ramp attempt ledger all live in the one store."""
 import importlib
+import threading
 
 from fastapi.testclient import TestClient
 
@@ -7,7 +8,7 @@ from camp import synth
 from camp.contracts import OfficeRef
 from camp.groups import CreateGroupReq, GroupService, JoinGroupReq
 from camp.models import LunchGroup, Order, RampAttempt, User
-from camp.store import Store
+from camp.store import SEED_INDEX, Store
 
 OFFICE = OfficeRef(id="hq", name="HQ", latitude=40.7424, longitude=-73.9913)
 
@@ -58,6 +59,72 @@ def test_seed_join_create_leave_keep_orders_consistent():
     ledger = svc.ledger(me, "HQ", "2026-09")
     assert ledger.entries == [] or all(e.status == "confirmed" for e in ledger.entries)
     assert ledger.monthly_budget_cents == 2000 * 20
+
+
+def test_racing_first_loads_seed_the_day_once():
+    store = world()
+    svc = GroupService(store)
+    gate = threading.Barrier(4)
+    results: list[int] = []
+
+    def load():
+        gate.wait()
+        results.append(len(svc.today(OFFICE, None, "2026-09-21").groups))
+
+    threads = [threading.Thread(target=load) for _ in range(4)]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    assert results == [3] * 4
+    assert store.count(LunchGroup) == 3
+    assert store.count(Order) == sum(len(g.members) for g in store.all(LunchGroup))
+
+
+def test_losing_seeder_rolls_back_and_returns_the_winners_rows(monkeypatch):
+    store = world()
+    svc = GroupService(store)
+    winner = svc.today(OFFICE, None, "2026-09-21").groups
+    counts = store.count(LunchGroup), store.count(Order), store.count(User)
+
+    # a second process checked before the winner committed: it sees an empty day and seeds anyway
+    real_live, calls = svc._live, []
+
+    def stale_then_real(office, day):
+        calls.append(day)
+        return [] if len(calls) == 1 else real_live(office, day)
+
+    monkeypatch.setattr(svc, "_live", stale_then_real)
+    again = svc.seed_if_empty(OFFICE, "2026-09-21", exclude_user=None)
+    assert len(calls) == 2                                              # the seed hit the unique index, then re-read
+    assert [g.id for g in again] == [g.id for g in winner]
+    assert (store.count(LunchGroup), store.count(Order), store.count(User)) == counts   # nothing of the loser's survived
+
+
+def test_migration_collapses_duplicate_seeded_groups(tmp_path):
+    path = str(tmp_path / "camp.db")
+    store = Store(path)
+    u, r, i = synth.make_world(12, 20, 0)
+    store.put_many(u); store.put_many(r); store.put_many(i)
+    svc = GroupService(store)
+    first = svc.today(OFFICE, None, "2026-09-21").groups
+    # a database written before the unique index existed, with a second seeded set a few ms after the first
+    store.conn.execute(f"DROP INDEX {SEED_INDEX}"); store.conn.commit()
+    second = svc.seed(OFFICE, "2026-09-21", exclude_user=None)
+    me = svc.join(second[0].id, JoinGroupReq(office=OFFICE, option_id=second[0].options[0].id, display_name="Harry")).user_id
+    assert store.count(LunchGroup) == 6
+    store.close()
+
+    store = Store(path)
+    groups = store.groups_for(OFFICE.id, "2026-09-21")
+    assert [g.id for g in groups] == [g.id for g in first]
+    keeper = store.get(LunchGroup, first[0].id)
+    assert me in {m.user_id for m in keeper.members}
+    mine = [o for o in store.orders_for(me) if o.status == "confirmed"]
+    assert len(mine) == 1 and mine[0].group_id == keeper.id
+    # the duplicate colleagues' orders are cancelled, the keepers' untouched
+    live = [o for o in store.all(Order) if o.status == "confirmed"]
+    assert {o.group_id for o in live} == {g.id for g in first}
+    assert len(live) == sum(len(g.members) for g in groups)
+    assert store.conn.execute("SELECT count(*) FROM sqlite_master WHERE type='index' AND name=?", (SEED_INDEX,)).fetchone()[0] == 1
 
 
 def test_http_groups_ledger_profile_and_ramp_guard(monkeypatch):
