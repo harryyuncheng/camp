@@ -70,31 +70,35 @@ async def modify(clf: Classifier, store: Store, order: Order, text: str, now_min
             top3 = [k for k, _ in sorted(probs.items(), key=lambda kv: -kv[1])[:3]] or [name] + [i.name for i in short[:2] if i.name != name]
             return ModResult(intent, False, "Did you mean one of these?", options=top3[:3])
         new_item = next(i for i in short if i.name == name)
+        if new_item.id != cur.id:
+            removed, addons = [], []
     if intent in ("add_extras", "remove_ingredient", "swap_item_same_restaurant", "other") and new_item.modifiers:
         cs = S.customizations_schema(new_item.modifiers)
         ans = await clf.ask(text, cs)
         for i, m in enumerate(new_item.modifiers):
-            if getattr(ans.output, f"m{i}"):
-                (removed if m.lower().startswith(("no ", "without")) else addons).append(m)
+            if ans.output.model_dump()[f"m{i}"]:
+                target = removed if m.lower().startswith(("no ", "without")) else addons
+                if m not in target:
+                    target.append(m)
 
     # deterministic validation (§7.2 step 4)
     r = rests[new_item.restaurant_id]
     share = order.fee_share_cents if new_item.restaurant_id == cur.restaurant_id else \
         next((b.fee_share_cents for b in (batch.restaurants if batch else []) if b.restaurant_id == r.id), r.fees.delivery_fee_cents)
     addon_cost = sum(new_item.modifier_prices.get(a, 0) for a in addons)
-    total = filters.total_cost_cents(new_item, r, share) + addon_cost
+    subtotal = new_item.price_cents + addon_cost
+    total = subtotal + r.fees.per_item_overhead(subtotal) + share
     if total > u.budget(order.meal):
         return ModResult(intent, False, f"{new_item.name} would come to ${total/100:.2f}, over your ${u.budget(order.meal)/100:.0f} budget.")
+    ok_dietary, why = filters.passes_dietary(u, new_item)
+    if not ok_dietary:
+        return ModResult(intent, False, f"{new_item.name} conflicts with your dietary settings ({why}).")
     if batch and new_item.restaurant_id != cur.restaurant_id:
         old_br = next(b for b in batch.restaurants if b.restaurant_id == cur.restaurant_id)
         # §6.2: leaving is allowed only if the remaining batch still fits; fee split is frozen so it does. Track it.
         u.traits.batch_breaks += 1
         old_br.company_absorbed_cents += old_br.fee_share_cents
         store.put(batch); store.put(u)
-    ok_dietary, why = filters.passes_dietary(u, new_item)
-    if not ok_dietary:
-        return ModResult(intent, False, f"{new_item.name} conflicts with your dietary settings ({why}).")
-
     line = OrderLine(item_id=new_item.id, restaurant_id=r.id, price_cents=new_item.price_cents, removed_ingredients=removed, addons=addons)
     order.line, order.total_cents = line, total
     store.put(order)

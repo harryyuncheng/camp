@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// App-owned persistence; the widget reads ActivityKit content instead of this file.
 /// An injectable URL keeps file access out of the domain and allows isolated tests.
@@ -7,6 +10,7 @@ public struct SessionFile {
     private struct Envelope: Codable {
         let schemaVersion: Int
         let session: LunchSession
+        var group: DemoLunchGroup?
     }
 
     public init(url: URL) { self.url = url }
@@ -17,18 +21,26 @@ public struct SessionFile {
     }
 
     public func load() throws -> LunchSession? {
+        try loadRecord()?.session
+    }
+
+    public func loadRecord() throws -> LunchSyncRecord? {
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
         let envelope = try JSONDecoder().decode(Envelope.self, from: Data(contentsOf: url))
         guard envelope.schemaVersion == 1 else {
             throw CocoaError(.coderReadCorrupt)
         }
-        return envelope.session
+        return LunchSyncRecord(session: envelope.session, group: envelope.group, device: "cache")
     }
 
-    public func save(_ session: LunchSession) throws {
+    public func save(_ session: LunchSession, group: DemoLunchGroup? = nil) throws {
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
-        let data = try JSONEncoder().encode(Envelope(schemaVersion: 1, session: session))
+        let data = try JSONEncoder().encode(Envelope(schemaVersion: 1, session: session, group: group))
         try data.write(to: url, options: .atomic)
+    }
+
+    public func clear() throws {
+        if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
     }
 }
 
@@ -45,7 +57,7 @@ public enum CampBackendURL {
         var raw = string.trimmingCharacters(in: .whitespacesAndNewlines)
         if raw.isEmpty, let fallback { raw = fallback }
         guard let url = URL(string: raw), let host = url.host?.lowercased(),
-              url.user == nil, url.password == nil, url.query == nil else { return nil }
+              !host.isEmpty, url.user == nil, url.password == nil, url.query == nil, url.fragment == nil else { return nil }
         switch url.scheme {
         case "https": return url
         case "http": return isPrivateHost(host) ? url : nil
@@ -55,8 +67,10 @@ public enum CampBackendURL {
 
     /// Loopback, mDNS names and RFC 1918 / link-local ranges. Hotspots hand out 172.20.10.x, home routers 192.168.x.
     public static func isPrivateHost(_ host: String) -> Bool {
-        if host == "localhost" || host == "127.0.0.1" || host == "::1" || host.hasSuffix(".local") { return true }
-        let parts = host.split(separator: ".").compactMap { Int($0) }
+        if host == "localhost" || host == "127.0.0.1" || host == "::1" || host == "[::1]" || host.hasSuffix(".local") { return true }
+        let octets = host.split(separator: ".", omittingEmptySubsequences: false)
+        guard octets.count == 4, octets.allSatisfy({ !$0.isEmpty && $0.count <= 3 && $0.allSatisfy { ("0"..."9").contains($0) } }) else { return false }
+        let parts = octets.compactMap { Int($0) }
         guard parts.count == 4, parts.allSatisfy({ (0...255).contains($0) }) else { return false }
         switch (parts[0], parts[1]) {
         case (10, _), (192, 168), (169, 254): return true
@@ -122,12 +136,14 @@ public struct LunchSyncClient: Sendable {
     public let base: URL
     public let token: String?
     public let device: String
+    private let session: URLSession
 
-    public init(urlString: String, token: String?, device: String) throws {
+    public init(urlString: String, token: String?, device: String, session: URLSession = .shared) throws {
         guard let url = CampBackendURL.parse(urlString, default: "http://127.0.0.1:8788") else {
             throw NSError(domain: "camp", code: 10, userInfo: [NSLocalizedDescriptionKey: CampBackendURL.requirement])
         }
         base = url; self.token = token; self.device = device
+        self.session = session
     }
 
     private struct Publish: Encodable {
@@ -157,6 +173,29 @@ public struct LunchSyncClient: Sendable {
         return try JSONDecoder().decode(LunchSyncSnapshot.self, from: data)
     }
 
+    private struct PushTokenBody: Encodable {
+        let sessionId: String
+        let pushToken: String
+        let device: String
+        let environment: String
+    }
+
+    /// Registers the Live Activity's APNs token so the backend can update it while the app is backgrounded.
+    /// `environment` must match the build: a development build's token is only valid on APNs sandbox.
+    public func registerPushToken(_ token: String, sessionId: String, environment: String) async throws {
+        let body = try JSONEncoder().encode(PushTokenBody(sessionId: sessionId, pushToken: token,
+                                                          device: device, environment: environment))
+        let (data, http) = try await send("POST", "v1/lunch-session/push-token", body: body, timeout: 15)
+        guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
+    }
+
+    /// Tells the backend to stop pushing: the activity has ended on this device.
+    public func dropPushToken(sessionId: String) async throws {
+        let (data, http) = try await send("DELETE", "v1/lunch-session/push-token",
+                                          query: ["sessionId": sessionId], timeout: 15)
+        guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
+    }
+
     /// Drops one order from the shared list (e.g. the user left the group).
     public func forget(sessionId: String) async throws -> LunchSyncSnapshot {
         let (data, http) = try await send("DELETE", "v1/lunch-session", query: ["sessionId": sessionId], timeout: 15)
@@ -175,7 +214,7 @@ public struct LunchSyncClient: Sendable {
         request.setValue("camp-native", forHTTPHeaderField: "X-Camp-Client")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         CampBackendURL.applyToken(token, to: &request)
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         guard let http = response as? HTTPURLResponse else { throw URLError(.badServerResponse) }
         return (data, http)
     }
@@ -201,16 +240,21 @@ public final class LunchSyncCoordinator {
     private var loop: Task<Void, Never>?
     private var seq: Int?
     private let device: String
+    private let session: URLSession
+    private var generation = 0
+    private var writing = false
 
-    public init(device: String) { self.device = device }
+    public init(device: String, session: URLSession = .shared) { self.device = device; self.session = session }
 
     public var isConfigured: Bool { client != nil }
 
     /// Reconfigures from the saved connection settings; an unusable URL stops syncing rather than failing loudly.
     public func configure(urlString: String, token: String?) {
-        let next = try? LunchSyncClient(urlString: urlString, token: token, device: device)
+        let next = try? LunchSyncClient(urlString: urlString, token: token, device: device, session: session)
         guard next?.base != client?.base || next?.token != client?.token else { return }
         stop()
+        generation += 1
+        seq = nil
         client = next
         if client == nil { onStatus?(nil) }
     }
@@ -219,16 +263,17 @@ public final class LunchSyncCoordinator {
         guard loop == nil, let client else { return }
         loop = Task { [weak self] in
             var failures = 0
+            var initial = true
             while !Task.isCancelled {
+                let cursor = self?.seq
+                let since = initial ? nil : cursor
                 do {
-                    let snapshot = try await client.fetch(since: self?.seq, wait: 25)
+                    let snapshot = try await client.fetch(since: since, wait: 25)
                     guard let self, !Task.isCancelled else { return }
                     failures = 0
                     self.onStatus?("Live · \(client.base.host ?? "backend")")
-                    if snapshot.seq != self.seq {
-                        self.seq = snapshot.seq
-                        self.deliver(snapshot)
-                    }
+                    self.receive(snapshot, allowReset: self.seq == cursor, force: initial && self.seq == cursor)
+                    initial = false
                 } catch is CancellationError {
                     return
                 } catch {
@@ -243,22 +288,60 @@ public final class LunchSyncCoordinator {
 
     public func stop() { loop?.cancel(); loop = nil }
 
+    private func receive(_ snapshot: LunchSyncSnapshot, allowReset: Bool = false, force: Bool = false) {
+        if let seq, snapshot.seq < seq && !allowReset { return }
+        guard force || snapshot.seq != seq else { return }
+        seq = snapshot.seq
+        deliver(snapshot)
+    }
+
     private func deliver(_ snapshot: LunchSyncSnapshot) {
         let records = snapshot.all
         applyAll?(records)
         for record in records { apply?(record) }
     }
 
-    /// Removes an order from the shared list; the loop's `since` skips the echo.
-    public func forget(sessionId: String) async {
+    /// Registers a Live Activity push token. Independent of the CAS write path, so it never contends
+    /// with `publish`; a failure is non-fatal because the foreground long-poll still works.
+    public func registerPushToken(_ token: String, sessionId: String, environment: String) async {
         guard let client else { return }
-        if let snapshot = try? await client.forget(sessionId: sessionId) { seq = snapshot.seq; applyAll?(snapshot.all) }
+        do { try await client.registerPushToken(token, sessionId: sessionId, environment: environment) }
+        catch { onStatus?("Live · push registration failed: \(error.localizedDescription)") }
+    }
+
+    public func dropPushToken(sessionId: String) async {
+        guard let client else { return }
+        try? await client.dropPushToken(sessionId: sessionId)
+    }
+
+    /// Removes an order from the shared list; the loop's `since` skips the echo.
+    @discardableResult
+    public func forget(sessionId: String) async -> Error? {
+        guard let client else { return URLError(.badURL) }
+        guard !writing else { return LunchError.busy }
+        writing = true
+        defer { writing = false }
+        let expectedGeneration = generation
+        do {
+            let snapshot = try await client.forget(sessionId: sessionId)
+            guard generation == expectedGeneration else { return CancellationError() }
+            receive(snapshot)
+            return nil
+        } catch {
+            guard generation == expectedGeneration else { return CancellationError() }
+            onStatus?("Offline · \(error.localizedDescription)")
+            return error
+        }
     }
 
     /// Publishes a local change. On a conflict the backend's record is applied locally and the error returned,
     /// so the caller can show it; the loop's `since` skips ahead so the echo isn't applied twice.
     public func publish(_ session: LunchSession, group: DemoLunchGroup?, previous: LunchSession?) async -> Error? {
-        guard let client else { return nil }
+        guard let client else { return URLError(.badURL) }
+        guard !writing else { return LunchError.busy }
+        writing = true
+        defer { writing = false }
+        let expectedGeneration = generation
         let record = LunchSyncRecord(session: session, group: group, device: device)
         // A transition must build on the revision this device last saw; a brand-new lunch simply replaces
         // whatever is there, so starting one never fails because the other device was ahead.
@@ -266,13 +349,15 @@ public final class LunchSyncCoordinator {
         do {
             let snapshot = try await client.publish(record, expectedSessionId: previous?.id.uuidString,
                                                     expectedRevision: previous?.revision)
-            seq = snapshot.seq
+            guard generation == expectedGeneration else { return CancellationError() }
+            receive(snapshot)
             return nil
         } catch let conflict as LunchSyncConflict {
-            seq = conflict.snapshot.seq
-            deliver(conflict.snapshot)
+            guard generation == expectedGeneration else { return CancellationError() }
+            receive(conflict.snapshot, force: true)
             return conflict
         } catch {
+            guard generation == expectedGeneration else { return CancellationError() }
             onStatus?("Offline · \(error.localizedDescription)")
             return error
         }

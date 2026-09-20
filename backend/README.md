@@ -30,7 +30,7 @@ is the symptom); stop it with `lsof -ti :8788 | xargs kill`.
 - `POST /v1/craving` (`text`, optional `category`, `userId`, `limit`) free text such as "I want tacos": OpenAI (`OPENAI_API_KEY`; an offline keyword reader otherwise) extracts cuisine, dish format, keywords, diet and price cap, and the catalog's menus are scored against them. Each match is a `RestaurantWire` whose `options` are the dishes that matched, ready for `POST /v1/groups`; `backend` says whether the sentence was read by `llm` or `keywords`.
 - `POST /v1/groups` (`category` optional, defaults to the place's primary one), `POST /v1/groups/{id}/join` with any menu item, `DELETE /v1/groups/{id}/members/{user}`. One order per person per category per day.
 - Both take `optionIds` (up to 8 items; `optionId` is still accepted for one). A member's whole selection is replaced on each join, one confirmed `Order` is written per item, and the delivery share is charged once per person, on their first item. The first item always goes through; every extra must keep the person inside their per-order budget (`budget_cents`, as `PUT /v1/profile` sets it), otherwise the request is refused with 422. The group wire carries `myOptionIds` and `budgetCents` so the menu can grey out what no longer fits.
-- `GET /v1/schedules/{user}`, `POST /v1/schedules` (`category`, `label`, `timeMinutes`, `weekdays` 0 = Monday, optional `restaurantId`/`optionId`), `PUT /v1/schedules/{id}/event` (store the device's calendar event id), `DELETE /v1/schedules/{id}?userId=`. `GET /v1/groups?userId=` materialises due schedules into groups.
+- `GET /v1/schedules/{user}`, `POST /v1/schedules` (`category`, `label`, `timeMinutes`, `weekdays` 0 = Monday, optional `restaurantId`/`optionId`), `PUT /v1/schedules/{id}/event` (`userId` required, `calendarEventId` optional; checks the schedule owner), `DELETE /v1/schedules/{id}?userId=`. `GET /v1/groups?userId=` materialises due schedules into groups.
 - `GET/PUT/DELETE /v1/lunch-session`: the shared list of active orders (`records`) with `record` = the nearest; `DELETE ?sessionId=` forgets one.
 
 ## Ramp sandbox (`/v1/ramp`)
@@ -67,4 +67,26 @@ authoritative payer/office mappings.
 ## Everything else
 
 See the repository `README.md` ("Recommendation core") for the recommender, the `PLAN.md` for its design, and
-`ARCHITECTURE.md` for what the native apps read and write. Tests: `uv run pytest`.
+`ARCHITECTURE.md` for what the native apps read and write.
+
+## Correctness checks
+
+From `backend`:
+
+```bash
+uv run --frozen --extra dev pytest -q
+uv run --frozen --extra dev ruff check src tests
+uv run --frozen --extra dev mypy
+uv run --frozen --extra dev python -m compileall -q src tests
+```
+
+Ruff is pinned to the correctness-only `E9,F63,F7,F82` rules; mypy is pinned and checks the wire contracts
+and persisted models. Set `CAMP_INTEGRATION_DATABASE_URL` to a disposable PostgreSQL admin database URL
+to also run the integration regressions against PostgreSQL. Those tests create and drop a unique database
+per case; SQLite always runs. The existing catalog PostgreSQL smoke test uses `CAMP_TEST_DATABASE_URL`.
+
+Offers, their wire snapshots and lifecycle state live in the `offers` table and are included by
+`Store.copy_from`. Lifecycle/order/profile/event writes commit together; event IDs are claimed atomically.
+`Store.transaction()` is synchronous and must not span an `await` or remote request. PostgreSQL uses a
+transaction-scoped single-writer advisory lock; SQLite uses `BEGIN IMMEDIATE`. Run one backend worker:
+sync notifications and Ramp mutation coordination still use process-local state.

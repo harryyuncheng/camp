@@ -125,6 +125,7 @@ public struct ConfigurationFile {
     }
     public func load() throws -> CampConfiguration? {
         guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: url.path)
         let config = try JSONDecoder().decode(CampConfiguration.self, from: Data(contentsOf: url))
         guard config.schemaVersion == 1, config.validationErrors.isEmpty else { throw CocoaError(.coderReadCorrupt) }
         return config
@@ -132,7 +133,9 @@ public struct ConfigurationFile {
     public func save(_ config: CampConfiguration) throws {
         guard config.validationErrors.isEmpty else { throw CocoaError(.coderInvalidValue) }
         try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: url.deletingLastPathComponent().path)
         try JSONEncoder().encode(config).write(to: url, options: .atomic)
+        try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: url.path)
     }
 }
 

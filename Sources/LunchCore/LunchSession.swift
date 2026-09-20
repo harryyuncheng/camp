@@ -7,17 +7,19 @@ public struct LunchOption: Codable, Hashable, Identifiable, Sendable {
     public let symbol: String
     public let priceCents: Int
     public let baselineCents: Int
+    public var deliveryShareCents: Int?
 
     public var savingsCents: Int { max(0, baselineCents - priceCents) }
 
     public init(id: String, name: String, detail: String, symbol: String,
-                priceCents: Int, baselineCents: Int) {
+                priceCents: Int, baselineCents: Int, deliveryShareCents: Int? = nil) {
         self.id = id
         self.name = name
         self.detail = detail
         self.symbol = symbol
         self.priceCents = priceCents
         self.baselineCents = baselineCents
+        self.deliveryShareCents = deliveryShareCents
     }
 }
 
@@ -37,7 +39,7 @@ public enum LunchPhase: String, Codable, Sendable {
 }
 
 public enum LunchEvent: Sendable {
-    case select(String), changeSelection, confirm, markDelivered, end
+    case select(String), selectMany([String]), changeSelection, confirm, markDelivered, end
 }
 
 public enum LunchError: LocalizedError, Equatable {
@@ -67,16 +69,20 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
     public var category: String?
     /// Where the order is from ("Dig", "Blue Bottle"), when known.
     public var place: String?
+    public var offerID: String?
     public var kind: OrderCategory { OrderCategory(wire: category) }
     public private(set) var phase: LunchPhase = .choosing
     public private(set) var selectedOptionID: String?
+    public private(set) var selectedOptionIDs: [String]?
     public private(set) var revision: Int = 0
 
     public var selectedOption: LunchOption? { options.first { $0.id == selectedOptionID } }
+    public var selectedIDs: [String] { selectedOptionIDs ?? selectedOptionID.map { [$0] } ?? [] }
+    public var selectedOptions: [LunchOption] { selectedIDs.compactMap { id in options.first { $0.id == id } } }
     public var isFinished: Bool { phase == .delivered || phase == .ended }
 
     public init(id: UUID = UUID(), office: String, options: [LunchOption],
-                closesAt: Date, arrivesAt: Date, category: OrderCategory = .meal, place: String? = nil) {
+                closesAt: Date, arrivesAt: Date, category: OrderCategory = .meal, place: String? = nil, offerID: String? = nil) {
         self.id = id
         self.office = office
         self.options = options
@@ -84,6 +90,7 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
         self.arrivesAt = arrivesAt
         self.category = category.rawValue
         self.place = place
+        self.offerID = offerID
     }
 
     public func isExpired(at now: Date = .now) -> Bool {
@@ -98,18 +105,23 @@ public struct LunchSession: Codable, Hashable, Identifiable, Sendable {
         var next = self
         switch event {
         case .select(let id):
+            return try applying(.selectMany([id]), at: now, expectedRevision: expectedRevision)
+        case .selectMany(let ids):
             guard phase == .choosing || phase == .reviewing else { throw LunchError.invalidTransition }
             guard !isExpired(at: now) else { throw LunchError.expired }
-            guard options.contains(where: { $0.id == id }) else { throw LunchError.unknownOption }
-            next.selectedOptionID = id
+            guard !ids.isEmpty, Set(ids).count == ids.count,
+                  ids.allSatisfy({ id in options.contains { $0.id == id } }) else { throw LunchError.unknownOption }
+            next.selectedOptionID = ids.first
+            next.selectedOptionIDs = ids
             next.phase = .reviewing
         case .changeSelection:
             guard phase == .reviewing else { throw LunchError.invalidTransition }
             guard !isExpired(at: now) else { throw LunchError.expired }
             next.selectedOptionID = nil
+            next.selectedOptionIDs = nil
             next.phase = .choosing
         case .confirm:
-            guard phase == .reviewing, selectedOption != nil else { throw LunchError.invalidTransition }
+            guard phase == .reviewing, !selectedIDs.isEmpty, selectedOptions.count == selectedIDs.count else { throw LunchError.invalidTransition }
             guard !isExpired(at: now) else { throw LunchError.expired }
             next.phase = .confirmed
         case .markDelivered:
@@ -238,12 +250,13 @@ public struct LunchMenuItem: Codable, Identifiable, Hashable, Sendable {
     public let symbol: String
     public let priceCents: Int
     public let itemPriceCents: Int
+    public var deliveryShareCents: Int?
     public var popular: Bool?
     public var drink: Bool?
     public var score: Double?
     public var reason: String?
     /// The same item as a group option, so joining off the short list reuses the join path.
-    public var option: LunchOption { LunchOption(id: id, name: name, detail: detail, symbol: symbol, priceCents: priceCents, baselineCents: priceCents) }
+    public var option: LunchOption { LunchOption(id: id, name: name, detail: detail, symbol: symbol, priceCents: priceCents, baselineCents: priceCents, deliveryShareCents: deliveryShareCents) }
 }
 
 /// A place's full menu with its public rating and the user's top picks first.

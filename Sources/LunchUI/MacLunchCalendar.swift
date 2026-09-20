@@ -84,10 +84,17 @@ public final class MacLunchCalendar: ObservableObject {
         return event.eventIdentifier
     }
 
+    public func ownsOrderEvent(id: String) -> Bool {
+        guard let campCalendarID, let event = events.event(withIdentifier: id) else { return false }
+        return event.calendar.calendarIdentifier == campCalendarID
+    }
+
     /// Removes an order block (and every future occurrence of a standing one). Missing events are not an error.
-    public func removeOrderEvent(id: String) {
-        guard canWrite, let event = events.event(withIdentifier: id) else { return }
-        try? events.remove(event, span: .futureEvents, commit: true)
+    public func removeOrderEvent(id: String) throws {
+        guard canWrite else { throw CampCalendarError.noAccess }
+        guard let event = events.event(withIdentifier: id) else { return }
+        guard let campCalendarID, event.calendar.calendarIdentifier == campCalendarID else { throw CampCalendarError.foreignEvent }
+        try events.remove(event, span: .futureEvents, commit: true)
         refresh()
     }
 
@@ -169,11 +176,12 @@ public final class MacLunchCalendar: ObservableObject {
     public var canRead: Bool { EKEventStore.authorizationStatus(for: .event) == .authorized }
     public var missingSelections: Set<String> { selected.subtracting(Set(calendars.map(\.id))) }
     public enum CampCalendarError: LocalizedError {
-        case noAccess, noSource
+        case noAccess, noSource, foreignEvent
         public var errorDescription: String? {
             switch self {
             case .noAccess: return "Connect your Mac calendars first (Connections → Connect calendars)."
             case .noSource: return "No calendar account can hold the camp calendar. Add an account in the Calendar app."
+            case .foreignEvent: return "This event is outside camp’s calendar and was not changed."
             }
         }
     }

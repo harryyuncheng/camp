@@ -19,7 +19,11 @@ final class MacLunchModel: ObservableObject {
     @Published var choosingGroup = true
     @Published private(set) var demoGroup: DemoLunchGroup?
     var officeName = "HackMIT HQ"
-    var onJoin: ((LunchOption, DemoLunchGroup) -> Void)?
+    var onJoin: (([LunchOption], DemoLunchGroup) async throws -> DemoLunchGroup)?
+    var onRemoteChange: (() -> Void)?
+    @Published private(set) var isWorking = false
+    private var pendingRecords: [LunchSyncRecord]?
+    private var localDemo = true
 
     // MARK: looking for something else
     /// What was typed into the notch when none of today's orders appeal ("I want tacos", "iced oat latte"). The
@@ -38,13 +42,13 @@ final class MacLunchModel: ObservableObject {
     private var cravingArrivalMinutes = OrderCategory.meal.defaultMinutes
     private var cravingCategory = OrderCategory.meal
     var onCravingSearch: ((String, OrderCategory) async -> Void)?
-    var onCravingOrder: ((LunchRestaurant, LunchOption, Int, OrderCategory) -> Void)?
+    var onCravingOrder: ((LunchRestaurant, LunchOption, Int, OrderCategory) async -> DemoLunchGroup?)?
 
     /// Searches the catalog and puts what came back on the card, in place of whatever was there. The panel stays
     /// open throughout: a search replaces the order on screen, it does not start a separate one.
     func searchCraving() async {
         let text = cravingText.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty, !cravingBusy else { return }
+        guard !text.isEmpty, !cravingBusy, !isWorking else { return }
         await onCravingSearch?(text, choosingGroup ? .meal : session.kind)
         if let result = cravingResult { applyCraving(result, text: text) }
     }
@@ -56,7 +60,8 @@ final class MacLunchModel: ObservableObject {
             guard let dish = match.restaurant.options.first, items[dish.id] == nil else { continue }
             let detail = dish.detail.isEmpty ? match.restaurant.name : "\(match.restaurant.name) · \(dish.detail)"
             options.append(LunchOption(id: dish.id, name: dish.name, detail: detail, symbol: dish.symbol,
-                                       priceCents: dish.priceCents, baselineCents: dish.baselineCents))
+                                       priceCents: dish.priceCents, baselineCents: dish.baselineCents,
+                                       deliveryShareCents: dish.deliveryShareCents))
             items[dish.id] = (match.restaurant, dish)
         }
         guard let first = options.first, let place = items[first.id]?.place else {
@@ -79,6 +84,7 @@ final class MacLunchModel: ObservableObject {
     }
 
     func chooseGroup(_ group: DemoLunchGroup) {
+        guard !isWorking else { return }
         scheduledLunch?.cancel(); scheduled = false
         clearCraving()
         demoGroup = group; choosingGroup = false
@@ -89,7 +95,7 @@ final class MacLunchModel: ObservableObject {
     }
     /// Brings one of the waiting orders to the front of the notch.
     func show(_ record: LunchSyncRecord) {
-        guard record.session.id != session.id else { return }
+        guard !isWorking, record.session.id != session.id else { return }
         stash(current: session, group: demoGroup)
         others.removeAll { $0.sessionId == record.sessionId }
         adopt(record, announce: !record.session.isFinished)
@@ -100,36 +106,50 @@ final class MacLunchModel: ObservableObject {
     private var scheduledLunch: Task<Void, Never>?
     /// Fires after every successful transition (confirm, delivered, end) so the shell can report it.
     var onTransition: ((LunchSession) -> Void)?
+    var onBackendTransition: ((LunchSession) async throws -> Void)?
     /// Shared session through the backend. Every local offer/transition is published; records from the
     /// phone arrive through `applyRemote`. The delegate configures it from the saved connection settings.
     let sync = LunchSyncCoordinator(device: "mac")
 
     init(store: SessionFile = .applicationStore(named: "LunchlineMac")) {
         self.store = store
-        do { if let saved = try store.load() { session = saved } }
+        do {
+            if let saved = try store.loadRecord() {
+                session = saved.session
+                demoGroup = saved.group
+                localDemo = false
+                choosingGroup = saved.group == nil && saved.session.phase == .choosing
+            }
+        }
         catch { self.error = "Could not restore your order: \(error.localizedDescription)" }
-        sync.apply = { [weak self] record in self?.applyRemote(record) }
         sync.applyAll = { [weak self] records in self?.reconcile(records) }
     }
 
     /// Entry point for a future prediction or notification service. Persist the
     /// offered session, then notify the presentation layer to automatically expand.
-    func offer(_ lunch: LunchSession) { offer(lunch, shared: true) }
+    func offer(_ lunch: LunchSession) {
+        guard !isWorking else { return }
+        choosingGroup = false
+        offer(lunch, shared: true)
+    }
 
     /// `shared: false` keeps a lunch on this Mac: the group picker's placeholder session is not a lunch the
     /// phone should show; the phone hears about the real one from `chooseGroup`.
     private func offer(_ lunch: LunchSession, shared: Bool) {
+        guard !isWorking else { return }
         let previous = session
         do {
-            try store.save(lunch)
+            try store.save(lunch, group: demoGroup)
+            localDemo = !shared
             session = lunch
             error = nil
             NotificationCenter.default.post(name: .lunchReady, object: self)
+            if shared { publish(previous: previous) }
         } catch { self.error = error.localizedDescription }
-        if shared { publish(previous: previous) }
     }
 
     func triggerDemo() {
+        guard !isWorking else { return }
         scheduledLunch?.cancel()
         scheduled = false
         choosingGroup = true; demoGroup = nil
@@ -156,15 +176,78 @@ final class MacLunchModel: ObservableObject {
     }
 
     func send(_ event: LunchEvent, revision: Int) {
+        guard !isWorking else { error = LunchError.busy.localizedDescription; return }
         let previous = session
         do {
             let next = try session.applying(event, expectedRevision: revision)
-            try store.save(next)
-            session = next
-            didTransition(next)
-            error = nil
+            let confirmingCraving = localDemo && !cravingItems.isEmpty && next.phase == .confirmed
+            if localDemo && !confirmingCraving {
+                try store.save(next, group: demoGroup)
+                session = next
+                onTransition?(next)
+                error = nil
+                return
+            }
+            isWorking = true
+            Task {
+                defer { finishWrite() }
+                do {
+                    var group = demoGroup
+                    if next.phase == .confirmed, previous.phase != .confirmed {
+                        if let option = next.selectedOption, let found = cravingItems[option.id] {
+                            guard let created = await onCravingOrder?(found.place, found.option, cravingArrivalMinutes, cravingCategory) else {
+                                error = "Couldn’t create this group order. Check Today for the backend error."
+                                return
+                            }
+                            group = created
+                        } else if let currentGroup = group {
+                            guard let onJoin else { throw LunchError.missingSession }
+                            group = try await onJoin(next.selectedOptions, currentGroup)
+                        }
+                    }
+                    if next.offerID != nil {
+                        guard let onBackendTransition else { throw LunchError.missingSession }
+                        try await onBackendTransition(next)
+                    }
+                    if let failure = await sync.publish(next, group: group, previous: confirmingCraving ? nil : previous) { throw failure }
+                    try store.save(next, group: group)
+                    demoGroup = group
+                    localDemo = false
+                    session = next
+                    onTransition?(next)
+                    error = nil
+                } catch { self.error = error.localizedDescription }
+            }
         } catch { self.error = error.localizedDescription }
-        if session.revision != previous.revision { publish(previous: previous) }
+    }
+
+    func showConfirmed(_ group: DemoLunchGroup) {
+        guard !isWorking else { error = LunchError.busy.localizedDescription; return }
+        do {
+            let now = Date()
+            let initial = LunchSession(office: officeName, options: group.options, closesAt: now.addingTimeInterval(8 * 60),
+                                       arrivesAt: group.arrival(on: now), category: group.kind, place: group.name)
+            let selected = try initial.applying(.selectMany(group.myOptionIdList), at: now)
+            let confirmed = try selected.applying(.confirm, at: now)
+            demoGroup = group
+            choosingGroup = false
+            clearCraving()
+            offer(confirmed)
+        } catch { self.error = error.localizedDescription }
+    }
+
+    func forgetGroup(_ groupID: String) {
+        guard !isWorking else { error = LunchError.busy.localizedDescription; return }
+        let matching = others.filter { $0.group?.id == groupID }.map(\.sessionId)
+            + (demoGroup?.id == groupID ? [session.id.uuidString] : [])
+        guard !matching.isEmpty else { return }
+        isWorking = true
+        Task {
+            defer { finishWrite() }
+            for id in matching {
+                if let failure = await sync.forget(sessionId: id) { error = failure.localizedDescription; return }
+            }
+        }
     }
 
     /// A record the phone (or the backend's list) holds. Same order and newer revision → adopt the transition. A
@@ -173,11 +256,10 @@ final class MacLunchModel: ObservableObject {
     private func applyRemote(_ record: LunchSyncRecord) {
         let incoming = record.session
         if incoming.id == session.id {
-            guard incoming.revision > session.revision else { return }
-            do { try store.save(incoming) } catch { self.error = error.localizedDescription }
+            guard incoming != session || record.group != demoGroup else { return }
+            do { try store.save(incoming, group: record.group) } catch { self.error = error.localizedDescription }
             session = incoming
-            if let group = record.group { demoGroup = group }
-            didTransition(incoming)
+            demoGroup = record.group
             return
         }
         if let i = others.firstIndex(where: { $0.sessionId == record.sessionId }) {
@@ -197,13 +279,17 @@ final class MacLunchModel: ObservableObject {
     /// The backend's complete list: drop waiting orders that were forgotten elsewhere and, when the order on screen
     /// is gone too, fall back to the nearest remaining one.
     private func reconcile(_ records: [LunchSyncRecord]) {
-        let ids = Set(records.map(\.sessionId))
-        others.removeAll { !ids.contains($0.sessionId) }
-        let current = session.id.uuidString
-        if !choosingGroup, !ids.contains(current), sync.isConfigured, !session.isFinished, let next = others.nearest {
+        guard !isWorking else { pendingRecords = records; return }
+        others = records.filter { $0.session.id != session.id }
+        if let current = records.first(where: { $0.session.id == session.id }) {
+            applyRemote(current)
+        } else if let next = records.nearest {
             others.removeAll { $0.sessionId == next.sessionId }
-            adopt(next, announce: true)
+            adopt(next, announce: next.session.id != session.id)
+        } else if !choosingGroup && cravingItems.isEmpty {
+            triggerDemo()
         }
+        onRemoteChange?()
     }
 
     private func stash(current: LunchSession, group: DemoLunchGroup?) {
@@ -216,32 +302,31 @@ final class MacLunchModel: ObservableObject {
     private func adopt(_ record: LunchSyncRecord, announce: Bool) {
         let incoming = record.session
         scheduledLunch?.cancel(); scheduled = false
-        do { try store.save(incoming) } catch { self.error = error.localizedDescription }
+        do { try store.save(incoming, group: record.group); error = nil } catch { self.error = error.localizedDescription }
         demoGroup = record.group
+        localDemo = false
         choosingGroup = false
         session = incoming
-        error = nil
         if announce && !incoming.isFinished { NotificationCenter.default.post(name: .lunchReady, object: self) }
-        else { onTransition?(incoming) }
-    }
-
-    private func didTransition(_ next: LunchSession) {
-        if next.phase == .confirmed, let option = next.selectedOption {
-            if let found = cravingItems[option.id] {
-                onCravingOrder?(found.place, found.option, cravingArrivalMinutes, cravingCategory)
-            } else if let group = demoGroup {
-                onJoin?(option, group)
-            }
-        }
-        onTransition?(next)
     }
 
     private func publish(previous: LunchSession) {
-        guard sync.isConfigured else { return }
         let current = session, group = demoGroup
+        isWorking = true
         Task { [weak self] in
-            guard let self, let failure = await self.sync.publish(current, group: group, previous: previous) else { return }
-            if failure is LunchSyncConflict { self.error = failure.localizedDescription }
+            guard let self else { return }
+            defer { finishWrite() }
+            if let failure = await self.sync.publish(current, group: group, previous: previous) {
+                self.error = failure.localizedDescription
+            }
+        }
+    }
+
+    private func finishWrite() {
+        isWorking = false
+        if let records = pendingRecords {
+            pendingRecords = nil
+            reconcile(records)
         }
     }
 }

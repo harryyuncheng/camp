@@ -68,13 +68,14 @@ def _to_models(s: PStore, menu: list[PItem], q: PQuote, existing: Restaurant | N
         r.rating, r.review_count = s.rating, max(r.review_count, s.review_count)
     r.verified_allergen_data = s.has_verified_allergen_data or any(i.allergens is not None for i in menu)
     r.fees = FeeSchedule(delivery_fee_cents=q.delivery_fee_cents, service_fee_pct=q.service_fee_pct, tax_pct=q.tax_pct,
-                         min_order_cents=s.min_order_cents or 1500)
+                         min_order_cents=s.min_order_cents)
     r.eta_mean_minutes, r.eta_std_minutes = q.eta_mean_minutes, q.eta_std_minutes
     items = []
     for it in menu:
         if not it.available or it.price_cents <= 0:
             continue
-        allergens = None if it.allergens is None else {ALLERGEN_MAP.get(a, a) for a in it.allergens if ALLERGEN_MAP.get(a, a) in ALLERGENS}
+        normalized = [ALLERGEN_MAP.get(a.strip().lower(), a.strip().lower()) for a in it.allergens or []]
+        allergens = set(normalized) if it.allergens is not None and all(a in ALLERGENS for a in normalized) else None
         items.append(MenuItem(restaurant_id=r.id, name=it.name, description=it.description, ingredients=it.ingredients, price_cents=it.price_cents,
                               modifiers=[m.name for m in it.modifiers], modifier_prices={m.name: m.price_cents for m in it.modifiers},
                               verified_allergens=allergens, verified_diets={DIET_MAP[d] for d in it.diets if d in DIET_MAP},
@@ -114,8 +115,10 @@ async def sync_catalog(store: Store, providers: list[MenuProvider], near: LatLng
             r.platform_ids[x[0].platform] = x[0].external_id
         for it in items:
             prev = old_items.get((it.platform, it.external_id))
-            if prev and keep_existing_tags:
-                it.id, it.tags = prev.id, prev.tags
+            if prev:
+                it.id = prev.id
+                if keep_existing_tags and (it.name, it.description, it.ingredients) == (prev.name, prev.description, prev.ingredients):
+                    it.tags = prev.tags
         new_rest.append(r); new_items += items
     if tagger:
         untagged = [i for i in new_items if i.tags is None]

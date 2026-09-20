@@ -65,7 +65,7 @@ def make_world(n_users: int = 40, n_restaurants: int | None = None, seed: int = 
     rng = random.Random(seed + 1)
     users = []
     for k in range(n_users):
-        u = User(name=f"user{k}", office_id="hq", home=LatLng(lat=OFFICE.lat + rng.uniform(-0.03, 0.03), lng=OFFICE.lng + rng.uniform(-0.04, 0.04)),   # within the 6 km delivery radius
+        u = User(name=f"user{k}", office_id="hq", synthetic=True, home=LatLng(lat=OFFICE.lat + rng.uniform(-0.03, 0.03), lng=OFFICE.lng + rng.uniform(-0.04, 0.04)),   # within the 6 km delivery radius
                  budget_cents={"lunch": rng.choice([1800, 2000, 2200, 2500]), "dinner": 2500})
         liked = rng.sample(CUISINES, 3)
         for c in liked:
