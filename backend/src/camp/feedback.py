@@ -34,6 +34,16 @@ def _decay(u: User) -> None:
 
 def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
     """Apply one event to the user's profile. Returns a human-readable log of what changed."""
+    previous = store.get(FeedbackEvent, ev.id)
+    if previous:
+        if (previous.user_id, previous.type, previous.order_id, previous.item_id) != (ev.user_id, ev.type, ev.order_id, ev.item_id):
+            raise ValueError("event ID belongs to a different feedback event")
+        confirming = previous.type == "constraint" and previous.needs_confirmation and ev.payload.get("confirmed")
+        if previous.applied or not confirming:
+            return ["event already recorded"]
+        ev = previous.model_copy(deep=True)
+        ev.payload["confirmed"] = True
+        ev.needs_confirmation = False
     u = store.get(User, ev.user_id)
     assert u, ev.user_id
     items = {i.id: i for i in store.all(MenuItem)}
@@ -45,7 +55,8 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
         ev.applied = False
         store.put(ev)
         return ["low confidence: not applied"]
-    _decay(u)
+    if ev.type not in ("skip", "constraint", "context"):
+        _decay(u)
     item = items.get(ev.item_id) if ev.item_id else None
     rest = rests.get(item.restaurant_id) if item else rests.get(ev.restaurant_id) if ev.restaurant_id else None
     p = ev.payload
@@ -130,7 +141,13 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
         which, action = p["which"], p["action"]
         kind, value = which.split(":", 1)
         if action == "add":
-            if not any(r.value == value for r in u.restrictions):
+            ev.needs_confirmation = not p.get("confirmed", False)
+            existing = next((r for r in u.restrictions if r.kind == kind and r.value == value), None)
+            if existing:
+                existing.severe = existing.severe or p.get("severe", False)
+                if p.get("confirmed"):
+                    existing.source = "nl_confirmed"
+            else:
                 u.restrictions.append(Restriction(kind=kind, value=value, severe=p.get("severe", False),
                                                   source="nl_confirmed" if p.get("confirmed") else "nl_provisional"))
                 log.append(f"constraint {which} added ({'confirmed' if p.get('confirmed') else 'PROVISIONAL, awaiting confirmation'})")
@@ -138,7 +155,7 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
                 u.suggest_only = True
         else:
             if p.get("confirmed"):
-                u.restrictions = [r for r in u.restrictions if r.value != value]
+                u.restrictions = [r for r in u.restrictions if (r.kind, r.value) != (kind, value)]
                 log.append(f"constraint {which} removed (confirmed)")
             else:
                 log.append(f"constraint {which} removal needs explicit confirmation → not applied")
@@ -146,7 +163,6 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
 
     elif ev.type == "logistics" and rest:
         rest.reliability = max(0.3, rest.reliability - (0.05 if not p.get("repeated") else 0.1))
-        store.put(rest)
         log.append(f"{rest.name} reliability → {rest.reliability:.2f} ({p.get('issue')})")
 
     elif ev.type == "meta":
@@ -162,8 +178,7 @@ def apply_event(store: Store, ev: FeedbackEvent) -> list[str]:
         log.append(f"meta {w}: autonomy={u.traits.autonomy:.2f} suggest_only={u.suggest_only}")
 
     ev.applied = not ev.needs_confirmation
-    store.put(ev)
-    store.put(u)
+    store.put_many([ev, u, *([rest] if ev.type == "logistics" and rest else [])])
     return log
 
 
