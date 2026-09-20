@@ -473,6 +473,18 @@ class ActivityPushToken(BaseModel):
     updated_at: datetime = Field(default_factory=utcnow)
 
 
+class ActivityStartToken(BaseModel):
+    """A device's ActivityKit push-to-start token (iOS 17.2+), keyed by device name. With it, an order
+    published by another device raises a Live Activity on this phone even while camp is closed.
+    `started` holds the session ids the device already renders — pushed starts plus sessions it
+    registered an update token for — so a second write for the same order can't spawn a duplicate."""
+    id: str                      # the device name, same value the sync client sends on writes
+    push_token: str
+    environment: str = "sandbox"
+    started: list[str] = Field(default_factory=list)
+    updated_at: datetime = Field(default_factory=utcnow)
+
+
 class ScheduledOrder(BaseModel):
     """A standing order the user asked camp to put on their calendar: e.g. coffee at 9:00 on weekdays, or a meal at
     12:30 Mon/Wed/Fri. Each matching day, `GroupService.today` makes sure a group exists at that restaurant and time

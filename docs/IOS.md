@@ -20,6 +20,7 @@ No Apple account, push certificate or Ramp credentials are needed for local simu
 - Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`; set your development team and a unique bundle prefix. The local file is ignored by Git. Both app and extension inherit it, with `.activity` appended for the extension.
 - Connect/trust the phone, enable Developer Mode when requested, select the phone in Xcode, and Run. Automatic signing must succeed for both targets.
 - Enable Live Activities for camp in iPhone Settings if disabled. Start a lunch while camp is foregrounded, then lock the phone.
+- For real-time updates while camp is backgrounded or closed (APNs push-to-update and push-to-start), the Apple account needs a *paid* Developer membership: uncomment `CAMP_PUSH_ENTITLEMENTS` and the `CAMP_PUSH` compilation condition in `Config/Local.xcconfig`, then run once on the phone so it registers its push tokens with the backend. The backend needs `CAMP_APNS_KEY`, `CAMP_APNS_KEY_ID`, `CAMP_APNS_TEAM_ID` and `CAMP_APNS_BUNDLE_ID` (see `backend/src/camp/apns.py`). Without them the phone still syncs in real time while camp is open and catches up on foreground.
 
 ## Lifecycle and integration boundary
 
@@ -31,7 +32,7 @@ Membership and session publication are separate requests. If membership succeeds
 
 The app supports Lock Screen and compact, minimal and expanded Dynamic Island presentations. The activity uses a short, phone-specific composition of the existing camp styling; the desktop card is too tall for the Lock Screen’s limited height. No notification permission is requested for locally started activities.
 
-Automatic invitations while the phone app is closed are a separate integration: use ActivityKit push-to-start (iOS 17.2+), per-device token registration, an authenticated backend and APNs credentials/capability. Server reconciliation must also propagate phone confirmations back to the shared order. Those services and push entitlements are deliberately not represented as connected in this local build. The shared-lunch long-poll runs only while the app is active; nothing polls in the background.
+Automatic invitations while the phone app is closed use ActivityKit push-to-start (iOS 17.2+): the phone registers its push-to-start token at `POST /v1/lunch-session/push-start-token`, and each running activity registers its own update token at `POST /v1/lunch-session/push-token`. An accepted write pushes `update`/`end` to a registered activity, or `start` when the device has never seen the session; `started` markers keep a second write from raising a duplicate. Forgetting an order pushes `end` to every activity rendering it. All of it compiles in only under the `CAMP_PUSH` flag (see above); without it the shared-lunch long-poll still covers the phone while the app is active, but nothing polls in the background. One residual case: an activity raised purely by push gets its own update token registered the next time camp runs, so Mac edits made between the remote start and the next launch appear on that launch rather than mid-flight.
 
 ## Historical verification and partner handoff
 
@@ -45,7 +46,7 @@ For a partner to continue:
 2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`, and fill in their team and unique bundle prefix. Never commit the local file.
 3. Select the **Lunchline** scheme and their trusted, unlocked phone with Developer Mode enabled. Let Xcode prepare the device and resolve automatic signing for both targets.
 4. Run, open Today → View menu, select items and confirm, then lock the phone to inspect the activity. Tap the activity to reopen Today. Also try New order, Change order and Leave; use the Mac notch's Simulate arrival for the delivery demo.
-5. Follow the [USB-C demo runbook](DEMO.md) to establish an actual network interface, start a token-protected backend and configure both devices. Keep camp open on the phone when choosing a group in the Mac notch. Background delivery still needs APNs push-to-update.
+5. Follow the [USB-C demo runbook](DEMO.md) to establish an actual network interface, start a token-protected backend and configure both devices. With `CAMP_PUSH` off, keep camp open on the phone when choosing a group in the Mac notch; with it on, background and closed delivery work too, including a new order raising the Live Activity by push-to-start.
 
 The first sandboxed attempt could not access CoreDevice/Simulator services or compiler preview plugins; repeating outside that sandbox allowed both builds to succeed. This is distinct from an Xcode compatibility failure.
 

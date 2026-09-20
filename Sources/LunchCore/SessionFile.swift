@@ -196,6 +196,20 @@ public struct LunchSyncClient: Sendable {
         guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
     }
 
+    private struct StartTokenBody: Encodable {
+        let pushToken: String
+        let device: String
+        let environment: String
+    }
+
+    /// Registers this device's push-to-start token so another device's *new* order can raise a Live
+    /// Activity here even while the app is closed (iOS 17.2+). iOS rotates the token; re-register each time.
+    public func registerStartToken(_ token: String, environment: String) async throws {
+        let body = try JSONEncoder().encode(StartTokenBody(pushToken: token, device: device, environment: environment))
+        let (data, http) = try await send("POST", "v1/lunch-session/push-start-token", body: body, timeout: 15)
+        guard (200..<300).contains(http.statusCode) else { throw error(from: data, status: http.statusCode) }
+    }
+
     /// Drops one order from the shared list (e.g. the user left the group).
     public func forget(sessionId: String) async throws -> LunchSyncSnapshot {
         let (data, http) = try await send("DELETE", "v1/lunch-session", query: ["sessionId": sessionId], timeout: 15)
@@ -312,6 +326,14 @@ public final class LunchSyncCoordinator {
     public func dropPushToken(sessionId: String) async {
         guard let client else { return }
         try? await client.dropPushToken(sessionId: sessionId)
+    }
+
+    /// Registers the push-to-start token. Same failure tolerance as `registerPushToken`: the foreground
+    /// long-poll still delivers remote changes.
+    public func registerStartToken(_ token: String, environment: String) async {
+        guard let client else { return }
+        do { try await client.registerStartToken(token, environment: environment) }
+        catch { onStatus?("Live · push registration failed: \(error.localizedDescription)") }
     }
 
     /// Removes an order from the shared list; the loop's `since` skips the echo.

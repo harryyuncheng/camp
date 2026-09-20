@@ -573,6 +573,7 @@
 				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/App-Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "$(CAMP_PUSH_ENTITLEMENTS)";
 				INFOPLIST_KEY_CFBundleDisplayName = camp;
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -627,6 +628,7 @@
 				DEVELOPMENT_TEAM = DC92972HRX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/App-Info.plist";
+				CODE_SIGN_ENTITLEMENTS = "$(CAMP_PUSH_ENTITLEMENTS)";
 				INFOPLIST_KEY_CFBundleDisplayName = camp;
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -110,8 +110,13 @@ class APNsClient:
         return self._client
 
     async def send(self, push_token: str, content_state: dict[str, Any], *, event: str = "update",
-                   stale_at: Optional[float] = None, dismiss_at: Optional[float] = None) -> tuple[int, str]:
-        """Pushes one content-state. Returns (status, apns-id or reason); 410 means the token is dead."""
+                   stale_at: Optional[float] = None, dismiss_at: Optional[float] = None,
+                   attributes_type: Optional[str] = None, attributes: Optional[dict[str, Any]] = None,
+                   alert: Optional[dict[str, Any]] = None) -> tuple[int, str]:
+        """Pushes one content-state. Returns (status, apns-id or reason); 410 means the token is dead.
+        For `event="start"` the token is a device's push-to-start token and the payload must also carry
+        `attributes_type` (the ActivityAttributes type name) and `attributes` (the encoded attributes);
+        `alert` gives the banner iOS shows alongside the new Live Activity."""
         if self.config is None:
             return (0, "apns disabled")
         aps: dict[str, Any] = {"timestamp": int(time.time()), "event": event, "content-state": content_state}
@@ -119,6 +124,12 @@ class APNsClient:
             aps["stale-date"] = int(stale_at)
         if event == "end" and dismiss_at is not None:
             aps["dismissal-date"] = int(dismiss_at)
+        if event == "start":
+            if attributes_type:
+                aps["attributes-type"] = attributes_type
+            aps["attributes"] = attributes or {}
+            if alert:
+                aps["alert"] = alert
         headers = {
             "authorization": f"bearer {self._bearer()}",
             "apns-topic": self.config.topic,
@@ -126,10 +137,13 @@ class APNsClient:
             "apns-priority": "10",
             "apns-expiration": "0",
         }
+        body = json.dumps({"aps": aps}).encode()
+        if len(body) > 4_096:  # APNs rejects Live Activity payloads over 4 KB
+            log.warning("Live Activity %s payload is %d bytes; skipping", event, len(body))
+            return (0, "payload too large")
         client = await self._http()
         try:
-            r = await client.post(f"{self.config.host}/3/device/{push_token}", headers=headers,
-                                  content=json.dumps({"aps": aps}).encode())
+            r = await client.post(f"{self.config.host}/3/device/{push_token}", headers=headers, content=body)
         except httpx.HTTPError as e:
             log.warning("APNs post failed: %s", e)
             return (0, str(e))

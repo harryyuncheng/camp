@@ -2,3 +2,10 @@
 // Both the iPhone app and Live Activity extension inherit these values.
 DEVELOPMENT_TEAM = YOUR_TEAM_ID
 BUNDLE_ID_PREFIX = com.yourname.camp
+
+// Live Activity push (update + push-to-start) so Mac-side changes reach a backgrounded phone.
+// Requires a *paid* Apple Developer membership: the Push Notifications capability cannot be signed
+// with a free team. Uncomment both lines to enable; the backend also needs CAMP_APNS_* variables
+// (see backend/src/camp/apns.py and docs/IOS.md).
+//CAMP_PUSH_ENTITLEMENTS = Config/App.entitlements
+//SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) CAMP_PUSH

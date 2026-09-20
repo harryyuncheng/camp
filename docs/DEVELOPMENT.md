@@ -36,7 +36,7 @@ The native project has no external Swift package dependencies. Existing `Lunchli
 
 - **Recommendations:** the Swift client sends a `MealContext` to the Python service and receives a `MealOffer`. On Mac, `MacLunchModel.offer(_:)` is the entry point that saves an offer and expands the notch panel. The backend contracts and service setup are in [backend/README.md](../backend/README.md); the design is in [backend/PLAN.md](../backend/PLAN.md).
 - **Groups and orders:** the backend database is authoritative for group membership and the order ledger. The clients update their views after acknowledged API mutations.
-- **Mac and iPhone sync:** active orders are shared through the backend while camp is foregrounded. Background Live Activity delivery and APNs push-to-update are still future work. See the [architecture notes](../ARCHITECTURE.md).
+- **Mac and iPhone sync:** active orders are shared through the backend, long-polled while camp is foregrounded and — with the `CAMP_PUSH` build flag plus `CAMP_APNS_*` backend credentials — pushed via APNs while backgrounded or closed (update and push-to-start). See the [architecture notes](../ARCHITECTURE.md).
 - **Location and calendars:** macOS uses on-device Location Services and EventKit; the app does not upload calendar event content. See [location behavior](LOCATION.md) and [calendar behavior](CALENDAR.md).
 
 Build history and device checks are recorded in [VALIDATION.md](../VALIDATION.md). Use the [demo runbook](DEMO.md) for the current end-to-end acceptance flow.

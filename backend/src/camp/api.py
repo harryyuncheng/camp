@@ -18,7 +18,8 @@ from .ai.modifications import modify
 from .ai.tagging import tag_menu
 from .explain import explain_llm
 from .apns import APNsClient, APNsConfig
-from .models import ORDER_CATEGORIES, ActivityPushToken, Context, EventType, FeedbackEvent, LunchGroup, MenuItem, Order, Restaurant, User
+from .models import (ORDER_CATEGORIES, ActivityPushToken, ActivityStartToken, Context, EventType, FeedbackEvent, LunchGroup, MenuItem, Order,
+                     Restaurant, User)
 from .pipeline import plan_home, plan_office
 from .providers import providers_from_env, sync_catalog
 from .cli import _load_env_file
@@ -41,10 +42,14 @@ apns = APNsClient(APNsConfig.from_env())
 
 
 async def _push_live_activity(record: dict, device: str) -> None:
-    """Fans an accepted write out to every registered Live Activity token except the device that wrote it.
+    """Fans an accepted write out to the phone's Live Activity.
 
-    This is what makes a Mac-side change reach a *locked* phone: the long-poll in `LunchSyncCoordinator`
-    only runs while camp is foregrounded, but APNs delivers to the activity without waking the app.
+    With a per-activity token registered this is an update (or end) push — what makes a Mac-side change
+    reach a *locked* phone: the long-poll in `LunchSyncCoordinator` only runs while camp is foregrounded,
+    but APNs delivers to the activity without waking the app. Without one — the phone has never seen this
+    session — a push-to-start on the device's registered start token raises the Live Activity even while
+    camp is closed entirely (iOS 17.2+). The device that wrote is skipped either way; `started` records
+    which sessions each device already renders so a later write can't spawn a duplicate activity.
     """
     if not apns.enabled:
         return
@@ -52,22 +57,56 @@ async def _push_live_activity(record: dict, device: str) -> None:
     session_id = record.get("sessionId")
     if not isinstance(session_id, str):
         return
-    row = store.get(ActivityPushToken, session_id)
-    if row is None or row.device == device:
-        return
     finished = str(session.get("phase", "")) in ("delivered", "ended")
-    status, reason = await apns.send(
-        row.push_token, session,
-        event="end" if finished else "update",
-        stale_at=session.get("closesAt"),
-        dismiss_at=session.get("deliveredAt") or session.get("arrivesAt"),
-    )
-    # 410 Gone means the activity is over on the phone; stop pushing to a dead token.
-    if status == 410 or finished:
+    row = store.get(ActivityPushToken, session_id)
+    if row is not None and row.device != device:
+        status, _ = await apns.send(
+            row.push_token, session,
+            event="end" if finished else "update",
+            stale_at=session.get("closesAt"),
+            dismiss_at=session.get("deliveredAt") or session.get("arrivesAt"),
+        )
+        # 410 Gone means the activity is over on the phone; stop pushing to a dead token.
+        if status == 410 or finished:
+            store.delete(ActivityPushToken, session_id)
+        return
+    if finished:
+        return
+    place = session.get("place")
+    for start in store.all(ActivityStartToken):
+        if start.id == device or session_id in start.started:
+            continue
+        status, _ = await apns.send(
+            start.push_token, session, event="start",
+            attributes_type="LunchAttributes",
+            attributes={"sessionID": session.get("id")},
+            stale_at=session.get("closesAt"),
+            alert={"title": "camp", "body": f"New order · {place}" if place else "A new order is up"},
+        )
+        if status == 410:
+            store.delete(ActivityStartToken, start.id)
+        elif status == 200:
+            start.started = sorted({*start.started, session_id})
+            store.put(start)
+
+
+async def _end_live_activities(removed: list[dict]) -> None:
+    """A forgotten order ends every Live Activity still rendering it."""
+    if not apns.enabled:
+        return
+    for record in removed:
+        session_id = record.get("sessionId")
+        if not isinstance(session_id, str):
+            continue
+        row = store.get(ActivityPushToken, session_id)
+        if row is None:
+            continue
+        await apns.send(row.push_token, record.get("session") or {}, event="end")
         store.delete(ActivityPushToken, session_id)
 
 
 lunch_sync.on_change = _push_live_activity
+lunch_sync.on_remove = _end_live_activities
 groups = GroupService(store)
 cravings = CravingService(store)
 ramp = RampService(store)
@@ -320,7 +359,32 @@ def lunch_session_push_token(req: ActivityTokenReq):
         raise HTTPException(422, "push_token must be hex")
     store.put(ActivityPushToken(id=req.session_id, push_token=req.push_token.lower(),
                                 device=req.device, environment=req.environment))
+    # A device already rendering the session must never get a push-to-start for it, so remember it.
+    start = store.get(ActivityStartToken, req.device)
+    if start is not None and req.session_id not in start.started:
+        start.started = sorted([*start.started, req.session_id])
+        store.put(start)
     return {"registered": req.session_id, "pushEnabled": apns.enabled}
+
+
+class ActivityStartTokenReq(Wire):
+    push_token: str = Field(min_length=1, max_length=512)
+    device: str = Field(default="iphone", min_length=1, max_length=128)
+    environment: str = Field(default="sandbox", pattern="^(sandbox|production)$")
+
+
+@app.post("/v1/lunch-session/push-start-token")
+def lunch_session_push_start_token(req: ActivityStartTokenReq):
+    """The phone's ActivityKit push-to-start token lets a new order from another device raise a Live
+    Activity while camp is closed (iOS 17.2+). Re-registered whenever iOS rotates the token; `started`
+    carries over so re-registration doesn't forget which sessions this device already renders."""
+    if not all(c in "0123456789abcdefABCDEF" for c in req.push_token):
+        raise HTTPException(422, "push_token must be hex")
+    existing = store.get(ActivityStartToken, req.device)
+    store.put(ActivityStartToken(id=req.device, push_token=req.push_token.lower(),
+                                 environment=req.environment,
+                                 started=existing.started if existing else []))
+    return {"registered": req.device, "pushEnabled": apns.enabled}
 
 
 @app.delete("/v1/lunch-session/push-token")
