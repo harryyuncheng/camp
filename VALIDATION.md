@@ -154,3 +154,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Group lists and the user's joined-group ID are shared with the notch. The notch group list has a bounded scroll area so adding groups does not make the panel grow indefinitely.
 - Groups remain local in-memory demo data and reset on relaunch. No ordering, invitations or payments are sent.
 - macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## Documentation refresh — September 19
+
+- README and architecture now describe five tabs, coffee history, group creation, shared Mac notch joining, lunch-only summary estimates, typed timing, the SVG mark and spending-card proportions.
+- Corrected stale claims that calendar/location were disconnected, Today embedded their panels, or workspace membership survived restart. Marked the original settings brief/integration plan as historical.
+- User reported the latest sidebar logo alignment looks good. Its release build succeeded; the agent did not restart it after automatic approval blocked potential loss of in-memory demo state.
+- Documentation-only follow-up; no build or tests run.

@@ -2,7 +2,7 @@
 
 ## Shared state and presentation
 
-`LunchCore` contains Foundation-only value types and file persistence. `LunchSession.applying` is the sole state transition function. It returns a new value or a meaningful error; it has no UI, network, payment, or ActivityKit dependencies. Dates are injectable and amounts are integer cents.
+`LunchCore` contains Foundation-only value types and file persistence. `LunchSession.applying` is the meal-session state transition function; demo group membership is managed separately by `CampSettingsStore`. It returns a new value or a meaningful error; it has no UI, network, payment, or ActivityKit dependencies. Dates are injectable and amounts are integer cents.
 
 ```text
 choosing → reviewing → confirmed → delivered
@@ -66,7 +66,7 @@ The two devices do not currently share state. A backend should become the author
 
 `CampWorkspace` and its pages live in LunchUI and support desktop sidebar and compact bottom-tab layouts. The Mac delegate owns persistent workspace and phone-preview windows; status-item left click continues to toggle the existing notch panel. Both Mac preview windows share the same store. iOS uses the compact workspace and opens the original Live Activity controls in a sheet.
 
-Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fee. Taxes, service and tip are shown separately; displayed savings do not claim a live quote. Office policies and dietary preferences are configuration only and are not enforced against fixture meals. Preview connection states are ephemeral and never represent authenticated services.
+Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fee for each nonempty lunch group. Taxes, service and tip are shown separately; displayed savings do not claim a live quote. Office policies and dietary preferences are configuration only and are not enforced against fixture meals. Preview connection states are ephemeral and never represent authenticated services.
 
 ## Ramp bridge
 
@@ -79,4 +79,21 @@ Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fe
 
 ## Mac calendars
 
-`MacLunchCalendar` owns EventKit access and publishes only calendar choices, anonymous free intervals and current availability. `CampSettingsStore` configures it from successfully saved lunch preferences and office timezone and forwards observable changes. Calendar selection persists separately in UserDefaults; access is always checked against the OS. `CampCalendarView` replaces fixture calendar switches and connection previews. The service does not write events or upload event content. See `docs/CALENDAR.md` for interval rules and the macOS 14 runtime compatibility path.
+`MacLunchCalendar` owns EventKit access and publishes only calendar choices, anonymous free intervals and current availability. `CampSettingsStore` configures it from successfully saved lunch preferences and office timezone and exposes it to directly observing calendar views. Calendar selection persists separately in UserDefaults; access is always checked against the OS. `CampCalendarView` replaces fixture calendar switches and connection previews. The service does not write events or upload event content. See `docs/CALENDAR.md` for interval rules and the macOS 14 runtime compatibility path.
+
+
+## Shared demo group flow
+
+`CampSettingsStore.lunchGroups` starts from `DemoLunchGroup.all`. Creation appends a UUID-backed group with a chosen fixture restaurant/menu and delivery time; joining stores one selected group ID and meal. Other participant counts are fixture data. `peopleOrdering` and `totalSavingsCents` derive from all lunch groups plus the current user's single membership. Coffee is a separate receipt fixture and is excluded from these totals.
+
+The Mac delegate subscribes the model to the workspace group list and joined-group ID. Today routes View menu through `requestDemoGroup` to `MacLunchModel.chooseGroup`. The notch first offers groups, then uses the existing revision-checked meal session for selection/review/confirmation. Successful confirmation calls `onJoin`, updating the workspace. The list scrolls within a bounded height. Compact hosts without this callback use a menu sheet and explicit local confirmation.
+
+Groups and workspace membership are not persisted. `SessionFile` still persists the meal session, but not its group context. After relaunch, the group picker starts fresh; a persisted meal does not restore workspace membership. Replacing this split persistence is required before shipping or syncing devices.
+
+## Rendering and input
+
+Location/calendar views observe their own services instead of forwarding every update through the workspace store. EventKit reads use the private `CampCalendarReader` actor and publish anonymous snapshots guarded against stale refreshes. Native map containers are pooled with delegate/gesture cleanup. The map and calendar are 340 points high and capture scrolling only after being clicked.
+
+Finite workspace pages use stable stacks. Card backgrounds avoid masking all their child views. macOS office time pickers build native menu entries once per control; personal lunch timing uses `CampTimingField` with local text drafts, validation, Return/focus-loss commit and formatted values. Save/Discard continues to operate on `CampSettingsStore.draft`.
+
+`CampLogo` caches paths from the preserved SVG and fits them uniformly; it does not load raster assets or require resource-bundle lookup. Changes to the source SVG must be reflected in those cached paths. Spending artwork has a fixed design canvas scaled to a 1.586 aspect ratio.
