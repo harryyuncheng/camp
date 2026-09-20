@@ -24,6 +24,7 @@ public struct CampWorkspace: View {
                         case .today: CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
+                        case .spending: CampSpendingPage(compact: compact)
                         case .connections: CampConnectionsPage(store: store, compact: compact)
                         }
                         if let error = store.saveError {
@@ -138,6 +139,7 @@ public struct CampWorkspace: View {
         case .today: return "THE OFFICE LUNCH, TOGETHER"
         case .you: return "ON YOUR TERMS"
         case .office: return "THE WAY YOUR TEAM ORDERS"
+        case .spending: return "LUNCH SPENDING"
         case .connections: return "READY WHEN YOU ARE"
         }
     }
@@ -146,6 +148,7 @@ public struct CampWorkspace: View {
         case .today: return "A better lunch break."
         case .you: return "Make camp yours."
         case .office: return "Your office, in sync."
+        case .spending: return "Lunch spend, at a glance."
         case .connections: return "Connect the pieces."
         }
     }
@@ -154,6 +157,7 @@ public struct CampWorkspace: View {
         case .today: return "Join your team’s order. Share the delivery, keep your own taste."
         case .you: return "Your preferences help camp find the right meal and moment."
         case .office: return "Set the boundaries for simpler, more economical group orders."
+        case .spending: return "A visual preview of a company lunch card and its activity."
         case .connections: return "Configure the experience now. Live integrations will come next."
         }
     }

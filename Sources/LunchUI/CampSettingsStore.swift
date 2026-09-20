@@ -5,13 +5,14 @@ import LunchCore
 #endif
 
 public enum CampSection: String, CaseIterable, Identifiable {
-    case today = "Today", you = "You", office = "Office", connections = "Connections"
+    case today = "Today", you = "You", office = "Office", spending = "Spending", connections = "Connections"
     public var id: String { rawValue }
     public var symbol: String {
         switch self {
         case .today: return "square.grid.2x2"
         case .you: return "person.crop.circle"
         case .office: return "building.2"
+        case .spending: return "creditcard.fill"
         case .connections: return "point.3.connected.trianglepath.dotted"
         }
     }

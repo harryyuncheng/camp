@@ -117,3 +117,120 @@ struct CampConnectionsPage: View {
         }
     }
 }
+
+/// Visual-only mock of the employee spending surface. All amounts and activity are fixtures.
+struct CampSpendingPage: View {
+    let compact: Bool
+
+    private let monthlySpendCents = 4_285
+    private let monthlyBudgetCents = 30_000
+    private let transactions = [
+        CampDemoTransaction(name: "The Green Table", detail: "Today · Team lunch", amountCents: 1_425, symbol: "fork.knife"),
+        CampDemoTransaction(name: "Corner Coffee", detail: "Sep 18 · Coffee run", amountCents: 861, symbol: "cup.and.saucer.fill"),
+        CampDemoTransaction(name: "Fresh Bowl", detail: "Sep 16 · Lunch", amountCents: 1_999, symbol: "leaf.fill")
+    ]
+
+    var body: some View {
+        LazyVStack(spacing: 20) {
+            CampCard("Company lunch card", subtitle: "A visual preview · no card is connected") {
+                lunchCard
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(alignment: .firstTextBaseline) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("SPENT THIS MONTH").font(.system(size: 9, weight: .semibold)).tracking(0.8).foregroundStyle(CampPalette.muted)
+                            Text(LunchStyle.money(monthlySpendCents)).font(.system(size: 25, weight: .semibold, design: .rounded)).monospacedDigit()
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 4) {
+                            Text("SAMPLE MONTHLY BUDGET").font(.system(size: 9, weight: .semibold)).tracking(0.5).foregroundStyle(CampPalette.muted)
+                            Text(LunchStyle.money(monthlyBudgetCents)).font(.system(size: 14, weight: .semibold, design: .rounded)).monospacedDigit()
+                        }
+                    }
+                    ProgressView(value: Double(monthlySpendCents), total: Double(monthlyBudgetCents)).tint(CampPalette.green)
+                    Text("\(LunchStyle.money(monthlyBudgetCents - monthlySpendCents)) available · demo values")
+                        .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+                }
+            }
+
+            CampCard("Recent activity", subtitle: "Example transactions · not connected to Ramp") {
+                ForEach(Array(transactions.enumerated()), id: \.element.id) { index, transaction in
+                    if index > 0 { Divider() }
+                    transactionRow(transaction)
+                }
+            }
+
+            CampCard("Built for the group order", subtitle: "The card preview shows where a confirmed lunch purchase could appear.") {
+                Label("Join a shared order", systemImage: "person.2.fill").font(.system(size: 13, weight: .medium))
+                Text("Spend controls, live balances and transaction details would come from the company card connection. This screen uses sample data only.")
+                    .font(.system(size: 12)).foregroundStyle(CampPalette.muted)
+            }
+        }
+    }
+
+    private var lunchCard: some View {
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: 19)
+                .fill(LinearGradient(colors: [Color(red: 0.10, green: 0.17, blue: 0.12), CampPalette.green], startPoint: .topLeading, endPoint: .bottomTrailing))
+            Circle().fill(CampPalette.lime.opacity(0.15)).frame(width: 230).offset(x: compact ? 185 : 300, y: -118)
+            Circle().stroke(.white.opacity(0.08), lineWidth: 1).frame(width: 265).offset(x: compact ? 163 : 278, y: -136)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("camp").font(.system(size: 23, weight: .bold, design: .rounded)).tracking(-0.7)
+                        Text("CORPORATE LUNCH").font(.system(size: 8, weight: .semibold)).tracking(1.2).foregroundStyle(.white.opacity(0.68))
+                    }
+                    Spacer()
+                    Text("DEMO ONLY").font(.system(size: 8, weight: .bold)).tracking(0.6)
+                        .padding(.horizontal, 9).padding(.vertical, 6)
+                        .background(.white.opacity(0.13)).clipShape(Capsule())
+                }
+                Spacer(minLength: 12)
+                HStack(spacing: 10) {
+                    RoundedRectangle(cornerRadius: 6).fill(CampPalette.lime.opacity(0.86))
+                        .frame(width: 39, height: 28)
+                        .overlay(Image(systemName: "cpu").font(.system(size: 15)).foregroundStyle(CampPalette.green))
+                    Image(systemName: "wave.3.right").font(.system(size: 15, weight: .medium)).foregroundStyle(.white.opacity(0.72))
+                    Text("••••  ••••  ••••  4821").font(.system(size: 12, weight: .medium, design: .monospaced)).monospacedDigit()
+                }
+                Spacer(minLength: 12)
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("CARDHOLDER").font(.system(size: 7, weight: .semibold)).tracking(1).foregroundStyle(.white.opacity(0.62))
+                        Text("CAMP MEMBER").font(.system(size: 10, weight: .semibold)).tracking(0.6)
+                    }
+                    Spacer()
+                    Image(systemName: "leaf.fill").font(.system(size: 19)).foregroundStyle(CampPalette.lime)
+                }
+            }
+            .foregroundStyle(.white)
+            .padding(compact ? 18 : 22)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: compact ? 178 : 196)
+        .clipShape(RoundedRectangle(cornerRadius: 19))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Demo camp company lunch card ending in 4821")
+    }
+
+    private func transactionRow(_ transaction: CampDemoTransaction) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: transaction.symbol).font(.system(size: 14, weight: .medium))
+                .foregroundStyle(CampPalette.green).frame(width: 38, height: 38)
+                .background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 11))
+            VStack(alignment: .leading, spacing: 4) {
+                Text(transaction.name).font(.system(size: 12, weight: .semibold))
+                Text(transaction.detail).font(.system(size: 10)).foregroundStyle(CampPalette.muted)
+            }
+            Spacer()
+            Text("−\(LunchStyle.money(transaction.amountCents))").font(.system(size: 12, weight: .semibold)).monospacedDigit()
+        }
+    }
+}
+
+private struct CampDemoTransaction: Identifiable {
+    let name: String
+    let detail: String
+    let amountCents: Int
+    let symbol: String
+    var id: String { name }
+}
