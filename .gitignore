@@ -14,3 +14,4 @@ __pycache__/
 .venv/
 *.db
 *.sqlite3
+Config/Local.xcconfig

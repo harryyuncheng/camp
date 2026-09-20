@@ -1,0 +1,4 @@
+// Copy to Local.xcconfig and fill in your Apple developer team and unique app ID.
+// Both the iPhone app and Live Activity extension inherit these values.
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+BUNDLE_ID_PREFIX = com.yourname.camp

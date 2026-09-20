@@ -97,10 +97,6 @@ struct CampConnectionsPage: View {
                 CampTextField(title: "http://127.0.0.1:8787", text: $store.draft.connections.backendURL)
                 Text("Ramp server URL. Leave blank to use http://127.0.0.1:8787.").font(.caption).foregroundStyle(CampPalette.muted)
             }
-            CampCard("Developer tools", subtitle: "A testing view of the backend: filters, scores, batches and feedback events.") {
-                CampToggle(title: "Show Developer page", detail: store.developerMode ? "Visible in the sidebar" : "Hidden", value: $store.developerMode)
-                Text("Reads live state from the recommendation service above. Nothing on that page is employee-facing.").font(.caption).foregroundStyle(CampPalette.muted)
-            }
         }
     }
 
@@ -181,11 +177,23 @@ struct CampSpendingPage: View {
     }
 
     private var lunchCard: some View {
+        GeometryReader { proxy in
+            cardArtwork
+                .scaleEffect(proxy.size.width / 360, anchor: .topLeading)
+        }
+        .aspectRatio(1.586, contentMode: .fit)
+        .frame(maxWidth: 400)
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Demo camp company lunch card ending in 4821")
+    }
+
+    private var cardArtwork: some View {
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: 19)
                 .fill(LinearGradient(colors: [Color(red: 0.10, green: 0.17, blue: 0.12), CampPalette.green], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Circle().fill(CampPalette.lime.opacity(0.15)).frame(width: 230).offset(x: compact ? 185 : 300, y: -118)
-            Circle().stroke(.white.opacity(0.08), lineWidth: 1).frame(width: 265).offset(x: compact ? 163 : 278, y: -136)
+            Circle().fill(CampPalette.lime.opacity(0.15)).frame(width: 230).offset(x: 205, y: -118)
+            Circle().stroke(.white.opacity(0.08), lineWidth: 1).frame(width: 265).offset(x: 183, y: -136)
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 3) {
@@ -216,13 +224,10 @@ struct CampSpendingPage: View {
                 }
             }
             .foregroundStyle(.white)
-            .padding(compact ? 18 : 22)
+            .padding(22)
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: compact ? 178 : 196)
-        .clipShape(RoundedRectangle(cornerRadius: 19))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Demo camp company lunch card ending in 4821")
+        .frame(width: 360, height: 360 / 1.586)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 
     private func transactionRow(_ transaction: CampDemoTransaction) -> some View {

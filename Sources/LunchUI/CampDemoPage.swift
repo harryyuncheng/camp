@@ -3,9 +3,9 @@ import SwiftUI
 import LunchCore
 #endif
 
-/// Developer page: live view of the recommender's filters, scores, batch and feedback loop.
-/// Enabled from Connections → Developer tools. Never shown to employees.
-struct CampDebugPage: View {
+/// Demo page: everything added for demoing and testing the recommender — the live offer, the backend's
+/// filters, scores, office batch and feedback loop. Lives in its own sidebar tab; not employee-facing.
+struct CampDemoPage: View {
     @ObservedObject var store: CampSettingsStore
     let compact: Bool
     @State private var snapshot: JSONValue?
@@ -17,6 +17,7 @@ struct CampDebugPage: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            if let offer = store.latestOffer { liveOffer(offer) }
             CampCard("Backend", subtitle: "GET /v1/health and /v1/debug/snapshot") {
                 HStack {
                     Button(busy ? "Loading…" : "Refresh") { Task { await refresh() } }.buttonStyle(CampActionStyle()).disabled(busy)
@@ -35,6 +36,43 @@ struct CampDebugPage: View {
             feedbackCard
             if let snapshot { CampCard("Raw snapshot") { JSONTree(value: snapshot, depth: 0) } }
         }.task { await refresh() }
+    }
+
+    private func liveOffer(_ offer: MealOffer) -> some View {
+        CampCard("Live recommendation", subtitle: offer.location == "office" ? "From the recommender · you are batched with \(offer.participants) people at this restaurant" : "From the recommender · home delivery, full fee") {
+            ForEach(offer.options) { option in
+                HStack(spacing: 12) {
+                    Image(systemName: option.symbol).foregroundStyle(CampPalette.green).frame(width: 28)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(option.name).font(.system(size: 14, weight: .semibold))
+                        Text("\(option.restaurant) · \(option.detail)").font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+                    }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(LunchStyle.money(option.priceCents)).font(.system(size: 13, weight: .semibold))
+                        Text("alone \(LunchStyle.money(option.baselineCents))").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
+                    }
+                }.padding(12).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            HStack {
+                CampBadge(text: offer.suggestOnly ? "Suggest only · confirm yourself" : "Estimated all-in prices", active: !offer.suggestOnly)
+                Spacer()
+                Button(store.recommenderBusy ? "Working…" : "Refresh offer") { Task { await store.requestOffer(force: true) } }
+                    .buttonStyle(CampActionStyle(primary: false)).disabled(store.recommenderBusy)
+            }
+            if !offer.note.isEmpty { Text(offer.note).font(.caption).foregroundStyle(.red) }
+            if let report = store.lastLunchReport {
+                Divider()
+                Text("Recorded: \(report["status"]?.string ?? "-") · \((report["events"]?.array ?? []).compactMap { $0["type"]?.string }.joined(separator: ", "))")
+                    .font(.system(size: 12, weight: .medium))
+                ForEach((report["profileUpdates"]?.array ?? []).indices, id: \.self) { i in
+                    Text("→ \(report["profileUpdates"]!.array![i].scalarText)").font(.system(size: 11)).foregroundStyle(CampPalette.green)
+                }
+                if let learned = report["learned"] {
+                    Text("Now liking: \((learned["liking"]?.array ?? []).map { $0.scalarText }.joined(separator: " · "))").font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+                }
+            }
+        }
     }
 
     private func refresh() async {

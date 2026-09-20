@@ -24,7 +24,7 @@ The bundled Mac app is not App Sandbox-enabled. `NSLocationUsageDescription` and
 
 ## Implementation
 
-`Sources/LunchUI/MacOfficeLocation.swift` owns the macOS service, authorization, wake lifecycle, geofence classification and transition events. It is conditionally compiled for Mac. `CampSettingsStore` owns its lifetime and forwards observable changes; only successfully saved office policy configures it. `CampLocationView` is shared between Office and Connections. Today reads live presence instead of the old demo override.
+`Sources/LunchUI/MacOfficeLocation.swift` owns the macOS service, authorization, wake lifecycle, geofence classification and transition events. It is conditionally compiled for Mac. `CampSettingsStore` owns its lifetime; location views observe the service directly; only successfully saved office policy configures it. `CampLocationView` is shared between Office and Connections. Live presence appears in Office and Connections; Today is the group-order demo feed.
 
 ## Validation status
 

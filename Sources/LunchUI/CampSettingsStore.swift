@@ -5,8 +5,10 @@ import LunchCore
 #endif
 
 public enum CampSection: String, CaseIterable, Identifiable {
-    case today = "Today", you = "You", office = "Office", spending = "Spending", connections = "Connections", debug = "Developer"
+    case today = "Today", you = "You", office = "Office", spending = "Spending", connections = "Connections", demo = "Demo"
     public var id: String { rawValue }
+    /// Sections in the main sidebar list. `.demo` sits on its own, bottom-aligned above the office footer.
+    public static var main: [CampSection] { allCases.filter { $0 != .demo } }
     public var symbol: String {
         switch self {
         case .today: return "square.grid.2x2"
@@ -14,7 +16,7 @@ public enum CampSection: String, CaseIterable, Identifiable {
         case .office: return "building.2"
         case .spending: return "creditcard.fill"
         case .connections: return "point.3.connected.trianglepath.dotted"
-        case .debug: return "ladybug"
+        case .demo: return "sparkles"
         }
     }
 }
@@ -26,11 +28,32 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var isDemoAdmin = true
     @Published public var statusMessage: String?
     @Published public var saveError: String?
+    @Published public var lunchGroups = DemoLunchGroup.all
+    public var peopleOrdering: Int { lunchGroups.reduce(0) { $0 + participantCount(for: $1) } }
+    public var totalSavingsCents: Int { lunchGroups.reduce(0) { $0 + savingsCents(for: $1) } }
+    public func participantCount(for group: DemoLunchGroup) -> Int {
+        group.people + (selectedGroupID == group.id && selectedMeal != nil ? 1 : 0)
+    }
+    public func savingsCents(for group: DemoLunchGroup) -> Int { max(0, participantCount(for: group) - 1) * 600 }
+    @discardableResult
+    public func createGroup(restaurant: DemoLunchGroup, arrivalMinutes: Int, meal: LunchOption) -> Bool {
+        guard restaurant.options.contains(meal), (360...1260).contains(arrivalMinutes) else { return false }
+        let group = DemoLunchGroup(id: UUID().uuidString, name: restaurant.name,
+                                  cuisine: "Started by you · " + restaurant.cuisine, symbol: restaurant.symbol,
+                                  people: 0, delivery: CampTimePicker.label(arrivalMinutes),
+                                  options: restaurant.options, arrivalMinutes: arrivalMinutes)
+        lunchGroups.append(group)
+        join(meal, group: group)
+        requestConfirmedDemoGroup?(group, meal)
+        return true
+    }
     @Published public var selectedGroupID: String?
+    public var requestConfirmedDemoGroup: ((DemoLunchGroup, LunchOption) -> Void)?
+    public var requestEndDemoGroup: (() -> Void)?
     public var requestDemoGroup: ((DemoLunchGroup) -> Void)?
-    public var selectedGroup: DemoLunchGroup? { DemoLunchGroup.all.first { $0.id == selectedGroupID } }
+    public var selectedGroup: DemoLunchGroup? { lunchGroups.first { $0.id == selectedGroupID } }
     public func join(_ option: LunchOption, group: DemoLunchGroup) {
-        guard group.options.contains(option) else { return }
+        guard lunchGroups.contains(where: { $0.id == group.id }), group.options.contains(option) else { return }
         selectedGroupID = group.id
         selectedMeal = option
         groupStage = .collecting
@@ -38,8 +61,6 @@ public final class CampSettingsStore: ObservableObject {
     @Published public var selectedMeal: LunchOption?
     @Published public var groupStage = DemoGroupStage.collecting
     @Published public var previewConnections: Set<String> = []
-    /// Developer tools: shows the Developer page with live backend state. Persisted per device, outside the config schema.
-    @Published public var developerMode: Bool { didSet { UserDefaults.standard.set(developerMode, forKey: "camp.developerMode"); if !developerMode, section == .debug { section = .connections } } }
     /// Live recommendation state from the Python recommender. Ephemeral; the backend is the authority.
     @Published public var recommenderHealth: JSONValue?
     @Published public var recommenderError: String?
@@ -76,11 +97,8 @@ public final class CampSettingsStore: ObservableObject {
     private var saved = CampConfiguration()
     private let file: ConfigurationFile
 
-    public var sections: [CampSection] { CampSection.allCases.filter { $0 != .debug || developerMode } }
-
     public init(file: ConfigurationFile = .applicationDefault) {
         self.file = file
-        developerMode = UserDefaults.standard.bool(forKey: "camp.developerMode")
         do {
             if let config = try file.load() { draft = config; saved = config }
         } catch { saveError = "Couldn’t restore settings. Your existing file has not been replaced. \(error.localizedDescription)" }
@@ -142,7 +160,10 @@ public final class CampSettingsStore: ObservableObject {
     }
 
     public func discard() { draft = saved; saveError = nil; statusMessage = nil }
-    public func resetGroup() { selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting }
+    public func resetGroup() {
+        selectedGroupID = nil; selectedMeal = nil; groupStage = .collecting
+        requestEndDemoGroup?()
+    }
     public func join(_ option: LunchOption) {
         guard groupStage == .collecting else { return }
         selectedMeal = option
@@ -186,7 +207,7 @@ public final class CampSettingsStore: ObservableObject {
         let restaurant: String
         if fromRecommender, let option = latestOffer?.options.first(where: { $0.id == session.selectedOptionID }) {
             restaurant = option.restaurant
-        } else if let group = DemoLunchGroup.all.first(where: { g in g.options.contains { $0.id == session.selectedOptionID } }) {
+        } else if let group = lunchGroups.first(where: { g in g.options.contains { $0.id == session.selectedOptionID } }) {
             restaurant = group.name
         } else {
             restaurant = "Demo kitchen"

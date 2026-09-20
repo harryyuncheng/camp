@@ -786,7 +786,7 @@
 		"4C9DF5E3380E8E33D7117F8A" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
-			"path" = "Sources/LunchUI/CampDebugPage.swift";
+			"path" = "Sources/LunchUI/CampDemoPage.swift";
 			"sourceTree" = "<group>";
 		};
 		"3DD2D2F172EBF4D72CFF6EEB" = {

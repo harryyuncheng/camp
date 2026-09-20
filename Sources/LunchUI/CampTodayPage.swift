@@ -8,11 +8,11 @@ struct CampTodayPage: View {
     let compact: Bool
     let previewActivity: () -> Void
     @State private var showingCoffee = false
+    @State private var creatingGroup = false
     @State private var choosingGroup: DemoLunchGroup?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            if let offer = store.latestOffer { liveOffer(offer) }
             Button { showingCoffee = true } label: {
                 HStack(spacing: 16) {
                     Image(systemName: "cup.and.saucer.fill").font(.title2)
@@ -34,7 +34,7 @@ struct CampTodayPage: View {
             HStack {
                 Text("Lunch groups").font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
-                CampBadge(text: "Demo")
+                Button("Create group") { creatingGroup = true }.buttonStyle(CampActionStyle(primary: false))
             }.padding(.top, 6)
             if let group = store.selectedGroup, let meal = store.selectedMeal {
                 HStack(spacing: 12) {
@@ -47,15 +47,15 @@ struct CampTodayPage: View {
                     Button("Leave") { store.resetGroup() }.buttonStyle(.plain).font(.caption)
                 }.padding(18).background(CampPalette.lime.opacity(0.35)).clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            ForEach(DemoLunchGroup.all) { group in
+            ForEach(store.lunchGroups) { group in
                 CampCard(group.name, subtitle: group.cuisine) {
                     HStack(spacing: 16) {
-                        Label("\(group.people + (store.selectedGroupID == group.id ? 1 : 0)) people", systemImage: "person.2")
+                        Label("\(store.participantCount(for: group)) people", systemImage: "person.2")
                         Spacer()
                         Label(group.delivery, systemImage: "bag")
                     }.font(.system(size: 12)).foregroundStyle(CampPalette.muted)
                     HStack {
-                        Text("\(LunchStyle.money(group.deliverySavingsCents)) shared delivery savings")
+                        Text("\(LunchStyle.money(store.savingsCents(for: group))) shared delivery savings")
                             .font(.system(size: 12, weight: .medium)).foregroundStyle(CampPalette.green)
                         Spacer(minLength: 12)
                         Button(store.selectedGroupID == group.id ? "Change meal" : "View menu") {
@@ -68,50 +68,27 @@ struct CampTodayPage: View {
             HStack {
                 Text("Sample orders and prices. No purchases.").font(.caption).foregroundStyle(CampPalette.muted)
                 Spacer()
-                #if os(macOS)
                 Button("Preview lunch invitation", action: previewActivity).buttonStyle(CampActionStyle(primary: false))
-                #endif
             }
+            CampPair(compact: compact) {
+                summaryCard("Total savings", value: LunchStyle.money(store.totalSavingsCents), symbol: "arrow.down.right")
+                summaryCard("People ordering", value: "\(store.peopleOrdering)", symbol: "person.2.fill")
+            }
+            Text("Today’s lunch groups · demo delivery estimates").font(.caption).foregroundStyle(CampPalette.muted)
         }
+        .sheet(isPresented: $creatingGroup) { CampCreateGroupSheet(store: store) }
         .sheet(isPresented: $showingCoffee) { coffeeDetail }
         .sheet(item: $choosingGroup) { group in
             CampDemoGroupMenu(store: store, group: group)
         }
     }
 
-    private func liveOffer(_ offer: MealOffer) -> some View {
-        CampCard("Live recommendation", subtitle: offer.location == "office" ? "From the recommender · you are batched with \(offer.participants) people at this restaurant" : "From the recommender · home delivery, full fee") {
-            ForEach(offer.options) { option in
-                HStack(spacing: 12) {
-                    Image(systemName: option.symbol).foregroundStyle(CampPalette.green).frame(width: 28)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(option.name).font(.system(size: 14, weight: .semibold))
-                        Text("\(option.restaurant) · \(option.detail)").font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(LunchStyle.money(option.priceCents)).font(.system(size: 13, weight: .semibold))
-                        Text("alone \(LunchStyle.money(option.baselineCents))").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
-                    }
-                }.padding(12).background(CampPalette.background).clipShape(RoundedRectangle(cornerRadius: 12))
-            }
+    private func summaryCard(_ title: String, value: String, symbol: String) -> some View {
+        CampCard(title) {
             HStack {
-                CampBadge(text: offer.suggestOnly ? "Suggest only · confirm yourself" : "Estimated all-in prices", active: !offer.suggestOnly)
+                Text(value).font(.system(size: 30, weight: .semibold, design: .rounded)).monospacedDigit()
                 Spacer()
-                Button(store.recommenderBusy ? "Working…" : "Refresh offer") { Task { await store.requestOffer(force: true) } }
-                    .buttonStyle(CampActionStyle(primary: false)).disabled(store.recommenderBusy)
-            }
-            if !offer.note.isEmpty { Text(offer.note).font(.caption).foregroundStyle(.red) }
-            if let report = store.lastLunchReport {
-                Divider()
-                Text("Recorded: \(report["status"]?.string ?? "-") · \((report["events"]?.array ?? []).compactMap { $0["type"]?.string }.joined(separator: ", "))")
-                    .font(.system(size: 12, weight: .medium))
-                ForEach((report["profileUpdates"]?.array ?? []).indices, id: \.self) { i in
-                    Text("→ \(report["profileUpdates"]!.array![i].scalarText)").font(.system(size: 11)).foregroundStyle(CampPalette.green)
-                }
-                if let learned = report["learned"] {
-                    Text("Now liking: \((learned["liking"]?.array ?? []).map { $0.scalarText }.joined(separator: " · "))").font(.system(size: 11)).foregroundStyle(CampPalette.muted)
-                }
+                Image(systemName: symbol).foregroundStyle(CampPalette.green)
             }
         }
     }
@@ -175,5 +152,64 @@ private struct CampDemoGroupMenu: View {
                 if let selection { store.join(selection, group: group); dismiss() }
             }.buttonStyle(CampActionStyle()).disabled(selection == nil)
         }.padding(24).frame(idealWidth: 440, maxWidth: 480).foregroundStyle(CampPalette.ink).background(.white)
+    }
+}
+
+private struct CampCreateGroupSheet: View {
+    @ObservedObject var store: CampSettingsStore
+    @Environment(\.dismiss) private var dismiss
+    @State private var restaurantID = DemoLunchGroup.all[0].id
+    @State private var delivery = "12:30 PM"
+    @State private var mealID = ""
+    private var restaurant: DemoLunchGroup { DemoLunchGroup.all.first { $0.id == restaurantID } ?? DemoLunchGroup.all[0] }
+    private var meal: LunchOption? { restaurant.options.first { $0.id == mealID } }
+    private var deliveryMinutes: Int? {
+        guard let minutes = CampTimingField.Kind.time.parse(delivery), (360...1260).contains(minutes) else { return nil }
+        return minutes
+    }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Text("Create a lunch group").font(.title2.weight(.semibold))
+                Spacer()
+                Button("Cancel") { dismiss() }.buttonStyle(.plain)
+            }
+            CampField("Restaurant") {
+                Picker("Restaurant", selection: $restaurantID) {
+                    ForEach(DemoLunchGroup.all) { Text($0.name).tag($0.id) }
+                }.labelsHidden()
+            }
+            CampField("Delivery time") {
+                CampTextField(title: "e.g. 12:30 PM", text: $delivery)
+                    .onSubmit { if let minutes = deliveryMinutes { delivery = CampTimePicker.label(minutes) } }
+                if deliveryMinutes == nil {
+                    Text("Enter a time between 6 AM and 9 PM.").font(.caption).foregroundStyle(.red)
+                }
+            }
+            CampField("Your meal") {
+                VStack(spacing: 8) {
+                    ForEach(restaurant.options) { option in
+                        Button { mealID = option.id } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: mealID == option.id ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(CampPalette.green)
+                                Text(option.name).font(.callout)
+                                Spacer()
+                                Text(LunchStyle.money(option.priceCents)).font(.callout)
+                            }.padding(14).background(CampPalette.background)
+                                .clipShape(RoundedRectangle(cornerRadius: 10)).contentShape(Rectangle())
+                        }.buttonStyle(.plain)
+                    }
+                }
+            }
+            Text("Demo group · no purchase. This replaces your current lunch choice.")
+                .font(.caption).foregroundStyle(CampPalette.muted)
+            Button("Create & join") {
+                if let meal, let minutes = deliveryMinutes,
+                   store.createGroup(restaurant: restaurant, arrivalMinutes: minutes, meal: meal) { dismiss() }
+            }.buttonStyle(CampActionStyle()).disabled(meal == nil || deliveryMinutes == nil)
+        }.padding(24).frame(idealWidth: 440, maxWidth: 480)
+            .foregroundStyle(CampPalette.ink).background(.white)
+            .onChange(of: restaurantID) { _ in mealID = "" }
     }
 }

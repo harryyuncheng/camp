@@ -73,10 +73,10 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 ## 2026-09-19 · recommender integration
 
 Python backend: `cd backend && uv run pytest` → 14 passed. `/v1/meal-offers` and `/v1/debug/*` exercised with FastAPI's
-TestClient. Swift changes (RecommendationContracts, RecommendationClient, CampRecommendationView, CampDebugPage,
+TestClient. Swift changes (RecommendationContracts, RecommendationClient, CampRecommendationView, CampDemoPage (then named CampDebugPage),
 store/workspace/Today/Mac-app edits, pbxproj wiring) compiled with Xcode 27.0: `swift build --product LunchMac` clean,
 `swift test` 13 passed, `scripts/build-mac.sh` produced `dist/camp.app`. The app was launched against the recommender on
-port 8788; the in-app flow (Connect → Request lunch offer → Developer page) was not exercised by automation.
+port 8788; the in-app flow (Connect → Request lunch offer → Demo tab) was not exercised by automation.
 
 ## Mac location update
 
@@ -147,3 +147,69 @@ port 8788; the in-app flow (Connect → Request lunch offer → Developer page) 
 - Today’s View menu opens the chosen group in the Mac notch. Other workspace hosts without the Mac callback use an in-app menu sheet with explicit confirmation. One lunch choice is active at a time; choosing another group replaces it. Leave clears it.
 - Fixture spending totals use the chosen group’s participants and sample food subtotal. Coffee, menus, delivery windows and prices are demo fixtures; no ordering or payments occur. Demo join state is in-memory, not synced or restored across launches.
 - macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## SVG logo trial — September 19
+
+- Preserved the supplied SVG in Branding/camp.svg. Its three vector paths are cached in CampLogo; the white background and surrounding whitespace are omitted for template-style use. The original file is unchanged.
+- Replaced the tent symbol in the sidebar, compact workspace header, shared lunch card, unconfirmed notch pill and macOS menu-bar icon. Kept the camp wordmark and confirmation checkmark. The menu-bar image is a system template for light/dark appearance.
+- macOS release build succeeded; relaunched and visually inspected the sidebar logo at its displayed size. Other surfaces share the vector but have not all been visually inspected. iOS was not built. No automated tests were run.
+
+## Today summaries and group creation — September 19
+
+- Added Total savings and People ordering cards at the bottom of Today. Values sum the lunch groups and update on join, leave and creation; savings use the demo $6 separate-delivery vs $6 shared-delivery model. Labels explicitly scope these estimates to lunch groups (coffee is excluded).
+- Create group opens a restaurant, editable delivery time and meal form. Valid submission adds a unique group and joins with the selected meal, replacing the user's previous lunch choice. Newly created groups have no simulated other members or savings until others join.
+- Group lists and the user's joined-group ID are shared with the notch. The notch group list has a bounded scroll area so adding groups does not make the panel grow indefinitely.
+- Groups remain local in-memory demo data and reset on relaunch. No ordering, invitations or payments are sent.
+- macOS release build succeeded. No automated tests were added or run; iOS was not built.
+
+## Documentation refresh — September 19
+
+- README and architecture now describe five tabs, coffee history, group creation, shared Mac notch joining, lunch-only summary estimates, typed timing, the SVG mark and spending-card proportions.
+- Corrected stale claims that calendar/location were disconnected, Today embedded their panels, or workspace membership survived restart. Marked the original settings brief/integration plan as historical.
+- User reported the latest sidebar logo alignment looks good. Its release build succeeded; the agent did not restart it after automatic approval blocked potential loss of in-memory demo state.
+- Documentation-only follow-up; no build or tests run.
+
+
+## Native iPhone companion — 2026-09-19
+
+- Connected Today group menus and create/join/leave to ActivityKit, restored group context from active activity attributes, and added activity deep-link routing.
+- Added a compact interactive Lock Screen/Dynamic Island layout and bounded incoming-offer entry point.
+- Added unsigned simulator build helper and ignored local signing overrides.
+- Invoked `scripts/build-ios.sh`: stopped at explicit preflight because installed Xcode is 14.3.1; iOS 17 APIs require Xcode 15+. No successful iOS build, simulator/device interaction or automated tests claimed.
+- Mac app was not restarted. Automatic cross-device delivery/APNs remains future work; see `docs/IOS.md`.
+
+
+## Xcode 16.2 setup — 2026-09-19
+
+- Confirmed selected Xcode is 16.2 (16C5032a) at `/Applications/Xcode_16.2.app`.
+- Fixed iOS build helper to respect `xcode-select` instead of defaulting to the old Xcode.app. Explicit DEVELOPER_DIR overrides still work.
+- Retried iOS build: exit 69, Xcode license not accepted. No compilation or simulator run occurred. User must complete Xcode first-launch setup.
+
+
+## Notch branding fix — 2026-09-19
+
+- Cause: the expanded notch owns a camp header, while its embedded LunchCard also rendered one. Embedded cards now omit only their logo/name; demo status and countdown remain. Standalone phone/in-app cards retain branding.
+- Release Mac build succeeded. No automated tests or app restart performed; running app needs relaunch to display the change.
+
+
+## Notch header spacing — 2026-09-19
+
+- Removed the entire embedded meal-card header row, including DEMO and countdown. The notch content no longer reserves space for the removed branding. Standalone card headers remain.
+- Release Mac build succeeded. No tests or app restart performed.
+
+
+## Notch group transition — 2026-09-19
+
+- Group selection reserved a taller scrolling area than meal selection and triggered an extra measured panel resize during navigation.
+- Added a shared 260-point content stage for expanded screens, shortened the group list to three 52-point rows with 8-point gaps, and crossfade contents over 0.24 seconds while keeping header/footer anchored. Additional groups scroll. Reduce Motion disables the content animation.
+- Removed the competing meal-action animation. Release Mac build succeeded; no tests or live UI restart performed. Visual review remains pending relaunch.
+
+
+## iPhone build and connection check — 2026-09-19
+
+- Xcode 16.2 (16C5032a), macOS 15.1. Prior license blocker resolved.
+- `scripts/build-ios.sh` succeeded outside the tool sandbox for arm64/x86_64 Simulator, including the embedded activity extension.
+- Generic iOS device build with CODE_SIGNING_ALLOWED=NO also succeeded, including the extension. No source changes were needed.
+- Connected iPhone 16 Pro on iOS 26.6.2 is wired and paired, but reports Developer Mode disabled and no mounted developer image. Device installation/runtime verification blocked pending phone setup and signing team. No local signing override exists.
+- No macOS upgrade requirement established by this attempt. Existing SwiftUI deprecation and ActivityKit concurrency warnings remain.
+- No app installed, no phone reboot triggered, no simulator/UI interaction or automated tests run. Updated docs/IOS.md with partner handoff steps.

@@ -11,6 +11,7 @@
 			<string>Lunch session</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>camp</string>
 				<string>lunchline</string>
 			</array>
 		</dict>

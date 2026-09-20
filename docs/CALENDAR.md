@@ -5,7 +5,7 @@
 1. Quit an older camp copy and open the rebuilt `dist/camp.app`.
 2. Open **Connections → Connect calendars** and allow full calendar access. macOS calls this full/read-write access; camp only reads events and contains no event-writing operations.
 3. Open the **Select calendars** dropdown and check the calendars that should block lunch. The dropdown stays open for multiple selections. Names include the calendar's account/source. Selections save immediately on this Mac. None are selected automatically.
-4. In **You**, set the lunch window, time to eat and meeting buffer, then **Save changes**. Computation uses saved preferences and the saved office timezone.
+4. In **You → Lunch timing**, type the lunch window, time to eat and meeting buffer; press Enter to format each value, then **Save**. Computation uses saved preferences and the saved office timezone.
 5. View today’s hourly timeline below the selector. Blue-gray blocks represent merged busy time including your buffer. A light-green block marks the earliest remaining gap for exactly your saved lunch duration. This is a suggestion, not a booked event; no lunch block appears if no gap fits. Use **Refresh** or the **…** menu for settings and pause.
 
 This reads calendars already present in the Mac Calendar app, including synced Google, Microsoft and iCloud accounts. It does not implement direct Google/Microsoft OAuth. If no calendars appear, add/sync the account in Calendar first. It sees locally synced events, not an independently refreshed server calendar. iPhone calendar integration is not implemented.
@@ -37,3 +37,5 @@ Apple references: [Accessing the event store](https://developer.apple.com/docume
 The timeline uses the office timezone and actual day length, including daylight-saving transitions. Blockers are labelled Busy without meeting titles. A red line indicates the last refresh time.
 
 The calendar viewport is 340 points high, matching the map. It forwards scrolling to the page until clicked. Moving the pointer outside or clicking **Done with calendar** returns to page scrolling.
+
+Calendar views now appear in You and Connections. EventKit reads execute in a private actor; only anonymous snapshots return to the main-actor service. Today no longer embeds the calendar.
