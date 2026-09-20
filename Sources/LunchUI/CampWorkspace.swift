@@ -25,6 +25,7 @@ public struct CampWorkspace: View {
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
                         case .connections: CampConnectionsPage(store: store, compact: compact)
+                        case .debug: CampDebugPage(store: store, compact: compact)
                         }
                         if let error = store.saveError {
                             Text(error).font(.callout).foregroundStyle(.red)
@@ -68,7 +69,7 @@ public struct CampWorkspace: View {
                 Text("Corporate Autonomous\nMeal Protocol").font(.system(size: 10)).foregroundStyle(CampPalette.muted)
             }.padding(.top, 8)
             VStack(spacing: 7) {
-                ForEach(CampSection.allCases) { section in
+                ForEach(store.sections) { section in
                     Button { store.section = section } label: {
                         HStack(spacing: 11) {
                             Image(systemName: section.symbol).frame(width: 20)
@@ -107,7 +108,7 @@ public struct CampWorkspace: View {
 
     private var phoneTabs: some View {
         HStack(spacing: 0) {
-            ForEach(CampSection.allCases) { section in
+            ForEach(store.sections) { section in
                 Button { store.section = section } label: {
                     VStack(spacing: 5) {
                         Image(systemName: section.symbol).font(.system(size: 18))
@@ -139,6 +140,7 @@ public struct CampWorkspace: View {
         case .you: return "ON YOUR TERMS"
         case .office: return "THE WAY YOUR TEAM ORDERS"
         case .connections: return "READY WHEN YOU ARE"
+        case .debug: return "UNDER THE HOOD"
         }
     }
     private var title: String {
@@ -147,6 +149,7 @@ public struct CampWorkspace: View {
         case .you: return "Make camp yours."
         case .office: return "Your office, in sync."
         case .connections: return "Connect the pieces."
+        case .debug: return "What the recommender is doing."
         }
     }
     private var subtitle: String {
@@ -155,6 +158,7 @@ public struct CampWorkspace: View {
         case .you: return "Your preferences help camp find the right meal and moment."
         case .office: return "Set the boundaries for simpler, more economical group orders."
         case .connections: return "Configure the experience now. Live integrations will come next."
+        case .debug: return "Live filters, scores, batches and feedback from the Python backend. Developer view; nothing here is shown to employees."
         }
     }
 }

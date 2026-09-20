@@ -11,3 +11,6 @@ dist/
 .state/
 __pycache__/
 *.pyc
+.venv/
+*.db
+*.sqlite3

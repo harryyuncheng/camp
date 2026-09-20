@@ -1,0 +1,218 @@
+[
+ {
+  "location_id": "doordash-0",
+  "name": "American Place 0",
+  "address": {
+   "lat": 37.80154139856204,
+   "lng": -122.39921046642645,
+   "street": "0 Market St"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-1",
+  "name": "Mexican Kitchen 1",
+  "address": {
+   "lat": 37.8126990580776,
+   "lng": -122.44588242603513,
+   "street": "1 Market St"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-2",
+  "name": "Italian Place 2",
+  "address": {
+   "lat": 37.78615690442132,
+   "lng": -122.41412498793932,
+   "street": "2 Market St"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-3",
+  "name": "Japanese Place 3",
+  "address": {
+   "lat": 37.784740485256386,
+   "lng": -122.41780057258839,
+   "street": "3 Market St"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 4000,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-4",
+  "name": "Chinese Kitchen 4",
+  "address": {
+   "lat": 37.790167494368404,
+   "lng": -122.3908335599309,
+   "street": "4 Market St"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true
+ },
+ {
+  "location_id": "doordash-5",
+  "name": "Thai Kitchen 5",
+  "address": {
+   "lat": 37.793886623789156,
+   "lng": -122.3952690200452,
+   "street": "5 Market St"
+  },
+  "cuisine": "thai",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-6",
+  "name": "Indian Kitchen 6",
+  "address": {
+   "lat": 37.785697197396686,
+   "lng": -122.43568153423502,
+   "street": "6 Market St"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-7",
+  "name": "Mediterranean Place 7",
+  "address": {
+   "lat": 37.806256363310915,
+   "lng": -122.39137096355016,
+   "street": "7 Market St"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true
+ },
+ {
+  "location_id": "doordash-8",
+  "name": "Korean Kitchen 8",
+  "address": {
+   "lat": 37.79608942959411,
+   "lng": -122.39189606753361,
+   "street": "8 Market St"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 4000,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-9",
+  "name": "Vietnamese Kitchen 9",
+  "address": {
+   "lat": 37.77571154510911,
+   "lng": -122.42015826361984,
+   "street": "9 Market St"
+  },
+  "cuisine": "vietnamese",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-10",
+  "name": "Salad Kitchen 10",
+  "address": {
+   "lat": 37.80516032862245,
+   "lng": -122.39800678814828,
+   "street": "10 Market St"
+  },
+  "cuisine": "salad",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false
+ },
+ {
+  "location_id": "doordash-11",
+  "name": "Sandwich Place 11",
+  "address": {
+   "lat": 37.77691524671329,
+   "lng": -122.4375539073225,
+   "street": "11 Market St"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false
+ }
+]

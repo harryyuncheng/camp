@@ -1,0 +1,3 @@
+text,types,constraint,scope
+"Great but too salty",rating,,meal
+"Allergic to shellfish",constraint,allergen:shellfish,ongoing

@@ -15,6 +15,8 @@ final class MacLunchModel: ObservableObject {
     @Published var scheduled = false
     private let store: SessionFile
     private var scheduledLunch: Task<Void, Never>?
+    /// Fires after every successful transition (confirm, delivered, end) so the shell can report it.
+    var onTransition: ((LunchSession) -> Void)?
 
     init(store: SessionFile = .applicationStore(named: "LunchlineMac")) {
         self.store = store
@@ -57,6 +59,7 @@ final class MacLunchModel: ObservableObject {
             try store.save(next)
             session = next
             error = nil
+            onTransition?(next)
         } catch { self.error = error.localizedDescription }
     }
 }

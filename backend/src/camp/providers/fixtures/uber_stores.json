@@ -1,0 +1,266 @@
+[
+ {
+  "store_id": "uber-0",
+  "name": "American Place 0",
+  "location": {
+   "latitude": 37.80154139856204,
+   "longitude": -122.39921046642645,
+   "address": "0 Market St"
+  },
+  "cuisine_types": [
+   "american"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-1",
+  "name": "Mexican Place 1",
+  "location": {
+   "latitude": 37.8026990580776,
+   "longitude": -122.43588242603512,
+   "address": "1 Market St"
+  },
+  "cuisine_types": [
+   "mexican"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-2",
+  "name": "Italian Place 2",
+  "location": {
+   "latitude": 37.78615690442132,
+   "longitude": -122.41412498793932,
+   "address": "2 Market St"
+  },
+  "cuisine_types": [
+   "italian"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": true
+ },
+ {
+  "store_id": "uber-3",
+  "name": "Japanese Place 3",
+  "location": {
+   "latitude": 37.784740485256386,
+   "longitude": -122.41780057258839,
+   "address": "3 Market St"
+  },
+  "cuisine_types": [
+   "japanese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-4",
+  "name": "Chinese Place 4",
+  "location": {
+   "latitude": 37.780167494368406,
+   "longitude": -122.38083355993089,
+   "address": "4 Market St"
+  },
+  "cuisine_types": [
+   "chinese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-5",
+  "name": "Thai Place 5",
+  "location": {
+   "latitude": 37.78388662378916,
+   "longitude": -122.3852690200452,
+   "address": "5 Market St"
+  },
+  "cuisine_types": [
+   "thai"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-6",
+  "name": "Indian Place 6",
+  "location": {
+   "latitude": 37.77569719739669,
+   "longitude": -122.42568153423501,
+   "address": "6 Market St"
+  },
+  "cuisine_types": [
+   "indian"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-7",
+  "name": "Mediterranean Place 7",
+  "location": {
+   "latitude": 37.806256363310915,
+   "longitude": -122.39137096355016,
+   "address": "7 Market St"
+  },
+  "cuisine_types": [
+   "mediterranean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-8",
+  "name": "Korean Place 8",
+  "location": {
+   "latitude": 37.786089429594114,
+   "longitude": -122.3818960675336,
+   "address": "8 Market St"
+  },
+  "cuisine_types": [
+   "korean"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 2500
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-9",
+  "name": "Vietnamese Place 9",
+  "location": {
+   "latitude": 37.76571154510911,
+   "longitude": -122.41015826361983,
+   "address": "9 Market St"
+  },
+  "cuisine_types": [
+   "vietnamese"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": true
+ },
+ {
+  "store_id": "uber-10",
+  "name": "Salad Place 10",
+  "location": {
+   "latitude": 37.79516032862245,
+   "longitude": -122.38800678814827,
+   "address": "10 Market St"
+  },
+  "cuisine_types": [
+   "salad"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 1500
+  },
+  "allergen_info_verified": false
+ },
+ {
+  "store_id": "uber-11",
+  "name": "Sandwich Place 11",
+  "location": {
+   "latitude": 37.77691524671329,
+   "longitude": -122.4375539073225,
+   "address": "11 Market St"
+  },
+  "cuisine_types": [
+   "sandwich"
+  ],
+  "hours": [
+   {
+    "start_time": "11:00",
+    "end_time": "22:00"
+   }
+  ],
+  "min_order_amount": {
+   "amount": 4000
+  },
+  "allergen_info_verified": false
+ }
+]

@@ -104,11 +104,7 @@ struct CampConnectionsPage: View {
                 connection("Location", symbol: "location", detail: "Check whether you are inside the office boundary.")
             }
             CampRampView(store: store)
-            CampCard("Recommendation service", subtitle: "A place for your partner’s model to plug in.") {
-                CampTextField(title: "https://recommendations.example.com", text: $store.draft.connections.recommendationURL)
-                CampBadge(text: "Not connected")
-                Text("Future input: preferences, presence, free time, budget and open groups. Future output: ranked meal options with reasons.").font(.callout).foregroundStyle(CampPalette.muted)
-            }
+            CampRecommendationView(store: store)
             CampCard("Ordering", subtitle: "Start with a simulated shared cart.") {
                 Picker("Provider", selection: $store.draft.connections.orderingProvider) {
                     Text("Mock provider").tag("Mock provider")
@@ -121,6 +117,10 @@ struct CampConnectionsPage: View {
                 CampTextField(title: "http://127.0.0.1:8787", text: $store.draft.connections.backendURL)
                 CampBadge(text: "Not connected")
                 Text("Ramp uses this URL through the local bridge. Other integrations remain placeholders. Mac and iPhone settings do not sync yet.").font(.caption).foregroundStyle(CampPalette.muted)
+            }
+            CampCard("Developer tools", subtitle: "A testing view of the backend: filters, scores, batches and feedback events.") {
+                CampToggle(title: "Show Developer page", detail: store.developerMode ? "Visible in the sidebar" : "Hidden", value: $store.developerMode)
+                Text("Reads live state from the recommendation service above. Nothing on that page is employee-facing.").font(.caption).foregroundStyle(CampPalette.muted)
             }
         }
     }

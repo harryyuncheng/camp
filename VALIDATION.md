@@ -69,3 +69,11 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Mac release build succeeded after wiring the shared Ramp view into app target memberships.
 - Fund creation, issuer enforcement and checkout have not been exercised. No automated tests were added or run for this update.
 - iPhone build remains blocked by installed Xcode 14.3.1; localhost bridge supports the Mac or simulator, not a physical phone.
+
+## 2026-09-19 · recommender integration
+
+Python backend: `cd backend && uv run pytest` → 14 passed. `/v1/meal-offers` and `/v1/debug/*` exercised with FastAPI's
+TestClient. Swift changes (RecommendationContracts, RecommendationClient, CampRecommendationView, CampDebugPage,
+store/workspace/Today/Mac-app edits, pbxproj wiring) compiled with Xcode 27.0: `swift build --product LunchMac` clean,
+`swift test` 13 passed, `scripts/build-mac.sh` produced `dist/camp.app`. The app was launched against the recommender on
+port 8788; the in-app flow (Connect → Request lunch offer → Developer page) was not exercised by automation.

@@ -1,0 +1,165 @@
+{
+ "items": [
+  {
+   "id": "uber-0-opt0",
+   "title": {
+    "translations": {
+     "en_us": "No onions"
+    }
+   },
+   "price_info": {
+    "price": 0
+   },
+   "is_modifier_option": true
+  },
+  {
+   "id": "uber-0-opt1",
+   "title": {
+    "translations": {
+     "en_us": "Extra sauce"
+    }
+   },
+   "price_info": {
+    "price": 100
+   },
+   "is_modifier_option": true
+  },
+  {
+   "id": "uber-0-opt2",
+   "title": {
+    "translations": {
+     "en_us": "Add Coke"
+    }
+   },
+   "price_info": {
+    "price": 250
+   },
+   "is_modifier_option": true
+  },
+  {
+   "id": "uber-0-opt3",
+   "title": {
+    "translations": {
+     "en_us": "Add side salad"
+    }
+   },
+   "price_info": {
+    "price": 350
+   },
+   "is_modifier_option": true
+  },
+  {
+   "id": "uber-0-i0",
+   "title": {
+    "translations": {
+     "en_us": "Cheeseburger"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Cheeseburger with beef, cheese, bread"
+    }
+   },
+   "price_info": {
+    "price": 1141
+   },
+   "ingredients": [
+    "beef",
+    "cheese",
+    "bread"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-0-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-0-i1",
+   "title": {
+    "translations": {
+     "en_us": "Grilled Chicken Salad"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Grilled Chicken Salad with chicken, lettuce, tomato"
+    }
+   },
+   "price_info": {
+    "price": 1365
+   },
+   "ingredients": [
+    "chicken",
+    "lettuce",
+    "tomato"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-0-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-0-i2",
+   "title": {
+    "translations": {
+     "en_us": "American Feast"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "American Feast with chicken, rice"
+    }
+   },
+   "price_info": {
+    "price": 1623
+   },
+   "ingredients": [
+    "chicken",
+    "rice"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-0-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  }
+ ],
+ "modifier_groups": [
+  {
+   "id": "uber-0-g0",
+   "title": {
+    "translations": {
+     "en_us": "Customize"
+    }
+   },
+   "modifier_options": {
+    "ids": [
+     "uber-0-opt0",
+     "uber-0-opt1",
+     "uber-0-opt2",
+     "uber-0-opt3"
+    ]
+   }
+  }
+ ]
+}

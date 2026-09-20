@@ -71,3 +71,11 @@ Demo group arithmetic compares N separate $6 delivery fees with one shared $6 fe
 ## Ramp bridge
 
 `backend/server.py` owns Ramp OAuth, read projections and durable sandbox allocation attempts. `CampRampView`/`CampRampModel` connect through a loopback camp endpoint and persist only the non-sensitive pending request in UserDefaults. The server enforces its own allocation cap and active employee lookup; demo office policy is not an authorization source. This local service is not suitable for remote deployment until camp authentication and office membership exist. See `backend/README.md` for its contract and limitations.
+
+## Recommender bridge
+
+`backend/src/camp` is the Python recommender (deterministic filters → scoring → batch optimizer, Jev/LLM only for
+classification; see `backend/PLAN.md`). `RecommendationClient` (LunchCore, Foundation-only) posts a `MealContext` built
+from `CampConfiguration` and maps the `MealOffer` onto `LunchSession`, so the existing card, panel and Live Activity render
+it unchanged. `CampSettingsStore.onOffer` is the seam the Mac delegate uses to call `MacLunchModel.offer(_:)`. The
+Developer page (`CampDebugPage`, behind a per-device toggle) renders backend debug JSON loosely via `JSONValue`.

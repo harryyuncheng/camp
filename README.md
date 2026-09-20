@@ -107,3 +107,58 @@ The iPhone app can also supply Apple's mirrored Live Activity on macOS Tahoe 26+
 - The Mac panel is a normal floating utility window, not a system notification; Focus mode does not automatically suppress it. Add your own quiet-hours/Focus policy before real reminders.
 
 See `ARCHITECTURE.md` for state ownership and the integration boundary.
+
+# Recommendation core (Python, `backend/`)
+
+Deterministic core (hard filters → per-user scoring → batch optimizer); Jev does classification,
+a small LLM writes text. See `PLAN.md` for module layout, decisions and assumptions.
+
+```bash
+cd backend
+uv sync --extra dev
+uv run pytest
+uv run camp run-batch --days 3            # office lunch batches on synthetic data
+uv run camp run-home                      # single home order (argmax, full fee)
+uv run camp feedback-demo                 # NL feedback → events → profile updates
+uv run camp eval --backends mock          # §8 harness; add jev,llm with keys set
+uv run uvicorn camp.api:app --port 8788  # recommender for the Mac/iOS app (Ramp bridge stays on 8787)
+```
+
+Keys: `TYPESAFE_API_KEY` enables Jev (`typesafe:jev-latest` via pydantic-ai); `ANTHROPIC_API_KEY` enables the
+LLM fallback and "why this pick" text. With neither set, an offline keyword mock is used so everything still runs.
+
+Human labels for the eval go in `src/camp/eval/labels/{feedback,modifications,menu_tags}.csv`
+(templates are written next to them by `camp eval`).
+
+## Menu sources (Uber Eats, DoorDash)
+
+`src/camp/providers/` — one `MenuProvider` interface (search stores, get menu, quote, place order),
+adapters for Uber Eats and DoorDash, a mock that emits raw JSON in each platform's shape and runs it
+through the real parsers, and `sync_catalog` which de-dupes restaurants listed on both platforms,
+picks the cheaper/faster platform, maps allergen and diet labels, and upserts into the store.
+
+```bash
+uv run camp sync --db camp.db            # mocks unless keys are set
+uv run camp sync --fixtures --no-tag     # also writes sample raw JSON to providers/fixtures/
+```
+
+Env for real adapters: `UBER_CLIENT_ID`, `UBER_CLIENT_SECRET`; `DOORDASH_DEVELOPER_ID`, `DOORDASH_KEY_ID`,
+`DOORDASH_SIGNING_SECRET`. Endpoints marked `# ASSUMED` in the adapters are partner-only and unverified:
+both public APIs are merchant-facing, so browsing stores near a point and ordering on behalf of a user
+need partner access.
+
+## Native app ↔ recommender
+
+Two local services: `python3 backend/server.py` (Ramp sandbox bridge, port 8787) and
+`cd backend && uv run uvicorn camp.api:app --port 8788` (recommender). In the app, Connections → Recommendation
+service → Connect, then **Request lunch offer**: the app sends a `MealContext` (saved preferences, allergies,
+lunch window, office policy, presence preview) and gets a `MealOffer` back (up to three options with all-in
+estimated prices under the office batch and an "ordered alone" baseline). On the Mac the offer opens in the notch
+panel through `MacLunchModel.offer(_:)`; on both platforms it also appears on Today.
+
+Contracts: `backend/src/camp/contracts.py` ↔ `Sources/LunchCore/RecommendationContracts.swift`.
+
+**Developer page**: Connections → Developer tools → *Show Developer page* adds a sidebar section that reads
+`/v1/debug/*`: the current office batch (restaurants, headcounts, fee shares, regret), your profile as the backend
+sees it (learned preferences, filter rejections, top candidates with score breakdowns), the last offer, and a feedback
+console that runs text through Jev/mock classification and shows the resulting events and profile updates.

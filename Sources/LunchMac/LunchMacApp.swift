@@ -29,6 +29,8 @@ final class LunchMacDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         panel = NotchPanelController(model: model)
+        settings.onOffer = { [weak self] session in self?.model.offer(session) }
+        model.onTransition = { [weak self] session in self?.settings.reportLunch(session) }
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem.button?.image = NSImage(systemSymbolName: "tent.fill", accessibilityDescription: "camp")
         let menu = NSMenu()

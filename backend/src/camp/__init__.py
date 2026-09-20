@@ -1,0 +1,1 @@
+"""CAMP recommendation core."""
