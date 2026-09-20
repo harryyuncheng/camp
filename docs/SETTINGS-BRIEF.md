@@ -1,6 +1,6 @@
 # Next task: camp settings and group-order overview
 
-> Historical planning document. For implemented behavior, see [README](../README.md) and [architecture](../ARCHITECTURE.md). The workspace now has five tabs, shared Mac notch/group joining, group creation, typed lunch timing, Ramp sandbox, Mac location and Mac calendars. Production orchestration, checkout and cross-device sync remain future work.
+> Historical planning document. For implemented behavior, see the [app guide](APP-GUIDE.md) and [architecture](../ARCHITECTURE.md). The workspace now has five tabs, shared Mac notch/group joining, group creation, typed lunch timing, Ramp sandbox, Mac location and Mac calendars. Production orchestration, checkout and cross-device sync remain future work.
 
 Build a native SwiftUI window beside the existing menu-bar/notch experience. This is the configuration and visibility surface for Corporate Autonomous Meal Protocol. The product's central workflow is joining a pending office group order to reduce firm-wide delivery costs.
 
