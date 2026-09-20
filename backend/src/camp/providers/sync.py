@@ -62,6 +62,10 @@ def _to_models(s: PStore, menu: list[PItem], q: PQuote, existing: Restaurant | N
     r.name, r.cuisine, r.location, r.platform = s.name, s.cuisine, s.location, s.platform
     r.platform_ids[s.platform] = s.external_id
     r.open_minutes, r.delivery_radius_km = s.open_minutes, s.delivery_radius_km
+    r.address, r.price_level = s.address or r.address, s.price_level
+    if s.rating:
+        r.ratings[s.platform] = s.rating
+        r.rating, r.review_count = s.rating, max(r.review_count, s.review_count)
     r.verified_allergen_data = s.has_verified_allergen_data or any(i.allergens is not None for i in menu)
     r.fees = FeeSchedule(delivery_fee_cents=q.delivery_fee_cents, service_fee_pct=q.service_fee_pct, tax_pct=q.tax_pct,
                          min_order_cents=s.min_order_cents or 1500)

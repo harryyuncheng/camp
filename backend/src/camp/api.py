@@ -8,7 +8,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from . import feedback as fb
-from . import synth
+from . import catalog, synth
 from .ai.classify import default_classifier
 from .ai.feedback_parse import parse_feedback
 from .ai.modifications import modify
@@ -23,13 +23,27 @@ from .contracts import MealContext, MealOffer, Wire
 from .offers import OfferService
 from .store import Store
 
+def _load_env_file(path: str | None = None) -> None:
+    """backend/.env → os.environ (setdefault, so the shell wins). Same convention as server.py."""
+    from pathlib import Path
+    p = Path(path or os.getenv("CAMP_ENV_FILE") or Path(__file__).resolve().parents[2] / ".env")
+    if p.exists():
+        for line in p.read_text().splitlines():
+            if "=" in line and not line.lstrip().startswith("#"):
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
+
+_load_env_file()
 app = FastAPI(title="CAMP recommender")
-store = Store(os.getenv("CAMP_DB", "camp.db"))
+store = Store.from_env()
 clf = default_classifier()
 offers = OfferService(store)
 if not store.all(User):
-    u, r, i = synth.make_world(int(os.getenv("CAMP_USERS", "40")), 12, 0)
+    u, r, i = synth.make_world(int(os.getenv("CAMP_USERS", "40")), None, 0)
     store.put_many(u); store.put_many(r); store.put_many(i)
+elif catalog.ensure_current(store):
+    print("camp: replaced the stored restaurant catalog with the Ramp HQ dataset")
 
 
 class RecommendReq(BaseModel):

@@ -5,13 +5,17 @@
     "name": "Mains",
     "items": [
      {
-      "merchant_supplied_id": "doordash-0-i0",
-      "name": "Cheeseburger",
-      "description": "Cheeseburger with beef, cheese, bread",
-      "price": 1361,
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d0",
+      "name": "Italian Hero",
+      "description": "Sopressata, salami, coppa, prosciutto, roasted peppers, balsamic, provolone",
+      "price": 1670,
       "ingredients": [
-       "beef",
-       "cheese",
+       "sopressata",
+       "salami",
+       "coppa",
+       "prosciutto",
+       "pepper",
+       "provolone",
        "bread"
       ],
       "status": "ACTIVE",
@@ -41,14 +45,17 @@
       ]
      },
      {
-      "merchant_supplied_id": "doordash-0-i1",
-      "name": "Grilled Chicken Salad",
-      "description": "Grilled Chicken Salad with chicken, lettuce, tomato",
-      "price": 1220,
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d1",
+      "name": "Prosciutto Cotto Sandwich",
+      "description": "Provolone, cornichons, arugula, mustard, lemon mayo on ciabatta",
+      "price": 1670,
       "ingredients": [
-       "chicken",
-       "lettuce",
-       "tomato"
+       "ham",
+       "provolone",
+       "cornichon",
+       "arugula",
+       "mayonnaise",
+       "ciabatta"
       ],
       "status": "ACTIVE",
       "dietary_tags": [],
@@ -77,13 +84,290 @@
       ]
      },
      {
-      "merchant_supplied_id": "doordash-0-i2",
-      "name": "American Feast",
-      "description": "American Feast with chicken, rice",
-      "price": 1607,
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d2",
+      "name": "Albacore Tuna Sandwich",
+      "description": "Lemon mayo, arugula, sun-dried tomato, hard-boiled egg on baguette",
+      "price": 1555,
+      "ingredients": [
+       "tuna",
+       "mayonnaise",
+       "arugula",
+       "sun-dried tomato",
+       "egg",
+       "baguette"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d3",
+      "name": "Fresh Mozzarella Sandwich",
+      "description": "Mozzarella, cucumber, romaine, tomato, avocado, black pepper mayo",
+      "price": 1555,
+      "ingredients": [
+       "mozzarella",
+       "cucumber",
+       "lettuce",
+       "tomato",
+       "avocado",
+       "mayonnaise",
+       "bread"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d4",
+      "name": "Grilled Chicken Telera (hot)",
+      "description": "Grilled chicken on telera roll",
+      "price": 1725,
       "ingredients": [
        "chicken",
-       "rice"
+       "telera roll",
+       "lettuce"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d5",
+      "name": "Chicken Milanese (hot)",
+      "description": "Breaded chicken cutlet sandwich",
+      "price": 1725,
+      "ingredients": [
+       "chicken",
+       "breadcrumb",
+       "arugula",
+       "bread"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d6",
+      "name": "Chicken Cobb Salad",
+      "description": "Kale, grilled chicken, bacon, egg, tomato, onion, blue cheese, avocado",
+      "price": 2130,
+      "ingredients": [
+       "kale",
+       "chicken",
+       "bacon",
+       "egg",
+       "tomato",
+       "blue cheese",
+       "avocado"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d7",
+      "name": "Caesar Salad",
+      "description": "Romaine, shaved parmigiano, croutons, Caesar dressing",
+      "price": 1440,
+      "ingredients": [
+       "lettuce",
+       "parmesan",
+       "crouton"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d8",
+      "name": "Pinsa Burrata",
+      "description": "Roman-style pinsa with pesto, mozzarella, parmesan, tomato, basil",
+      "price": 1095,
+      "ingredients": [
+       "pinsa",
+       "pesto",
+       "mozzarella",
+       "parmesan",
+       "tomato",
+       "basil"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d9",
+      "name": "Spaghetti Carbonara",
+      "description": "Crispy pancetta & pecorino",
+      "price": 2415,
+      "ingredients": [
+       "spaghetti",
+       "pancetta",
+       "pecorino",
+       "egg"
       ],
       "status": "ACTIVE",
       "dietary_tags": [],

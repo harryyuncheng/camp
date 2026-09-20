@@ -46,6 +46,9 @@ class PStore(BaseModel):
     delivery_radius_km: float = 6.0
     has_verified_allergen_data: bool = False
     address: str = ""
+    rating: Optional[float] = None             # platform-displayed rating, 5-point scale
+    review_count: int = 0
+    price_level: int = 2
 
 
 class PQuote(BaseModel):

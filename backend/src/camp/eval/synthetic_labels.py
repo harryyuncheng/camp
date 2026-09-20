@@ -46,7 +46,7 @@ def feedback_set(n: int, rng: random.Random) -> list[dict]:
 
 
 def menu() -> list[MenuItem]:
-    _, _, items = make_world(1, 12, 0)
+    _, _, items = make_world(1, None, 0)
     return items
 
 

@@ -20,11 +20,11 @@ def world(n=30, seed=1):
 
 
 def test_allergen_filter_excludes_on_jev_warning_and_requires_verified_for_severe():
-    u, r, items = synth.make_world(1, 12, 0)
+    u, r, items = synth.make_world(1, None, 0)
     user = u[0]; user.restrictions = [Restriction(kind="allergen", value="peanut")]
-    pad_thai = next(i for i in items if i.name == "Pad Thai")
-    assert filters.passes_dietary(user, pad_thai)[0] is False
-    safe = next(i for i in items if "peanut" not in i.ingredients and i.verified_allergens is None)
+    peanutty = next(i for i in items if i.tags.allergen_p["peanut"] > 0.5)
+    assert filters.passes_dietary(user, peanutty)[0] is False
+    safe = next(i for i in items if i.tags.allergen_p["peanut"] < 0.5 and i.verified_allergens is None)
     assert filters.passes_dietary(user, safe)[0] is True
     user.restrictions[0].severe = True
     assert filters.passes_dietary(user, safe)[0] is False          # unverified → excluded for severe
@@ -104,6 +104,7 @@ def test_constraint_requires_confirmation_and_removal_never_inferred():
 def test_feedback_updates_profile():
     store = world(3)
     u = store.all(User)[0]
+    u.prefs.stated.pop("cuisine:thai", None); store.put(u)     # start neutral on thai
     ev = FeedbackEvent(user_id=u.id, type="preference", scope="ongoing", payload=dict(attribute="cuisine:thai", direction="never"), source="nl")
     fb.apply_event(store, ev)
     assert store.get(User, u.id).prefs.stated["cuisine:thai"] < -1

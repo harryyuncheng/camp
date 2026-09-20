@@ -1,82 +1,80 @@
-"""Mock provider. Generates RAW JSON in the target platform's shape (Uber or DoorDash) and runs it through
-the real parsers, so adapter parsing is exercised offline. Some restaurants appear on both platforms
-(to test de-duplication); quotes vary per platform so the sync picks the cheaper/faster one."""
+"""Mock provider. Serves the real Ramp HQ catalog (`catalog.py`) as RAW JSON in the target platform's shape (Uber or
+DoorDash) and runs it through the real parsers, so adapter parsing is exercised offline. Restaurants listed on both
+platforms appear on both (to test de-duplication); quotes vary per platform so the sync picks the cheaper/faster one."""
 from __future__ import annotations
 
 import json
 import random
 from pathlib import Path
 
-from ..models import CUISINES, LatLng
-from ..synth import _DISHES, _ING_ALLERGEN, OFFICE
+from ..catalog import CatalogRestaurant, load
+from ..models import LatLng
 from . import doordash, uber
 from .base import PItem, PQuote, PStore, PlacedOrder
 
 FIXTURES = Path(__file__).parent / "fixtures"
+_MODIFIERS = [("No onions", 0), ("Extra sauce", 100), ("Add Coke", 250), ("Add side salad", 350)]
+_DIET_LABELS = (("vegetarian", "VEGETARIAN"), ("vegan", "VEGAN"), ("gluten_free", "GLUTEN_FREE"))
 
 
 class MockProvider:
-    def __init__(self, platform: str = "uber", n_stores: int = 12, seed: int = 0, overlap: float = 0.5, latency_ms: int = 0):
+    def __init__(self, platform: str = "uber", seed: int = 0, latency_ms: int = 0, n_stores: int | None = None):
         assert platform in ("uber", "doordash")
         self.name = platform
         self.rng = random.Random(seed)
-        self.n_stores, self.overlap, self.latency_ms = n_stores, overlap, latency_ms
+        self.latency_ms = latency_ms
         self._raw_stores: dict[str, dict] = {}
         self._raw_menus: dict[str, dict] = {}
-        self._build()
+        rows = [r for r in load() if platform in r.platforms and r.dishes]
+        for c in rows[:n_stores] if n_stores else rows:
+            sid = f"{platform}-{c.id}"
+            self._raw_stores[sid] = self._uber_store(sid, c) if platform == "uber" else self._dd_store(sid, c)
+            self._raw_menus[sid] = self._uber_menu(sid, c) if platform == "uber" else self._dd_menu(sid, c)
 
     # ---- raw generation in platform shape
-    def _build(self) -> None:
-        for k in range(self.n_stores):
-            cuisine = CUISINES[k % len(CUISINES)]
-            # shared physical identity across platforms: same name + coords when overlapping
-            shared = random.Random(1000 + k)
-            lat, lng = OFFICE.lat + shared.uniform(-0.03, 0.03), OFFICE.lng + shared.uniform(-0.03, 0.03)
-            name = f"{cuisine.title()} Place {k}"
-            if self.rng.random() > self.overlap and self.name == "doordash":
-                name, lat, lng = f"{cuisine.title()} Kitchen {k}", lat + 0.01, lng - 0.01   # doordash-only store
-            sid = f"{self.name}-{k}"
-            verified = self.rng.random() < 0.3
-            dishes = _DISHES[cuisine] + [(f"{cuisine.title()} Feast", ["chicken", "rice"], "rice", 1)]
-            if self.name == "uber":
-                self._raw_stores[sid] = {"store_id": sid, "name": name, "location": {"latitude": lat, "longitude": lng, "address": f"{k} Market St"},
-                                         "cuisine_types": [cuisine], "hours": [{"start_time": "11:00", "end_time": "22:00"}],
-                                         "min_order_amount": {"amount": self.rng.choice([1500, 2500, 4000])}, "allergen_info_verified": verified}
-                self._raw_menus[sid] = self._uber_menu(sid, dishes, verified)
-            else:
-                self._raw_stores[sid] = {"location_id": sid, "name": name, "address": {"lat": lat, "lng": lng, "street": f"{k} Market St"},
-                                         "cuisine": cuisine, "open_hours": [{"start_time": "11:00:00", "end_time": "22:00:00"}],
-                                         "minimum_order_subtotal": self.rng.choice([1500, 2500, 4000]), "allergen_data_verified": verified}
-                self._raw_menus[sid] = self._dd_menu(sid, dishes, verified)
+    @staticmethod
+    def _uber_store(sid: str, c: CatalogRestaurant) -> dict:
+        return {"store_id": sid, "name": c.name, "location": {"latitude": c.lat, "longitude": c.lng, "address": c.address},
+                "cuisine_types": [c.cuisine], "hours": [{"start_time": c.hours.get("open", "11:00"), "end_time": c.hours.get("close", "22:00")}],
+                "min_order_amount": {"amount": 1500 if c.price_level <= 2 else 2500}, "allergen_info_verified": c.has_allergen_info,
+                "rating": {"value": c.rating, "count": c.review_count}, "price_bucket": c.price_level}
 
-    def _uber_menu(self, sid: str, dishes, verified: bool) -> dict:
-        items, groups = [], []
-        opt_ids = []
-        for j, (oname, price) in enumerate([("No onions", 0), ("Extra sauce", 100), ("Add Coke", 250), ("Add side salad", 350)]):
+    @staticmethod
+    def _dd_store(sid: str, c: CatalogRestaurant) -> dict:
+        return {"location_id": sid, "name": c.name, "address": {"lat": c.lat, "lng": c.lng, "street": c.address}, "cuisine": c.cuisine,
+                "open_hours": [{"start_time": c.hours.get("open", "11:00") + ":00", "end_time": c.hours.get("close", "22:00") + ":00"}],
+                "minimum_order_subtotal": 1500 if c.price_level <= 2 else 2500, "allergen_data_verified": c.has_allergen_info,
+                "average_rating": c.rating, "number_of_ratings": c.review_count, "price_range": c.price_level}
+
+    @staticmethod
+    def _uber_menu(sid: str, c: CatalogRestaurant) -> dict:
+        items, opt_ids = [], []
+        for j, (oname, price) in enumerate(_MODIFIERS):
             oid = f"{sid}-opt{j}"
             opt_ids.append(oid)
             items.append({"id": oid, "title": {"translations": {"en_us": oname}}, "price_info": {"price": price}, "is_modifier_option": True})
-        groups.append({"id": f"{sid}-g0", "title": {"translations": {"en_us": "Customize"}}, "modifier_options": {"ids": opt_ids}})
-        for j, (name, ings, dish, spice) in enumerate(dishes):
-            it = {"id": f"{sid}-i{j}", "title": {"translations": {"en_us": name}}, "description": {"translations": {"en_us": f"{name} with {', '.join(ings)}"}},
-                  "price_info": {"price": self.rng.randint(1100, 1900)}, "ingredients": ings, "modifier_group_ids": {"ids": [f"{sid}-g0"]},
-                  "dietary_label_info": {"labels": [] if any(i in ("chicken", "beef", "pork", "fish", "salmon", "shrimp", "turkey", "bacon") for i in ings) else ["VEGETARIAN"]},
+        groups = [{"id": f"{sid}-g0", "title": {"translations": {"en_us": "Customize"}}, "modifier_options": {"ids": opt_ids}}]
+        for d in c.dishes:
+            it = {"id": f"{sid}-{d.id}", "title": {"translations": {"en_us": d.name}}, "description": {"translations": {"en_us": d.description}},
+                  "price_info": {"price": d.price_cents}, "ingredients": d.ingredients, "modifier_group_ids": {"ids": [f"{sid}-g0"]},
+                  "dietary_label_info": {"labels": [lab for k, lab in _DIET_LABELS if getattr(d, k)]},
                   "quantity_info": {"in_stock": True}}
-            if verified:
-                it["allergen_info"] = {"contains": sorted({_ING_ALLERGEN[i] for i in ings if i in _ING_ALLERGEN})}
+            if d.kcal:
+                it["nutritional_info"] = {"calories": {"display_type": "calories", "lower_range": d.kcal}}
+            if c.has_allergen_info:
+                it["allergen_info"] = {"contains": sorted(d.allergens)}
             items.append(it)
         return {"items": items, "modifier_groups": groups}
 
-    def _dd_menu(self, sid: str, dishes, verified: bool) -> dict:
+    @staticmethod
+    def _dd_menu(sid: str, c: CatalogRestaurant) -> dict:
         items = []
-        for j, (name, ings, dish, spice) in enumerate(dishes):
-            it = {"merchant_supplied_id": f"{sid}-i{j}", "name": name, "description": f"{name} with {', '.join(ings)}", "price": self.rng.randint(1100, 1900),
-                  "ingredients": ings, "status": "ACTIVE",
-                  "dietary_tags": [] if any(i in ("chicken", "beef", "pork", "fish", "salmon", "shrimp", "turkey", "bacon") for i in ings) else ["vegetarian"],
-                  "extras": [{"name": "Customize", "options": [{"name": "No onions", "price": 0}, {"name": "Extra sauce", "price": 100},
-                                                               {"name": "Add Coke", "price": 250}, {"name": "Add side salad", "price": 350}]}]}
-            if verified:
-                it["allergens"] = sorted({_ING_ALLERGEN[i] for i in ings if i in _ING_ALLERGEN})
+        for d in c.dishes:
+            it = {"merchant_supplied_id": f"{sid}-{d.id}", "name": d.name, "description": d.description, "price": d.price_cents,
+                  "ingredients": d.ingredients, "status": "ACTIVE", "dietary_tags": [k for k, _ in _DIET_LABELS if getattr(d, k)],
+                  "extras": [{"name": "Customize", "options": [{"name": n, "price": p} for n, p in _MODIFIERS]}]}
+            if c.has_allergen_info:
+                it["allergens"] = sorted(d.allergens)
             items.append(it)
         return {"menu": {"categories": [{"name": "Mains", "items": items}]}}
 

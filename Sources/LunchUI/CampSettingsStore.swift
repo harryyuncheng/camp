@@ -51,6 +51,10 @@ public final class CampSettingsStore: ObservableObject {
     /// What the backend did with the last confirmed / delivered lunch (events + profile updates).
     @Published public var lastLunchReport: JSONValue?
     @Published public var lastLunchPhase: String?
+    /// Every simulated lunch that was confirmed on this device (recommender offers and demo groups alike).
+    /// Feeds the Spending page. Local only; nothing is charged.
+    @Published public var lunchLedger: [LunchLedgerEntry] = LunchLedger.load() { didSet { LunchLedger.save(lunchLedger) } }
+    public func clearLunchLedger() { lunchLedger = [] }
     #if os(macOS)
     public let location = MacOfficeLocation()
     public let lunchCalendar = MacLunchCalendar()
@@ -158,6 +162,7 @@ public final class CampSettingsStore: ObservableObject {
     /// Called by the platform shell when the lunch card changes phase. Only sessions that came from
     /// the recommender (option ids match the latest offer) are reported; demo lunches are ignored.
     public func reportLunch(_ session: LunchSession) {
+        recordLunch(session)
         guard let offer = latestOffer, Set(session.options.map(\.id)) == Set(offer.options.map(\.id)) else { return }
         let event: String
         switch session.phase {
@@ -171,6 +176,23 @@ public final class CampSettingsStore: ObservableObject {
         Task {
             do { lastLunchReport = try await client().lunchEvent(offerId: offer.offerId, optionId: session.selectedOptionID, event: event) }
             catch { recommenderError = "Couldn’t record your lunch: \(error.localizedDescription)" }
+        }
+    }
+
+    /// Writes a confirmed / delivered lunch into the local ledger, naming the restaurant from the recommender offer
+    /// or the demo group the options came from.
+    func recordLunch(_ session: LunchSession) {
+        let fromRecommender = latestOffer.map { Set(session.options.map(\.id)) == Set($0.options.map(\.id)) } ?? false
+        let restaurant: String
+        if fromRecommender, let option = latestOffer?.options.first(where: { $0.id == session.selectedOptionID }) {
+            restaurant = option.restaurant
+        } else if let group = DemoLunchGroup.all.first(where: { g in g.options.contains { $0.id == session.selectedOptionID } }) {
+            restaurant = group.name
+        } else {
+            restaurant = "Demo kitchen"
+        }
+        if let next = LunchLedger.applying(session, to: lunchLedger, restaurant: restaurant, source: fromRecommender ? "recommender" : "demo") {
+            lunchLedger = next
         }
     }
 

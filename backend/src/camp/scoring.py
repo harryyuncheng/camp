@@ -5,6 +5,7 @@ No price term.
 """
 from __future__ import annotations
 
+import hashlib
 import math
 from collections import Counter
 from dataclasses import dataclass
@@ -141,6 +142,15 @@ def context_fit(item: MenuItem, ctx: Context, where: str) -> float:
     return s
 
 
+def exploration_noise(u: User, item: MenuItem, ctx: Context) -> float:
+    """Deterministic jitter in [-1, 1] keyed by (request nonce, user, item): the same request ranks the same way,
+    a refreshed request reshuffles near-ties so people see different options instead of the same three."""
+    if ctx.exploration <= 0:
+        return 0.0
+    h = hashlib.blake2b(f"{ctx.nonce}|{u.id}|{item.id}".encode(), digest_size=8).digest()
+    return (int.from_bytes(h, "big") / 2**64) * 2 - 1
+
+
 def learned_term(u: User, item: MenuItem, ctx: Context) -> float:
     """α·P(keep) + (1−α)·E[enjoy]. v1: no trained models, returns 0. Interface kept for v2."""
     return 0.0
@@ -161,6 +171,8 @@ def score(u: User, item: MenuItem, r: Restaurant, ctx: Context, h: History, wher
         "repetition": -W_REP * (1 - 0.5 * (1 - eps)) * repetition(h, item, cuisine),
         "learned": learned_term(u, item, ctx),
         "reliability": 0.2 * (r.reliability - 0.9),
+        "rating": 0.15 * ((r.rating or 4.2) - 4.2) + (0.05 if item.popular else 0.0),
+        "exploration": ctx.exploration * exploration_noise(u, item, ctx),
     }
     return sum(comps.values()), comps
 

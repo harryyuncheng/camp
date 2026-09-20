@@ -9,12 +9,13 @@ fallback classifier. No model ever picks a meal directly.
 | Module | Deliverable | Contents |
 |---|---|---|
 | `models.py` | 1 | Pydantic domain models: User, Restaurant, MenuItem (+tags), Order, Batch, FeedbackEvent, Context |
-| `store.py` | 1 | SQLite store, one table per entity, JSON payloads. Simple by design. |
+| `store.py` | 1 | Document store: Postgres (JSONB + generated index columns) in prod, SQLite for tests; one table per entity |
 | `filters.py` | 2 | Hard filters: dietary/allergen, time, location, budget (with fee-share callback) |
 | `scoring.py` | 2 | Item vectors (tags + bag-of-words), v1 heuristic `score(u, i, ctx)` with component breakdown |
 | `batching.py` | 3 | Greedy facility-location optimizer, budget re-check, soft regret + fairness debt, cost term |
 | `presentation.py` | 3/4 | Default + 2 alternatives (batch-safe, budget-safe), LLM "why this pick" |
-| `synth.py` | 3 | Synthetic users / restaurants / menus / context |
+| `catalog.py` | 3 | Real restaurants + menus around Ramp HQ (`providers/fixtures/ramp_hq_restaurants.json`) → Restaurant/MenuItem |
+| `synth.py` | 3 | Synthetic users / context; item tags (deterministic stand-in for Jev) |
 | `ai/classify.py` | 4 | `Classifier` interface: `JevClassifier`, `LLMClassifier`, `MockClassifier`, `RoutedClassifier` (Jev → LLM fallback) |
 | `ai/schemas.py` | 4 | All Jev question schemas (feedback pass 1/2, modifications, menu tags) |
 | `ai/feedback_parse.py` | 4 | Two-pass NL feedback parsing → `FeedbackEvent`s with scope + confidence |
@@ -26,7 +27,7 @@ fallback classifier. No model ever picks a meal directly.
 | `cli.py` | — | `camp synth`, `camp run-batch`, `camp eval` |
 
 ## Decisions already made (see conversation 2026-09-19)
-- Python, FastAPI + SQLite. Company pays; total cost enters the batch objective (small λ), μ = fee savings.
+- Python, FastAPI + Postgres (`CAMP_DATABASE_URL`; SQLite fallback for tests). Company pays; total cost enters the batch objective (small λ), μ = fee savings.
 - Regret cap is soft; per-user sacrifice debt rotates who yields.
 - Budget per meal. Fixed delivery fee shared across batch; % service/tax/tip not shared.
 - Office vs home per meal: weekly schedule predicts, live location overrides.
@@ -64,3 +65,23 @@ v1 (this repo): hand-set weights. v2: LambdaMART ranker on logged features. v3: 
 endpoints marked ASSUMED); `mock.py` emits platform-shaped raw JSON through the real parsers; `sync.py` de-dupes by
 normalized name + 150 m, prefers the platform with lower fee + 15¢/ETA-minute, keeps item ids and tags stable across syncs.
 Assumptions: allergen labels from platforms count as "verified"; missing allergen field = no data; only ACTIVE/in-stock items.
+
+## Restaurant dataset (replaced 2026-09-19)
+`providers/fixtures/ramp_hq_restaurants.json` is the offline catalog: real restaurants within ~2 km of Ramp HQ
+(28 W 23rd St, Flatiron), collected from menus, delivery-app listings and review sites on 2026-09-19. Each entry has
+address + coordinates, cuisine, price level, Google/Yelp/Tripadvisor/Infatuation ratings where findable, press
+recommendations, weekday hours, which delivery apps list it, whether it publishes allergen info, and 6-12 lunch dishes
+with price (`price_estimated` when not from a menu), ingredients, dish type, protein, spice, diet flags, allergens,
+popularity and calories when published. `catalog.to_models()` maps it to Restaurant/MenuItem (fees, ETA and
+reliability are drawn from a seed because they are not public; ratings feed a small scoring term, never a safety
+signal). `MockProvider` serves the same catalog as Uber/DoorDash-shaped JSON; `synth.OFFICE` is Ramp HQ and
+`make_world(center=...)` re-centres the geometry on another office. `uber_stores.json` / `doordash_stores.json` are
+dumped from the mock (`camp sync --fixtures`). Ratings are partial: Yelp and Google block scripted fetches, so
+counts came from search snippets and aggregators; treat them as approximate.
+
+## Exploration noise (added 2026-09-19)
+`Context.exploration` (amplitude) and `Context.nonce` add a deterministic per-request jitter to every score
+(`scoring.exploration_noise`, keyed by nonce × user × item). `OfferService` sets amplitude 0.25 and a fresh nonce on
+every meal-offer request and re-plans, so refreshing the card reshuffles near-ties instead of repeating the same three
+options; hard filters and budgets are untouched. CLI/eval runs leave exploration at 0 and stay deterministic.
+

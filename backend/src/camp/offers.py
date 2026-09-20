@@ -5,7 +5,7 @@ import statistics
 from datetime import date, datetime, timedelta
 from typing import Any
 
-from . import explain, filters, synth
+from . import catalog, explain, filters, synth
 from .contracts import MealContext, MealOffer, MealOfferOption, OfficeRef
 from .filters import haversine_km
 from .models import ALLERGENS, DIETS, Context, LatLng, MealWindow, MenuItem, Restaurant, Restriction, ScheduleEntry, User, new_id
@@ -20,6 +20,9 @@ _SYMBOL = {"salad": "leaf.fill", "bowl": "takeoutbag.and.cup.and.straw.fill", "s
            "curry": "flame.fill", "noodles": "fork.knife", "rice": "fork.knife", "sandwich": "sun.max.fill", "wrap": "sun.max.fill", "taco": "flame.fill"}
 
 
+EXPLORATION = 0.25    # score jitter per request; affinity is ~[-1, 1], so this reshuffles near-ties, not clear favourites
+
+
 class OfferService:
     def __init__(self, store: Store):
         self.store = store
@@ -30,15 +33,17 @@ class OfferService:
     # ------------------------------------------------------------ world + user sync
     def ensure_world(self, office: OfficeRef) -> None:
         loc = LatLng(lat=office.latitude, lng=office.longitude)
-        rests = self.store.all(Restaurant)
-        if any(haversine_km(r.location, loc) <= 8 for r in rests):
-            return
-        users, rs, items = synth.make_world(16, 12, seed=hash(office.id) & 0xFFFF, center=loc)
-        for u in users:
-            u.office_id = office.id
-        self.store.put_many(users); self.store.put_many(rs); self.store.put_many(items)
-        self.last["seeded"].append(f"seeded {len(rs)} restaurants and {len(users)} colleagues around {office.name}")
-        self.plans.clear()
+        seed = hash(office.id) & 0xFFFF
+        if catalog.ensure_current(self.store, center=loc, seed=seed):     # legacy/synthetic or mis-centred catalog → replace
+            self.last["seeded"].append(f"loaded the Ramp HQ catalog ({len(self.store.all(Restaurant))} restaurants) around {office.name}")
+            self.plans.clear()
+        if not self.store.users_in_office(office.id):
+            users, _, _ = synth.make_world(16, None, seed=seed, center=loc)
+            for u in users:
+                u.office_id = office.id
+            self.store.put_many(users)
+            self.last["seeded"].append(f"seeded {len(users)} colleagues at {office.name}")
+            self.plans.clear()
 
     def user_for(self, ctx: MealContext) -> tuple[User, bool]:
         u = self.store.get(User, ctx.user_id) if ctx.user_id else None
@@ -74,9 +79,9 @@ class OfferService:
         d = date.today()
         now = ctx.now_minutes if ctx.now_minutes is not None else datetime.now().hour * 60 + datetime.now().minute
         return Context(date=d.isoformat(), meal=ctx.meal, weekday=d.weekday(), temp_c=ctx.temp_c, raining=ctx.raining,
-                       order_time_minutes=min(now, ctx.office.cutoff))
+                       order_time_minutes=min(now, ctx.office.cutoff), exploration=EXPLORATION, nonce=new_id("n"))
 
-    def offer(self, ctx: MealContext, force: bool = False) -> MealOffer:
+    def offer(self, ctx: MealContext, force: bool = False) -> MealOffer:   # force kept for API compatibility
         self.ensure_world(ctx.office)
         u, _ = self.user_for(ctx)
         c = self._context(ctx)
@@ -84,11 +89,11 @@ class OfferService:
         location = "home" if ctx.presence == "outside" else "office"
         key = (ctx.office.id, c.date, c.meal)
         if location == "office":
-            plan = self.plans.get(key)
-            if force or plan is None or u.id not in plan.recommendations:
-                live = {x.id: "office" for x in self.store.users_in_office(ctx.office.id)}
-                plan = plan_office(self.store, ctx.office.id, office_loc, c, live_location=live)
-                self.plans[key] = plan
+            # every explicit request re-plans with a fresh nonce, so a refreshed offer explores different options;
+            # the cached plan is still used by lunch_event / snapshot between requests
+            live = {x.id: "office" for x in self.store.users_in_office(ctx.office.id)}
+            plan = plan_office(self.store, ctx.office.id, office_loc, c, live_location=live)
+            self.plans[key] = plan
         else:
             plan = plan_home(self.store, u, office_loc, c)
         rests = {r.id: r for r in self.store.all(Restaurant)}

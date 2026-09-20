@@ -106,21 +106,35 @@ struct CampConnectionsPage: View {
 
 }
 
-/// Visual-only mock of the employee spending surface. All amounts and activity are fixtures.
+/// Employee spending surface. The card itself is a demo visual; spend and activity come from the local lunch ledger
+/// (every simulated lunch confirmed on this device). Sample rows are shown until the first lunch is recorded.
 struct CampSpendingPage: View {
+    @ObservedObject var store: CampSettingsStore
     let compact: Bool
 
-    private let monthlySpendCents = 4_285
-    private let monthlyBudgetCents = 30_000
-    private let transactions = [
-        CampDemoTransaction(name: "The Green Table", detail: "Today · Team lunch", amountCents: 1_425, symbol: "fork.knife"),
-        CampDemoTransaction(name: "Corner Coffee", detail: "Sep 18 · Coffee run", amountCents: 861, symbol: "cup.and.saucer.fill"),
-        CampDemoTransaction(name: "Fresh Bowl", detail: "Sep 16 · Lunch", amountCents: 1_999, symbol: "leaf.fill")
+    private let sampleTransactions = [
+        CampDemoTransaction(id: "sample-1", name: "The Green Table", detail: "Sample · Team lunch", amountCents: 1_425, symbol: "fork.knife"),
+        CampDemoTransaction(id: "sample-2", name: "Corner Coffee", detail: "Sample · Coffee run", amountCents: 861, symbol: "cup.and.saucer.fill"),
+        CampDemoTransaction(id: "sample-3", name: "Fresh Bowl", detail: "Sample · Lunch", amountCents: 1_999, symbol: "leaf.fill")
     ]
+
+    private var ledger: [LunchLedgerEntry] { store.lunchLedger }
+    private var monthlySpendCents: Int { LunchLedger.spentCents(ledger) }
+    /// 20 working lunches at the office's per-person cap.
+    private var monthlyBudgetCents: Int { max(store.draft.office.personBudgetCents * 20, monthlySpendCents, 1) }
+    private var savingsThisMonthCents: Int {
+        ledger.filter { Calendar.current.isDate($0.date, equalTo: .now, toGranularity: .month) }.reduce(0) { $0 + $1.savingsCents }
+    }
+    private var transactions: [CampDemoTransaction] {
+        ledger.isEmpty ? sampleTransactions : ledger.prefix(8).map { entry in
+            CampDemoTransaction(id: entry.id, name: entry.restaurant, detail: "\(Self.day(entry.date)) · \(entry.item) · \(entry.status)",
+                                amountCents: entry.amountCents, symbol: entry.symbol)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 20) {
-            CampCard("Lunch card", subtitle: "Sample spending · no live card connected.") {
+            CampCard("Lunch card", subtitle: ledger.isEmpty ? "Demo card · confirm a lunch to see it here." : "Demo card · \(ledger.count) simulated lunch\(ledger.count == 1 ? "" : "es") recorded on this device.") {
                 lunchCard
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(alignment: .firstTextBaseline) {
@@ -135,20 +149,35 @@ struct CampSpendingPage: View {
                         }
                     }
                     ProgressView(value: Double(monthlySpendCents), total: Double(monthlyBudgetCents)).tint(CampPalette.green)
-                    Text("\(LunchStyle.money(monthlyBudgetCents - monthlySpendCents)) available")
-                        .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
+                    HStack {
+                        Text("\(LunchStyle.money(monthlyBudgetCents - monthlySpendCents)) available")
+                        Spacer()
+                        if savingsThisMonthCents > 0 {
+                            Text("\(LunchStyle.money(savingsThisMonthCents)) saved by sharing delivery").foregroundStyle(CampPalette.green)
+                        }
+                    }
+                    .font(.system(size: 11)).foregroundStyle(CampPalette.muted)
                 }
             }
 
-            CampCard("Recent activity") {
+            CampCard("Recent activity", subtitle: ledger.isEmpty ? "Sample activity until your first simulated lunch." : "Simulated lunches from the notch card and Today page. No purchases.") {
                 ForEach(Array(transactions.enumerated()), id: \.element.id) { index, transaction in
                     if index > 0 { Divider() }
                     transactionRow(transaction)
                 }
+                if !ledger.isEmpty {
+                    Divider()
+                    Button("Clear recorded lunches") { store.clearLunchLedger() }
+                        .buttonStyle(.plain).font(.system(size: 11, weight: .medium)).foregroundStyle(CampPalette.muted)
+                }
             }
-
-
         }
+    }
+
+    private static func day(_ date: Date) -> String {
+        if Calendar.current.isDateInToday(date) { return "Today" }
+        if Calendar.current.isDateInYesterday(date) { return "Yesterday" }
+        return date.formatted(.dateTime.month(.abbreviated).day())
     }
 
     private var lunchCard: some View {
@@ -212,9 +241,9 @@ struct CampSpendingPage: View {
 }
 
 private struct CampDemoTransaction: Identifiable {
+    let id: String
     let name: String
     let detail: String
     let amountCents: Int
     let symbol: String
-    var id: String { name }
 }

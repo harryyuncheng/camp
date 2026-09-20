@@ -132,6 +132,12 @@ uv run camp eval --backends mock          # §8 harness; add jev,llm with keys s
 uv run uvicorn camp.api:app --port 8788  # recommender for the Mac/iOS app (Ramp bridge stays on 8787)
 ```
 
+Database: the recommender stores users, catalog, orders, batches and feedback in Postgres when `CAMP_DATABASE_URL`
+is set (in `backend/.env` or the shell; local default `postgresql://localhost/camp`, e.g. Postgres.app), otherwise
+in the SQLite file named by `CAMP_DB` (default `camp.db`). Tests use in-memory SQLite plus one Postgres round-trip
+test that skips when no server is reachable. `uv run camp migrate --source camp.db` copies an old SQLite file into
+`CAMP_DATABASE_URL`. The Ramp bridge (`server.py`) keeps its own small SQLite ledger of allocation attempts.
+
 Keys: `TYPESAFE_API_KEY` enables Jev (`typesafe:jev-latest` via pydantic-ai); `ANTHROPIC_API_KEY` enables the
 LLM fallback and "why this pick" text. With neither set, an offline keyword mock is used so everything still runs.
 

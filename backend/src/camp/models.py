@@ -31,9 +31,9 @@ Scope = Literal["meal", "today", "ongoing", "restaurant"]
 ALLERGENS = ["peanut", "tree_nut", "shellfish", "fish", "dairy", "egg", "gluten", "soy", "sesame"]
 DIETS = ["vegetarian", "vegan", "halal", "kosher", "gluten_free", "dairy_free"]
 CUISINES = ["american", "mexican", "italian", "japanese", "chinese", "thai", "indian",
-            "mediterranean", "korean", "vietnamese", "salad", "sandwich"]
-PROTEINS = ["chicken", "beef", "pork", "fish", "shrimp", "tofu", "egg", "none"]
-DISH_TYPES = ["bowl", "sandwich", "salad", "noodles", "rice", "pizza", "taco", "curry", "soup", "wrap", "other"]
+            "mediterranean", "korean", "vietnamese", "salad", "sandwich", "pizza", "burger", "bakery"]
+PROTEINS = ["chicken", "beef", "pork", "lamb", "fish", "shrimp", "tofu", "egg", "none"]
+DISH_TYPES = ["bowl", "sandwich", "salad", "noodles", "rice", "pizza", "taco", "curry", "soup", "wrap", "burger", "other"]
 
 
 class KcalBand(str, Enum):
@@ -177,6 +177,16 @@ class Restaurant(BaseModel):
     open_minutes: tuple[int, int] = (11 * 60, 22 * 60)
     platform: str = "mock"                 # uber | doordash | mock
     platform_ids: dict[str, str] = Field(default_factory=dict)   # platform -> external store id (same place on both)
+    # public listing data (ratings are inputs to scoring, never a safety signal)
+    address: str = ""
+    neighborhood: str = ""
+    cuisine_detail: str = ""
+    price_level: int = 2                   # 1..4 ($..$$$$)
+    rating: Optional[float] = None         # blended public rating on a 5-point scale
+    review_count: int = 0
+    ratings: dict[str, float] = Field(default_factory=dict)      # source -> rating (google, yelp, infatuation/10 ...)
+    recommendations: list[str] = Field(default_factory=list)     # press / guide mentions
+    chain: bool = False
 
     def prep_minutes(self, n_items: int) -> float:
         return self.prep_base_minutes + self.prep_per_item_minutes * n_items
@@ -214,6 +224,8 @@ class MenuItem(BaseModel):
     external_id: str = ""
     verified_allergens: Optional[set[str]] = None                # None = restaurant did not supply data
     verified_diets: set[str] = Field(default_factory=set)
+    popular: bool = False                                         # "most ordered" / widely recommended
+    kcal: Optional[int] = None                                    # published calories, when the restaurant lists them
     tags: Optional[ItemTags] = None
 
 
@@ -227,6 +239,8 @@ class Context(BaseModel):
     raining: bool = False
     order_time_minutes: int = 10 * 60      # when the order would be placed
     temporary_prefs: dict[str, float] = Field(default_factory=dict)   # "something light today"
+    exploration: float = 0.0               # amplitude of per-request score jitter (0 = deterministic ranking)
+    nonce: str = ""                        # changes per request so a refreshed offer explores different picks
 
 
 class Recommendation(BaseModel):

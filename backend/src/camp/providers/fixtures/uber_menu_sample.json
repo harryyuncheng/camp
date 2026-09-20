@@ -1,7 +1,7 @@
 {
  "items": [
   {
-   "id": "uber-0-opt0",
+   "id": "uber-mangia-23rd-st-opt0",
    "title": {
     "translations": {
      "en_us": "No onions"
@@ -13,7 +13,7 @@
    "is_modifier_option": true
   },
   {
-   "id": "uber-0-opt1",
+   "id": "uber-mangia-23rd-st-opt1",
    "title": {
     "translations": {
      "en_us": "Extra sauce"
@@ -25,7 +25,7 @@
    "is_modifier_option": true
   },
   {
-   "id": "uber-0-opt2",
+   "id": "uber-mangia-23rd-st-opt2",
    "title": {
     "translations": {
      "en_us": "Add Coke"
@@ -37,7 +37,7 @@
    "is_modifier_option": true
   },
   {
-   "id": "uber-0-opt3",
+   "id": "uber-mangia-23rd-st-opt3",
    "title": {
     "translations": {
      "en_us": "Add side salad"
@@ -49,28 +49,32 @@
    "is_modifier_option": true
   },
   {
-   "id": "uber-0-i0",
+   "id": "uber-mangia-23rd-st-d0",
    "title": {
     "translations": {
-     "en_us": "Cheeseburger"
+     "en_us": "Italian Hero"
     }
    },
    "description": {
     "translations": {
-     "en_us": "Cheeseburger with beef, cheese, bread"
+     "en_us": "Sopressata, salami, coppa, prosciutto, roasted peppers, balsamic, provolone"
     }
    },
    "price_info": {
-    "price": 1141
+    "price": 1670
    },
    "ingredients": [
-    "beef",
-    "cheese",
+    "sopressata",
+    "salami",
+    "coppa",
+    "prosciutto",
+    "pepper",
+    "provolone",
     "bread"
    ],
    "modifier_group_ids": {
     "ids": [
-     "uber-0-g0"
+     "uber-mangia-23rd-st-g0"
     ]
    },
    "dietary_label_info": {
@@ -81,28 +85,136 @@
    }
   },
   {
-   "id": "uber-0-i1",
+   "id": "uber-mangia-23rd-st-d1",
    "title": {
     "translations": {
-     "en_us": "Grilled Chicken Salad"
+     "en_us": "Prosciutto Cotto Sandwich"
     }
    },
    "description": {
     "translations": {
-     "en_us": "Grilled Chicken Salad with chicken, lettuce, tomato"
+     "en_us": "Provolone, cornichons, arugula, mustard, lemon mayo on ciabatta"
     }
    },
    "price_info": {
-    "price": 1365
+    "price": 1670
    },
    "ingredients": [
-    "chicken",
+    "ham",
+    "provolone",
+    "cornichon",
+    "arugula",
+    "mayonnaise",
+    "ciabatta"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d2",
+   "title": {
+    "translations": {
+     "en_us": "Albacore Tuna Sandwich"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Lemon mayo, arugula, sun-dried tomato, hard-boiled egg on baguette"
+    }
+   },
+   "price_info": {
+    "price": 1555
+   },
+   "ingredients": [
+    "tuna",
+    "mayonnaise",
+    "arugula",
+    "sun-dried tomato",
+    "egg",
+    "baguette"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d3",
+   "title": {
+    "translations": {
+     "en_us": "Fresh Mozzarella Sandwich"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Mozzarella, cucumber, romaine, tomato, avocado, black pepper mayo"
+    }
+   },
+   "price_info": {
+    "price": 1555
+   },
+   "ingredients": [
+    "mozzarella",
+    "cucumber",
     "lettuce",
-    "tomato"
+    "tomato",
+    "avocado",
+    "mayonnaise",
+    "bread"
    ],
    "modifier_group_ids": {
     "ids": [
-     "uber-0-g0"
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d4",
+   "title": {
+    "translations": {
+     "en_us": "Grilled Chicken Telera (hot)"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Grilled chicken on telera roll"
+    }
+   },
+   "price_info": {
+    "price": 1725
+   },
+   "ingredients": [
+    "chicken",
+    "telera roll",
+    "lettuce"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
     ]
    },
    "dietary_label_info": {
@@ -113,27 +225,171 @@
    }
   },
   {
-   "id": "uber-0-i2",
+   "id": "uber-mangia-23rd-st-d5",
    "title": {
     "translations": {
-     "en_us": "American Feast"
+     "en_us": "Chicken Milanese (hot)"
     }
    },
    "description": {
     "translations": {
-     "en_us": "American Feast with chicken, rice"
+     "en_us": "Breaded chicken cutlet sandwich"
     }
    },
    "price_info": {
-    "price": 1623
+    "price": 1725
    },
    "ingredients": [
     "chicken",
-    "rice"
+    "breadcrumb",
+    "arugula",
+    "bread"
    ],
    "modifier_group_ids": {
     "ids": [
-     "uber-0-g0"
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d6",
+   "title": {
+    "translations": {
+     "en_us": "Chicken Cobb Salad"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Kale, grilled chicken, bacon, egg, tomato, onion, blue cheese, avocado"
+    }
+   },
+   "price_info": {
+    "price": 2130
+   },
+   "ingredients": [
+    "kale",
+    "chicken",
+    "bacon",
+    "egg",
+    "tomato",
+    "blue cheese",
+    "avocado"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d7",
+   "title": {
+    "translations": {
+     "en_us": "Caesar Salad"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Romaine, shaved parmigiano, croutons, Caesar dressing"
+    }
+   },
+   "price_info": {
+    "price": 1440
+   },
+   "ingredients": [
+    "lettuce",
+    "parmesan",
+    "crouton"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d8",
+   "title": {
+    "translations": {
+     "en_us": "Pinsa Burrata"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Roman-style pinsa with pesto, mozzarella, parmesan, tomato, basil"
+    }
+   },
+   "price_info": {
+    "price": 1095
+   },
+   "ingredients": [
+    "pinsa",
+    "pesto",
+    "mozzarella",
+    "parmesan",
+    "tomato",
+    "basil"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d9",
+   "title": {
+    "translations": {
+     "en_us": "Spaghetti Carbonara"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Crispy pancetta & pecorino"
+    }
+   },
+   "price_info": {
+    "price": 2415
+   },
+   "ingredients": [
+    "spaghetti",
+    "pancetta",
+    "pecorino",
+    "egg"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
     ]
    },
    "dietary_label_info": {
@@ -146,7 +402,7 @@
  ],
  "modifier_groups": [
   {
-   "id": "uber-0-g0",
+   "id": "uber-mangia-23rd-st-g0",
    "title": {
     "translations": {
      "en_us": "Customize"
@@ -154,10 +410,10 @@
    },
    "modifier_options": {
     "ids": [
-     "uber-0-opt0",
-     "uber-0-opt1",
-     "uber-0-opt2",
-     "uber-0-opt3"
+     "uber-mangia-23rd-st-opt0",
+     "uber-mangia-23rd-st-opt1",
+     "uber-mangia-23rd-st-opt2",
+     "uber-mangia-23rd-st-opt3"
     ]
    }
   }

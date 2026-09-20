@@ -79,6 +79,11 @@ classification; see `backend/PLAN.md`). `RecommendationClient` (LunchCore, Found
 from `CampConfiguration` and maps the `MealOffer` onto `LunchSession`, so the existing card, panel and Live Activity render
 it unchanged. `CampSettingsStore.onOffer` is the seam the Mac delegate uses to call `MacLunchModel.offer(_:)`. The
 Developer page (`CampDebugPage`, behind a per-device toggle) renders backend debug JSON loosely via `JSONValue`.
+The recommender's offline catalog is real restaurants around Ramp HQ (`backend/src/camp/catalog.py`, see `backend/PLAN.md`);
+when the app's office is elsewhere the catalog geometry is re-centred on it, so demo distances stay realistic.
+Every confirmed lunch (recommender offer or demo group) is also written to a local `LunchLedger` in UserDefaults by
+`CampSettingsStore.recordLunch`; the Spending page derives monthly spend, savings and recent activity from it and shows
+sample rows only until the first lunch is recorded. Nothing is charged.
 
 ## Mac location
 

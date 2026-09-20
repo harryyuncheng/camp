@@ -14,7 +14,7 @@ from .store import Store
 app = typer.Typer(no_args_is_help=True)
 
 
-def _load(db: str, users: int, restaurants: int, seed: int) -> Store:
+def _load(db: str, users: int, restaurants: int | None, seed: int) -> Store:
     store = Store(db)
     if not store.all(User):
         u, r, i = synth.make_world(users, restaurants, seed)
@@ -23,7 +23,7 @@ def _load(db: str, users: int, restaurants: int, seed: int) -> Store:
 
 
 @app.command()
-def run_batch(db: str = ":memory:", users: int = 40, restaurants: int = 12, seed: int = 0, days: int = 1,
+def run_batch(db: str = ":memory:", users: int = 40, restaurants: int | None = None, seed: int = 0, days: int = 1,
               temp_c: float = 18.0, raining: bool = False):
     """Run the office lunch batch for N consecutive days on synthetic data."""
     from datetime import date, timedelta
@@ -53,7 +53,7 @@ def run_batch(db: str = ":memory:", users: int = 40, restaurants: int = 12, seed
 
 @app.command()
 def run_home(db: str = ":memory:", seed: int = 0):
-    store = _load(db, 40, 12, seed)
+    store = _load(db, 40, None, seed)
     items = {i.id: i for i in store.all(MenuItem)}
     u = store.all(User)[0]
     plan = plan_home(store, u, synth.OFFICE, synth.make_context("dinner"))
@@ -86,7 +86,7 @@ def feedback_demo(seed: int = 0):
     from . import feedback as fb
     from .ai.classify import default_classifier
     from .ai.feedback_parse import parse_feedback
-    store = _load(":memory:", 10, 6, seed)
+    store = _load(":memory:", 10, 12, seed)
     u = store.all(User)[0]
     clf = default_classifier()
     for text in ["Great, but too salty", "Not into spicy food", "I'm allergic to shellfish", "Arrived cold again", "Let me pick myself"]:
@@ -99,6 +99,19 @@ def feedback_demo(seed: int = 0):
         if res.clarify:
             typer.echo(f"  ask: {res.clarify}")
     typer.echo(f"\nlearned: {fb.learned_view(store.get(User, u.id))}")
+
+
+@app.command()
+def migrate(source: str = "camp.db", target: str | None = None):
+    """Copy every table from a SQLite file (or any store URL) into the target database (default: CAMP_DATABASE_URL)."""
+    import os
+    dst_url = target or os.getenv("CAMP_DATABASE_URL")
+    if not dst_url:
+        raise typer.BadParameter("set CAMP_DATABASE_URL or pass --target postgresql://...")
+    src, dst = Store(source), Store(dst_url)
+    for table, n in dst.copy_from(src).items():
+        typer.echo(f"  {table:<12} {n} rows")
+    typer.echo(f"copied {source} → {dst_url}")
 
 
 @app.command()

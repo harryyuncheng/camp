@@ -148,3 +148,72 @@ public struct DemoLunchGroup: Identifiable, Hashable, Sendable {
         ])
     ]
 }
+
+
+/// One simulated lunch that reached "confirmed" (or later). Kept locally so the Spending page reflects what the
+/// demo actually did instead of fixtures. Amounts are the all-in card price at confirmation; nothing is charged.
+public struct LunchLedgerEntry: Codable, Hashable, Identifiable, Sendable {
+    public let id: String                 // session id, so a later phase updates the same entry
+    public var date: Date
+    public var office: String
+    public var restaurant: String
+    public var item: String
+    public var symbol: String
+    public var amountCents: Int
+    public var baselineCents: Int
+    public var status: String             // confirmed | delivered
+    public var source: String             // recommender | demo
+
+    public var savingsCents: Int { max(0, baselineCents - amountCents) }
+
+    public init(id: String, date: Date, office: String, restaurant: String, item: String, symbol: String,
+                amountCents: Int, baselineCents: Int, status: String, source: String) {
+        self.id = id; self.date = date; self.office = office; self.restaurant = restaurant; self.item = item
+        self.symbol = symbol; self.amountCents = amountCents; self.baselineCents = baselineCents
+        self.status = status; self.source = source
+    }
+}
+
+public enum LunchLedger {
+    public static let defaultsKey = "camp.lunchLedger"
+
+    public static func load(from defaults: UserDefaults = .standard) -> [LunchLedgerEntry] {
+        guard let data = defaults.data(forKey: defaultsKey) else { return [] }
+        return (try? decoder.decode([LunchLedgerEntry].self, from: data)) ?? []
+    }
+
+    public static func save(_ entries: [LunchLedgerEntry], to defaults: UserDefaults = .standard) {
+        if let data = try? encoder.encode(entries) { defaults.set(data, forKey: defaultsKey) }
+    }
+
+    /// Upserts the session's selected meal. Returns nil when the session has nothing to record
+    /// (not yet confirmed, or ended without confirming).
+    public static func applying(_ session: LunchSession, to entries: [LunchLedgerEntry], restaurant: String,
+                                source: String, now: Date = .now) -> [LunchLedgerEntry]? {
+        let status: String
+        switch session.phase {
+        case .confirmed: status = "confirmed"
+        case .delivered: status = "delivered"
+        default: return nil
+        }
+        guard let option = session.selectedOption else { return nil }
+        var next = entries
+        let id = session.id.uuidString
+        if let i = next.firstIndex(where: { $0.id == id }) {
+            next[i].status = status
+            next[i].item = option.name; next[i].amountCents = option.priceCents; next[i].baselineCents = option.baselineCents
+        } else {
+            next.append(LunchLedgerEntry(id: id, date: now, office: session.office, restaurant: restaurant, item: option.name,
+                                         symbol: option.symbol, amountCents: option.priceCents, baselineCents: option.baselineCents,
+                                         status: status, source: source))
+        }
+        return next.sorted { $0.date > $1.date }
+    }
+
+    public static func spentCents(_ entries: [LunchLedgerEntry], inMonthOf date: Date = .now, calendar: Calendar = .current) -> Int {
+        entries.filter { calendar.isDate($0.date, equalTo: date, toGranularity: .month) }.reduce(0) { $0 + $1.amountCents }
+    }
+
+    private static let encoder: JSONEncoder = { let e = JSONEncoder(); e.dateEncodingStrategy = .iso8601; return e }()
+    private static let decoder: JSONDecoder = { let d = JSONDecoder(); d.dateDecodingStrategy = .iso8601; return d }()
+}

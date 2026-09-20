@@ -90,3 +90,22 @@ final class LunchSessionTests: XCTestCase {
         XCTAssertThrowsError(try store.load())
     }
 }
+
+final class LunchLedgerTests: XCTestCase {
+    func testConfirmedLunchIsRecordedOnceAndUpdatedOnDelivery() throws {
+        var session = DemoLunch.make()
+        XCTAssertNil(LunchLedger.applying(session, to: [], restaurant: "Demo", source: "demo"))   // nothing before confirm
+        session = try session.applying(.select("green-bowl"))
+        session = try session.applying(.confirm)
+        let confirmed = try XCTUnwrap(LunchLedger.applying(session, to: [], restaurant: "The Green Table", source: "demo"))
+        XCTAssertEqual(confirmed.count, 1)
+        XCTAssertEqual(confirmed[0].restaurant, "The Green Table")
+        XCTAssertEqual(confirmed[0].amountCents, 1140)
+        XCTAssertEqual(confirmed[0].status, "confirmed")
+        session = try session.applying(.markDelivered)
+        let delivered = try XCTUnwrap(LunchLedger.applying(session, to: confirmed, restaurant: "The Green Table", source: "demo"))
+        XCTAssertEqual(delivered.count, 1)
+        XCTAssertEqual(delivered[0].status, "delivered")
+        XCTAssertEqual(LunchLedger.spentCents(delivered), 1140)
+    }
+}

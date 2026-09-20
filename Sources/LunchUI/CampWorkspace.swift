@@ -24,7 +24,7 @@ public struct CampWorkspace: View {
                         case .today: CampTodayPage(store: store, compact: compact, previewActivity: previewActivity)
                         case .you: CampPersonalPage(store: store, compact: compact)
                         case .office: CampOfficePage(store: store, compact: compact)
-                        case .spending: CampSpendingPage(compact: compact)
+                        case .spending: CampSpendingPage(store: store, compact: compact)
                         case .connections: CampConnectionsPage(store: store, compact: compact)
                         case .debug: CampDebugPage(store: store, compact: compact)
                         }

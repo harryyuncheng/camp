@@ -91,7 +91,8 @@ def parse_store(s: dict) -> PStore:
                   cuisine=(s.get("cuisine") or "other").lower(),
                   open_minutes=(_hm(hrs.get("start_time", "11:00:00")), _hm(hrs.get("end_time", "22:00:00"))),
                   min_order_cents=int(s.get("minimum_order_subtotal", 0)), has_verified_allergen_data=bool(s.get("allergen_data_verified", False)),
-                  address=addr.get("street", ""))
+                  address=addr.get("street", ""),
+                  rating=s.get("average_rating"), review_count=int(s.get("number_of_ratings", 0)), price_level=int(s.get("price_range", 2)))
 
 
 def parse_menu(j: dict) -> list[PItem]:

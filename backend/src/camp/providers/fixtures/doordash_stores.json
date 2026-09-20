@@ -1,29 +1,32 @@
 [
  {
-  "location_id": "doordash-0",
-  "name": "American Place 0",
+  "location_id": "doordash-mangia-23rd-st",
+  "name": "Mangia (23rd St)",
   "address": {
-   "lat": 37.80154139856204,
-   "lng": -122.39921046642645,
-   "street": "0 Market St"
+   "lat": 40.7419,
+   "lng": -73.9905,
+   "street": "22 W 23rd St, New York, NY 10010"
   },
-  "cuisine": "american",
+  "cuisine": "sandwich",
   "open_hours": [
    {
-    "start_time": "11:00:00",
-    "end_time": "22:00:00"
+    "start_time": "07:00:00",
+    "end_time": "16:00:00"
    }
   ],
   "minimum_order_subtotal": 1500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 3.9,
+  "number_of_ratings": 201,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-1",
-  "name": "Mexican Kitchen 1",
+  "location_id": "doordash-tacombi-flatiron",
+  "name": "Tacombi Flatiron",
   "address": {
-   "lat": 37.8126990580776,
-   "lng": -122.44588242603513,
-   "street": "1 Market St"
+   "lat": 40.7431,
+   "lng": -73.9905,
+   "street": "30 W 24th St, New York, NY 10010"
   },
   "cuisine": "mexican",
   "open_hours": [
@@ -32,34 +35,250 @@
     "end_time": "22:00:00"
    }
   ],
-  "minimum_order_subtotal": 2500,
-  "allergen_data_verified": false
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.38,
+  "number_of_ratings": 1297,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-2",
-  "name": "Italian Place 2",
+  "location_id": "doordash-junoon",
+  "name": "Junoon",
   "address": {
-   "lat": 37.78615690442132,
-   "lng": -122.41412498793932,
-   "street": "2 Market St"
+   "lat": 40.7431,
+   "lng": -73.9905,
+   "street": "19 W 24th St, New York, NY 10010"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "17:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.2,
+  "number_of_ratings": 1931,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-kofoo",
+  "name": "KoFoo",
+  "address": {
+   "lat": 40.7427,
+   "lng": -73.9925,
+   "street": "67 W 23rd St, New York, NY 10010"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.7,
+  "number_of_ratings": 122,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-lenwich-flatiron",
+  "name": "Lenwich (Flatiron)",
+  "address": {
+   "lat": 40.7418,
+   "lng": -73.9902,
+   "street": "16 W 23rd St, New York, NY 10010"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "17:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": null,
+  "number_of_ratings": 160,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-cote-korean-steakhouse",
+  "name": "Cote Korean Steakhouse",
+  "address": {
+   "lat": 40.7411,
+   "lng": -73.9914,
+   "street": "16 W 22nd St, New York, NY 10010"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.77,
+  "number_of_ratings": 0,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-la-pizza-la-pasta-at-eataly-flatiron",
+  "name": "La Pizza & La Pasta at Eataly Flatiron",
+  "address": {
+   "lat": 40.742,
+   "lng": -73.9897,
+   "street": "200 5th Ave, New York, NY 10010"
   },
   "cuisine": "italian",
   "open_hours": [
    {
     "start_time": "11:00:00",
-    "end_time": "22:00:00"
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 3.9,
+  "number_of_ratings": 636,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-maman-nomad",
+  "name": "Maman (NoMad)",
+  "address": {
+   "lat": 40.7437,
+   "lng": -73.9905,
+   "street": "22 W 25th St, New York, NY 10010"
+  },
+  "cuisine": "bakery",
+  "open_hours": [
+   {
+    "start_time": "07:30:00",
+    "end_time": "18:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 3.8,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-trattoria-zero-otto-nove",
+  "name": "Trattoria Zero Otto Nove",
+  "address": {
+   "lat": 40.7407,
+   "lng": -73.9915,
+   "street": "15 W 21st St, New York, NY 10010"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "21:30:00"
    }
   ],
   "minimum_order_subtotal": 2500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 4.39,
+  "number_of_ratings": 1133,
+  "price_range": 3
  },
  {
-  "location_id": "doordash-3",
-  "name": "Japanese Place 3",
+  "location_id": "doordash-hill-country-barbecue-market",
+  "name": "Hill Country Barbecue Market",
   "address": {
-   "lat": 37.784740485256386,
-   "lng": -122.41780057258839,
-   "street": "3 Market St"
+   "lat": 40.7443,
+   "lng": -73.9905,
+   "street": "30 W 26th St, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 3.98,
+  "number_of_ratings": 2438,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-s-p-lunch",
+  "name": "S&P Lunch",
+  "address": {
+   "lat": 40.7404,
+   "lng": -73.9903,
+   "street": "174 5th Ave, New York, NY 10010"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 5.0,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-little-beet-nomad",
+  "name": "Little Beet (NoMad)",
+  "address": {
+   "lat": 40.7438,
+   "lng": -73.9886,
+   "street": "1140 Broadway, New York, NY 10001"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.24,
+  "number_of_ratings": 635,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-cava",
+  "name": "CAVA",
+  "address": {
+   "lat": 40.7418,
+   "lng": -73.9946,
+   "street": "678 6th Ave, New York, NY 10010"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.6,
+  "number_of_ratings": 1182,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-wagamama-nomad",
+  "name": "wagamama NoMad",
+  "address": {
+   "lat": 40.7439,
+   "lng": -73.9884,
+   "street": "210 Fifth Ave, New York, NY 10010"
   },
   "cuisine": "japanese",
   "open_hours": [
@@ -68,16 +287,1111 @@
     "end_time": "22:00:00"
    }
   ],
-  "minimum_order_subtotal": 4000,
-  "allergen_data_verified": false
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 3.65,
+  "number_of_ratings": 1801,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-4",
-  "name": "Chinese Kitchen 4",
+  "location_id": "doordash-shake-shack-madison-square-park",
+  "name": "Shake Shack Madison Square Park",
   "address": {
-   "lat": 37.790167494368404,
-   "lng": -122.3908335599309,
-   "street": "4 Market St"
+   "lat": 40.7414,
+   "lng": -73.988,
+   "street": "Madison Ave & E 23rd St, New York, NY 10010"
+  },
+  "cuisine": "burger",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.29,
+  "number_of_ratings": 13678,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-dos-toros-taqueria",
+  "name": "Dos Toros Taqueria",
+  "address": {
+   "lat": 40.7414,
+   "lng": -73.995,
+   "street": "668 6th Ave, New York, NY 10010"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.17,
+  "number_of_ratings": 0,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-planta-queen",
+  "name": "PLANTA Queen",
+  "address": {
+   "lat": 40.7448,
+   "lng": -73.989,
+   "street": "15 W 27th St, New York, NY 10001"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true,
+  "average_rating": 4.4,
+  "number_of_ratings": 1657,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-dig-dig-inn-madison-square-park",
+  "name": "Dig (Dig Inn) Madison Square Park",
+  "address": {
+   "lat": 40.7406,
+   "lng": -73.988,
+   "street": "16 E 23rd St, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.15,
+  "number_of_ratings": 402,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-the-smith-nomad",
+  "name": "The Smith (NoMad)",
+  "address": {
+   "lat": 40.7448,
+   "lng": -73.9886,
+   "street": "1150 Broadway, New York, NY 10001"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.29,
+  "number_of_ratings": 1414,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-oiji-mi",
+  "name": "Oiji Mi",
+  "address": {
+   "lat": 40.7393,
+   "lng": -73.9927,
+   "street": "17 W 19th St, New York, NY 10011"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true,
+  "average_rating": 4.2,
+  "number_of_ratings": 0,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-7th-street-burger-chelsea",
+  "name": "7th Street Burger (Chelsea)",
+  "address": {
+   "lat": 40.744,
+   "lng": -73.995,
+   "street": "171 W 23rd St, New York, NY 10011"
+  },
+  "cuisine": "burger",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.3,
+  "number_of_ratings": 0,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-alidoro-one-madison",
+  "name": "Alidoro (One Madison)",
+  "address": {
+   "lat": 40.7414,
+   "lng": -73.9872,
+   "street": "1 Madison Ave, New York, NY 10010"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "17:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 3.85,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-ilili-nomad",
+  "name": "ilili NoMad",
+  "address": {
+   "lat": 40.7443,
+   "lng": -73.9877,
+   "street": "236 5th Ave, New York, NY 10001"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true,
+  "average_rating": 4.25,
+  "number_of_ratings": 2946,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-ootoya-chelsea",
+  "name": "Ootoya Chelsea",
+  "address": {
+   "lat": 40.7389,
+   "lng": -73.9925,
+   "street": "8 W 18th St, New York, NY 10011"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.05,
+  "number_of_ratings": 1617,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-pret-a-manger",
+  "name": "Pret A Manger",
+  "address": {
+   "lat": 40.7409,
+   "lng": -73.9956,
+   "street": "655 6th Ave, New York, NY 10010"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "06:00:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.07,
+  "number_of_ratings": 215,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-cosme",
+  "name": "Cosme",
+  "address": {
+   "lat": 40.7395,
+   "lng": -73.9884,
+   "street": "35 E 21st St, New York, NY 10010"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 1382,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-kyma-flatiron",
+  "name": "Kyma Flatiron",
+  "address": {
+   "lat": 40.7389,
+   "lng": -73.993,
+   "street": "15 W 18th St, New York, NY 10011"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.15,
+  "number_of_ratings": 470,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-rezd-ra",
+  "name": "Rezd\u00f4ra",
+  "address": {
+   "lat": 40.7391,
+   "lng": -73.9889,
+   "street": "27 E 20th St, New York, NY 10003"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 957,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-thai-villa",
+  "name": "Thai Villa",
+  "address": {
+   "lat": 40.7387,
+   "lng": -73.9905,
+   "street": "5 E 19th St, New York, NY 10003"
+  },
+  "cuisine": "thai",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:15:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.7,
+  "number_of_ratings": 13132,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-bourke-street-bakery-nomad",
+  "name": "Bourke Street Bakery (NoMad)",
+  "address": {
+   "lat": 40.744,
+   "lng": -73.9865,
+   "street": "15 E 28th St, New York, NY 10016"
+  },
+  "cuisine": "bakery",
+  "open_hours": [
+   {
+    "start_time": "07:00:00",
+    "end_time": "17:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 216,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-sweetgreen",
+  "name": "Sweetgreen",
+  "address": {
+   "lat": 40.7403,
+   "lng": -73.9866,
+   "street": "27 E 23rd St, New York, NY 10010"
+  },
+  "cuisine": "salad",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": null,
+  "number_of_ratings": 209,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-upland",
+  "name": "Upland",
+  "address": {
+   "lat": 40.7423,
+   "lng": -73.9857,
+   "street": "345 Park Ave S, New York, NY 10010"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.29,
+  "number_of_ratings": 1992,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-springbone-kitchen",
+  "name": "Springbone Kitchen",
+  "address": {
+   "lat": 40.7403,
+   "lng": -73.9863,
+   "street": "38 E 23rd St, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.53,
+  "number_of_ratings": 252,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-gramercy-tavern-the-tavern",
+  "name": "Gramercy Tavern (The Tavern)",
+  "address": {
+   "lat": 40.7386,
+   "lng": -73.9884,
+   "street": "42 E 20th St, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.53,
+  "number_of_ratings": 0,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-playa-bowls-fit-7th-ave",
+  "name": "Playa Bowls (FIT / 7th Ave)",
+  "address": {
+   "lat": 40.7466,
+   "lng": -73.9935,
+   "street": "299 7th Ave, New York, NY 10001"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": null,
+  "number_of_ratings": 59,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-l-express",
+  "name": "L'Express",
+  "address": {
+   "lat": 40.7386,
+   "lng": -73.988,
+   "street": "249 Park Ave S, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-ole-steen",
+  "name": "Ole & Steen",
+  "address": {
+   "lat": 40.7378,
+   "lng": -73.9906,
+   "street": "873 Broadway, New York, NY 10003"
+  },
+  "cuisine": "bakery",
+  "open_hours": [
+   {
+    "start_time": "07:00:00",
+    "end_time": "19:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.03,
+  "number_of_ratings": 746,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-caf-chelsea",
+  "name": "Caf\u00e9 Chelsea",
+  "address": {
+   "lat": 40.7444,
+   "lng": -73.9967,
+   "street": "218 W 23rd St, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.19,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-hawksmoor-nyc",
+  "name": "Hawksmoor NYC",
+  "address": {
+   "lat": 40.7396,
+   "lng": -73.9862,
+   "street": "109 E 22nd St, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 0,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-rosa-mexicano-union-square",
+  "name": "Rosa Mexicano Union Square",
+  "address": {
+   "lat": 40.7376,
+   "lng": -73.991,
+   "street": "9 E 18th St, New York, NY 10003"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": null,
+  "number_of_ratings": 1887,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-barbounia",
+  "name": "Barbounia",
+  "address": {
+   "lat": 40.7386,
+   "lng": -73.9876,
+   "street": "250 Park Ave S, New York, NY 10003"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 1592,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-el-quijote",
+  "name": "El Quijote",
+  "address": {
+   "lat": 40.7445,
+   "lng": -73.997,
+   "street": "226 W 23rd St, New York, NY 10011"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.9,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-momoya-chelsea",
+  "name": "Momoya Chelsea",
+  "address": {
+   "lat": 40.7433,
+   "lng": -73.9976,
+   "street": "185 7th Ave, New York, NY 10011"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 898,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-boucherie-union-square",
+  "name": "Boucherie Union Square",
+  "address": {
+   "lat": 40.738,
+   "lng": -73.9884,
+   "street": "225 Park Ave S, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.6,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-just-salad",
+  "name": "Just Salad",
+  "address": {
+   "lat": 40.7408,
+   "lng": -73.9851,
+   "street": "315 Park Ave S, New York, NY 10010"
+  },
+  "cuisine": "salad",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.65,
+  "number_of_ratings": 931,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-abc-kitchen",
+  "name": "ABC Kitchen",
+  "address": {
+   "lat": 40.7376,
+   "lng": -73.9896,
+   "street": "35 E 18th St, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.65,
+  "number_of_ratings": 3330,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-kanyakumari",
+  "name": "Kanyakumari",
+  "address": {
+   "lat": 40.7375,
+   "lng": -73.9908,
+   "street": "20 E 17th St, New York, NY 10003"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.47,
+  "number_of_ratings": 218,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-laut",
+  "name": "Laut",
+  "address": {
+   "lat": 40.7375,
+   "lng": -73.9906,
+   "street": "15 E 17th St, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "21:45:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 4123,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-atoboy",
+  "name": "Atoboy",
+  "address": {
+   "lat": 40.7433,
+   "lng": -73.9847,
+   "street": "43 E 28th St, New York, NY 10016"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true,
+  "average_rating": 4.3,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-scarpetta",
+  "name": "Scarpetta",
+  "address": {
+   "lat": 40.7443,
+   "lng": -73.9852,
+   "street": "88 Madison Ave, New York, NY 10016"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.39,
+  "number_of_ratings": 3225,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-hillstone",
+  "name": "Hillstone",
+  "address": {
+   "lat": 40.7429,
+   "lng": -73.9846,
+   "street": "378 Park Ave S, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-ravagh-persian-grill-midtown",
+  "name": "Ravagh Persian Grill (Midtown)",
+  "address": {
+   "lat": 40.7455,
+   "lng": -73.9858,
+   "street": "11 E 30th St, New York, NY 10016"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.15,
+  "number_of_ratings": 1205,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-chopt-creative-salad-co-union-square",
+  "name": "Chopt Creative Salad Co. (Union Square)",
+  "address": {
+   "lat": 40.737,
+   "lng": -73.991,
+   "street": "24 E 17th St, New York, NY 10003"
+  },
+  "cuisine": "salad",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": null,
+  "number_of_ratings": 348,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-potbelly-sandwich-shop",
+  "name": "Potbelly Sandwich Shop",
+  "address": {
+   "lat": 40.7478,
+   "lng": -73.9928,
+   "street": "333 7th Ave, New York, NY 10001"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.36,
+  "number_of_ratings": 565,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-breads-bakery",
+  "name": "Breads Bakery",
+  "address": {
+   "lat": 40.7369,
+   "lng": -73.9916,
+   "street": "18 E 16th St, New York, NY 10003"
+  },
+  "cuisine": "bakery",
+  "open_hours": [
+   {
+    "start_time": "07:00:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": null,
+  "number_of_ratings": 1318,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-elmo",
+  "name": "Elmo",
+  "address": {
+   "lat": 40.7423,
+   "lng": -73.9987,
+   "street": "156 7th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-cafe-zaffri",
+  "name": "Cafe Zaffri",
+  "address": {
+   "lat": 40.7368,
+   "lng": -73.9921,
+   "street": "16 E 16th St, New York, NY 10003"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "23:59:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.55,
+  "number_of_ratings": 0,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-union-square-cafe",
+  "name": "Union Square Cafe",
+  "address": {
+   "lat": 40.7375,
+   "lng": -73.9875,
+   "street": "101 E 19th St, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.58,
+  "number_of_ratings": 607,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-her-name-is-han",
+  "name": "Her Name Is Han",
+  "address": {
+   "lat": 40.7459,
+   "lng": -73.9848,
+   "street": "17 E 31st St, New York, NY 10016"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:15:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.43,
+  "number_of_ratings": 2296,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-chipotle-mexican-grill",
+  "name": "Chipotle Mexican Grill",
+  "address": {
+   "lat": 40.7391,
+   "lng": -73.9846,
+   "street": "125 E 23rd St, New York, NY 10010"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "10:45:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.1,
+  "number_of_ratings": 133,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-daily-provisions-union-square",
+  "name": "Daily Provisions (Union Square)",
+  "address": {
+   "lat": 40.7373,
+   "lng": -73.9871,
+   "street": "103 E 19th St, New York, NY 10003"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "07:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.24,
+  "number_of_ratings": 1126,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-bhatti-indian-grill",
+  "name": "Bhatti Indian Grill",
+  "address": {
+   "lat": 40.742,
+   "lng": -73.9832,
+   "street": "100 Lexington Ave, New York, NY 10016"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 968,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-woorijip",
+  "name": "Woorijip",
+  "address": {
+   "lat": 40.7474,
+   "lng": -73.9865,
+   "street": "12 W 32nd St, New York, NY 10001"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.38,
+  "number_of_ratings": 3661,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-pokeworks-union-square",
+  "name": "Pokeworks (Union Square)",
+  "address": {
+   "lat": 40.7362,
+   "lng": -73.9915,
+   "street": "21 E 15th St, New York, NY 10003"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "10:30:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.65,
+  "number_of_ratings": 523,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-spicy-moon-chelsea",
+  "name": "Spicy Moon (Chelsea)",
+  "address": {
+   "lat": 40.7444,
+   "lng": -73.999,
+   "street": "232 8th Ave, New York, NY 10011"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 3.95,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-cafeteria",
+  "name": "Cafeteria",
+  "address": {
+   "lat": 40.7409,
+   "lng": -73.9993,
+   "street": "119 7th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "09:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-hey-yuet",
+  "name": "Hey Yuet",
+  "address": {
+   "lat": 40.7473,
+   "lng": -73.9965,
+   "street": "251 W 26th St, New York, NY 10001"
   },
   "cuisine": "chinese",
   "open_hours": [
@@ -87,89 +1401,566 @@
    }
   ],
   "minimum_order_subtotal": 1500,
-  "allergen_data_verified": true
+  "allergen_data_verified": false,
+  "average_rating": 4.39,
+  "number_of_ratings": 0,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-5",
-  "name": "Thai Kitchen 5",
+  "location_id": "doordash-kailash-parbat",
+  "name": "Kailash Parbat",
   "address": {
-   "lat": 37.793886623789156,
-   "lng": -122.3952690200452,
-   "street": "5 Market St"
+   "lat": 40.742,
+   "lng": -73.9829,
+   "street": "99 Lexington Ave, New York, NY 10016"
   },
-  "cuisine": "thai",
+  "cuisine": "indian",
   "open_hours": [
    {
-    "start_time": "11:00:00",
-    "end_time": "22:00:00"
+    "start_time": "12:00:00",
+    "end_time": "21:45:00"
    }
   ],
   "minimum_order_subtotal": 1500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 3.7,
+  "number_of_ratings": 410,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-6",
-  "name": "Indian Kitchen 6",
+  "location_id": "doordash-pongal",
+  "name": "Pongal",
   "address": {
-   "lat": 37.785697197396686,
-   "lng": -122.43568153423502,
-   "street": "6 Market St"
+   "lat": 40.7425,
+   "lng": -73.9829,
+   "street": "110 Lexington Ave, New York, NY 10016"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 636,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-gupshup",
+  "name": "GupShup",
+  "address": {
+   "lat": 40.7366,
+   "lng": -73.9878,
+   "street": "115 E 18th St, New York, NY 10003"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.2,
+  "number_of_ratings": 912,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-jongro-bbq",
+  "name": "Jongro BBQ",
+  "address": {
+   "lat": 40.7478,
+   "lng": -73.9866,
+   "street": "22 W 32nd St, 2nd Fl, New York, NY 10001"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 8292,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-dubuhaus",
+  "name": "DubuHaus",
+  "address": {
+   "lat": 40.747,
+   "lng": -73.9853,
+   "street": "6 E 32nd St, New York, NY 10016"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.25,
+  "number_of_ratings": 789,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-dhaba-indian-cuisine",
+  "name": "Dhaba Indian Cuisine",
+  "address": {
+   "lat": 40.7423,
+   "lng": -73.9827,
+   "street": "108 Lexington Ave, New York, NY 10016"
   },
   "cuisine": "indian",
   "open_hours": [
    {
     "start_time": "11:00:00",
-    "end_time": "22:00:00"
+    "end_time": "23:30:00"
    }
   ],
-  "minimum_order_subtotal": 2500,
-  "allergen_data_verified": false
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 1671,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-7",
-  "name": "Mediterranean Place 7",
+  "location_id": "doordash-bcd-tofu-house",
+  "name": "BCD Tofu House",
   "address": {
-   "lat": 37.806256363310915,
-   "lng": -122.39137096355016,
-   "street": "7 Market St"
-  },
-  "cuisine": "mediterranean",
-  "open_hours": [
-   {
-    "start_time": "11:00:00",
-    "end_time": "22:00:00"
-   }
-  ],
-  "minimum_order_subtotal": 2500,
-  "allergen_data_verified": true
- },
- {
-  "location_id": "doordash-8",
-  "name": "Korean Kitchen 8",
-  "address": {
-   "lat": 37.79608942959411,
-   "lng": -122.39189606753361,
-   "street": "8 Market St"
+   "lat": 40.7477,
+   "lng": -73.9859,
+   "street": "5 W 32nd St, New York, NY 10001"
   },
   "cuisine": "korean",
   "open_hours": [
    {
-    "start_time": "11:00:00",
+    "start_time": "10:30:00",
+    "end_time": "01:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 7669,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-friend-of-a-farmer",
+  "name": "Friend of a Farmer",
+  "address": {
+   "lat": 40.7366,
+   "lng": -73.9871,
+   "street": "77 Irving Pl, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "09:00:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-westville-chelsea",
+  "name": "Westville Chelsea",
+  "address": {
+   "lat": 40.7419,
+   "lng": -74.0,
+   "street": "246 W 18th St, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
     "end_time": "22:00:00"
    }
   ],
-  "minimum_order_subtotal": 4000,
-  "allergen_data_verified": false
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 1323,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-9",
-  "name": "Vietnamese Kitchen 9",
+  "location_id": "doordash-chote-nawab",
+  "name": "Chote Nawab",
   "address": {
-   "lat": 37.77571154510911,
-   "lng": -122.42015826361984,
-   "street": "9 Market St"
+   "lat": 40.7427,
+   "lng": -73.9824,
+   "street": "115 Lexington Ave, New York, NY 10016"
   },
-  "cuisine": "vietnamese",
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 626,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-anjappar-chettinad-restaurant",
+  "name": "Anjappar Chettinad Restaurant",
+  "address": {
+   "lat": 40.7428,
+   "lng": -73.9823,
+   "street": "116 Lexington Ave, New York, NY 10016"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.59,
+  "number_of_ratings": 6783,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-turntable-chicken-jazz",
+  "name": "Turntable Chicken Jazz",
+  "address": {
+   "lat": 40.7484,
+   "lng": -73.9868,
+   "street": "20 W 33rd St, New York, NY 10001"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.36,
+  "number_of_ratings": 2691,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-nan-xiang-xiao-long-bao-koreatown",
+  "name": "Nan Xiang Xiao Long Bao (Koreatown)",
+  "address": {
+   "lat": 40.7485,
+   "lng": -73.987,
+   "street": "24 W 33rd St, New York, NY 10001"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.38,
+  "number_of_ratings": 1573,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-pete-s-tavern",
+  "name": "Pete's Tavern",
+  "address": {
+   "lat": 40.736,
+   "lng": -73.9877,
+   "street": "129 E 18th St, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-anixi",
+  "name": "Anixi",
+  "address": {
+   "lat": 40.7461,
+   "lng": -73.999,
+   "street": "290 8th Ave, New York, NY 10001"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "16:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.9,
+  "number_of_ratings": 376,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-grand-sichuan-eastern-chelsea",
+  "name": "Grand Sichuan Eastern (Chelsea)",
+  "address": {
+   "lat": 40.7427,
+   "lng": -74.0007,
+   "street": "172 8th Ave, New York, NY 10011"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "21:50:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.13,
+  "number_of_ratings": 151,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-casa-mono",
+  "name": "Casa Mono",
+  "address": {
+   "lat": 40.7357,
+   "lng": -73.9878,
+   "street": "52 Irving Pl, New York, NY 10003"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.58,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-rolf-s-german-restaurant",
+  "name": "Rolf's German Restaurant",
+  "address": {
+   "lat": 40.7384,
+   "lng": -73.9832,
+   "street": "281 3rd Ave, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 2.4,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-bar-jam-n",
+  "name": "Bar Jam\u00f3n",
+  "address": {
+   "lat": 40.7355,
+   "lng": -73.988,
+   "street": "125 E 17th St, New York, NY 10003"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.4,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-coppelia",
+  "name": "Coppelia",
+  "address": {
+   "lat": 40.7386,
+   "lng": -73.9998,
+   "street": "207 W 14th St, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "00:00:00",
+    "end_time": "23:59:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 1733,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-sappe",
+  "name": "Sappe",
+  "address": {
+   "lat": 40.7392,
+   "lng": -74.001,
+   "street": "240 W 14th St, New York, NY 10011"
+  },
+  "cuisine": "thai",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 688,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-wolfgang-s-steakhouse-park-avenue",
+  "name": "Wolfgang's Steakhouse (Park Avenue)",
+  "address": {
+   "lat": 40.7468,
+   "lng": -73.9818,
+   "street": "4 Park Ave, New York, NY 10016"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:45:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.39,
+  "number_of_ratings": 3715,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-cho-dang-gol",
+  "name": "Cho Dang Gol",
+  "address": {
+   "lat": 40.7503,
+   "lng": -73.9868,
+   "street": "55 W 35th St, New York, NY 10001"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.33,
+  "number_of_ratings": 0,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-txikito",
+  "name": "Txikito",
+  "address": {
+   "lat": 40.7473,
+   "lng": -74.001,
+   "street": "240 9th Ave, New York, NY 10001"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.29,
+  "number_of_ratings": 344,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-franchia-vegan-cafe",
+  "name": "Franchia Vegan Cafe",
+  "address": {
+   "lat": 40.7471,
+   "lng": -73.9812,
+   "street": "12 Park Ave, New York, NY 10016"
+  },
+  "cuisine": "korean",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.68,
+  "number_of_ratings": 1749,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-joe-s-pizza-union-square",
+  "name": "Joe's Pizza (Union Square)",
+  "address": {
+   "lat": 40.7337,
+   "lng": -73.9877,
+   "street": "150 E 14th St, New York, NY 10003"
+  },
+  "cuisine": "pizza",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "04:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.06,
+  "number_of_ratings": 0,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-time-out-market-union-square",
+  "name": "Time Out Market Union Square",
+  "address": {
+   "lat": 40.7336,
+   "lng": -73.988,
+   "street": "124 E 14th St, New York, NY 10003"
+  },
+  "cuisine": "american",
   "open_hours": [
    {
     "start_time": "11:00:00",
@@ -177,42 +1968,723 @@
    }
   ],
   "minimum_order_subtotal": 1500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 3.9,
+  "number_of_ratings": 142,
+  "price_range": 2
  },
  {
-  "location_id": "doordash-10",
-  "name": "Salad Kitchen 10",
+  "location_id": "doordash-salinas",
+  "name": "Salinas",
   "address": {
-   "lat": 37.80516032862245,
-   "lng": -122.39800678814828,
-   "street": "10 Market St"
+   "lat": 40.7434,
+   "lng": -74.0033,
+   "street": "136 9th Ave, New York, NY 10011"
   },
-  "cuisine": "salad",
+  "cuisine": "mediterranean",
   "open_hours": [
    {
-    "start_time": "11:00:00",
+    "start_time": "17:30:00",
     "end_time": "22:00:00"
    }
   ],
   "minimum_order_subtotal": 2500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 4.6,
+  "number_of_ratings": 1107,
+  "price_range": 3
  },
  {
-  "location_id": "doordash-11",
-  "name": "Sandwich Place 11",
+  "location_id": "doordash-xi-an-famous-foods-union-square",
+  "name": "Xi'an Famous Foods (Union Square)",
   "address": {
-   "lat": 37.77691524671329,
-   "lng": -122.4375539073225,
-   "street": "11 Market St"
+   "lat": 40.7332,
+   "lng": -73.9895,
+   "street": "139 4th Ave, New York, NY 10003"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.2,
+  "number_of_ratings": 38,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-dos-toros-taqueria-union-square",
+  "name": "Dos Toros Taqueria (Union Square)",
+  "address": {
+   "lat": 40.7333,
+   "lng": -73.989,
+   "street": "137 4th Ave, New York, NY 10003"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.25,
+  "number_of_ratings": 1424,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-cafe-china",
+  "name": "Cafe China",
+  "address": {
+   "lat": 40.7511,
+   "lng": -73.9861,
+   "street": "59 W 37th St, New York, NY 10018"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 2114,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-sullivan-street-bakery-chelsea",
+  "name": "Sullivan Street Bakery (Chelsea)",
+  "address": {
+   "lat": 40.7476,
+   "lng": -74.0019,
+   "street": "236 9th Ave, New York, NY 10001"
+  },
+  "cuisine": "bakery",
+  "open_hours": [
+   {
+    "start_time": "08:00:00",
+    "end_time": "19:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 3.6,
+  "number_of_ratings": 251,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-semma",
+  "name": "Semma",
+  "address": {
+   "lat": 40.7357,
+   "lng": -74.0003,
+   "street": "60 Greenwich Ave, New York, NY 10011"
+  },
+  "cuisine": "indian",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.03,
+  "number_of_ratings": 1140,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-2nd-ave-deli-murray-hill",
+  "name": "2nd Ave Deli (Murray Hill)",
+  "address": {
+   "lat": 40.7458,
+   "lng": -73.9793,
+   "street": "162 E 33rd St, New York, NY 10016"
   },
   "cuisine": "sandwich",
   "open_hours": [
    {
     "start_time": "11:00:00",
+    "end_time": "20:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.23,
+  "number_of_ratings": 1581,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-tao-downtown",
+  "name": "TAO Downtown",
+  "address": {
+   "lat": 40.7418,
+   "lng": -74.0045,
+   "street": "92 9th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "17:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.8,
+  "number_of_ratings": 1659,
+  "price_range": 4
+ },
+ {
+  "location_id": "doordash-han-dynasty-east-village",
+  "name": "Han Dynasty (East Village)",
+  "address": {
+   "lat": 40.7322,
+   "lng": -73.9877,
+   "street": "90 3rd Ave, New York, NY 10003"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.0,
+  "number_of_ratings": 1453,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-grill-21",
+  "name": "Grill 21",
+  "address": {
+   "lat": 40.736,
+   "lng": -73.9798,
+   "street": "346 E 21st St, New York, NY 10010"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.31,
+  "number_of_ratings": 1101,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-citizen-of-chelsea",
+  "name": "Citizen of Chelsea",
+  "address": {
+   "lat": 40.749,
+   "lng": -74.0027,
+   "street": "401 W 25th St, New York, NY 10001"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "07:00:00",
+    "end_time": "16:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.8,
+  "number_of_ratings": 1035,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-los-mariscos",
+  "name": "Los Mariscos",
+  "address": {
+   "lat": 40.742,
+   "lng": -74.0057,
+   "street": "409 W 15th St (Chelsea Market), New York, NY 10011"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.57,
+  "number_of_ratings": 917,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-friedman-s-chelsea-market",
+  "name": "Friedman's (Chelsea Market)",
+  "address": {
+   "lat": 40.7424,
+   "lng": -74.0058,
+   "street": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "09:00:00",
+    "end_time": "16:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 4.35,
+  "number_of_ratings": 671,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-the-halal-guys-14th-street",
+  "name": "The Halal Guys (14th Street)",
+  "address": {
+   "lat": 40.7326,
+   "lng": -73.9848,
+   "street": "307 E 14th St, New York, NY 10003"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "04:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": true,
+  "average_rating": 3.8,
+  "number_of_ratings": 865,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-tim-ho-wan-east-village",
+  "name": "Tim Ho Wan East Village",
+  "address": {
+   "lat": 40.7314,
+   "lng": -73.9903,
+   "street": "85 4th Ave, New York, NY 10003"
+  },
+  "cuisine": "chinese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "20:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.21,
+  "number_of_ratings": 4265,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-the-lobster-place-chelsea-market",
+  "name": "The Lobster Place (Chelsea Market)",
+  "address": {
+   "lat": 40.7424,
+   "lng": -74.006,
+   "street": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 662,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-los-tacos-no-1-chelsea-market",
+  "name": "Los Tacos No. 1 (Chelsea Market)",
+  "address": {
+   "lat": 40.7424,
+   "lng": -74.006,
+   "street": "75 9th Ave, New York, NY 10011"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.46,
+  "number_of_ratings": 4073,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-zou-zou-s",
+  "name": "Zou Zou's",
+  "address": {
+   "lat": 40.7527,
+   "lng": -73.997,
+   "street": "385 9th Ave, Suite 85, New York, NY 10001"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 949,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-soothr-thai-noodle-bar",
+  "name": "Soothr Thai Noodle Bar",
+  "address": {
+   "lat": 40.7318,
+   "lng": -73.9861,
+   "street": "204 E 13th St, New York, NY 10003"
+  },
+  "cuisine": "thai",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.69,
+  "number_of_ratings": 3182,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-pastis",
+  "name": "Pastis",
+  "address": {
+   "lat": 40.7395,
+   "lng": -74.0059,
+   "street": "52 Gansevoort St, New York, NY 10014"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "15:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 3.85,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-ippudo-ny-east-village",
+  "name": "Ippudo NY (East Village)",
+  "address": {
+   "lat": 40.7309,
+   "lng": -73.9903,
+   "street": "65 4th Ave, New York, NY 10003"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 16336,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-empire-diner",
+  "name": "Empire Diner",
+  "address": {
+   "lat": 40.7466,
+   "lng": -74.0054,
+   "street": "210 10th Ave, New York, NY 10011"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "09:00:00",
+    "end_time": "23:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.23,
+  "number_of_ratings": 418,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-t-a-pol",
+  "name": "T\u00eda Pol",
+  "address": {
+   "lat": 40.747,
+   "lng": -74.0055,
+   "street": "205 10th Ave, New York, NY 10011"
+  },
+  "cuisine": "mediterranean",
+  "open_hours": [
+   {
+    "start_time": "15:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.4,
+  "number_of_ratings": 1059,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-ippudo-ny",
+  "name": "Ippudo NY",
+  "address": {
+   "lat": 40.7305,
+   "lng": -73.9899,
+   "street": "65 4th Ave, New York, NY 10003"
+  },
+  "cuisine": "japanese",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "22:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.15,
+  "number_of_ratings": 10827,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-ci-siamo",
+  "name": "Ci Siamo",
+  "address": {
+   "lat": 40.753,
+   "lng": -73.9985,
+   "street": "440 W 33rd St, Suite 100, New York, NY 10001"
+  },
+  "cuisine": "italian",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
     "end_time": "22:00:00"
    }
   ],
   "minimum_order_subtotal": 2500,
-  "allergen_data_verified": false
+  "allergen_data_verified": false,
+  "average_rating": 4.25,
+  "number_of_ratings": 0,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-artichoke-basille-s-pizza-e-14th-st",
+  "name": "Artichoke Basille's Pizza (E 14th St)",
+  "address": {
+   "lat": 40.7318,
+   "lng": -73.9834,
+   "street": "321 E 14th St, New York, NY 10003"
+  },
+  "cuisine": "pizza",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "05:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 4307,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-sarge-s-delicatessen-diner",
+  "name": "Sarge's Delicatessen & Diner",
+  "address": {
+   "lat": 40.7478,
+   "lng": -73.9762,
+   "street": "548 3rd Ave, New York, NY 10016"
+  },
+  "cuisine": "sandwich",
+  "open_hours": [
+   {
+    "start_time": "10:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.2,
+  "number_of_ratings": 1719,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-veselka",
+  "name": "Veselka",
+  "address": {
+   "lat": 40.7288,
+   "lng": -73.9873,
+   "street": "144 2nd Ave, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "09:00:00",
+    "end_time": "00:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.31,
+  "number_of_ratings": 3485,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-madame-vo",
+  "name": "Madame Vo",
+  "address": {
+   "lat": 40.729,
+   "lng": -73.9861,
+   "street": "212 E 10th St, New York, NY 10003"
+  },
+  "cuisine": "vietnamese",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.37,
+  "number_of_ratings": 1216,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-saigon-shack",
+  "name": "Saigon Shack",
+  "address": {
+   "lat": 40.7295,
+   "lng": -74.0005,
+   "street": "114 MacDougal St, New York, NY 10012"
+  },
+  "cuisine": "vietnamese",
+  "open_hours": [
+   {
+    "start_time": "11:00:00",
+    "end_time": "21:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.1,
+  "number_of_ratings": 2841,
+  "price_range": 1
+ },
+ {
+  "location_id": "doordash-atla",
+  "name": "Atla",
+  "address": {
+   "lat": 40.7267,
+   "lng": -73.994,
+   "street": "372 Lafayette St, New York, NY 10012"
+  },
+  "cuisine": "mexican",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": false,
+  "average_rating": 4.04,
+  "number_of_ratings": 422,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-hanoi-house",
+  "name": "Hanoi House",
+  "address": {
+   "lat": 40.7274,
+   "lng": -73.9838,
+   "street": "119 St Marks Pl, New York, NY 10009"
+  },
+  "cuisine": "vietnamese",
+  "open_hours": [
+   {
+    "start_time": "17:30:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.3,
+  "number_of_ratings": 870,
+  "price_range": 2
+ },
+ {
+  "location_id": "doordash-fish-cheeks",
+  "name": "Fish Cheeks",
+  "address": {
+   "lat": 40.7263,
+   "lng": -73.9927,
+   "street": "55 Bond St, New York, NY 10012"
+  },
+  "cuisine": "thai",
+  "open_hours": [
+   {
+    "start_time": "12:00:00",
+    "end_time": "22:00:00"
+   }
+  ],
+  "minimum_order_subtotal": 2500,
+  "allergen_data_verified": true,
+  "average_rating": 4.4,
+  "number_of_ratings": 2019,
+  "price_range": 3
+ },
+ {
+  "location_id": "doordash-sigiri",
+  "name": "Sigiri",
+  "address": {
+   "lat": 40.7262,
+   "lng": -73.9868,
+   "street": "91 1st Ave, New York, NY 10003"
+  },
+  "cuisine": "american",
+  "open_hours": [
+   {
+    "start_time": "11:30:00",
+    "end_time": "21:30:00"
+   }
+  ],
+  "minimum_order_subtotal": 1500,
+  "allergen_data_verified": false,
+  "average_rating": 4.5,
+  "number_of_ratings": 1030,
+  "price_range": 2
  }
 ]
