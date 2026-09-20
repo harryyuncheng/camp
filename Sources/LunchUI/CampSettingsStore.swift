@@ -425,7 +425,7 @@ public final class CampSettingsStore: ObservableObject {
         recommenderBusy = true; recommenderError = nil
         defer { recommenderBusy = false }
         do { recommenderHealth = try await client().health() }
-        catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run uvicorn camp.api:app --port 8788" }
+        catch { recommenderHealth = nil; recommenderError = "\(error.localizedDescription) Start it with: cd backend && uv run camp serve" }
     }
 
     /// Called by the platform shell when the lunch card changes phase. Only sessions that came from

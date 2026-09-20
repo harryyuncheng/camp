@@ -1,7 +1,7 @@
 # camp backend
 
-One FastAPI service (`uv run uvicorn camp.api:app --port 8788`) fronts one database. It serves the recommender,
-Today's lunch groups, the spending ledger, the Mac ↔ iPhone lunch session and the Ramp sandbox bridge. The former
+One FastAPI service (`uv run camp serve`, i.e. `uvicorn camp.api:app --port 8788 --reload`) fronts one database. It serves the recommender,
+Today's lunch groups, the natural-language craving search, the spending ledger, the Mac ↔ iPhone lunch session and the Ramp sandbox bridge. The former
 stand-alone bridge `server.py` is retired; its endpoints moved to `/v1/ramp` unchanged and its SQLite ledger became
 the `ramp_attempts` table.
 
@@ -11,8 +11,13 @@ the `ramp_attempts` table.
 cd backend
 cp .env.example .env        # RAMP_CLIENT_ID / RAMP_CLIENT_SECRET, CAMP_DATABASE_URL (Postgres) …
 uv sync --extra dev
-uv run uvicorn camp.api:app --port 8788
+uv run camp serve            # :8788 with --reload; `--host 0.0.0.0` for the phone, `--no-reload` for a daemon
 ```
+
+Every endpoint the app uses (recommender, groups, `/v1/craving`, ledger, Ramp) is on this one process and one URL.
+Running `uvicorn camp.api:app` by hand without `--port 8788` listens on :8000, which the app is not pointed at, and
+any process still holding :8788 keeps answering the app with an older route table (a `Not Found` from a new feature
+is the symptom); stop it with `lsof -ti :8788 | xargs kill`.
 
 `CAMP_DATABASE_URL=postgresql://localhost/camp` (Postgres.app) is the intended setup; unset it to fall back to the
 `camp.db` SQLite file. Tables are created on startup. In the app, Demo → Recommendation service → `http://127.0.0.1:8788`

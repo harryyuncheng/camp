@@ -1,6 +1,6 @@
 import Foundation
 
-/// Foundation-only client for the Python recommender (`uv run uvicorn camp.api:app --port 8788`).
+/// Foundation-only client for the Python recommender (`uv run camp serve`).
 public struct RecommendationClient {
     public let base: URL
     public var session: URLSession = .shared

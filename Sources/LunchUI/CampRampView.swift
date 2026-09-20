@@ -59,7 +59,7 @@ final class CampRampModel: ObservableObject {
             guard result.environment == "sandbox" else { throw URLError(.badServerResponse) }
             guard revision == connectionRevision else { return }
             snapshot = result; connectedBackend = base
-        } catch { self.error = "\(error.localizedDescription) Start the camp backend (uv run uvicorn camp.api:app --port 8788) if it isn’t running." }
+        } catch { self.error = "\(error.localizedDescription) Start the camp backend (cd backend && uv run camp serve) if it isn’t running." }
     }
 
     func prepare(_ backend: String, token: String?) async {

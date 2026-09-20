@@ -9,7 +9,7 @@ The Demo tab connects to Ramp through a local Python backend, lists active sandb
 ```sh
 cp backend/.env.example backend/.env
 # Add your sandbox credentials to backend/.env.
-python3 backend/server.py
+(cd backend && uv run camp serve)   # the one backend, on the port the app expects (8788)
 ```
 
 Open camp → Demo → **Connect / refresh sandbox**. Choose the company payer and allocation before clicking **Create sandbox fund**. No food order or charge is placed.
@@ -163,8 +163,8 @@ uv run camp run-batch --days 3            # office lunch batches on synthetic da
 uv run camp run-home                      # single home order (argmax, full fee)
 uv run camp feedback-demo                 # NL feedback → events → profile updates
 uv run camp eval --backends mock          # §8 harness; add jev,llm with keys set
-uv run uvicorn camp.api:app --port 8788  # the one backend: recommender, groups, ledger, sync and Ramp bridge
-CAMP_TOKEN=pick-a-secret uv run uvicorn camp.api:app --host 0.0.0.0 --port 8788  # also reachable from the phone
+uv run camp serve                         # the one backend on :8788 (--reload on): recommender, groups, craving search, ledger, sync, Ramp
+CAMP_TOKEN=pick-a-secret uv run camp serve --host 0.0.0.0   # also reachable from the phone
 ```
 
 Database: everything server-owned lives in one Postgres database when `CAMP_DATABASE_URL` is set (in `backend/.env`
@@ -202,8 +202,9 @@ need partner access.
 
 ## Native app ↔ recommender
 
-One local service: `cd backend && uv run uvicorn camp.api:app --port 8788` (recommender, groups, ledger, sync and the
-Ramp sandbox bridge at `/v1/ramp`; `backend/server.py` is retired). In the app, Demo → Recommendation
+One local service: `cd backend && uv run camp serve` (recommender, groups, craving search, ledger, sync and the
+Ramp sandbox bridge at `/v1/ramp`; `backend/server.py` is retired). Every feature the app talks to lives behind that
+single URL; a bare `uvicorn camp.api:app` without `--port 8788` listens on :8000, which the app is not pointed at. In the app, Demo → Recommendation
 service → Connect, then **Request lunch offer**: the app sends a `MealContext` (saved preferences, allergies,
 lunch window, office policy, presence preview) and gets a `MealOffer` back (up to three options with all-in
 estimated prices under the office batch and an "ordered alone" baseline). On the Mac the offer opens in the notch
@@ -227,8 +228,8 @@ Stale writes get a 409 and the device adopts the newer record. Single user, one 
 
 To connect the phone (same Wi-Fi, or the Mac joined to the phone's Personal Hotspot):
 
-1. Run the backend bound to the network with a token: `cd backend && CAMP_TOKEN=pick-a-secret uv run uvicorn
-   camp.api:app --host 0.0.0.0 --port 8788`. Never bind `0.0.0.0` without `CAMP_TOKEN`; the API fronts your keys.
+1. Run the backend bound to the network with a token: `cd backend && CAMP_TOKEN=pick-a-secret uv run camp serve
+   --host 0.0.0.0`. Never bind `0.0.0.0` without `CAMP_TOKEN`; the API fronts your keys.
 2. On the Mac, Demo → Recommendation service: `http://127.0.0.1:8788`, the token, **Save**.
 3. On the phone, the same card: `http://<mac-name>.local:8788` (`scutil --get LocalHostName` on the Mac; the `.local`
    name survives switching between Wi-Fi and hotspot) or the Mac's LAN IP, the same token, **Save**. iOS asks for

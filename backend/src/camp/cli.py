@@ -102,6 +102,13 @@ def feedback_demo(seed: int = 0):
 
 
 @app.command()
+def serve(host: str = "127.0.0.1", port: int = 8788, reload: bool = True):
+    """Run the one backend (recommender, groups, craving search, ledger, Ramp) on the port the app expects."""
+    import uvicorn
+    uvicorn.run("camp.api:app", host=host, port=port, reload=reload)
+
+
+@app.command()
 def migrate(source: str = "camp.db", target: str | None = None):
     """Copy every table from a SQLite file (or any store URL) into the target database (default: CAMP_DATABASE_URL)."""
     import os
