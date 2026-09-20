@@ -10,7 +10,7 @@ def test_catalog_is_near_ramp_hq_and_well_formed():
     names = {r.name.lower() for r in rows}
     assert any("sweetgreen" in n for n in names) and any(n.startswith("dig") for n in names)   # the corporate-lunch staples
     for r in rows:
-        assert haversine_km(LatLng(lat=r.lat, lng=r.lng), catalog.RAMP_HQ) <= 2.6, r.name
+        assert haversine_km(LatLng(lat=r.lat, lng=r.lng), catalog.RAMP_HQ) <= catalog.SERVICE_RADIUS_KM, r.name
         assert r.cuisine in CUISINES and 1 <= r.price_level <= 4 and len(r.dishes) >= 3
         for d in r.dishes:
             assert 100 <= d.price_cents <= 20000 and d.dish_type in DISH_TYPES and d.protein in PROTEINS
@@ -27,7 +27,7 @@ def test_to_models_tags_and_translates():
     assert any(r.rating for r in rests) and any(i.popular for i in items)
     boston = LatLng(lat=42.36, lng=-71.09)
     moved, _ = catalog.to_models(n=20, seed=3, center=boston)
-    assert all(haversine_km(r.location, boston) <= 2.7 for r in moved)
+    assert all(haversine_km(r.location, boston) <= catalog.SERVICE_RADIUS_KM + 0.1 for r in moved)
     assert moved[0].id == rests[0].id     # ids are stable across centres
 
 

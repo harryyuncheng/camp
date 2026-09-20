@@ -1,0 +1,284 @@
+# Fuller menus for existing Flatiron / NoMad places (ids match ramp_hq_restaurants.json). Header keys are optional
+# for existing ids; only dishes are appended. Prices are menu-typical estimates unless `prices: menu`.
+
+@ mangia-23rd-st
+--
+Chicken Parm Hero | 16.95 | Breaded chicken cutlet, marinara, melted mozzarella on a semolina hero
+Turkey & Brie Sandwich | 15.95 | Roast turkey, brie, apple, honey mustard, arugula on multigrain
+Roast Beef & Cheddar | 16.50 | Rare roast beef, aged cheddar, horseradish cream, tomato, red onion on ciabatta
+Grilled Vegetable Panini | 14.50 | Zucchini, eggplant, roasted peppers, goat cheese, pesto on focaccia | - | - | v
+Salmon Nicoise Salad | 18.95 | Seared salmon, haricots verts, potatoes, olives, hard-boiled egg, cherry tomato
+Greek Salad | 14.50 | Romaine, feta, kalamata olives, cucumber, tomato, red onion, oregano vinaigrette | - | - | v
+Salad Bar (per lb) | 14.99 | Build-your-own from 40+ toppings: grains, roasted vegetables, proteins, greens | salad | none
+Pinsa Margherita | 15.00 | Roman-style pinsa, tomato, fresh mozzarella, basil | pizza | - | v
+Pinsa Prosciutto & Arugula | 17.00 | Pinsa with mozzarella, prosciutto di Parma, arugula, shaved parmigiano | pizza
+Penne alla Vodka | 15.50 | Penne, vodka-tomato cream sauce, parmigiano | - | - | v
+Lasagna Bolognese | 16.50 | Layered pasta, beef ragù, béchamel, parmigiano
+Chicken Marsala (hot) | 17.50 | Chicken breast in marsala mushroom sauce with roasted potatoes
+Eggplant Parmigiana | 15.50 | Breaded eggplant, marinara, mozzarella, parmigiano | - | - | v
+Minestrone Soup | 8.50 | Vegetable and bean soup with ditalini | - | - | vg
+Tomato Basil Soup | 8.50 | Cream of tomato soup, basil | - | - | v
+Tiramisu | 7.50 | Espresso-soaked sponge, mascarpone cream, cocoa | - | - | v
+Fresh Squeezed Orange Juice | 6.50 | Oranges, juiced to order | - | - | vg
+
+@ tacombi-flatiron
+--
+Chicken Tinga Burrita | 14.50 | Shredded chipotle chicken, black beans, rice, cheese, salsa in a flour tortilla | wrap
+Carne Asada Burrita | 15.50 | Grilled steak, black beans, rice, jack cheese, salsa verde in a flour tortilla | wrap
+Chicken Quesadilla | 13.50 | Flour tortilla, Oaxaca cheese, chicken tinga, salsa
+Cheese Quesadilla | 11.00 | Flour tortilla with melted Oaxaca cheese, salsa, crema | - | - | v
+Esquites | 6.50 | Roasted corn off the cob, chipotle mayo, cotija, lime | - | - | v
+Guacamole & Chips | 10.50 | Avocado, onion, cilantro, lime, corn tortilla chips | - | - | vg gf
+Black Bean Taco | 4.75 | Refried black beans, queso fresco, salsa verde, pickled onion on a corn tortilla | - | - | v
+Cauliflower Taco | 5.00 | Roasted cauliflower, pipián verde, pickled cabbage on a corn tortilla | - | - | vg
+Chorizo & Potato Taco | 5.25 | Crumbled chorizo, potato, salsa verde, cilantro on a corn tortilla
+Grilled Salmon Taco | 6.50 | Achiote salmon, cabbage slaw, chipotle mayo on a corn tortilla
+Taco Bowl (Chicken Tinga) | 15.50 | Chicken tinga over rice and black beans, lettuce, cheese, salsa, crema
+Taco Bowl (Carne Asada) | 16.50 | Grilled steak over rice and black beans, avocado, pico, crema
+Ensalada Tacombi | 13.50 | Romaine, avocado, black beans, corn, cotija, tortilla strips, cilantro-lime dressing | - | - | v
+Pozole Rojo | 12.00 | Pork and hominy stew, guajillo broth, cabbage, radish, lime
+Tres Leches | 8.00 | Vanilla sponge soaked in three milks, cinnamon | - | - | v
+Horchata | 5.00 | Rice milk, cinnamon, vanilla | - | - | vg
+Agua Fresca | 5.00 | Fruit water of the day (hibiscus or tamarind) | - | - | vg
+
+@ junoon
+--
+Samosa Chaat | 16.00 | Crushed potato samosa, chickpeas, yogurt, tamarind and mint chutneys | - | - | v
+Tandoori Paneer Tikka | 18.00 | Marinated paneer, peppers, onion from the tandoor, mint chutney | - | - | v
+Murgh Malai Tikka | 19.00 | Cream-and-cardamom marinated chicken from the tandoor
+Lamb Seekh Kebab | 21.00 | Minced lamb kebabs, ginger, green chili, mint chutney | - | - | s1
+Butter Chicken | 28.00 | Tandoori chicken in tomato-fenugreek makhani sauce | - | - | s1
+Goan Fish Curry | 30.00 | Halibut in coconut, kokum and red chili curry | - | - | s2
+Lamb Biryani | 32.00 | Dum-cooked basmati rice with lamb, saffron, mint, raita
+Dal Makhani | 18.00 | Slow-cooked black lentils, butter, cream | - | - | v
+Palak Paneer | 22.00 | Paneer in spinach with garlic and cumin | - | - | v
+Baingan Bharta | 20.00 | Smoked eggplant mash, onion, tomato, cilantro | - | - | vg
+Steamed Basmati Rice | 6.00 | Saffron-scented basmati rice | rice | none | vg gf
+Tandoori Roti | 5.00 | Whole wheat bread from the tandoor | - | - | vg
+Gulab Jamun | 12.00 | Milk dumplings in cardamom syrup, pistachio | - | - | v
+Mango Lassi | 8.00 | Yogurt, Alphonso mango, cardamom | - | - | v gf
+
+@ kofoo
+--
+Spicy Pork Bob (E5) | 14.50 | Gochujang stir-fried pork over rice, kimchi, pickled radish | rice | pork | s2
+Chicken Teriyaki Bob (E6) | 13.50 | Grilled teriyaki chicken over rice with steamed vegetables
+Tofu Bibimbob (E1) | 13.00 | Rice, seasoned vegetables, pan-fried tofu, gochujang, sesame oil | rice | tofu | vg s1
+Salmon Bob (E7) | 15.50 | Grilled soy-glazed salmon over rice, sesame spinach, radish
+Bulgogi Kimchi Fried Rice | 14.00 | Fried rice with beef bulgogi, kimchi, egg, scallion | rice | beef | s1
+Kimchi Fried Rice (V) | 12.50 | Fried rice with kimchi, vegetables and a fried egg | rice | egg | v s1
+Tuna Kimbob (K4) | 10.50 | Seaweed rice roll with spicy tuna mayo, pickled radish, cucumber
+Vegetable Kimbob (K1) | 9.00 | Seaweed rice roll with pickled radish, carrot, spinach, egg, burdock | - | - | v
+Spicy Pork Kimbob (K6) | 10.50 | Seaweed rice roll with gochujang pork, lettuce, radish | - | - | s2
+Yook Gae Jang (S4) | 15.00 | Spicy shredded beef and scallion soup with glass noodles | soup | beef | s2
+Dduk Mandu Guk (S5) | 14.00 | Rice cake and dumpling soup in beef broth | soup | beef
+Mandu (6 pc) | 8.50 | Pan-fried pork and vegetable dumplings, soy dipping sauce
+Vegetable Mandu (6 pc) | 8.00 | Pan-fried vegetable dumplings, soy dipping sauce | - | - | vg
+Ddukbokki | 11.00 | Chewy rice cakes in sweet-spicy gochujang sauce with fish cake | other | none | s2 +fish nv
+Japchae (side) | 8.00 | Stir-fried sweet potato glass noodles, vegetables, sesame | noodles | none | v
+Kimchi (side) | 4.00 | House napa cabbage kimchi | - | - | s2 nv +fish
+Seaweed Salad | 5.00 | Marinated seaweed, sesame, rice vinegar | - | - | vg
+
+@ lenwich-flatiron
+--
+Chicken Parmesan Hero | 14.95 | Breaded chicken, marinara, melted mozzarella on a toasted hero
+Buffalo Chicken Sandwich | 14.50 | Grilled chicken, buffalo sauce, blue cheese, lettuce, tomato on a hero | - | - | s1
+Roast Beef & Cheddar | 14.95 | Rare roast beef, cheddar, horseradish mayo, lettuce, tomato on ciabatta
+Pastrami Reuben | 15.50 | Hot pastrami, swiss, sauerkraut, Russian dressing on grilled rye
+Tuna Melt | 13.95 | Albacore tuna salad, cheddar, tomato on grilled sourdough
+Grilled Chicken Caesar Wrap | 13.50 | Grilled chicken, romaine, parmesan, caesar dressing in a wheat wrap
+Veggie Delight | 12.95 | Avocado, hummus, cucumber, roasted peppers, sprouts, lettuce on multigrain | - | - | vg
+Caprese Panini | 13.50 | Fresh mozzarella, tomato, basil, balsamic glaze pressed on ciabatta | - | - | v
+BLT | 12.95 | Bacon, lettuce, tomato, mayo on toasted white
+Egg & Cheese on a Roll | 6.95 | Two eggs, American cheese on a kaiser roll | - | egg | v
+Bacon Egg & Cheese | 8.95 | Two eggs, bacon, American cheese on a kaiser roll | - | pork
+Grilled Chicken Salad | 14.50 | Grilled chicken, mixed greens, tomato, cucumber, carrots, balsamic vinaigrette | - | - | gf
+Greek Salad | 12.95 | Romaine, feta, olives, cucumber, tomato, red onion, oregano vinaigrette | - | - | v gf
+Chicken Noodle Soup | 7.95 | Chicken, egg noodles, carrot, celery in broth
+Tomato Bisque | 7.95 | Creamy tomato soup | - | - | v
+Chocolate Chip Cookie | 3.50 | Soft-baked chocolate chip cookie | - | - | v
+Fresh Fruit Cup | 6.50 | Seasonal cut fruit | - | - | vg gf
+
+@ cote-korean-steakhouse
+--
+Galbi Jjim | 48.00 | Braised short rib, radish, jujube, chestnut in soy-sweet sauce | other | beef
+Kimchi Jjigae | 18.00 | Aged kimchi stew with pork belly and tofu | soup | pork | s2
+Doenjang Jjigae | 16.00 | Fermented soybean stew with tofu, zucchini, mushroom | soup | tofu | v
+Japchae | 22.00 | Sweet potato glass noodles, beef, mushrooms, vegetables, sesame | noodles | beef
+Kimchi Fried Rice | 19.00 | Kimchi, pork belly, egg, scallion, sesame oil | rice | pork | s1
+Truffle Fried Rice | 24.00 | Fried rice with black truffle, egg, chives | rice | egg | v
+Marinated Galbi (a la carte) | 58.00 | Soy-marinated prime short rib for the tabletop grill | other | beef
+Pork Belly (a la carte) | 26.00 | Thick-cut pork belly for the grill with ssamjang | other | pork
+Spicy Pork (a la carte) | 26.00 | Gochujang-marinated pork shoulder for the grill | other | pork | s2
+Scallion Salad | 9.00 | Shaved scallion, sesame, chili flakes | - | - | vg s1
+Banchan Set | 12.00 | Kimchi, pickled radish, seasoned spinach, bean sprouts | other | none | vg s1
+Corn Cheese | 12.00 | Sweet corn baked with mozzarella and mayo | other | none | v
+Egg Souffle | 12.00 | Steamed egg custard with scallion and dashi | other | egg | nv
+Soft Serve | 9.00 | Soy sauce caramel soft serve | other | none | v
+
+@ la-pizza-la-pasta-at-eataly-flatiron
+--
+Pizza Marinara | 17.00 | Tomato, garlic, oregano, extra virgin olive oil | - | - | vg
+Pizza Quattro Formaggi | 24.00 | Mozzarella, gorgonzola, fontina, parmigiano | - | - | v
+Pizza Prosciutto e Rucola | 26.00 | Tomato, mozzarella, prosciutto di Parma, arugula, parmigiano
+Pizza Salsiccia e Friarielli | 25.00 | Mozzarella, Italian sausage, broccoli rabe, chili | - | - | s1
+Pizza Funghi | 24.00 | Mozzarella, mixed mushrooms, taleggio, thyme | - | - | v
+Pizza Burrata | 26.00 | Tomato, burrata, basil, olive oil | - | - | v
+Rigatoni all'Amatriciana | 24.00 | Rigatoni, guanciale, tomato, pecorino, chili | - | - | s1
+Spaghetti alla Carbonara | 25.00 | Spaghetti, guanciale, egg yolk, pecorino, black pepper
+Tagliatelle al Tartufo | 32.00 | Fresh tagliatelle, butter, black truffle, parmigiano | - | - | v
+Lasagna alla Bolognese | 26.00 | Fresh pasta layered with beef ragù, béchamel, parmigiano
+Ravioli di Ricotta e Spinaci | 24.00 | Ricotta-spinach ravioli, butter, sage, parmigiano | - | - | v
+Gnocchi al Pesto | 23.00 | Potato gnocchi, Genovese basil pesto, pine nuts | - | - | v
+Linguine alle Vongole | 28.00 | Linguine, clams, white wine, garlic, parsley
+Insalata Caprese | 18.00 | Mozzarella di bufala, tomato, basil, olive oil | - | - | v gf
+Tiramisù | 12.00 | Mascarpone, espresso-soaked savoiardi, cocoa | - | - | v
+
+@ maman-nomad
+--
+Grilled Cheese & Tomato Soup | 16.00 | Gruyère and cheddar on sourdough with a cup of tomato soup | sandwich | none | v
+Nutty Chicken Sandwich | 16.50 | Roasted chicken, arugula, pesto, sun-dried tomato, walnut on baguette
+Prosciutto & Brie Baguette | 16.00 | Prosciutto, brie, arugula, fig jam on baguette
+Croque Monsieur | 15.50 | Ham, gruyère, béchamel on country bread
+Quinoa Salad | 15.50 | Quinoa, roasted vegetables, feta, herbs, lemon vinaigrette | - | - | v gf
+Ratatouille Bowl | 15.00 | Stewed eggplant, zucchini, peppers over quinoa with goat cheese | - | - | v gf
+Salmon Grain Bowl | 19.00 | Roasted salmon, farro, kale, avocado, lemon-dill yogurt
+Tomato Soup | 9.00 | Roasted tomato soup with basil | - | - | v
+Lentil Soup | 9.00 | French lentil soup with carrot and thyme | - | - | vg
+Nutty Chocolate Chip Cookie | 4.75 | Maman's signature cookie with walnuts, almonds, macadamia and dark chocolate | - | - | v
+Lavender Hot Chocolate | 6.50 | Dark chocolate, milk, lavender | - | - | v
+Latte | 5.25 | Espresso with steamed milk | - | - | v
+Butter Croissant | 4.75 | Laminated butter croissant | - | - | v
+Banana Bread | 5.50 | Chocolate chip banana bread slice | - | - | v
+Rose Latte | 6.25 | Espresso, steamed milk, rose syrup | - | - | v
+
+@ trattoria-zero-otto-nove
+--
+Pizza San Matteo | 24.00 | Mozzarella, butternut squash cream, pancetta, basil
+Pizza Salsiccia | 23.00 | Tomato, mozzarella, Italian sausage, broccoli rabe
+Pizza Bufalina | 25.00 | Tomato, buffalo mozzarella, basil | - | - | v
+Pizza Capricciosa | 24.00 | Tomato, mozzarella, ham, mushrooms, artichokes, olives
+Lasagna | 24.00 | House-made lasagna with beef ragù and béchamel
+Gnocchi alla Sorrentina | 22.00 | Potato gnocchi baked with tomato, mozzarella, basil | - | - | v
+Spaghetti alla Carbonara | 23.00 | Guanciale, egg, pecorino, black pepper
+Paccheri al Ragù | 24.00 | Paccheri with slow-cooked Salerno-style ragù | noodles | beef
+Tagliatelle ai Funghi | 23.00 | Tagliatelle, wild mushrooms, cream, parmigiano | - | - | v
+Melanzane alla Parmigiana | 18.00 | Baked eggplant, tomato, mozzarella, parmigiano | - | - | v
+Polpette | 16.00 | Beef and pork meatballs in tomato sauce with ricotta
+Insalata Caprese | 16.00 | Mozzarella, tomato, basil, olive oil | - | - | v gf
+Arugula Salad | 14.00 | Arugula, shaved parmigiano, cherry tomato, lemon | - | - | v gf
+Chicken Parmigiana | 26.00 | Breaded chicken, tomato, mozzarella, side of spaghetti
+Tiramisù | 11.00 | Classic mascarpone tiramisù | - | - | v
+
+@ hill-country-barbecue-market
+--
+Pork Spare Ribs (1/2 lb) | 14.00 | Dry-rubbed pork spare ribs, smoked over post oak | other | pork | gf
+Beef Rib (per lb) | 44.00 | Giant smoked beef short rib by the pound | other | beef | gf
+Smoked Turkey Breast (1/2 lb) | 13.00 | Sliced smoked turkey breast | other | chicken | gf
+Market Sausage (link) | 6.50 | Kreuz Market beef sausage link | other | beef | gf
+Pulled Pork (1/2 lb) | 12.00 | Slow-smoked pulled pork shoulder | other | pork | gf
+Smoked Half Chicken | 15.00 | Half chicken, dry rub, post-oak smoked | other | chicken | gf
+Pitmaster Sampler | 32.00 | Brisket, sausage, ribs, and a side | other | beef
+Green Bean Casserole (8 oz) | 6.50 | Green beans, mushroom cream, crispy onions | - | - | v
+Baked Beans with Burnt Ends | 6.50 | Pinto beans with brisket burnt ends | other | beef
+Cornbread | 4.50 | Skillet cornbread with honey butter | - | - | v
+Coleslaw (8 oz) | 5.50 | Creamy cabbage slaw | - | - | v gf
+Potato Salad (8 oz) | 5.50 | Mustard potato salad | - | - | v gf
+Sweet Potato Bourbon Mash (8 oz) | 6.50 | Whipped sweet potato, bourbon, brown sugar | - | - | v gf
+Banana Pudding | 7.50 | Layered banana pudding with vanilla wafers | - | - | v
+Pecan Pie | 7.50 | Texas pecan pie slice | - | - | v
+Big Red Soda | 3.50 | Texas cream soda | - | - | vg gf
+Sweet Tea | 3.50 | Sweet iced tea | - | - | vg gf
+
+@ s-p-lunch
+--
+Chicken Salad Sandwich | 14.00 | House chicken salad, lettuce on challah
+Roast Turkey Club | 16.00 | Roast turkey, bacon, lettuce, tomato, mayo, triple-decker on toast
+Patty Melt | 17.00 | Beef patty, swiss, griddled onions on rye
+Cheeseburger Deluxe | 18.00 | Griddled burger, American cheese, lettuce, tomato, pickle, fries
+Corned Beef on Rye | 21.00 | Hot corned beef, mustard on rye
+Reuben | 22.00 | Pastrami, swiss, sauerkraut, Russian dressing on grilled rye
+Grilled Ham & Swiss | 14.00 | Ham, swiss on grilled rye
+Tuna Melt | 16.00 | Tuna salad, American cheese on grilled rye
+Chopped Liver Sandwich | 15.00 | Chopped chicken liver, onion on rye
+Split Pea Soup | 8.00 | Green split pea soup with ham hock
+Chicken Noodle Soup | 8.00 | Chicken, egg noodles, vegetables
+Chef's Salad | 17.00 | Turkey, ham, swiss, egg, tomato, cucumber on romaine | - | - | gf
+Egg Cream (chocolate) | 5.00 | Fox's U-bet syrup, milk, seltzer | - | - | v gf
+Lime Rickey | 5.00 | Lime syrup, seltzer | - | - | vg gf
+Black & White Cookie | 4.50 | Classic NYC black and white cookie | - | - | v
+Cheesecake | 8.00 | New York cheesecake slice | - | - | v
+
+@ little-beet-nomad
+--
+Harissa Chicken Bowl | 16.50 | Harissa chicken, brown rice, roasted sweet potato, cucumber, tahini | - | - | gf s1
+Sesame Ginger Salmon Bowl | 18.50 | Roasted salmon, brown rice, broccoli, pickled carrot, sesame ginger dressing | - | - | gf
+Smoky Chicken Bowl | 16.00 | Smoky spiced chicken, quinoa, roasted cauliflower, greens, green goddess | - | - | gf
+Steak Chimichurri Plate | 19.00 | Grilled steak, chimichurri, choice of two sides | other | beef | gf
+Roasted Cauliflower Bowl | 15.00 | Roasted cauliflower, quinoa, kale, chickpeas, lemon tahini | - | - | vg gf
+Falafel Salad | 15.50 | Beet falafel, greens, cucumber, tomato, pickled onion, tahini | - | - | vg gf
+Kale Caesar (Beet Style) | 13.50 | Kale, romaine, parmesan, gluten-free croutons, caesar dressing | - | - | v gf
+Sweet Potato Wedges | 6.00 | Roasted sweet potato wedges, herb salt | - | - | vg gf
+Roasted Brussels Sprouts | 6.50 | Brussels sprouts, lemon, chili flakes | - | - | vg gf s1
+Charred Broccoli | 6.00 | Broccoli with garlic and chili | - | - | vg gf s1
+Turmeric Cauliflower Rice | 6.00 | Riced cauliflower with turmeric and herbs | rice | none | vg gf
+Chicken Soup | 8.50 | Chicken, vegetables, brown rice in bone broth | - | - | gf
+Chocolate Chip Cookie (GF) | 4.00 | Gluten-free chocolate chip cookie | - | - | v gf
+Green Juice | 8.50 | Kale, cucumber, apple, lemon, ginger | - | - | vg gf
+
+@ cava
+--
+Chicken + RightRice Bowl | 14.50 | Grilled chicken, RightRice, tzatziki, cucumber, tomato, pickled onions | - | - | gf
+Spicy Lamb Meatballs Bowl | 15.50 | Spicy lamb meatballs, saffron basmati, harissa, feta, pickled onions | - | - | gf s2
+Grilled Steak Bowl | 16.50 | Grilled steak, SuperGreens, crazy feta, pita crisps, garlic dressing
+Crispy Falafel Bowl | 13.50 | Falafel, greens, hummus, cucumber, tomato, lemon herb tahini | - | - | vg
+Roasted Vegetable Bowl | 13.00 | Roasted vegetables, brown rice, hummus, red pepper hummus, pickled onions | - | - | vg gf
+Harissa Honey Chicken Bowl | 15.00 | Harissa honey chicken, saffron basmati, crazy feta, pita crisps | - | - | s1
+Chicken Pita | 13.50 | Grilled chicken, tzatziki, tomato, cucumber, pickled onions in pita | sandwich
+Lamb Meatball Pita | 14.50 | Spicy lamb meatballs, harissa, feta, cabbage slaw in pita | sandwich | - | s2
+Steak Pita | 15.50 | Grilled steak, crazy feta, arugula, tomato, garlic dressing in pita | sandwich
+Greek Salad | 13.00 | Romaine, feta, tomato, cucumber, olives, pickled onions, Greek vinaigrette | - | - | v gf
+Lentil Avocado Bowl | 14.00 | Black lentils, avocado, SuperGreens, cucumber, tahini | - | - | vg gf
+Crazy Feta + Pita Chips | 6.00 | Whipped jalapeño feta with pita chips | - | - | v s1
+Tzatziki + Pita Chips | 5.50 | Cucumber yogurt dip with pita chips | - | - | v
+Side Pita | 2.00 | Warm pita bread | - | - | vg
+Pita Chips | 3.50 | Sea salt pita chips | - | - | vg
+Jalapeño Cucumber Lime Juice | 4.50 | Cucumber, lime, jalapeño | - | - | vg gf s1
+Blueberry Lavender Lemonade | 4.50 | Lemonade with blueberry and lavender | - | - | vg gf
+
+@ wagamama-nomad
+--
+Shirodashi Pork Belly Ramen | 21.00 | Pork belly, ramen noodles in shirodashi broth, egg, menma, scallion
+Kare Burosu Ramen | 18.00 | Curried vegetable broth, udon, grilled tofu, mushrooms, pak choi | - | tofu | vg s1
+Chili Beef Ramen | 22.00 | Sirloin steak, chili, ramen noodles, beansprouts, red onion, lime | - | - | s2
+Chicken Firecracker | 19.00 | Chicken, mangetout, peppers, chili, sesame with white rice | rice | - | s3
+Shrimp Firecracker | 21.00 | Shrimp, mangetout, peppers, chili, sesame with white rice | rice | - | s3
+Chicken Pad Thai | 19.00 | Rice noodles, chicken, egg, chili, peanuts, beansprouts, lime | - | - | s1
+Yasai Pad Thai | 18.00 | Rice noodles, tofu, egg, chili, peanuts, beansprouts | - | tofu | v s1
+Teriyaki Beef Donburi | 22.00 | Sliced steak, teriyaki, sticky rice, kimchi, egg
+Grilled Duck Donburi | 23.00 | Shredded duck, spicy teriyaki, sticky rice, cucumber, egg | rice | chicken | s1
+Chicken Raisukaree | 20.00 | Chicken in coconut-lime curry, white rice, red onion, cilantro | curry | - | s1
+Bang Bang Cauliflower | 10.00 | Crispy cauliflower in firecracker sauce, shichimi, cilantro | - | - | vg s2
+Ebi Katsu | 12.00 | Panko-fried shrimp, chili garlic sauce, lime
+Chicken Gyoza (5 pc) | 10.00 | Steamed chicken dumplings, soy dipping sauce
+Yasai Gyoza (5 pc) | 9.00 | Steamed vegetable dumplings, soy dipping sauce | - | - | vg
+Edamame | 6.50 | Steamed soybeans with salt or chili garlic salt | - | - | vg gf
+Miso Soup + Pickles | 4.50 | Miso broth with wakame and tofu, Japanese pickles | - | - | vg
+Kare Lomen | 19.00 | Curried soup, ramen noodles, chicken, shiitake, pak choi | - | - | s1
+
+@ shake-shack-madison-square-park
+--
+SmokeShack | 10.99 | Cheeseburger with applewood bacon, chopped cherry peppers, ShackSauce | - | - | s1
+Bacon Cheeseburger | 10.29 | Cheeseburger topped with applewood-smoked bacon
+Hamburger | 7.49 | Angus beef patty with lettuce, tomato, pickle on a potato bun
+Hot Chicken | 9.99 | Crispy chicken breast, hot spice blend, slaw, pickles | sandwich | chicken | s2
+Veggie Shack | 9.49 | Black bean, brown rice and roasted beet patty, provolone, pickled onions | burger | none | v
+Hot Dog | 5.79 | Vienna all-beef hot dog on a potato bun | sandwich | beef
+Chicken Bites (6 pc) | 6.99 | Crispy whole white-meat chicken bites with dipping sauce | other | chicken
+Bacon Cheese Fries | 7.29 | Crinkle-cut fries, cheese sauce, applewood bacon | other | pork
+Vanilla Shake | 6.99 | Vanilla frozen custard shake | - | - | v gf
+Strawberry Shake | 6.99 | Strawberry frozen custard shake | - | - | v gf
+Black & White Shake | 6.99 | Vanilla custard with chocolate fudge | - | - | v gf
+Shack-made Lemonade | 3.99 | Fresh lemonade | - | - | vg gf
+Fifty/Fifty | 3.99 | Half lemonade, half iced tea | - | - | vg gf
+Vanilla Cone | 4.99 | Vanilla frozen custard on a cone | - | - | v
+Concrete (Shack Attack) | 7.49 | Chocolate custard blended with fudge, chocolate truffle cookie dough, brownie | other | none | v

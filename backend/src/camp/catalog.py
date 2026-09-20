@@ -17,6 +17,10 @@ from .filters import haversine_km
 from .models import ALLERGENS, CUISINES, DISH_TYPES, PROTEINS, Batch, FeeSchedule, LatLng, LunchGroup, MenuItem, OfferRecord, Order, Restaurant, ScheduledOrder
 
 RAMP_HQ = LatLng(lat=40.7424, lng=-73.9913)          # 28 W 23rd St, Flatiron
+# How far from the office a place may be and still be ordered from: the walkable core plus destination spots
+# (Chinatown, LES, West Village, Williamsburg, DUMBO) that a courier reaches inside a lunch window. It is the
+# default radius for `camp sync` and the bound every catalog row must satisfy.
+SERVICE_RADIUS_KM = 6.0
 FIXTURES = Path(__file__).parent / "providers" / "fixtures"
 DATASET = FIXTURES / "ramp_hq_restaurants.json"       # meal places (collected 2026-09-19)
 CAFES = FIXTURES / "ramp_hq_cafes.json"               # coffee / tea / bakeries (collected 2026-09-20); optional until present
@@ -157,7 +161,7 @@ def ensure_current(store, center: LatLng | None = None, seed: int = 0) -> bool:
         previous = have_by_id.get(r.id)
         if previous is None:
             updates.append(r)
-        elif center is not None and haversine_km(previous.location, center) > 8:
+        elif center is not None and haversine_km(previous.location, center) > SERVICE_RADIUS_KM + 2:
             previous.location = r.location
             updates.append(previous)
     missing = [item for item in items if item.id not in have_items]

@@ -394,6 +394,675 @@
         ]
        }
       ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d10",
+      "name": "Chicken Parm Hero",
+      "description": "Breaded chicken cutlet, marinara, melted mozzarella on a semolina hero",
+      "price": 1695,
+      "ingredients": [
+       "chicken parm",
+       "chicken cutlet",
+       "marinara",
+       "mozzarella",
+       "semolina"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d11",
+      "name": "Turkey & Brie Sandwich",
+      "description": "Roast turkey, brie, apple, honey mustard, arugula on multigrain",
+      "price": 1595,
+      "ingredients": [
+       "turkey",
+       "brie",
+       "apple",
+       "honey mustard",
+       "arugula"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d12",
+      "name": "Roast Beef & Cheddar",
+      "description": "Rare roast beef, aged cheddar, horseradish cream, tomato, red onion on ciabatta",
+      "price": 1650,
+      "ingredients": [
+       "roast beef",
+       "cheddar",
+       "aged cheddar",
+       "cream",
+       "tomato",
+       "red onion",
+       "ciabatta"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d13",
+      "name": "Grilled Vegetable Panini",
+      "description": "Zucchini, eggplant, roasted peppers, goat cheese, pesto on focaccia",
+      "price": 1450,
+      "ingredients": [
+       "zucchini",
+       "eggplant",
+       "roasted peppers",
+       "goat cheese",
+       "pesto",
+       "focaccia"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d14",
+      "name": "Salmon Nicoise Salad",
+      "description": "Seared salmon, haricots verts, potatoes, olives, hard-boiled egg, cherry tomato",
+      "price": 1895,
+      "ingredients": [
+       "salmon",
+       "potatoes",
+       "olives",
+       "hard-boiled egg",
+       "cherry tomato"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d15",
+      "name": "Greek Salad",
+      "description": "Romaine, feta, kalamata olives, cucumber, tomato, red onion, oregano vinaigrette",
+      "price": 1450,
+      "ingredients": [
+       "greek salad",
+       "romaine",
+       "feta",
+       "kalamata",
+       "olives",
+       "cucumber",
+       "tomato",
+       "red onion",
+       "oregano",
+       "vinaigrette"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d16",
+      "name": "Salad Bar (per lb)",
+      "description": "Build-your-own from 40+ toppings: grains, roasted vegetables, proteins, greens",
+      "price": 1499,
+      "ingredients": [
+       "greens"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "vegan",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d17",
+      "name": "Pinsa Margherita",
+      "description": "Roman-style pinsa, tomato, fresh mozzarella, basil",
+      "price": 1500,
+      "ingredients": [
+       "pinsa",
+       "tomato",
+       "fresh mozzarella",
+       "basil"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d18",
+      "name": "Pinsa Prosciutto & Arugula",
+      "description": "Pinsa with mozzarella, prosciutto di Parma, arugula, shaved parmigiano",
+      "price": 1700,
+      "ingredients": [
+       "pinsa",
+       "prosciutto",
+       "arugula",
+       "mozzarella",
+       "parmigiano"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d19",
+      "name": "Penne alla Vodka",
+      "description": "Penne, vodka-tomato cream sauce, parmigiano",
+      "price": 1550,
+      "ingredients": [
+       "penne",
+       "tomato",
+       "cream",
+       "parmigiano"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d20",
+      "name": "Lasagna Bolognese",
+      "description": "Layered pasta, beef rag\u00f9, b\u00e9chamel, parmigiano",
+      "price": 1650,
+      "ingredients": [
+       "bolognese",
+       "beef",
+       "rag\u00f9",
+       "b\u00e9chamel",
+       "parmigiano"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d21",
+      "name": "Chicken Marsala (hot)",
+      "description": "Chicken breast in marsala mushroom sauce with roasted potatoes",
+      "price": 1750,
+      "ingredients": [
+       "chicken",
+       "chicken breast",
+       "mushroom",
+       "roasted potatoes"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d22",
+      "name": "Eggplant Parmigiana",
+      "description": "Breaded eggplant, marinara, mozzarella, parmigiano",
+      "price": 1550,
+      "ingredients": [
+       "eggplant",
+       "marinara",
+       "mozzarella",
+       "parmigiano"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d23",
+      "name": "Minestrone Soup",
+      "description": "Vegetable and bean soup with ditalini",
+      "price": 850,
+      "ingredients": [
+       "bean"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "vegan",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d24",
+      "name": "Tomato Basil Soup",
+      "description": "Cream of tomato soup, basil",
+      "price": 850,
+      "ingredients": [
+       "tomato",
+       "basil",
+       "cream"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d25",
+      "name": "Tiramisu",
+      "description": "Espresso-soaked sponge, mascarpone cream, cocoa",
+      "price": 750,
+      "ingredients": [
+       "tiramisu",
+       "mascarpone",
+       "cream",
+       "cocoa"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "merchant_supplied_id": "doordash-mangia-23rd-st-d26",
+      "name": "Fresh Squeezed Orange Juice",
+      "description": "Oranges, juiced to order",
+      "price": 650,
+      "ingredients": [
+       "orange juice",
+       "orange"
+      ],
+      "status": "ACTIVE",
+      "dietary_tags": [
+       "vegetarian",
+       "vegan",
+       "gluten_free"
+      ],
+      "extras": [
+       {
+        "name": "Customize",
+        "options": [
+         {
+          "name": "No onions",
+          "price": 0
+         },
+         {
+          "name": "Extra sauce",
+          "price": 100
+         },
+         {
+          "name": "Add Coke",
+          "price": 250
+         },
+         {
+          "name": "Add side salad",
+          "price": 350
+         }
+        ]
+       }
+      ]
      }
     ]
    }

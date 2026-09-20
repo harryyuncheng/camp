@@ -1,0 +1,976 @@
+# New nearby quick-service / fast-casual places within ~1 km of Ramp HQ.
+# Coordinates come from the OpenStreetMap survey (tools/catalog survey of 2026-09); ratings are approximate
+# public Google-listing values without review counts; menu prices are estimates unless `prices: menu`.
+
+@ lenwich-w-23rd
+name: Lenwich (W 23rd St)
+address: 16 W 23rd St, New York, NY 10010
+ll: 40.74168, -73.9904
+hood: Flatiron
+cuisine: sandwich
+detail: NYC sandwich chain; build-your-own heroes, wraps and salads
+price: 1
+google: 4.2
+hours: 07:00-20:00
+platforms: uber, doordash
+chain: yes
+source: https://www.lenwich.com/menu
+--
+*Chicken Cutlet Hero | 13.95 | Breaded chicken cutlet, lettuce, tomato, mayo on a hero
+*Turkey & Swiss | 12.95 | Roast turkey, swiss, lettuce, tomato on a roll
+Italian Combo | 13.95 | Ham, salami, capicola, provolone, lettuce, tomato, oil and vinegar
+Chipotle Chicken Wrap | 12.95 | Grilled chicken, cheddar, lettuce, chipotle mayo in a wrap | wrap | chicken | s1
+Tuna Melt | 12.95 | Tuna salad, melted cheddar on sourdough
+Grilled Chicken Caesar Wrap | 12.95 | Grilled chicken, romaine, parmesan, caesar in a wrap
+Roast Beef & Cheddar | 13.95 | Roast beef, cheddar, horseradish mayo on a roll
+Veggie Delight | 11.95 | Avocado, cucumber, tomato, sprouts, hummus on multigrain | sandwich | none | vg
+Caprese Panini | 12.45 | Mozzarella, tomato, basil, balsamic pressed | sandwich | none | v
+Chicken Cobb Salad | 14.95 | Grilled chicken, bacon, egg, avocado, blue cheese, greens | salad | chicken | gf
+Greek Salad | 12.95 | Romaine, feta, olives, cucumber, tomato | salad | none | v gf
+Bacon Egg & Cheese | 7.95 | Bacon, egg, cheese on a roll
+Chicken Noodle Soup | 6.95 | Chicken noodle soup | soup | chicken
+Chocolate Chip Cookie | 2.95 | Chocolate chip cookie | other | none | v
+Fountain Soda | 2.75 | Soft drink | other | none | vg gf
+
+@ lava-shawarma-nyc
+name: Lava Shawarma NYC
+address: 12 W 23rd St, New York, NY 10010
+ll: 40.74164, -73.99025
+hood: Flatiron
+cuisine: mediterranean
+detail: Counter-service shawarma, falafel and rice platters
+price: 1
+google: 4.5
+hours: 11:00-23:00
+platforms: uber, doordash
+halal: yes
+--
+*Chicken Shawarma Platter | 15.00 | Chicken shawarma over rice, salad, hummus, pita | bowl | chicken | h
+*Chicken Shawarma Wrap | 12.00 | Chicken shawarma, pickles, garlic sauce in a wrap | wrap | chicken | h
+Beef Shawarma Platter | 16.00 | Beef shawarma over rice, salad, tahini | bowl | beef | h
+Beef Shawarma Wrap | 13.00 | Beef shawarma, tahini, pickles in a wrap | wrap | beef | h
+Mixed Shawarma Platter | 17.00 | Chicken and beef shawarma over rice | bowl | chicken | h
+Falafel Platter | 13.00 | Falafel over rice, salad, hummus | bowl | none | vg
+Falafel Wrap | 10.00 | Falafel, tahini, salad in a wrap | wrap | none | vg
+Chicken Kebab Platter | 16.00 | Grilled chicken skewers, rice, salad | bowl | chicken | h gf
+Kofta Kebab Platter | 16.00 | Ground beef kebab, rice, salad | bowl | beef | h gf
+Hummus with Pita | 7.00 | Hummus, olive oil, pita | other | none | vg
+Baba Ghanoush | 7.00 | Smoked eggplant dip, pita | other | none | vg
+Fattoush Salad | 9.00 | Greens, tomato, cucumber, pita chips, sumac | salad | none | vg
+Lentil Soup | 6.00 | Red lentil soup | soup | none | vg gf
+Baklava | 4.00 | Pistachio baklava | other | none | v
+Ayran | 3.00 | Salted yogurt drink | other | none | v gf
+
+@ memo-shish-kebab
+name: Memo Shish Kebab
+address: 100 W 23rd St, New York, NY 10011
+ll: 40.74283, -73.99312
+hood: Chelsea
+cuisine: mediterranean
+detail: Turkish kebab counter; adana, doner and pide
+price: 1
+google: 4.4
+hours: 11:00-23:00
+platforms: uber, doordash
+halal: yes
+--
+*Chicken Doner Platter | 16.00 | Chicken doner, rice, salad, pita | bowl | chicken | h
+*Adana Kebab Platter | 18.00 | Spiced ground lamb kebab, rice, grilled peppers | bowl | lamb | h gf s1
+Lamb Doner Platter | 17.00 | Lamb doner, rice, salad | bowl | lamb | h
+Chicken Shish Platter | 17.00 | Grilled chicken cubes, rice, salad | bowl | chicken | h gf
+Lamb Shish Platter | 19.00 | Grilled lamb cubes, rice, salad | bowl | lamb | h gf
+Chicken Doner Sandwich | 12.00 | Chicken doner, lettuce, tomato, sauce in pita | sandwich | chicken | h
+Lamb Doner Sandwich | 13.00 | Lamb doner, lettuce, tomato in pita | sandwich | lamb | h
+Mixed Grill | 24.00 | Adana, chicken shish, lamb shish, rice | other | lamb | h gf s1
+Falafel Platter | 14.00 | Falafel, hummus, rice, salad | bowl | none | vg
+Lahmacun | 8.00 | Thin flatbread with minced lamb, herbs | pizza | lamb | h
+Cheese Pide | 14.00 | Boat-shaped flatbread with cheese | pizza | none | v
+Lentil Soup | 6.00 | Turkish red lentil soup | soup | none | vg gf
+Shepherd Salad | 8.00 | Tomato, cucumber, onion, parsley | salad | none | vg gf
+Baklava | 4.50 | Pistachio baklava | other | none | v
+Ayran | 3.00 | Salted yogurt drink | other | none | v gf
+
+@ great-burrito-w-23rd
+name: Great Burrito
+address: 100 W 23rd St, New York, NY 10011
+ll: 40.74288, -73.99319
+hood: Chelsea
+cuisine: mexican
+detail: Late-night taqueria counter; burritos, tacos and tortas
+price: 1
+google: 4.3
+hours: 10:00-02:00
+platforms: uber, doordash
+--
+*Chicken Burrito | 12.00 | Grilled chicken, rice, beans, cheese, salsa, sour cream in a flour tortilla | wrap | chicken
+*Carne Asada Tacos (3) | 12.00 | Grilled steak, onion, cilantro on corn tortillas | taco | beef | gf
+Al Pastor Tacos (3) | 11.00 | Marinated pork, pineapple, cilantro on corn tortillas | taco | pork | gf
+Carnitas Burrito | 12.00 | Braised pork, rice, beans, cheese, salsa | wrap | pork
+Veggie Burrito | 11.00 | Grilled vegetables, rice, beans, cheese, guacamole | wrap | none | v
+Chicken Quesadilla | 11.00 | Grilled chicken, cheese in a flour tortilla | other | chicken
+Torta de Milanesa | 12.00 | Breaded chicken cutlet, avocado, beans, jalapeño on telera | sandwich | chicken | s1
+Chicken Enchiladas | 14.00 | Three chicken enchiladas, salsa verde, rice, beans | other | chicken | gf
+Nachos Supreme | 12.00 | Chips, cheese, beans, ground beef, jalapeño, sour cream | other | beef | s1
+Chicken Taco Salad | 12.00 | Lettuce, chicken, beans, cheese, salsa in a tortilla bowl | salad | chicken
+Chips & Guacamole | 7.00 | Tortilla chips, guacamole | other | none | vg gf
+Rice & Beans | 5.00 | Mexican rice with black beans | rice | none | vg gf
+Horchata | 3.50 | Rice cinnamon drink | other | none | vg gf
+Jarritos | 3.00 | Mexican soda | other | none | vg gf
+
+@ brown-bag-sandwich-shop
+name: Brown Bag Sandwich Shop
+address: 64 W 22nd St, New York, NY 10010
+ll: 40.74202, -73.99304
+hood: Flatiron
+cuisine: sandwich
+detail: Cozy sandwich counter with seasonal specials
+price: 2
+google: 4.6
+hours: 08:00-16:00
+platforms: uber, doordash
+--
+*Turkey Avocado Club | 14.50 | Roast turkey, avocado, bacon, lettuce, tomato on multigrain
+*Roast Beef & Horseradish | 14.50 | Roast beef, cheddar, horseradish cream, arugula on ciabatta
+Chicken Pesto | 14.00 | Grilled chicken, mozzarella, pesto, tomato on focaccia
+Caprese | 12.50 | Fresh mozzarella, tomato, basil, balsamic on ciabatta | sandwich | none | v
+Prosciutto & Fig | 15.00 | Prosciutto, fig jam, goat cheese, arugula on baguette
+Tuna Niçoise Sandwich | 14.00 | Tuna, egg, olives, greens on baguette
+Grilled Vegetable & Hummus | 12.50 | Grilled zucchini, peppers, hummus, greens on multigrain | sandwich | none | vg
+Egg Salad | 11.00 | Egg salad, chives, greens on sourdough | sandwich | egg | v
+BLT | 12.00 | Bacon, lettuce, tomato, mayo on sourdough
+Chicken Salad Sandwich | 13.50 | Chicken salad with grapes and walnuts on multigrain
+Soup of the Day | 7.00 | Rotating house soup | soup | none | v
+Kale Caesar Salad | 12.00 | Kale, parmesan, croutons, caesar | salad | none | nv
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Iced Tea | 3.50 | Fresh brewed iced tea | other | none | vg gf
+
+@ chick-fil-a-700-6th-ave
+name: Chick-fil-A (6th Ave & 23rd)
+address: 700 6th Ave, New York, NY 10010
+ll: 40.74225, -73.99304
+hood: Flatiron
+cuisine: american
+detail: Chicken sandwich chain; closed Sundays
+price: 1
+google: 4.4
+hours: 06:30-22:00
+platforms: uber, doordash
+chain: yes
+allergen_info: yes
+source: https://www.chick-fil-a.com/menu
+--
+*Chick-fil-A Chicken Sandwich | 6.29 | Breaded chicken breast, pickles on a toasted bun | sandwich | chicken | k420
+*Spicy Chicken Sandwich | 6.65 | Spicy breaded chicken, pickles on a bun | sandwich | chicken | s2 k450
+Deluxe Chicken Sandwich | 7.49 | Chicken, lettuce, tomato, cheese on a bun | sandwich | chicken | k490
+Grilled Chicken Sandwich | 7.79 | Grilled chicken, lettuce, tomato on a multigrain bun | sandwich | chicken | k390
+Chicken Nuggets (12 ct) | 8.25 | Breaded chicken nuggets | other | chicken | k380
+Grilled Nuggets (12 ct) | 9.05 | Grilled chicken nuggets | other | chicken | gf k200
+Chick-n-Strips (4 ct) | 7.25 | Breaded chicken strips | other | chicken | k470
+Cobb Salad with Nuggets | 11.79 | Greens, nuggets, bacon, egg, cheese, corn | salad | chicken | k830
+Spicy Southwest Salad | 11.79 | Greens, spicy grilled chicken, black beans, corn, cheese | salad | chicken | gf s1 k690
+Market Salad | 11.79 | Grilled chicken, greens, apples, berries, blue cheese | salad | chicken | k540
+Waffle Potato Fries (medium) | 3.29 | Waffle-cut fries | other | none | vg gf k420
+Mac & Cheese (medium) | 5.19 | Baked macaroni and cheese | other | none | v k450
+Kale Crunch Side | 3.29 | Kale, cabbage, almonds, vinaigrette | salad | none | vg gf k170
+Chicken Noodle Soup | 5.09 | Chicken noodle soup | soup | chicken | k250
+Frosted Lemonade | 5.19 | Lemonade blended with vanilla ice cream | other | none | v gf k330
+Chocolate Chunk Cookie | 2.19 | Chocolate chunk cookie | other | none | v k370
+Lemonade (medium) | 2.79 | Fresh-squeezed lemonade | other | none | vg gf k220
+
+@ andiamo-pizza-688-6th
+name: Andiamo Pizza (6th Ave)
+address: 688 6th Ave, New York, NY 10010
+ll: 40.74205, -73.99317
+hood: Flatiron
+cuisine: pizza
+detail: Neighborhood slice shop; pies, heroes and pasta
+price: 1
+google: 4.2
+hours: 10:00-23:00
+platforms: uber, doordash
+--
+*Cheese Slice | 3.75 | Classic New York cheese slice | pizza | none | v
+*Pepperoni Slice | 4.50 | Cheese slice with pepperoni | pizza | pork
+Sicilian Slice | 4.50 | Thick square slice | pizza | none | v
+Margherita Slice | 4.75 | Fresh mozzarella, basil, tomato | pizza | none | v
+Chicken Bacon Ranch Slice | 5.50 | Chicken, bacon, ranch, mozzarella | pizza | chicken
+Buffalo Chicken Slice | 5.50 | Buffalo chicken, mozzarella, ranch | pizza | chicken | s2
+Large Cheese Pie | 24.00 | 18-inch cheese pie | pizza | none | v
+Large Pepperoni Pie | 28.00 | 18-inch pepperoni pie | pizza | pork
+Garlic Knots (6) | 4.00 | Garlic knots with marinara | other | none | v
+Chicken Parm Hero | 13.00 | Breaded chicken, marinara, mozzarella on a hero
+Meatball Parm Hero | 13.00 | Beef meatballs, marinara, mozzarella on a hero | sandwich | beef
+Penne alla Vodka | 14.00 | Penne in vodka cream sauce | noodles | none | v
+Baked Ziti | 14.00 | Ziti, ricotta, mozzarella, marinara | noodles | none | v
+Caesar Salad | 9.00 | Romaine, croutons, parmesan | salad | none | nv
+Canned Soda | 2.00 | Soft drink | other | none | vg gf
+
+@ all-antico-vinaio-nomad
+name: All'Antico Vinaio (NoMad)
+address: 7 W 25th St, New York, NY 10010
+ll: 40.74332, -73.98953
+hood: NoMad
+cuisine: sandwich
+detail: Florentine schiacciata sandwich shop; famous for La Favolosa
+price: 2
+google: 4.6
+rec: Florence's cult schiacciata shop; La Favolosa is the order (Eater NY)
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+source: https://www.allanticovinaio.com/en/menu-new-york
+--
+*La Favolosa | 19.00 | Sbriciolona salami, pecorino cream, artichoke cream, spicy eggplant on schiacciata | sandwich | pork | s1
+*La Paradiso | 19.00 | Mortadella, stracciatella, pistachio cream on schiacciata
+La Summer | 19.00 | Prosciutto crudo, stracciatella, tomato, basil on schiacciata
+La Schiacciata del Boss | 20.00 | Prosciutto crudo, pecorino cream, truffle cream on schiacciata
+La Dante | 19.00 | Porchetta, pecorino cream, spicy eggplant on schiacciata | sandwich | pork | s1
+La Toscana | 19.00 | Finocchiona salami, pecorino, artichoke cream on schiacciata
+La Vegetariana | 17.00 | Grilled zucchini, eggplant, peppers, stracciatella on schiacciata | sandwich | none | v
+La Bufalina | 18.00 | Buffalo mozzarella, tomato, basil, olive oil on schiacciata | sandwich | none | v
+Il Pollo | 19.00 | Roast chicken, pecorino cream, arugula, sun-dried tomato on schiacciata
+Plain Schiacciata | 6.00 | Warm Tuscan flatbread with olive oil and salt | other | none | vg
+Cantucci | 5.00 | Tuscan almond biscotti | other | none | v
+Italian Soda | 3.50 | Chinotto or aranciata | other | none | vg gf
+San Pellegrino | 3.00 | Sparkling water | other | none | vg gf
+
+@ s-and-p-sandwich-shop
+name: S&P Sandwich Shop
+address: 174 5th Ave, New York, NY 10010
+ll: 40.74112, -73.99017
+hood: Flatiron
+cuisine: sandwich
+detail: Revived Eisenberg's lunch counter; tuna melts, egg creams and matzo ball soup
+price: 2
+google: 4.4
+rec: The old Eisenberg's counter, lovingly revived (Infatuation)
+hours: 08:00-16:00
+platforms: uber, doordash
+--
+*Tuna Melt | 16.00 | Tuna salad, cheddar, tomato on rye
+*Pastrami Sandwich | 19.00 | Hot pastrami, mustard on rye | sandwich | beef
+Egg Salad Sandwich | 12.00 | Egg salad, lettuce on rye | sandwich | egg | v
+Chicken Salad Sandwich | 14.00 | Chicken salad, lettuce on challah
+Turkey Club | 17.00 | Turkey, bacon, lettuce, tomato on toast
+Reuben | 20.00 | Pastrami, sauerkraut, swiss, Russian dressing on rye
+Patty Melt | 17.00 | Beef patty, swiss, onions on rye
+Grilled Cheese | 11.00 | American cheese on white | sandwich | none | v
+BLT | 14.00 | Bacon, lettuce, tomato, mayo on toast
+Matzo Ball Soup | 10.00 | Chicken broth, matzo ball | soup | chicken
+Chopped Liver on Rye | 14.00 | Chopped chicken liver, onion on rye | sandwich | chicken
+Potato Salad | 5.00 | Deli potato salad | other | egg | v gf
+Half Sour Pickles | 4.00 | Half sour pickles | other | none | vg gf
+Egg Cream | 5.00 | Chocolate syrup, milk, seltzer | other | none | v gf -egg i=chocolate,milk,seltzer
+Lime Rickey | 5.00 | Lime syrup, seltzer | other | none | vg gf
+Black & White Cookie | 4.00 | Black and white cookie | other | none | v
+
+@ naya-nomad-broadway
+name: Naya (NoMad)
+address: 1123 Broadway, New York, NY 10010
+ll: 40.74347, -73.98922
+hood: NoMad
+cuisine: mediterranean
+detail: Lebanese fast-casual bowls, rolls and pitas
+price: 1
+google: 4.4
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+allergen_info: yes
+halal: yes
+source: https://www.eatnaya.com/menu
+--
+*Chicken Shawarma Bowl | 14.95 | Chicken shawarma, rice, hummus, pickles, garlic whip | bowl | chicken | h gf
+*Chicken Taouk Roll | 13.95 | Grilled chicken, garlic whip, pickles, fries in saj wrap | wrap | chicken | h
+Beef Shawarma Bowl | 15.95 | Beef shawarma, rice, tahini, tomato, onion | bowl | beef | h gf
+Kafta Bowl | 15.45 | Ground beef kafta, rice, hummus, tomato | bowl | beef | h gf
+Falafel Bowl | 13.45 | Falafel, rice, hummus, tahini, pickles | bowl | none | vg
+Chicken Shawarma Pita | 13.45 | Chicken shawarma, garlic whip, pickles in pita | sandwich | chicken | h
+Falafel Roll | 12.45 | Falafel, tahini, tomato, pickles in saj wrap | wrap | none | vg
+Halloumi Bowl | 14.45 | Grilled halloumi, rice, salad, hummus | bowl | none | v gf
+Chicken Shawarma Salad | 14.95 | Chicken shawarma over fattoush | salad | chicken | h
+Hummus with Pita | 6.95 | Hummus, olive oil, pita | other | none | vg
+Baba Ghanouj | 6.95 | Smoked eggplant dip, pita | other | none | vg
+Lentil Soup | 5.95 | Lebanese lentil soup | soup | none | vg gf
+Fries | 4.45 | French fries | other | none | vg gf
+Baklava | 3.45 | Pistachio baklava | other | none | v
+Ayran | 3.45 | Yogurt drink | other | none | v gf
+
+@ cospa-ramen-nomad
+name: Cospa Ramen
+address: 42 W 26th St, New York, NY 10010
+ll: 40.74434, -73.99054
+hood: NoMad
+cuisine: japanese
+detail: Quick-service ramen and rice bowls
+price: 1
+google: 4.4
+hours: 11:00-21:00
+platforms: uber, doordash
+--
+*Tonkotsu Ramen | 15.00 | Pork bone broth, chashu, egg, scallion | noodles | pork
+*Spicy Miso Ramen | 15.00 | Spicy miso broth, ground pork, corn, egg | noodles | pork | s2
+Shoyu Ramen | 14.00 | Soy chicken broth, chashu, bamboo, nori | noodles | pork
+Vegetable Miso Ramen | 14.00 | Miso vegetable broth, tofu, corn, bok choy | noodles | tofu | vg
+Chicken Karaage Ramen | 15.00 | Shoyu broth topped with fried chicken | noodles | chicken
+Tantanmen | 15.00 | Sesame-chili broth, ground pork | noodles | pork | s2
+Chashu Don | 12.00 | Rice bowl with sliced pork chashu, egg | rice | pork
+Chicken Karaage Don | 12.00 | Fried chicken over rice, spicy mayo | rice | chicken | s1
+Gyoza (6) | 7.00 | Pan-fried pork dumplings | other | pork
+Karaage (5) | 8.00 | Japanese fried chicken | other | chicken
+Edamame | 5.00 | Steamed soybeans | other | none | vg gf
+Seaweed Salad | 6.00 | Wakame salad, sesame | salad | none | vg
+Ajitama Egg | 2.00 | Marinated soft egg | other | egg | v gf
+Ramune | 3.50 | Japanese marble soda | other | none | vg gf
+
+@ 2-bros-pizza-755-6th
+name: 2 Bros. Pizza (6th Ave)
+address: 755 6th Ave, New York, NY 10010
+ll: 40.74435, -73.99197
+hood: Chelsea
+cuisine: pizza
+detail: Dollar-slice institution (now $1.50); quick pies and calzones
+price: 1
+google: 4.1
+hours: 10:00-02:00
+platforms: uber, doordash
+chain: yes
+--
+*Cheese Slice | 1.50 | Plain cheese slice | pizza | none | v
+*Pepperoni Slice | 2.50 | Pepperoni slice | pizza | pork
+Sicilian Slice | 3.00 | Thick square slice | pizza | none | v
+Mushroom Slice | 2.50 | Mushroom slice | pizza | none | v
+Sausage Slice | 2.50 | Italian sausage slice | pizza | pork
+Whole Cheese Pie | 12.00 | 18-inch cheese pie | pizza | none | v
+Whole Pepperoni Pie | 16.00 | 18-inch pepperoni pie | pizza | pork
+Calzone | 7.00 | Ricotta and mozzarella calzone | other | none | v
+Garlic Knots (6) | 3.00 | Garlic knots | other | none | v
+Chicken Roll | 6.00 | Chicken, mozzarella rolled in pizza dough | other | chicken
+Meatball Hero | 9.00 | Meatballs, marinara, mozzarella on a hero | sandwich | beef
+Baked Ziti | 9.00 | Baked ziti with mozzarella | noodles | none | v
+Canned Soda | 1.50 | Soft drink | other | none | vg gf
+
+@ hee-korean-bbq-grill
+name: Hee Korean BBQ & Grill
+address: 793 6th Ave, New York, NY 10001
+ll: 40.74539, -73.9912
+hood: Chelsea
+cuisine: korean
+detail: Fast-casual Korean grill boxes and bibimbap
+price: 1
+google: 4.5
+hours: 11:00-21:30
+platforms: uber, doordash
+--
+*Bulgogi Box | 15.00 | Marinated beef, rice, kimchi, salad | bowl | beef
+*Spicy Pork Box | 15.00 | Gochujang pork, rice, kimchi | bowl | pork | s2
+Chicken Teriyaki Box | 14.00 | Grilled chicken, teriyaki, rice, salad | bowl | chicken
+Spicy Chicken Box | 14.00 | Gochujang chicken, rice, kimchi | bowl | chicken | s2
+Galbi Box | 19.00 | Grilled short rib, rice, kimchi | bowl | beef | gf
+Tofu Box | 13.00 | Pan-fried tofu, vegetables, rice | bowl | tofu | vg
+Bibimbap | 15.00 | Rice, vegetables, egg, gochujang | rice | egg | v s1
+Bulgogi Bibimbap | 17.00 | Rice, vegetables, bulgogi, egg | rice | beef | s1
+Japchae | 13.00 | Glass noodles, vegetables | noodles | none | vg
+Kimchi Fried Rice | 14.00 | Kimchi, rice, egg | rice | egg | v s1
+Mandu (6) | 8.00 | Pork dumplings | other | pork
+Kimchi Pancake | 10.00 | Kimchi jeon | other | none | v s1
+Tteokbokki | 10.00 | Spicy rice cakes | other | none | v s2
+Miso Soup | 4.00 | Soybean paste soup | soup | tofu | vg
+
+@ excellent-dumpling-house-chelsea
+name: Excellent Dumpling House (Chelsea)
+address: 165 W 23rd St, New York, NY 10011
+ll: 40.74401, -73.99505
+hood: Chelsea
+cuisine: chinese
+detail: Chinatown dumpling stalwart's Chelsea branch; Shanghainese classics
+price: 2
+google: 4.2
+hours: 11:00-21:30
+platforms: uber, doordash
+--
+*Pork Soup Dumplings (6) | 11.95 | Xiao long bao | other | pork
+*Pan-Fried Pork Dumplings (8) | 10.95 | Pork and chive dumplings | other | pork
+Steamed Vegetable Dumplings (8) | 9.95 | Vegetable dumplings | other | none | vg
+Scallion Pancake | 6.95 | Crispy scallion pancake | other | none | vg
+Shanghai Rice Cakes with Pork | 15.95 | Stir-fried rice cakes, pork, greens | rice | pork
+Shredded Pork with Garlic Sauce | 16.95 | Pork, peppers, garlic sauce | other | pork | s1
+General Tso's Chicken | 17.95 | Crispy chicken in sweet chili glaze | other | chicken | s1
+Beef with Broccoli | 18.95 | Sliced beef, broccoli, brown sauce | other | beef
+Ma Po Tofu | 14.95 | Tofu in spicy bean sauce | other | tofu | vg s2
+Sautéed String Beans | 13.95 | Dry-fried green beans with garlic | other | none | vg gf
+Hot & Sour Soup | 5.95 | Tofu, egg, mushroom, vinegar | soup | egg | v s1
+Wonton Soup | 6.95 | Pork wontons in broth | soup | pork
+Pork Fried Rice | 12.95 | Fried rice with pork and egg | rice | pork
+Lo Mein with Vegetables | 12.95 | Egg noodles with vegetables | noodles | none | v
+Sesame Noodles | 9.95 | Cold noodles in sesame sauce | noodles | none | vg
+
+@ wrapido-chelsea
+name: Wrapido
+address: 171 W 23rd St, New York, NY 10011
+ll: 40.74412, -73.9953
+hood: Chelsea
+cuisine: mediterranean
+detail: Mediterranean wraps, bowls and salads
+price: 1
+google: 4.4
+hours: 11:00-22:00
+platforms: uber, doordash
+halal: yes
+--
+*Chicken Shawarma Wrap | 12.95 | Chicken shawarma, hummus, pickles, tahini in a wrap | wrap | chicken | h
+*Falafel Wrap | 10.95 | Falafel, hummus, salad, tahini in a wrap | wrap | none | vg
+Steak Wrap | 14.95 | Grilled steak, tahini, salad in a wrap | wrap | beef | h
+Chicken Shawarma Bowl | 14.95 | Chicken shawarma over rice, salad, hummus | bowl | chicken | h gf
+Falafel Bowl | 12.95 | Falafel over rice, salad, hummus | bowl | none | vg
+Kofta Bowl | 14.95 | Beef kofta over rice, salad | bowl | beef | h gf
+Grilled Chicken Salad | 13.95 | Grilled chicken over greens, feta, olives | salad | chicken | h gf
+Halloumi Wrap | 12.95 | Grilled halloumi, tomato, greens, tahini | wrap | none | v
+Hummus Plate | 7.95 | Hummus, olive oil, pita | other | none | vg
+Stuffed Grape Leaves (5) | 6.95 | Rice-stuffed grape leaves | other | none | vg gf
+Tabbouleh | 6.95 | Parsley, bulgur, tomato, lemon | salad | none | vg
+Lentil Soup | 5.95 | Lentil soup | soup | none | vg gf
+Fries | 4.50 | French fries | other | none | vg gf
+Baklava | 3.95 | Baklava | other | none | v
+
+@ skewr-kabob-kitchen
+name: Skewr Kabob Kitchen
+address: 34 E 23rd St, New York, NY 10010
+ll: 40.74049, -73.98754
+hood: Flatiron
+cuisine: mediterranean
+detail: Afghan-Persian kabob fast-casual; rice platters and wraps
+price: 1
+google: 4.5
+hours: 11:00-22:00
+platforms: uber, doordash
+halal: yes
+--
+*Chicken Kabob Platter | 15.95 | Chicken kabob, basmati rice, salad, sauces | bowl | chicken | h gf
+*Kofta Kabob Platter | 15.95 | Ground beef kabob, basmati, salad | bowl | beef | h gf
+Lamb Kabob Platter | 18.95 | Lamb kabob, basmati, salad | bowl | lamb | h gf
+Chicken Kabob Wrap | 12.95 | Chicken kabob, salad, sauce in flatbread | wrap | chicken | h
+Kofta Wrap | 12.95 | Kofta, salad, sauce in flatbread | wrap | beef | h
+Falafel Platter | 13.95 | Falafel, basmati, salad, hummus | bowl | none | vg
+Mixed Kabob Platter | 21.95 | Chicken, kofta and lamb kabobs, rice | bowl | lamb | h gf
+Chicken Kabob Salad | 14.95 | Chicken kabob over greens, tomato, cucumber | salad | chicken | h gf
+Kabuli Pulao | 15.95 | Afghan rice with carrots, raisins, lamb | rice | lamb | h gf
+Mantu (6) | 10.95 | Afghan beef dumplings with yogurt and lentils | other | beef | h
+Bolani | 7.95 | Stuffed potato flatbread with chutney | other | none | vg
+Hummus & Bread | 6.95 | Hummus with flatbread | other | none | vg
+Lentil Soup | 5.95 | Lentil soup | soup | none | vg gf
+Baklava | 3.95 | Baklava | other | none | v
+Doogh | 3.50 | Mint yogurt drink | other | none | v gf
+
+@ zucker-s-bagels-flatiron
+name: Zucker's Bagels & Smoked Fish (Flatiron)
+address: 40 E 23rd St, New York, NY 10010
+ll: 40.74039, -73.9873
+hood: Flatiron
+cuisine: bakery
+detail: Hand-rolled bagels, smoked fish and breakfast sandwiches
+price: 2
+google: 4.4
+hours: 06:30-16:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+source: https://www.zuckersbagels.com/menu
+--
+*Nova Scotia Salmon Sandwich | 17.95 | Nova salmon, cream cheese, tomato, onion, capers on a bagel
+*Bacon Egg & Cheese | 9.50 | Bacon, egg, cheese on a bagel
+Bagel with Cream Cheese | 5.25 | Bagel with plain cream cheese | sandwich | none | v
+Bagel with Scallion Cream Cheese | 5.75 | Bagel, scallion cream cheese | sandwich | none | v
+The Classic | 16.95 | Nova, cream cheese, lettuce, tomato, onion, capers on a bagel
+Whitefish Salad Sandwich | 14.95 | Whitefish salad, tomato, onion on a bagel
+Sable Sandwich | 21.95 | Smoked sable, cream cheese on a bagel
+Egg & Cheese | 7.50 | Egg, cheese on a bagel | sandwich | egg | v
+Turkey Club | 14.95 | Turkey, bacon, lettuce, tomato on a bagel
+Tuna Salad Sandwich | 12.95 | Tuna salad, lettuce, tomato on a bagel
+Avocado Toast Bagel | 11.95 | Avocado, radish, chili flakes on a flagel | sandwich | none | vg s1
+Lox Platter | 24.95 | Nova, cream cheese, tomato, onion, capers, bagel | other | fish
+Black & White Cookie | 4.25 | Black and white cookie | other | none | v
+Rugelach | 3.50 | Chocolate rugelach | other | none | v
+Drip Coffee | 3.25 | Brewed coffee | other | none | vg gf
+Fresh Orange Juice | 5.50 | Orange juice | other | none | vg gf
+
+@ mezeh-mediterranean-grill-flatiron
+name: Mezeh Mediterranean Grill
+address: 900 Broadway, New York, NY 10003
+ll: 40.73892, -73.98967
+hood: Flatiron
+cuisine: mediterranean
+detail: Build-your-own Mediterranean bowls and pitas
+price: 1
+google: 4.3
+hours: 10:30-21:00
+platforms: uber, doordash
+chain: yes
+allergen_info: yes
+source: https://www.mezeh.com/menu
+--
+*Chicken Shawarma Bowl | 14.49 | Chicken shawarma, rice, hummus, toppings | bowl | chicken | gf
+*Falafel Bowl | 12.99 | Falafel, rice, hummus, tzatziki, toppings | bowl | none | v
+Steak Kabob Bowl | 15.99 | Grilled steak, rice, toppings | bowl | beef | gf
+Lamb Meatball Bowl | 14.99 | Lamb meatballs, rice, tahini | bowl | lamb | gf
+Chicken Kabob Pita | 12.99 | Grilled chicken, hummus, veggies in pita | sandwich | chicken
+Roasted Cauliflower Bowl | 12.99 | Roasted cauliflower, rice, hummus, pickled veggies | bowl | none | vg gf
+Grilled Salmon Bowl | 16.49 | Grilled salmon, rice, greens | bowl | fish | gf
+Chicken Shawarma Salad | 14.49 | Chicken shawarma over greens, feta, cucumber | salad | chicken | gf
+Hummus with Pita | 5.99 | Hummus, pita | other | none | vg
+Baba Ghanoush with Pita | 5.99 | Eggplant dip, pita | other | none | vg
+Spicy Feta Dip | 5.99 | Whipped feta with harissa, pita | other | none | v s2
+Lentil Soup | 5.49 | Lentil soup | soup | none | vg gf
+Pita Chips | 3.49 | Baked pita chips | other | none | vg
+Baklava | 3.49 | Baklava | other | none | v
+Mint Lemonade | 3.99 | Lemonade with mint | other | none | vg gf
+
+@ rainbow-falafel-shawarma
+name: Rainbow Falafel & Shawarma
+address: 26 E 17th St, New York, NY 10003
+ll: 40.73726, -73.99094
+hood: Union Square
+cuisine: mediterranean
+detail: Tiny Union Square falafel counter, a lunch-line institution
+price: 1
+google: 4.5
+rec: Consistently the best cheap falafel near Union Square (Eater NY)
+hours: 11:00-20:00
+platforms: none
+halal: yes
+--
+*Falafel Sandwich | 8.00 | Falafel, hummus, salad, tahini in pita | sandwich | none | vg
+*Chicken Shawarma Sandwich | 10.00 | Chicken shawarma, salad, tahini in pita | sandwich | chicken | h
+Lamb Shawarma Sandwich | 11.00 | Lamb shawarma, salad, tahini in pita | sandwich | lamb | h
+Falafel Platter | 13.00 | Falafel, hummus, salad, rice, pita | bowl | none | vg
+Chicken Shawarma Platter | 15.00 | Chicken shawarma, rice, salad, hummus | bowl | chicken | h gf
+Lamb Shawarma Platter | 16.00 | Lamb shawarma, rice, salad, hummus | bowl | lamb | h gf
+Mixed Platter | 17.00 | Chicken and lamb shawarma with falafel, rice | bowl | chicken | h
+Sabich | 10.00 | Fried eggplant, egg, hummus, salad in pita | sandwich | egg | v
+Hummus Sandwich | 7.00 | Hummus, salad, tahini in pita | sandwich | none | vg
+Baba Ghanoush Sandwich | 7.50 | Eggplant dip, salad in pita | sandwich | none | vg
+Tabbouleh | 5.00 | Parsley, bulgur, tomato | salad | none | vg
+Stuffed Grape Leaves (4) | 5.00 | Grape leaves with rice | other | none | vg gf
+Lentil Soup | 5.00 | Lentil soup | soup | none | vg gf
+Baklava | 3.00 | Baklava | other | none | v
+
+@ tsurutontan-union-square
+name: TsuruTonTan (Union Square)
+address: 21 E 16th St, New York, NY 10003
+ll: 40.73678, -73.99107
+hood: Union Square
+cuisine: japanese
+detail: Udon specialist in giant bowls; hot and cold noodles, sushi
+price: 2
+google: 4.4
+hours: 11:30-22:00
+platforms: uber, doordash
+source: https://www.tsurutontan.com/menu
+--
+*Uni Cream Udon | 29.00 | Udon in sea urchin cream sauce | noodles | shrimp
+*Curry Udon | 19.00 | Udon in Japanese curry broth with beef | noodles | beef | s1
+Kake Udon | 14.00 | Udon in hot dashi broth | noodles | none | v
+Tempura Udon | 22.00 | Udon in dashi with shrimp and vegetable tempura | noodles | shrimp
+Sukiyaki Udon | 23.00 | Udon with sliced beef in sweet soy broth, egg | noodles | beef
+Chicken Paitan Udon | 20.00 | Creamy chicken broth udon | noodles | chicken
+Mentaiko Cream Udon | 21.00 | Udon in spicy cod roe cream | noodles | fish | s1
+Cold Zaru Udon | 15.00 | Chilled udon with dipping sauce | noodles | none | v
+Cold Sesame Tantan Udon | 19.00 | Chilled udon in sesame-chili sauce with ground pork | noodles | pork | s2
+Wagyu Sukiyaki Udon | 32.00 | Udon with wagyu in sukiyaki broth | noodles | beef
+Chicken Karaage | 12.00 | Japanese fried chicken | other | chicken
+Shrimp Tempura (3) | 12.00 | Shrimp tempura | other | shrimp
+Salmon Avocado Roll | 12.00 | Salmon, avocado, sushi rice | rice | fish | gf
+Edamame | 6.00 | Steamed soybeans | other | none | vg gf
+Matcha Ice Cream | 7.00 | Green tea ice cream | other | none | v gf
+
+@ sweet-chick-union-square
+name: Sweet Chick (Union Square)
+address: 32 E 16th St, New York, NY 10003
+ll: 40.73661, -73.99122
+hood: Union Square
+cuisine: american
+detail: Chicken and waffles, Southern comfort plates
+price: 2
+google: 4.4
+hours: 11:00-23:00
+platforms: uber, doordash
+chain: yes
+source: https://www.sweetchick.com/menu
+--
+*Chicken & Waffles | 22.00 | Fried chicken, classic waffle, maple butter | other | chicken
+*Nashville Hot Chicken Sandwich | 17.00 | Spicy fried chicken, pickles, slaw on a bun | sandwich | chicken | s3
+General Tso's Chicken & Waffles | 24.00 | Sweet-spicy glazed fried chicken with a waffle | other | chicken | s2
+Classic Fried Chicken Sandwich | 16.00 | Fried chicken, pickles, mayo on a bun | sandwich | chicken
+Shrimp & Grits | 22.00 | Shrimp, cheddar grits, andouille | other | shrimp | gf
+Sweet Chick Burger | 18.00 | Beef patty, cheddar, bacon jam, pickles
+Fried Chicken Basket (3 pc) | 19.00 | Three pieces fried chicken, biscuit | other | chicken
+Mac & Cheese | 10.00 | Baked macaroni and cheese | other | none | v
+Collard Greens | 8.00 | Braised collard greens | other | pork | gf
+Cornbread | 6.00 | Skillet cornbread, honey butter | other | none | v
+Kale Caesar | 14.00 | Kale, parmesan, croutons | salad | none | nv
+Biscuits & Gravy | 12.00 | Buttermilk biscuits, sausage gravy | other | pork
+Fries | 7.00 | Seasoned fries | other | none | vg gf
+Banana Pudding | 9.00 | Banana pudding with vanilla wafers | other | none | v
+Sweet Tea | 4.00 | Sweet iced tea | other | none | vg gf
+
+@ roll-over-kimbap
+name: Roll Over Kimbap
+address: 25 E 17th St, New York, NY 10003
+ll: 40.73737, -73.99067
+hood: Union Square
+cuisine: korean
+detail: Korean seaweed rice rolls and quick bites
+price: 1
+google: 4.6
+hours: 11:00-20:00
+platforms: uber, doordash
+--
+*Classic Kimbap | 9.00 | Seaweed rice roll with egg, pickled radish, carrot, spinach, ham | rice | egg
+*Spicy Tuna Kimbap | 11.00 | Spicy tuna mayo kimbap | rice | fish | s1
+Bulgogi Kimbap | 12.00 | Marinated beef kimbap | rice | beef
+Spicy Pork Kimbap | 11.00 | Gochujang pork kimbap | rice | pork | s2
+Vegetable Kimbap | 9.00 | Vegetable-only kimbap | rice | none | vg
+Kimchi Kimbap | 10.00 | Kimchi and egg kimbap | rice | egg | v s1
+Chicken Katsu Kimbap | 12.00 | Fried chicken cutlet kimbap | rice | chicken
+Tuna Mayo Kimbap | 10.00 | Tuna mayo kimbap | rice | fish
+Tteokbokki | 9.00 | Spicy rice cakes | other | none | v s2
+Mandu (6) | 8.00 | Pork dumplings | other | pork
+Ramyeon | 8.00 | Korean instant noodle soup with egg | noodles | egg | v s2
+Kimchi Fried Rice | 12.00 | Kimchi, rice, egg | rice | egg | v s1
+Miso Soup | 3.00 | Soybean soup | soup | tofu | vg
+Yakult | 2.00 | Probiotic yogurt drink | other | none | v gf
+
+@ poke-bowl-union-square
+name: Poke Bowl (Union Square)
+address: 26 E 17th St, New York, NY 10003
+ll: 40.73728, -73.99099
+hood: Union Square
+cuisine: japanese
+detail: Build-your-own poke bowls
+price: 1
+google: 4.3
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+--
+*Salmon Poke Bowl | 15.00 | Salmon, sushi rice, edamame, cucumber, avocado, ponzu | bowl | fish
+*Tuna Poke Bowl | 16.00 | Ahi tuna, sushi rice, seaweed salad, avocado, shoyu | bowl | fish
+Spicy Tuna Bowl | 16.00 | Spicy tuna, rice, cucumber, crispy onions | bowl | fish | s2
+Shrimp Poke Bowl | 15.00 | Poached shrimp, rice, mango, edamame | bowl | shrimp
+Tofu Poke Bowl | 13.00 | Marinated tofu, brown rice, edamame, avocado | bowl | tofu | vg -fish -shellfish
+Chicken Teriyaki Bowl | 14.00 | Grilled chicken, teriyaki, rice, vegetables | bowl | chicken
+Salmon Avocado Salad Bowl | 15.00 | Salmon, avocado over mixed greens | salad | fish | gf
+Hawaiian Classic | 16.00 | Tuna, sweet onion, seaweed, sesame, shoyu | bowl | fish
+Miso Soup | 3.50 | Miso soup | soup | tofu | vg
+Seaweed Salad | 5.00 | Wakame salad | salad | none | vg
+Edamame | 4.50 | Steamed soybeans | other | none | vg gf
+Spicy Crab Salad | 6.00 | Kani salad with spicy mayo | salad | shrimp | s1
+Mochi Ice Cream | 4.00 | Mochi ice cream | other | none | v gf
+Ramune | 3.50 | Japanese soda | other | none | vg gf
+
+@ chelsea-papaya
+name: Chelsea Papaya
+address: 171 W 23rd St, New York, NY 10011
+ll: 40.74428, -73.99527
+hood: Chelsea
+cuisine: american
+detail: Classic NYC hot dog and papaya drink counter
+price: 1
+google: 4.3
+hours: 08:00-23:00
+platforms: none
+--
+*Hot Dog | 3.25 | Grilled all-beef frank on a bun | sandwich | beef
+*Two Dogs & a Drink | 8.50 | Two franks with a papaya drink | sandwich | beef
+Cheese Dog | 3.95 | Frank with melted cheese | sandwich | beef
+Chili Dog | 4.25 | Frank with beef chili | sandwich | beef | s1
+Kraut Dog | 3.75 | Frank with sauerkraut and mustard | sandwich | beef
+Cheeseburger | 7.50 | Beef patty, American cheese on a bun
+Chicken Sandwich | 7.95 | Fried chicken sandwich | sandwich | chicken
+Fries | 4.00 | French fries | other | none | vg gf
+Onion Rings | 4.50 | Onion rings | other | none | v
+Knish | 3.50 | Potato knish | other | none | vg
+Papaya Drink | 3.50 | Papaya fruit drink | other | none | vg gf
+Piña Colada Drink | 3.50 | Non-alcoholic piña colada | other | none | vg gf
+Coconut Champagne | 3.50 | Coconut soda | other | none | vg gf
+Fresh Orange Juice | 4.50 | Orange juice | other | none | vg gf
+
+@ go-go-curry-chelsea
+name: Go! Go! Curry (Chelsea)
+address: 144 W 19th St, New York, NY 10011
+ll: 40.74116, -73.99662
+hood: Chelsea
+cuisine: japanese
+detail: Kanazawa-style thick Japanese curry with katsu
+price: 1
+google: 4.4
+hours: 11:00-21:55
+platforms: uber, doordash
+chain: yes
+source: https://www.gogocurryusa-ny.com/menu
+--
+*Chicken Katsu Curry | 13.95 | Fried chicken cutlet over rice with thick curry, cabbage | curry | chicken
+*Pork Katsu Curry | 13.95 | Fried pork cutlet, curry, rice, cabbage | curry | pork
+Grand Slam Curry | 22.95 | Pork katsu, chicken katsu, shrimp, sausage, egg over curry rice | curry | pork
+Shrimp Curry | 14.95 | Fried shrimp over curry rice | curry | shrimp
+Chicken Curry (no katsu) | 11.95 | Curry rice with grilled chicken | curry | chicken
+Plain Curry | 9.95 | Curry sauce over rice with cabbage | curry | none | v
+Vegetable Curry | 12.95 | Curry rice with fried vegetables | curry | none | v
+Sausage Curry | 12.95 | Curry rice with grilled sausage | curry | pork
+Egg Topping | 2.00 | Soft boiled egg | other | egg | v gf
+Chicken Katsu (side) | 6.50 | Fried chicken cutlet | other | chicken
+Cabbage Salad | 3.50 | Shredded cabbage with dressing | salad | none | vg gf
+Miso Soup | 3.00 | Miso soup | soup | tofu | vg
+Ramune | 3.50 | Japanese soda | other | none | vg gf
+
+@ glur-thai-chelsea
+name: Glur Thai
+address: 144 W 19th St, New York, NY 10011
+ll: 40.74119, -73.99672
+hood: Chelsea
+cuisine: thai
+detail: Casual Thai; noodles, curries and rice plates
+price: 2
+google: 4.5
+hours: 11:30-22:30
+platforms: uber, doordash
+--
+*Pad Thai Chicken | 17.00 | Rice noodles, chicken, egg, peanuts, tamarind | noodles | chicken | s1
+*Green Curry Chicken | 18.00 | Green curry, chicken, bamboo, basil, rice | curry | chicken | gf s2
+Pad See Ew Pork | 17.00 | Wide rice noodles, pork, egg, Chinese broccoli | noodles | pork | gf
+Drunken Noodles Beef | 18.00 | Wide noodles, beef, basil, chili | noodles | beef | s2
+Massaman Curry Beef | 19.00 | Massaman curry with beef, potato, peanuts | curry | beef | gf s1
+Panang Curry Tofu | 17.00 | Panang curry with tofu | curry | tofu | vg gf s2
+Basil Chicken | 17.00 | Stir-fried chicken with basil and chili, rice | rice | chicken | gf s2
+Crispy Pork with Chinese Broccoli | 18.00 | Fried pork belly, Chinese broccoli, rice | rice | pork | s1
+Tom Yum Shrimp Soup | 9.00 | Spicy lemongrass soup with shrimp | soup | shrimp | gf s2
+Tom Kha Chicken Soup | 8.00 | Coconut galangal soup with chicken | soup | chicken | gf s1
+Chicken Satay (4) | 10.00 | Grilled chicken skewers, peanut sauce | other | chicken | gf
+Thai Spring Rolls (3) | 8.00 | Fried vegetable spring rolls | other | none | vg
+Papaya Salad | 12.00 | Green papaya, peanuts, lime, chili | salad | none | gf s2 nv
+Mango Sticky Rice | 9.00 | Coconut sticky rice, mango | other | none | vg gf
+Thai Iced Tea | 5.00 | Thai tea with milk | other | none | v gf
+
+@ luke-s-lobster-union-square
+name: Luke's Lobster (Union Square)
+address: 124 University Pl, New York, NY 10003
+ll: 40.73483, -73.99225
+hood: Union Square
+cuisine: american
+detail: Maine-style lobster, crab and shrimp rolls
+price: 2
+google: 4.5
+hours: 11:00-21:00
+platforms: uber, doordash
+chain: yes
+allergen_info: yes
+source: https://www.lukeslobster.com/menu
+--
+*Lobster Roll | 28.00 | Chilled lobster, mayo, lemon butter, seasoning on a toasted bun | sandwich | shrimp
+*Lobster Grilled Cheese | 22.00 | Lobster, cheddar on griddled bread | sandwich | shrimp
+Crab Roll | 22.00 | Jonah crab meat on a toasted bun | sandwich | shrimp
+Shrimp Roll | 18.00 | Chilled Maine shrimp on a toasted bun | sandwich | shrimp
+Luke's Trio | 36.00 | Half lobster, crab and shrimp rolls | sandwich | shrimp
+Lobster Tail Roll | 34.00 | Whole warm lobster tail on a bun | sandwich | shrimp
+Clam Chowder | 9.00 | New England clam chowder | soup | shrimp
+Lobster Bisque | 10.00 | Lobster bisque | soup | shrimp | gf
+Crab Cake Roll | 20.00 | Crab cake, tartar on a bun | sandwich | shrimp
+Kale Slaw | 5.00 | Kale and cabbage slaw | salad | none | vg gf
+Chips | 2.50 | Kettle chips | other | none | vg gf
+Blueberry Whoopie Pie | 5.00 | Blueberry whoopie pie | other | none | v
+Maine Root Soda | 3.50 | Maine root beer or blueberry soda | other | none | vg gf
+Lobster Mac & Cheese | 16.00 | Macaroni, lobster, cheddar | other | shrimp
+
+@ taboonette-union-square
+name: Taboonette
+address: 30 E 13th St, New York, NY 10003
+ll: 40.73465, -73.99279
+hood: Union Square
+cuisine: mediterranean
+detail: Middleterranean pitas and bowls from a taboon oven
+price: 1
+google: 4.5
+hours: 11:00-21:00
+platforms: uber, doordash
+--
+*Chicken Shawarma Pita | 13.50 | Chicken shawarma, cabbage, tahini, pickles in taboon pita | sandwich | chicken
+*Lamb Shawarma Bowl | 16.50 | Lamb shawarma over freekeh, hummus, salad | bowl | lamb
+Chicken Shawarma Bowl | 15.50 | Chicken shawarma over rice, hummus, salad | bowl | chicken | gf
+Falafel Pita | 11.50 | Falafel, hummus, Israeli salad, tahini in pita | sandwich | none | vg
+Sabich | 12.50 | Fried eggplant, egg, hummus, amba in pita | sandwich | egg | v
+Steak Pita | 15.50 | Grilled steak, chimichurri, onion in pita | sandwich | beef
+Brisket Pita | 15.50 | Braised brisket, pickles, tahini in pita | sandwich | beef
+Roasted Cauliflower Bowl | 13.50 | Roasted cauliflower, rice, tahini, herbs | bowl | none | vg gf
+Salmon Bowl | 16.50 | Grilled salmon, rice, salad, tzatziki | bowl | fish | gf
+Hummus Plate | 8.50 | Hummus, olive oil, pita | other | none | vg
+Israeli Salad | 7.50 | Cucumber, tomato, onion, lemon | salad | none | vg gf
+Lentil Soup | 6.50 | Lentil soup | soup | none | vg gf
+Fries with Za'atar | 5.50 | Fries with za'atar | other | none | vg gf
+Malabi | 6.00 | Rose milk pudding with pistachios | other | none | v gf
+Mint Lemonade | 4.50 | Lemonade with mint | other | none | vg gf
+
+@ kung-fu-tea-tkk-e-23rd
+name: Kung Fu Tea / TKK Fried Chicken (E 23rd)
+address: 115 E 23rd St, New York, NY 10010
+ll: 40.74, -73.9855
+hood: Gramercy
+cuisine: chinese
+detail: Bubble tea plus Taiwanese fried chicken
+price: 1
+google: 4.2
+hours: 11:00-23:00
+platforms: uber, doordash
+chain: yes
+categories: coffee, meal
+--
+*TKK Fried Chicken Sandwich | 9.99 | Taiwanese fried chicken, pickles, spicy mayo on a bun | sandwich | chicken | s1
+*Popcorn Chicken | 8.99 | Taiwanese popcorn chicken with basil | other | chicken | s1
+Fried Chicken (2 pc) | 8.99 | Two pieces of Taiwanese fried chicken | other | chicken
+Chicken Rice Box | 12.99 | Fried chicken over rice, pickled cabbage, egg | rice | chicken
+Sweet Potato Fries | 4.99 | Sweet potato fries | other | none | vg gf
+Fried Rice Ball | 4.99 | Crispy sticky rice ball | other | none | vg gf
+Kung Fu Milk Tea | 5.75 | Black milk tea with boba | other | none | v gf
+Taro Milk Tea | 6.25 | Taro milk tea | other | none | v gf
+Brown Sugar Boba Milk | 6.50 | Brown sugar boba with fresh milk | other | none | v gf
+Matcha Milk Tea | 6.25 | Matcha with milk | other | none | v gf
+Passion Fruit Green Tea | 5.50 | Green tea with passion fruit | other | none | vg gf
+Mango Slush | 6.50 | Mango slush | other | none | vg gf
+Oolong Tea | 4.50 | Oolong tea | other | none | vg gf
+Winter Melon Tea | 5.00 | Winter melon tea | other | none | vg gf
+
+@ mala-town-gramercy
+name: Mala Town
+address: 162 E 25th St, New York, NY 10010
+ll: 40.74017, -73.98261
+hood: Kips Bay
+cuisine: chinese
+detail: Build-your-own Sichuan mala dry pot and soup
+price: 2
+google: 4.5
+hours: 11:30-22:00
+platforms: uber, doordash
+--
+*Mala Dry Pot (Build Your Own) | 18.00 | Choice of proteins and vegetables stir-fried in mala sauce | bowl | none | s3 nv
+*Mala Tang Soup Bowl | 17.00 | Choice ingredients in spicy numbing broth | soup | none | s3 nv
+Beef Mala Dry Pot | 20.00 | Sliced beef, potato, lotus root, mala sauce | bowl | beef | s3
+Lamb Mala Dry Pot | 21.00 | Sliced lamb, mushrooms, cabbage, mala sauce | bowl | lamb | s3
+Fish Fillet Mala Tang | 19.00 | Fish fillet, tofu, glass noodles in mala broth | soup | fish | s3
+Vegetable Mala Dry Pot | 16.00 | Lotus root, potato, tofu, bok choy, mala sauce | bowl | tofu | vg s3
+Cumin Lamb Skewers (3) | 9.00 | Grilled lamb skewers with cumin | other | lamb | gf s2
+Dan Dan Noodles | 12.00 | Noodles in sesame-chili sauce with pork | noodles | pork | s2
+Cold Cucumber Salad | 7.00 | Smashed cucumber, garlic, chili | salad | none | vg gf s1
+Wontons in Chili Oil | 9.00 | Pork wontons in chili oil | other | pork | s2
+Steamed Rice | 2.50 | White rice | rice | none | vg gf
+Soy Milk | 3.00 | Sweet soy milk | other | none | vg gf
+Herbal Tea | 3.00 | Chrysanthemum tea | other | none | vg gf
+
+@ beef-up-noodle-kips-bay
+name: Beef Up Noodle
+address: 350 3rd Ave, New York, NY 10010
+ll: 40.74065, -73.98206
+hood: Kips Bay
+cuisine: chinese
+detail: Taiwanese beef noodle soup specialist
+price: 1
+google: 4.5
+hours: 11:00-21:30
+platforms: uber, doordash
+--
+*Braised Beef Noodle Soup | 16.95 | Braised beef shank, wheat noodles, bok choy in beef broth | soup | beef
+*Spicy Beef Noodle Soup | 17.95 | Braised beef in spicy broth with noodles | soup | beef | s2
+Beef Tendon Noodle Soup | 17.95 | Beef and tendon with noodles | soup | beef
+Tomato Beef Noodle Soup | 16.95 | Tomato-based beef noodle soup | soup | beef
+Clear Broth Beef Noodle Soup | 16.95 | Clear beef broth, sliced beef, noodles | soup | beef
+Braised Pork Rice | 12.95 | Minced pork over rice with egg and pickles | rice | pork
+Dry Beef Noodles | 16.95 | Braised beef over noodles with sauce | noodles | beef
+Pork Chop Rice | 13.95 | Fried pork chop over rice | rice | pork
+Scallion Pancake | 6.95 | Crispy scallion pancake | other | none | vg
+Pork Dumplings (8) | 9.95 | Boiled pork dumplings | other | pork
+Popcorn Chicken | 8.95 | Taiwanese popcorn chicken | other | chicken | s1
+Cucumber Salad | 5.95 | Garlic cucumber salad | salad | none | vg gf s1
+Tea Egg | 1.95 | Soy-marinated egg | other | egg | v
+Soy Milk | 3.00 | Sweet soy milk | other | none | vg gf
+
+@ 1915-lanzhou-hand-pulled-noodles
+name: 1915 Lanzhou Hand-Pulled Noodles & Dumplings
+address: 207 E 26th St, New York, NY 10010
+ll: 40.74062, -73.98125
+hood: Kips Bay
+cuisine: chinese
+detail: Lanzhou beef noodle soup with hand-pulled noodles
+price: 1
+google: 4.4
+hours: 11:00-22:00
+platforms: uber, doordash
+--
+*Lanzhou Beef Noodle Soup | 15.95 | Hand-pulled noodles, sliced beef, radish, cilantro, chili oil | soup | beef | s1
+*Spicy Cumin Lamb Noodles | 17.95 | Hand-pulled noodles with cumin lamb | noodles | lamb | s2
+Braised Beef Noodle Soup | 16.95 | Hand-pulled noodles with braised beef chunks | soup | beef
+Stir-Fried Beef Noodles | 16.95 | Hand-pulled noodles stir-fried with beef and vegetables | noodles | beef
+Tomato Egg Noodles | 13.95 | Hand-pulled noodles with tomato and egg | noodles | egg | v
+Vegetable Noodle Soup | 12.95 | Hand-pulled noodles in vegetable broth | soup | none | vg
+Pork Dumplings (10) | 10.95 | Boiled pork and cabbage dumplings | other | pork
+Lamb Dumplings (10) | 12.95 | Boiled lamb and onion dumplings | other | lamb
+Vegetable Dumplings (10) | 9.95 | Boiled vegetable dumplings | other | none | vg
+Cumin Lamb Skewers (3) | 8.95 | Grilled lamb skewers | other | lamb | gf s2
+Cold Cucumber Salad | 5.95 | Smashed cucumber with garlic | salad | none | vg gf s1
+Scallion Pancake | 5.95 | Crispy scallion pancake | other | none | vg
+Beef Pancake Roll | 8.95 | Sliced beef, scallion, hoisin in a crispy pancake | wrap | beef
+Soy Milk | 3.00 | Sweet soy milk | other | none | vg gf
+
+@ bb-q-chicken-kips-bay
+name: bb.q Chicken (Kips Bay)
+address: 383 3rd Ave, New York, NY 10016
+ll: 40.74156, -73.98093
+hood: Kips Bay
+cuisine: korean
+detail: Korean fried chicken chain; golden olive and secret sauce
+price: 2
+google: 4.3
+hours: 11:00-23:00
+platforms: uber, doordash
+chain: yes
+source: https://bbqchicken.us/menu
+--
+*Golden Original Chicken (half) | 18.99 | Fried in olive oil, crispy and unsauced | other | chicken
+*Secret Sauced Chicken (half) | 19.99 | Fried chicken in sweet-spicy secret sauce | other | chicken | s1
+Honey Garlic Chicken (half) | 19.99 | Fried chicken in honey garlic glaze | other | chicken
+Cheesling Chicken (half) | 20.99 | Fried chicken with cheese powder | other | chicken
+Hot Spicy Chicken (half) | 19.99 | Fried chicken in fiery sauce | other | chicken | s3
+Soy Garlic Chicken (half) | 19.99 | Fried chicken in soy garlic glaze | other | chicken
+Boneless Golden Original (small) | 15.99 | Boneless fried chicken pieces | other | chicken
+Chicken Sandwich | 11.99 | Fried chicken sandwich with pickles | sandwich | chicken
+Tteokbokki | 12.99 | Spicy rice cakes | other | none | v s2
+Kimchi Fried Rice | 13.99 | Kimchi, rice, egg | rice | egg | v s1
+Cheese Fries | 8.99 | Fries with cheese | other | none | v gf
+Pickled Radish | 2.00 | Pickled radish cubes | other | none | vg gf
+Coleslaw | 3.99 | Coleslaw | salad | egg | v gf
+Korean Soda | 3.00 | Milkis or Chilsung Cider | other | none | v gf
+
+@ street-taco-kips-bay
+name: Street Taco
+address: 358 3rd Ave, New York, NY 10010
+ll: 40.74089, -73.98187
+hood: Kips Bay
+cuisine: mexican
+detail: Tacos and margaritas in a casual cantina
+price: 2
+google: 4.4
+hours: 11:00-23:00
+platforms: uber, doordash
+--
+*Carne Asada Tacos (3) | 16.00 | Grilled steak, onion, cilantro on corn tortillas | taco | beef | gf
+*Al Pastor Tacos (3) | 15.00 | Marinated pork, pineapple on corn tortillas | taco | pork | gf
+Chicken Tinga Tacos (3) | 14.00 | Chipotle chicken, crema on corn tortillas | taco | chicken | gf s1
+Baja Fish Tacos (3) | 16.00 | Battered fish, cabbage, chipotle crema | taco | fish
+Carnitas Tacos (3) | 15.00 | Braised pork, salsa verde on corn tortillas | taco | pork | gf
+Mushroom Tacos (3) | 13.00 | Roasted mushrooms, salsa verde | taco | none | vg gf
+Chicken Burrito | 15.00 | Chicken, rice, beans, cheese, salsa in a flour tortilla | wrap | chicken
+Steak Burrito Bowl | 16.00 | Steak, rice, beans, guacamole, salsa | bowl | beef | gf
+Chicken Quesadilla | 14.00 | Chicken, cheese in a flour tortilla | other | chicken
+Guacamole & Chips | 10.00 | Guacamole, tortilla chips | other | none | vg gf
+Queso Fundido | 11.00 | Melted cheese with chorizo, tortillas | other | pork
+Elote | 6.00 | Grilled corn, mayo, cotija, chili | other | none | v gf s1
+Churros | 8.00 | Cinnamon churros with chocolate | other | none | v
+Horchata | 4.00 | Rice cinnamon drink | other | none | vg gf
+Jarritos | 3.50 | Mexican soda | other | none | vg gf

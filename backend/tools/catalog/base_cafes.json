@@ -1,0 +1,7846 @@
+[
+ {
+  "id": "joe-coffee-flatiron",
+  "name": "Joe Coffee (Flatiron)",
+  "address": "186 5th Ave, New York, NY 10010",
+  "lat": 40.741,
+  "lng": -73.9898,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Walk-up espresso window by the Flatiron Building; Joe's smallest shop",
+  "price_level": 2,
+  "google_rating": 4.2,
+  "google_reviews": 14,
+  "yelp_rating": null,
+  "yelp_reviews": null,
+  "other_ratings": {},
+  "recommendations": [
+   "\"Our tiniest Joe Coffee to date\" - a walk-up window at the Flatiron Building (Joe Coffee)"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "17:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.2,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://joecoffeecompany.com/pages/flatiron",
+   "https://joe.coffee/locations/ny/new-york/joe-coffee-company-flatiron-new-york/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "think-coffee-nomad",
+  "name": "Think Coffee (NoMad)",
+  "address": "246 5th Ave, New York, NY 10001",
+  "lat": 40.7452,
+  "lng": -73.9877,
+  "neighborhood": "NoMad",
+  "cuisine": "sandwich",
+  "cuisine_detail": "Mission-driven NYC coffee chain; espresso, light breakfast and sandwiches",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 20,
+  "other_ratings": {},
+  "recommendations": [
+   "One of 11 Think Coffee cafes; NYC Tourism lists it among the city's long-running independents"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "19:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.43,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Oat Milk Latte",
+    "description": "Espresso with steamed oat milk",
+    "price_cents": 675,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 375,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Chai Latte",
+    "description": "Spiced black tea concentrate with steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "black tea",
+     "spices",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Egg & Cheese Sandwich",
+    "description": "Scrambled egg and melted cheese on a roll",
+    "price_cents": 850,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d8",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://thinkcoffee.com/pages/locations",
+   "https://www.nyctourism.com/restaurants/think-coffee2/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "stumptown-coffee-ace-hotel",
+  "name": "Stumptown Coffee Roasters (Ace Hotel)",
+  "address": "18 W 29th St, New York, NY 10001",
+  "lat": 40.7458,
+  "lng": -73.9884,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Portland roaster's Ace Hotel lobby cafe, open since 2009; King David breakfast tacos",
+  "price_level": 2,
+  "google_rating": 4.4,
+  "google_reviews": 3139,
+  "yelp_rating": null,
+  "yelp_reviews": 1470,
+  "other_ratings": {},
+  "recommendations": [
+   "The Infatuation keeps a standing review of the Ace Hotel Stumptown",
+   "A NoMad landmark since 2009 (Stumptown)"
+  ],
+  "hours": {
+   "open": "06:00",
+   "close": "17:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.45,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Stumptown Cold Brew",
+    "description": "Nitro-style cold brew on tap",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Hair Bender Drip",
+    "description": "Stumptown's flagship Hair Bender blend, brewed filter",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Breakfast Taco",
+    "description": "King David Tacos: egg, cheese and potato in a flour tortilla",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "potato",
+     "tortilla"
+    ],
+    "dish_type": "taco",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.stumptowncoffee.com/pages/new-york-ace-hotel-cafe",
+   "https://www.theinfatuation.com/new-york/reviews/stumptown-coffee-roasters-w-29th-st",
+   "https://www.yelp.com/biz/stumptown-coffee-roasters-new-york"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "devocion-flatiron",
+  "name": "Devoción (Flatiron)",
+  "address": "25 E 20th St, New York, NY 10003",
+  "lat": 40.7388,
+  "lng": -73.9887,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Colombian single-farm roaster; skylit plant-filled room, pastries and light bites",
+  "price_level": 2,
+  "google_rating": 4.5,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 266,
+  "other_ratings": {
+   "restaurantguru": 4.4
+  },
+  "recommendations": [
+   "The Infatuation: \"they roast their own coffee... a real coffee nerd could be very happy\"",
+   "Flatiron NoMad Partnership: beans \"sourced from hand-selected farms in Colombia\""
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.46,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Americano",
+    "description": "Espresso lengthened with hot water",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "water"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Pandebono",
+    "description": "Colombian cheese bread, warm from the oven",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "cassava flour",
+     "cheese",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.devocion.com/pages/devocion-cafe-flatiron-district-new-york-ny",
+   "https://www.theinfatuation.com/new-york/reviews/devocion-flatiron",
+   "https://flatironnomad.nyc/2022/02/11/must-try-coffee-shops-in-flatiron-nomad/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "blue-bottle-gramercy-park",
+  "name": "Blue Bottle Coffee (Gramercy Park)",
+  "address": "257 Park Ave S, New York, NY 10010",
+  "lat": 40.7388,
+  "lng": -73.9875,
+  "neighborhood": "Gramercy",
+  "cuisine": "bakery",
+  "cuisine_detail": "Oakland roaster; single-origin pour-over, New Orleans iced coffee and pastries",
+  "price_level": 2,
+  "google_rating": 4.5,
+  "google_reviews": 208,
+  "yelp_rating": null,
+  "yelp_reviews": 49,
+  "other_ratings": {
+   "tripadvisor": 5.0
+  },
+  "recommendations": [
+   "One of Blue Bottle's original Manhattan cafes, on the Park Avenue South corner"
+  ],
+  "hours": {
+   "open": "06:30",
+   "close": "19:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.51,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 425,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Pour Over",
+    "description": "Single-origin, brewed to order",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "New Orleans Iced Coffee",
+    "description": "Cold brew with chicory, milk and cane sugar",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 725,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Liege Waffle",
+    "description": "Belgian pearl-sugar waffle, served warm",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "pearl sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://bluebottlecoffee.com/us/eng/cafes/gramercy-park",
+   "https://www.yelp.com/biz/blue-bottle-coffee-gramercy-park-new-york"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "gregorys-coffee-park-ave-south",
+  "name": "Gregorys Coffee (Park Ave South)",
+  "address": "327 Park Ave S, New York, NY 10010",
+  "lat": 40.7401,
+  "lng": -73.9846,
+  "neighborhood": "Flatiron",
+  "cuisine": "sandwich",
+  "cuisine_detail": "New York coffee chain; espresso plus sandwiches, parfaits, smoothies and cold-pressed juice",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 429,
+  "other_ratings": {
+   "toast": 4.0
+  },
+  "recommendations": [
+   "Time Out New York profiles Gregorys as a homegrown New York coffee chain"
+  ],
+  "hours": {
+   "open": "06:00",
+   "close": "19:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.62,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Chai Latte",
+    "description": "Spiced black tea concentrate with steamed milk",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "black tea",
+     "spices",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Egg & Cheese Sandwich",
+    "description": "Scrambled egg and melted cheese on a roll",
+    "price_cents": 825,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1150,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Blueberry Muffin",
+    "description": "Buttermilk muffin folded with blueberries",
+    "price_cents": 425,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "blueberry"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d8",
+    "name": "Greek Yogurt Parfait",
+    "description": "Greek yogurt layered with granola and berries",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "yogurt",
+     "granola",
+     "berries"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "gluten",
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.yelp.com/biz/gregorys-coffee-new-york",
+   "https://www.timeout.com/newyork/restaurants/gregorys-coffee"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "blank-street-coffee-23rd-lex",
+  "name": "Blank Street Coffee (23rd & Lex)",
+  "address": "127 E 23rd St, New York, NY 10010",
+  "lat": 40.7396,
+  "lng": -73.9838,
+  "neighborhood": "Gramercy",
+  "cuisine": "bakery",
+  "cuisine_detail": "Fast, tech-forward espresso bar known for blueberry matcha and banana bread lattes",
+  "price_level": 1,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 36,
+  "other_ratings": {
+   "tripadvisor": 4.2
+  },
+  "recommendations": [
+   "Flatiron NoMad Partnership \"New Neighbor\" feature (2022)"
+  ],
+  "hours": {
+   "open": "06:30",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.7,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Oat Milk Latte",
+    "description": "Espresso with steamed oat milk",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Iced Matcha Latte (Oat)",
+    "description": "Whisked matcha over ice with oat milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Blueberry Matcha",
+    "description": "Matcha over blueberry puree with oat milk",
+    "price_cents": 735,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "blueberry",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.blankstreet.com/en-US/locations/new-york/34-23rd-and-lex",
+   "https://flatironnomad.nyc/2022/08/02/new-neighbor-blank-street-coffee/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "felix-roasting-co-nomad",
+  "name": "Felix Roasting Co. (NoMad)",
+  "address": "450 Park Ave S, New York, NY 10016",
+  "lat": 40.745,
+  "lng": -73.9832,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Maximalist design-led coffee bar; signature rosemary honey latte, Supermoon pastries",
+  "price_level": 3,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 384,
+  "other_ratings": {
+   "tripadvisor": 4.5,
+   "restaurantguru": 4.8,
+   "joe_coffee": 4.3
+  },
+  "recommendations": [
+   "Known for its signature rosemary honey latte; pastries from Supermoon Bakehouse"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.74,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Rosemary Honey Latte",
+    "description": "Espresso, steamed milk, rosemary-infused honey",
+    "price_cents": 800,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "honey",
+     "rosemary"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 675,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 775,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1400,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://felixroastingco.com/pages/visit-us",
+   "https://www.yelp.com/biz/felix-roasting-new-york-4"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "irving-farm-gramercy",
+  "name": "Irving Farm New York (Gramercy)",
+  "address": "71 Irving Pl, New York, NY 10003",
+  "lat": 40.7362,
+  "lng": -73.9871,
+  "neighborhood": "Gramercy",
+  "cuisine": "american",
+  "cuisine_detail": "Irving Farm's original 1996 cafe in a Gramercy brownstone; full breakfast and lunch menu",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 583,
+  "other_ratings": {
+   "tripadvisor": 4.3,
+   "joe_coffee": 3.8
+  },
+  "recommendations": [
+   "Irving Farm's first cafe, opened 1996 on the garden level of a historic Gramercy brownstone"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "17:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.77,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Chai Latte",
+    "description": "Spiced black tea concentrate with steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "black tea",
+     "spices",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1300,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Egg & Cheese Sandwich",
+    "description": "Scrambled egg and melted cheese on a roll",
+    "price_cents": 950,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d8",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 425,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://irvingfarmcoffee.com/pages/gramercy",
+   "https://www.yelp.com/biz/irving-farm-new-york-new-york-9"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "birch-coffee-murray-hill",
+  "name": "Birch Coffee (Murray Hill)",
+  "address": "432 3rd Ave, New York, NY 10016",
+  "lat": 40.7442,
+  "lng": -73.9793,
+  "neighborhood": "Murray Hill",
+  "cuisine": "sandwich",
+  "cuisine_detail": "New York roaster with a reading-library counter; espresso plus sandwiches and salads",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 127,
+  "other_ratings": {
+   "tripadvisor": 4.2
+  },
+  "recommendations": [
+   "One of 13 Birch Coffee shops across New York (Birch Coffee)"
+  ],
+  "hours": {
+   "open": "07:30",
+   "close": "16:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 1.03,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Chai Latte",
+    "description": "Spiced black tea concentrate with steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "black tea",
+     "spices",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Egg & Cheese Sandwich",
+    "description": "Scrambled egg and melted cheese on a roll",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1250,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.birchcoffee.com/pages/visit",
+   "https://www.yelp.com/biz/birch-coffee-new-york-9"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "cha-cha-matcha-flatiron",
+  "name": "Cha Cha Matcha (Flatiron)",
+  "address": "922 Broadway, New York, NY 10010",
+  "lat": 40.7396,
+  "lng": -73.9897,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Pink-tiled matcha bar: matcha lattes, soft serve and matcha pastries",
+  "price_level": 2,
+  "google_rating": 4.1,
+  "google_reviews": 485,
+  "yelp_rating": null,
+  "yelp_reviews": 68,
+  "other_ratings": {},
+  "recommendations": [
+   "\"Matcha can be found in drinks, desserts and even soft-serve ice cream\" (Cha Cha Matcha)"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.34,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Iced Matcha",
+    "description": "Ceremonial matcha shaken over ice",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "water"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Classic Matcha Latte",
+    "description": "Matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Iced Matcha Latte (Oat)",
+    "description": "Whisked matcha over ice with oat milk",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Hojicha Tea",
+    "description": "Roasted Japanese green tea",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Hot Chocolate",
+    "description": "Dark chocolate melted into steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Matcha Soft Serve",
+    "description": "Swirled matcha soft serve in a cup or cone",
+    "price_cents": 800,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Matcha Croissant",
+    "description": "Butter croissant dusted with matcha sugar",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://chachamatcha.com/pages/location/flatiron",
+   "https://www.toasttab.com/local/cha-cha-matcha-flatiron-922-broadway/r-787b0e4a-f759-45f5-9454-361600466f57"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "variety-coffee-roasters-chelsea",
+  "name": "Variety Coffee Roasters (Chelsea)",
+  "address": "261 7th Ave, New York, NY 10001",
+  "lat": 40.7466,
+  "lng": -73.9936,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Bushwick roaster's Chelsea counter; espresso, filter and house-baked cookies",
+  "price_level": 2,
+  "google_rating": 4.4,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 232,
+  "other_ratings": {},
+  "recommendations": [
+   "Profiled in The New York Coffee Guide"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "21:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.51,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Flat White",
+    "description": "Double ristretto with silky steamed milk",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 350,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Dirty Chai Latte",
+    "description": "Chai concentrate, steamed milk and a shot of espresso",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "black tea",
+     "spices",
+     "milk",
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://varietycoffeeroasters.com/pages/locations",
+   "https://www.newyorkcoffeeguide.com/Venues/Profile/Variety-Coffee-Roasters-(Chelsea)"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "cafe-grumpy-nomad",
+  "name": "Café Grumpy (NoMad)",
+  "address": "63 Madison Ave, New York, NY 10016",
+  "lat": 40.7434,
+  "lng": -73.9849,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Grab-and-go coffee bar from the long-running Brooklyn roaster",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": null,
+  "other_ratings": {},
+  "recommendations": [
+   "Café Grumpy is a long-running New York specialty roaster with six Manhattan shops"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.55,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 660,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Salted Caramel Latte",
+    "description": "Espresso, steamed milk, salted caramel",
+    "price_cents": 770,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "caramel"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Honey Oat Latte",
+    "description": "Espresso with honey and steamed oat milk",
+    "price_cents": 770,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "honey",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 632,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Macchiato",
+    "description": "Espresso marked with a spoon of foam",
+    "price_cents": 577,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Iced Americano",
+    "description": "Espresso over ice and water",
+    "price_cents": 632,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "water"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 425,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://cafegrumpy.com/nomad/",
+   "https://www.ubereats.com/store/cafe-grumpy-63-madison-ave/W6LR-Th5V3a5wzvXZWhV_w"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "starbucks-reserve-roastery-nyc",
+  "name": "Starbucks Reserve Roastery New York",
+  "address": "61 9th Ave, New York, NY 10011",
+  "lat": 40.7417,
+  "lng": -74.0053,
+  "neighborhood": "Chelsea",
+  "cuisine": "american",
+  "cuisine_detail": "23,000 sq ft roastery: reserve coffee, Princi Italian bakery and the Arriviamo cocktail bar",
+  "price_level": 3,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 1174,
+  "other_ratings": {
+   "tripadvisor": 4.5
+  },
+  "recommendations": [
+   "\"Combines coffee artistry with innovative coffee- and tea-inspired mixology and authentic Italian fare\" (Starbucks Reserve)",
+   "Opening covered by designboom"
+  ],
+  "hours": {
+   "open": "07:30",
+   "close": "22:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 1.18,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Reserve Latte",
+    "description": "Single-origin reserve espresso with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Whiskey Barrel-Aged Cold Brew",
+    "description": "Cold brew from beans aged in whiskey barrels",
+    "price_cents": 950,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Ube Coconut Latte",
+    "description": "Reserve espresso, ube and coconut milk",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "ube",
+     "coconut milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Teavana Loose-Leaf Tea",
+    "description": "Brewed to order at the tea bar",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Princi Focaccia Sandwich",
+    "description": "Roman focaccia with cured meats and cheese",
+    "price_cents": 1450,
+    "price_estimated": true,
+    "ingredients": [
+     "focaccia",
+     "prosciutto",
+     "cheese"
+    ],
+    "dish_type": "sandwich",
+    "protein": "pork",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Princi Baked Eggs",
+    "description": "Eggs baked with tomato and herbs, served with bread",
+    "price_cents": 1350,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "tomato",
+     "bread"
+    ],
+    "dish_type": "other",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "egg",
+     "gluten"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Princi Cornetto",
+    "description": "Italian butter cornetto from the Princi bakery",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.starbucksreserve.com/locations/new-york-roastery",
+   "https://www.yelp.com/biz/starbucks-reserve-roastery-new-york-11"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "levain-bakery-flatiron",
+  "name": "Levain Bakery (Flatiron)",
+  "address": "2 W 18th St, New York, NY 10011",
+  "lat": 40.7381,
+  "lng": -73.9926,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "The six-ounce cookie shop; also breads, baguette sandwiches and coffee",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 161,
+  "other_ratings": {
+   "tripadvisor": 5.0
+  },
+  "recommendations": [
+   "Time Out New York: \"See inside the brand-new Levain Bakery in the Flatiron\" (2024)"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "23:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.49,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Chocolate Chip Walnut Cookie",
+    "description": "Levain's six-ounce signature, crisp outside and molten inside",
+    "price_cents": 500,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate",
+     "walnut"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "tree_nut"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Two Chip Chocolate Chip Cookie",
+    "description": "Dark and semi-sweet chips, no nuts",
+    "price_cents": 500,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Dark Chocolate Peanut Butter Chip Cookie",
+    "description": "Dark chocolate dough with peanut butter chips",
+    "price_cents": 500,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate",
+     "peanut butter"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "peanut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Vegan & Gluten-Free Chocolate Chip Walnut Cookie",
+    "description": "The signature cookie, vegan and gluten-free",
+    "price_cents": 600,
+    "price_estimated": false,
+    "ingredients": [
+     "gluten-free flour",
+     "chocolate",
+     "walnut"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 375,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://levainbakery.com/pages/flatiron-nyc",
+   "https://www.tripadvisor.com/Restaurant_Review-g60763-d27752282-Reviews-Levain_Bakery-New_York_City_New_York.html",
+   "https://newyorkyimby.com/2024/04/levain-bakery-opens-new-location-at-122-fifth-avenue-in-union-square-manhattan.html"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "caffe-vergnano-eataly-flatiron",
+  "name": "Caffè Vergnano at Eataly NYC Flatiron",
+  "address": "200 5th Ave, New York, NY 10010",
+  "lat": 40.7415,
+  "lng": -73.9896,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Italian caffè counter inside Eataly Flatiron: espresso, cornetti and Italian breakfast",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": null,
+  "other_ratings": {},
+  "recommendations": [
+   "La Voce di New York (2024): Eataly expanded its Flatiron café space and opened Caffè Vergnano"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "23:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.17,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Espresso",
+    "description": "Vergnano 1882 blend, pulled Italian-style",
+    "price_cents": 300,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Caffè Latte",
+    "description": "Espresso with hot steamed milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cornetto",
+    "description": "Italian butter cornetto, plain or filled",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Maritozzo",
+    "description": "Roman sweet bun split and filled with whipped cream",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "cream"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cioccolata Calda",
+    "description": "Thick Italian drinking chocolate",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.eataly.com/us_en/stores/nyc-flatiron/counters-and-cafes",
+   "https://lavocedinewyork.com/new-york/2024/05/21/eataly-aumenta-gli-spazi-a-flatiron-district-ora-apre-il-caffe-vergnano/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "le-pain-quotidien-29th-7th",
+  "name": "Le Pain Quotidien (29th & 7th)",
+  "address": "339 7th Ave, New York, NY 10001",
+  "lat": 40.7478,
+  "lng": -73.993,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Belgian bakery-café: organic breads, tartines, salads and communal-table breakfast",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 49,
+  "other_ratings": {},
+  "recommendations": [
+   "Listed as an active 2026 store on Le Pain Quotidien's own US locator; the Flatiron branch at 931 Broadway has closed"
+  ],
+  "hours": {
+   "open": "06:00",
+   "close": "19:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.62,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Organic Loose-Leaf Tea",
+    "description": "Served in a glass pot",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Hot Chocolate",
+    "description": "Dark chocolate melted into steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Avocado Tartine",
+    "description": "Smashed avocado on organic sourdough with lemon and chili",
+    "price_cents": 1450,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Croque Monsieur",
+    "description": "Ham, béchamel and gruyère on organic bread, baked",
+    "price_cents": 1650,
+    "price_estimated": true,
+    "ingredients": [
+     "ham",
+     "bechamel",
+     "gruyere",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "pork",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Belgian Waffle",
+    "description": "Liège-style waffle with pearl sugar",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "pearl sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.lepainquotidien.com/us/en/locations/3013:%2029th%20&%207th%20Avenue/339-Seventh-Avenue/",
+   "https://www.yelp.com/biz/le-pain-quotidien-new-york-194"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "magnolia-bakery-moynihan",
+  "name": "Magnolia Bakery (Moynihan Train Hall)",
+  "address": "383 8th Ave, New York, NY 10001",
+  "lat": 40.751,
+  "lng": -73.9955,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Banana pudding, cupcakes and layer cakes, plus drip coffee",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 280,
+  "other_ratings": {},
+  "recommendations": [
+   "Magnolia's Moynihan Train Hall concourse counter (Magnolia Bakery)"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "21:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 1.02,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Classic Banana Pudding",
+    "description": "Vanilla pudding layered with wafers and banana",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "pudding",
+     "banana",
+     "wafer",
+     "cream"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "gluten",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Vanilla Cupcake",
+    "description": "Vanilla cupcake with buttercream swirl",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Red Velvet Cupcake",
+    "description": "Cocoa-tinged cake with cream cheese frosting",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "cocoa",
+     "cream cheese"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 350,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Hot Chocolate",
+    "description": "Dark chocolate melted into steamed milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.magnoliabakery.com/blogs/stores/moynihan-train-hall",
+   "https://www.yelp.com/biz/magnolia-bakery-new-york-23"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "fabrique-bakery-chelsea",
+  "name": "Fabrique Artisan Bakery (Chelsea)",
+  "address": "348 W 14th St, New York, NY 10014",
+  "lat": 40.7404,
+  "lng": -74.0035,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Swedish wood-fired bakery: cardamom and cinnamon buns, sourdough, espresso",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 363,
+  "other_ratings": {},
+  "recommendations": [
+   "Covered by Cititour as the Swedish cardamom-and-cinnamon-bun specialist"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "19:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 1.05,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Cardamom Bun",
+    "description": "Swedish kardemummabulle, knotted and pearl-sugared",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "cardamom",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cinnamon Bun",
+    "description": "Kanelbulle, wood-fired and glazed",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "cinnamon",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Sourdough Loaf",
+    "description": "Wood-fired levain loaf",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "water",
+     "salt"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.yelp.com/biz/fabrique-artisan-bakery-new-york-2",
+   "https://www.tripadvisor.com/Restaurant_Review-g60763-d17778947-Reviews-Fabrique-New_York_City_New_York.html"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "dominique-ansel-workshop",
+  "name": "Dominique Ansel Workshop",
+  "address": "17 E 27th St, New York, NY 10016",
+  "lat": 40.7443,
+  "lng": -73.9869,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Pastry workshop from the Cronut creator: viennoiserie, cakes and La Colombe coffee",
+  "price_level": 3,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 272,
+  "other_ratings": {},
+  "recommendations": [
+   "Flatiron NoMad Partnership \"New Neighbor: Dominique Ansel Workshop\"",
+   "Named in the Flatiron/NoMad coffee guide; coffee by La Colombe"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "16:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.43,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Butter Croissant",
+    "description": "Laminated over two days, baked each morning",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Almond Croissant",
+    "description": "Twice-baked croissant with almond cream",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "almond"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Pain au Chocolat",
+    "description": "Laminated pastry with two dark chocolate batons",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Mini Madeleines",
+    "description": "Baked to order, served warm",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "lemon"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 625,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.dominiqueansel.com/our-shops/",
+   "https://flatironnomad.nyc/2021/07/26/new-neighbor-dominique-ansel-workshop/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "paris-baguette-6th-ave",
+  "name": "Paris Baguette (23rd St)",
+  "address": "700 6th Ave, New York, NY 10010",
+  "lat": 40.7423,
+  "lng": -73.9926,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Korean-French bakery café: pastries, cakes, breakfast sandwiches and Lavazza coffee",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 66,
+  "other_ratings": {},
+  "recommendations": [
+   "Listed on Paris Baguette's own site as a full bakery café serving Lavazza coffee"
+  ],
+  "hours": {
+   "open": "06:00",
+   "close": "22:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.11,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 525,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Iced Americano",
+    "description": "Lavazza espresso over ice",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "water"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Strawberry Soft Cream Cake Slice",
+    "description": "Sponge cake with cream and fresh strawberries",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "egg",
+     "cream",
+     "strawberry"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Egg Tart",
+    "description": "Flaky tart shell with baked egg custard",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Egg & Cheese Croissant Sandwich",
+    "description": "Scrambled egg and cheese in a butter croissant",
+    "price_cents": 800,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Soft Bun with Sweet Cream",
+    "description": "Milk bread bun filled with sweet cream",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "milk",
+     "egg",
+     "cream"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://parisbaguette.com/locations/ny/new-york/700-6th-avenue/",
+   "https://www.yelp.com/biz/paris-baguette-new-york-27"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "lady-m-nomad",
+  "name": "Lady M Cake Boutique (NoMad)",
+  "address": "1178 Broadway, New York, NY 10001",
+  "lat": 40.7457,
+  "lng": -73.9884,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Mille crêpes cake boutique with a small tea and coffee counter",
+  "price_level": 3,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 363,
+  "other_ratings": {},
+  "recommendations": [
+   "Profiled by Experience NoMad / Cititour as the neighbourhood's mille crêpes boutique"
+  ],
+  "hours": {
+   "open": "11:00",
+   "close": "21:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.44,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Signature Mille Crêpes Slice",
+    "description": "Twenty paper-thin crêpes layered with pastry cream",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "egg",
+     "milk",
+     "cream"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Green Tea Mille Crêpes Slice",
+    "description": "Mille crêpes layered with matcha pastry cream",
+    "price_cents": 1300,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "egg",
+     "milk",
+     "matcha"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Checkers Cake Slice",
+    "description": "Chocolate and vanilla checkerboard sponge",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "egg",
+     "butter",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Loose-Leaf Tea Pot",
+    "description": "Brewed by the pot, served with the cakes",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Hot Chocolate",
+    "description": "Dark chocolate melted into steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.ladym.com/boutiques/details/nomad-ny",
+   "https://www.yelp.com/biz/lady-m-cake-boutique-new-york-6"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "aux-merveilleux-de-fred",
+  "name": "Aux Merveilleux de Fred",
+  "address": "37 8th Ave, New York, NY 10014",
+  "lat": 40.7382,
+  "lng": -74.0021,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Northern-French pâtisserie: meringue merveilleux, brioche and cramique",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 499,
+  "other_ratings": {},
+  "recommendations": [
+   "The French merveilleux specialist, long covered on Tripadvisor and Menupages"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "20:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 1.02,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Le Merveilleux",
+    "description": "Two meringues sandwiched with whipped cream and chocolate shavings",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "egg white",
+     "cream",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "egg",
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "L'Incroyable",
+    "description": "Meringue with speculoos-flavoured cream",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "egg white",
+     "cream",
+     "speculoos"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "egg",
+     "dairy",
+     "gluten"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Brioche Sucrée",
+    "description": "Sugar-crusted French brioche",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cramique aux Raisins",
+    "description": "Belgian raisin brioche loaf",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "raisin"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 350,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Hot Chocolate",
+    "description": "Dark chocolate melted into steamed milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "chocolate",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.yelp.com/biz/aux-merveilleux-de-fred-new-york",
+   "https://menupages.com/aux-merveilleux-de-fred/37-8th-ave-new-york"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "gotham-coffee-roasters",
+  "name": "Gotham Coffee Roasters",
+  "address": "23 W 19th St, New York, NY 10011",
+  "lat": 40.7397,
+  "lng": -73.9927,
+  "neighborhood": "Flatiron",
+  "cuisine": "american",
+  "cuisine_detail": "Independent Flatiron roastery-cafe; avocado toast, overnight oats and house-roasted espresso",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 111,
+  "other_ratings": {
+   "joe_coffee": 4.3
+  },
+  "recommendations": [
+   "\"Gotham Coffee Roasters: FlatIron Coffee\" - NYC Under Grounds"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.32,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Oat Milk Latte",
+    "description": "Espresso with steamed oat milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 350,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 575,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Iced Matcha Latte (Oat)",
+    "description": "Whisked matcha over ice with oat milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Overnight Oats",
+    "description": "Rolled oats soaked overnight with fruit and seeds",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "oats",
+     "milk",
+     "fruit",
+     "seeds"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Cinnamon Babka",
+    "description": "Sliced cinnamon babka, warmed",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "cinnamon"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.gothamroasters.com/flatiron-cafe-1",
+   "https://joe.coffee/locations/ny/new-york/gotham-coffee-roasters-new-york/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "three-coffee-flatiron",
+  "name": ":3Coffee (Flatiron)",
+  "address": "29 W 21st St, New York, NY 10010",
+  "lat": 40.7411,
+  "lng": -73.992,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Family-owned Colombian micro-roastery; pandebono, arepas and small-batch espresso",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 13,
+  "other_ratings": {
+   "joe_coffee": 4.6
+  },
+  "recommendations": [
+   "Flatiron NoMad Partnership: \"100% family-owned Colombian coffee shop, roasts all beans in small batches\""
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "17:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.16,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Pandebono",
+    "description": "Colombian cheese bread baked through the day",
+    "price_cents": 300,
+    "price_estimated": false,
+    "ingredients": [
+     "cassava flour",
+     "cheese",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Arepa",
+    "description": "Griddled corn arepa with cheese",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "corn flour",
+     "cheese"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cortado",
+    "description": "Equal parts espresso and steamed milk",
+    "price_cents": 475,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 350,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://flatironnomad.nyc/2022/02/11/must-try-coffee-shops-in-flatiron-nomad/",
+   "https://joe.coffee/locations/ny/new-york/3coffee-flatiron-new-york/",
+   "https://www.yelp.com/biz/3coffee-flatiron-new-york-2"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "sunday-morning-nomad",
+  "name": "Sunday Morning (NoMad)",
+  "address": "11 W 25th St, New York, NY 10010",
+  "lat": 40.7435,
+  "lng": -73.9896,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Cinnamon roll bakery; rolls baked in batches until they sell out, plus espresso",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 56,
+  "other_ratings": {},
+  "recommendations": [
+   "Hoodline (Apr 2026): \"NoMad wakes up to sugar shock as Sunday Morning rolls in\"",
+   "Also runs a stall at Time Out Market Union Square"
+  ],
+  "hours": {
+   "open": "09:00",
+   "close": "15:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.19,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Sugar Glazed Cinnamon Roll",
+    "description": "The house roll under a plain sugar glaze",
+    "price_cents": 725,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "cinnamon",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cream Cheese Frosted Roll",
+    "description": "Cinnamon roll under cream cheese frosting",
+    "price_cents": 775,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "cinnamon",
+     "cream cheese"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Pistachio Mascarpone Roll",
+    "description": "Cinnamon roll with pistachio mascarpone",
+    "price_cents": 875,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "pistachio",
+     "mascarpone"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 575,
+    "price_estimated": false,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 450,
+    "price_estimated": false,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 400,
+    "price_estimated": false,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 525,
+    "price_estimated": false,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Iced Matcha",
+    "description": "Whisked matcha over ice",
+    "price_cents": 525,
+    "price_estimated": false,
+    "ingredients": [
+     "matcha",
+     "water"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d8",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": false,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.sundaymorningnyc.com/food",
+   "https://hoodline.com/2026/04/nomad-wakes-up-to-sugar-shock-as-sunday-morning-rolls-in/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "paper-coffee-nomad",
+  "name": "Paper Coffee (MADE Hotel)",
+  "address": "44 W 29th St, New York, NY 10001",
+  "lat": 40.7461,
+  "lng": -73.9891,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Espresso counter in the lobby of the MADE Hotel; coffee and baked goods only",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": 4.0,
+  "yelp_reviews": 255,
+  "other_ratings": {
+   "joe_coffee": 4.6
+  },
+  "recommendations": [
+   "Listed in the Flatiron NoMad Partnership coffee guide",
+   "NoMad Magazine \"Coffee Kick Start\""
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.45,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Cortado",
+    "description": "Espresso cut with a splash of steamed milk",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Cappuccino",
+    "description": "Espresso with steamed milk and a thick cap of foam",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://experiencenomad.com/people/paper-coffee/",
+   "https://www.yelp.com/biz/paper-coffee-new-york",
+   "https://flatironnomad.nyc/2022/02/11/must-try-coffee-shops-in-flatiron-nomad/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "reve-coffee-chelsea",
+  "name": "Rêve Coffee",
+  "address": "135 W 24th St, New York, NY 10011",
+  "lat": 40.7441,
+  "lng": -73.9933,
+  "neighborhood": "Chelsea",
+  "cuisine": "bakery",
+  "cuisine_detail": "Small new Chelsea espresso bar; single-origin pour-overs and breakfast sandwiches",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": 4.5,
+  "yelp_reviews": 3,
+  "other_ratings": {},
+  "recommendations": [
+   "Appears in Yelp's 2026 Flatiron coffee rankings; opening announced on the shop's own Instagram"
+  ],
+  "hours": {
+   "open": "06:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.25,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Bananas Foster Latte",
+    "description": "Espresso, steamed milk, caramelised banana syrup",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "banana",
+     "caramel"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Single-Origin Pour Over",
+    "description": "Hand-brewed, rotating single origin",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Egg & Cheese Sandwich",
+    "description": "Scrambled egg and melted cheese on a roll",
+    "price_cents": 1000,
+    "price_estimated": true,
+    "ingredients": [
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.yelp.com/biz/r%C3%AAve-coffee-new-york",
+   "https://www.instagram.com/p/DVgvXUvAJN6/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "foreigner-nyc",
+  "name": "Foreigner",
+  "address": "64 W 21st St, New York, NY 10010",
+  "lat": 40.7413,
+  "lng": -73.9934,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Coffee and natural-wine-adjacent cafe from East of Normal; quiche, pastries, espresso spritz",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 69,
+  "other_ratings": {},
+  "recommendations": [
+   "Flatiron NoMad Partnership: \"New Neighbor: Foreigner Coffee by East of Normal\"",
+   "Reviewed by The Infatuation"
+  ],
+  "hours": {
+   "open": "07:30",
+   "close": "17:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.22,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Espresso",
+    "description": "Single-origin double shot",
+    "price_cents": 350,
+    "price_estimated": false,
+    "ingredients": [
+     "espresso"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Espresso Spritz",
+    "description": "Espresso, soda and citrus over ice",
+    "price_cents": 700,
+    "price_estimated": false,
+    "ingredients": [
+     "espresso",
+     "soda",
+     "citrus"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Swiss Mushroom Quiche",
+    "description": "Savoury quiche with mushroom and swiss cheese",
+    "price_cents": 675,
+    "price_estimated": false,
+    "ingredients": [
+     "egg",
+     "cream",
+     "mushroom",
+     "cheese",
+     "pastry"
+    ],
+    "dish_type": "other",
+    "protein": "egg",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "egg",
+     "dairy",
+     "gluten"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": false,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Tea Latte",
+    "description": "Brewed tea with steamed milk",
+    "price_cents": 550,
+    "price_estimated": false,
+    "ingredients": [
+     "tea",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Cake Donut",
+    "description": "Rotating glazed cake donut",
+    "price_cents": 450,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "sugar"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://foreigner.nyc/pages/cafe",
+   "https://flatironnomad.nyc/2021/05/19/new-neighbor-foreigner-coffee-by-east-of-normal/",
+   "https://www.theinfatuation.com/new-york/reviews/foreigner-nyc"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "remi-flower-coffee-nomad",
+  "name": "Remi Flower & Coffee (NoMad)",
+  "address": "425 Park Ave S, New York, NY 10016",
+  "lat": 40.744,
+  "lng": -73.9833,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Flower shop and cafe; floral lattes on La Colombe coffee and Harney & Sons tea",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 16,
+  "other_ratings": {},
+  "recommendations": [
+   "Commercial Observer (Jan 2026): \"Remi Flower & Coffee Takes 4K SF at 425 Park Avenue South\"",
+   "Flatiron NoMad Partnership \"New Neighbor Roundup\" (May 2026)"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.7,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Lavender Latte",
+    "description": "Espresso and steamed milk with lavender syrup",
+    "price_cents": 800,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "lavender"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Rose Latte",
+    "description": "Espresso, steamed milk and rose syrup",
+    "price_cents": 800,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "rose"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Pistachio Cream Latte",
+    "description": "Espresso with pistachio cream and milk",
+    "price_cents": 850,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "pistachio"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Iced Strawberry Matcha",
+    "description": "Matcha over strawberry puree and milk",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "strawberry",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Mango Passionfruit Green Tea",
+    "description": "Harney & Sons green tea with tropical fruit",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 550,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://commercialobserver.com/2026/01/remi-flower-coffee-takes-4k-sf-at-425-park-avenue-south/",
+   "https://flatironnomad.nyc/2026/05/27/new-neighbor-roundup-motoishi-remi-flower-coffee-patsys-pizzeria/"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "ninepin-cafe",
+  "name": "Ninepin Café",
+  "address": "7 E 27th St, New York, NY 10016",
+  "lat": 40.744,
+  "lng": -73.9869,
+  "neighborhood": "NoMad",
+  "cuisine": "american",
+  "cuisine_detail": "All-day cafe in The Evelyn hotel with a menu by the Contra/Wildair chefs",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": null,
+  "other_ratings": {
+   "postcard": 4.3
+  },
+  "recommendations": [
+   "Menu by Jeremiah Stone and Fabián von Hauske Valtierra of Contra and Wildair (The Evelyn)",
+   "Featured by Experience NoMad"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "13:40"
+  },
+  "platforms": [
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.41,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Smoked Salmon Toast",
+    "description": "Smoked salmon on toast with cream cheese and herbs",
+    "price_cents": 1400,
+    "price_estimated": false,
+    "ingredients": [
+     "salmon",
+     "bread",
+     "cream cheese",
+     "dill"
+    ],
+    "dish_type": "sandwich",
+    "protein": "fish",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "fish",
+     "gluten",
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Bacon, Egg & Cheese",
+    "description": "Bacon, fried egg and cheddar on a roll",
+    "price_cents": 1300,
+    "price_estimated": false,
+    "ingredients": [
+     "bacon",
+     "egg",
+     "cheese",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "pork",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Manchego Bikini",
+    "description": "Pressed ham and manchego toastie",
+    "price_cents": 1300,
+    "price_estimated": false,
+    "ingredients": [
+     "ham",
+     "manchego",
+     "bread"
+    ],
+    "dish_type": "sandwich",
+    "protein": "pork",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1300,
+    "price_estimated": false,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Quiche Lorraine",
+    "description": "Bacon and gruyère custard tart",
+    "price_cents": 1100,
+    "price_estimated": false,
+    "ingredients": [
+     "egg",
+     "cream",
+     "bacon",
+     "pastry"
+    ],
+    "dish_type": "other",
+    "protein": "pork",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "egg",
+     "dairy",
+     "gluten"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Maple Yogurt Parfait",
+    "description": "Yogurt with maple, granola and fruit",
+    "price_cents": 800,
+    "price_estimated": false,
+    "ingredients": [
+     "yogurt",
+     "maple",
+     "granola"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "dairy",
+     "gluten",
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.theevelyn.com/eat-drink/ninepin-cafe",
+   "https://experiencenomad.com/people/ninepin-cafe/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ },
+ {
+  "id": "patent-coffee",
+  "name": "Patent Coffee",
+  "address": "49 W 27th St, New York, NY 10001",
+  "lat": 40.7453,
+  "lng": -73.9903,
+  "neighborhood": "NoMad",
+  "cuisine": "bakery",
+  "cuisine_detail": "Grab-and-go espresso counter sharing a space with the Patent Pending bar",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 91,
+  "other_ratings": {},
+  "recommendations": [
+   "Featured by NYC Tourism as \"Patent Coffee / Patent Pending\""
+  ],
+  "hours": {
+   "open": "08:30",
+   "close": "17:00"
+  },
+  "platforms": [
+   "mock"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.33,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Rosemary Latte",
+    "description": "Espresso, steamed milk, rosemary syrup",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "rosemary"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Vanilla Fig Oat Latte",
+    "description": "Espresso with vanilla fig syrup and oat milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "oat milk",
+     "fig",
+     "vanilla"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Cortado",
+    "description": "Espresso cut with steamed milk",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Pour Over",
+    "description": "Hand-brewed single origin",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Matcha Chai",
+    "description": "Matcha layered with spiced chai and milk",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "black tea",
+     "spices",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Chocolate Chip Cookie",
+    "description": "Brown-butter cookie with dark chocolate",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Butter Croissant",
+    "description": "All-butter croissant, baked each morning",
+    "price_cents": 500,
+    "price_estimated": true,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.drinkpatent.com/",
+   "https://www.business.nyctourism.com/places/patent-coffee-patent-pending"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "somedays-bakery-flatiron",
+  "name": "Somedays Bakery (Flatiron)",
+  "address": "297 Park Ave S, New York, NY 10010",
+  "lat": 40.7399,
+  "lng": -73.9863,
+  "neighborhood": "Flatiron",
+  "cuisine": "bakery",
+  "cuisine_detail": "Seed-oil-free bakery: laminated pastries, mini cakes and espresso",
+  "price_level": 3,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 28,
+  "other_ratings": {},
+  "recommendations": [
+   "Listed in the Flatiron NoMad Partnership guide; a seed-oil-free bakery with a second LIC shop"
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "21:00"
+  },
+  "platforms": [
+   "uber"
+  ],
+  "has_allergen_info": false,
+  "chain": true,
+  "distance_km": 0.5,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Somedays Croissant",
+    "description": "Butter croissant baked without seed oils",
+    "price_cents": 584,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Pain au Chocolat",
+    "description": "Laminated pastry with dark chocolate batons",
+    "price_cents": 820,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Pistachio Lattice Croissant",
+    "description": "Lattice-topped croissant with pistachio cream",
+    "price_cents": 1056,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "pistachio"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "tree_nut"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Brownie",
+    "description": "Dense chocolate brownie",
+    "price_cents": 702,
+    "price_estimated": false,
+    "ingredients": [
+     "flour",
+     "butter",
+     "egg",
+     "chocolate"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Iced Latte",
+    "description": "Espresso over ice with milk",
+    "price_cents": 761,
+    "price_estimated": false,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Matcha Latte",
+    "description": "Ceremonial-grade matcha whisked with steamed milk",
+    "price_cents": 750,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Hot Tea",
+    "description": "Loose-leaf tea, brewed by the pot",
+    "price_cents": 400,
+    "price_estimated": true,
+    "ingredients": [
+     "tea"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://www.somedaysbakery.com/stores",
+   "https://www.ubereats.com/store/somedays-bakery-flatiron/2sCxIagVUISa0WdXyqHWSA"
+  ],
+  "categories": [
+   "coffee"
+  ]
+ },
+ {
+  "id": "copper-mug-coffee",
+  "name": "Copper Mug Coffee",
+  "address": "38 W 30th St, New York, NY 10001",
+  "lat": 40.7466,
+  "lng": -73.9883,
+  "neighborhood": "NoMad",
+  "cuisine": "american",
+  "cuisine_detail": "Organic all-day cafe: wraps, smoothies, toasts and flavoured lattes",
+  "price_level": 2,
+  "google_rating": null,
+  "google_reviews": null,
+  "yelp_rating": null,
+  "yelp_reviews": 156,
+  "other_ratings": {
+   "joe_coffee": 4.8
+  },
+  "recommendations": [
+   "Listed in the Flatiron NoMad Partnership \"Must-Try Coffee Shops in Flatiron & NoMad\""
+  ],
+  "hours": {
+   "open": "07:00",
+   "close": "18:00"
+  },
+  "platforms": [
+   "uber",
+   "doordash"
+  ],
+  "has_allergen_info": false,
+  "chain": false,
+  "distance_km": 0.53,
+  "dishes": [
+   {
+    "id": "d0",
+    "name": "Cinnamon Maple Latte",
+    "description": "Espresso, steamed milk, cinnamon and maple",
+    "price_cents": 650,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk",
+     "cinnamon",
+     "maple"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d1",
+    "name": "Latte",
+    "description": "Double espresso with steamed whole milk",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "espresso",
+     "milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": false,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "dairy"
+    ],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d2",
+    "name": "Drip Coffee",
+    "description": "House filter coffee, brewed in batch",
+    "price_cents": 375,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": false,
+    "kcal": null
+   },
+   {
+    "id": "d3",
+    "name": "Cold Brew",
+    "description": "Slow-steeped cold brew over ice",
+    "price_cents": 600,
+    "price_estimated": true,
+    "ingredients": [
+     "coffee"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d4",
+    "name": "Iced Matcha Latte (Oat)",
+    "description": "Whisked matcha over ice with oat milk",
+    "price_cents": 700,
+    "price_estimated": true,
+    "ingredients": [
+     "matcha",
+     "oat milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d5",
+    "name": "Avocado Toast",
+    "description": "Smashed avocado, lemon, chili flake on sourdough",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "avocado",
+     "sourdough",
+     "lemon",
+     "chili flake"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d6",
+    "name": "Chicken Caesar Wrap",
+    "description": "Grilled chicken, romaine, parmesan and caesar in a wrap",
+    "price_cents": 1200,
+    "price_estimated": true,
+    "ingredients": [
+     "chicken",
+     "lettuce",
+     "parmesan",
+     "tortilla"
+    ],
+    "dish_type": "wrap",
+    "protein": "chicken",
+    "spice": 0,
+    "vegetarian": false,
+    "vegan": false,
+    "gluten_free": false,
+    "halal": null,
+    "allergens": [
+     "gluten",
+     "dairy",
+     "egg",
+     "fish"
+    ],
+    "popular": true,
+    "kcal": null
+   },
+   {
+    "id": "d7",
+    "name": "Green Smoothie",
+    "description": "Spinach, banana, mango and almond milk",
+    "price_cents": 900,
+    "price_estimated": true,
+    "ingredients": [
+     "spinach",
+     "banana",
+     "mango",
+     "almond milk"
+    ],
+    "dish_type": "other",
+    "protein": "none",
+    "spice": 0,
+    "vegetarian": true,
+    "vegan": true,
+    "gluten_free": true,
+    "halal": null,
+    "allergens": [
+     "tree_nut"
+    ],
+    "popular": false,
+    "kcal": null
+   }
+  ],
+  "sources": [
+   "https://thecoppermugcoffee.com/",
+   "https://joe.coffee/locations/ny/new-york/copper-mug-coffee-new-york/"
+  ],
+  "categories": [
+   "coffee",
+   "meal"
+  ]
+ }
+]

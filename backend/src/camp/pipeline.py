@@ -74,7 +74,7 @@ def plan_office(store: Store, office_id: str, office_loc: LatLng, ctx: Context, 
         if not late:
             break
         for uid, rid in late:
-            cand.scores[uid] = {iid: s for iid, s in cand.scores[uid].items() if items[iid].restaurant_id != rid}
+            cand.exclude(uid, rid)
     batch = batching.to_batch(cand, R, a, office_id, ctx.date)
     share = {br.restaurant_id: br.fee_share_cents for br in batch.restaurants}
 

@@ -1,0 +1,663 @@
+@ atla
+--
+Huevos Rancheros | 19.00 | Eggs, salsa roja, black beans, tortilla | other | egg | v gf s1
+Chicken Enchiladas | 26.00 | Chicken enchiladas, salsa verde, crema | other | chicken | gf s1
+Arctic Char Tostada | 24.00 | Cured char, avocado, tostada | taco | fish | gf
+Flank Steak Tacos | 28.00 | Grilled flank steak, salsa, corn tortillas | taco | beef | gf
+Mushroom Tacos | 22.00 | Roasted mushrooms, salsa verde, corn tortillas | taco | none | vg gf
+Herb Guacamole | 18.00 | Avocado, herbs, tortilla chips | other | none | vg gf
+Arctic Char | 38.00 | Roasted char, salsa verde | other | fish | gf
+Quinoa Bowl | 22.00 | Quinoa, avocado, kale, pumpkin seeds, lime | bowl | none | vg gf
+Kale Salad | 18.00 | Kale, avocado, cotija, pepitas, lime | salad | none | v gf
+Fried Egg Tacos | 18.00 | Fried eggs, salsa, corn tortillas | taco | egg | v gf
+Pan Dulce | 8.00 | Mexican sweet bread | other | none | v
+Churros | 12.00 | Churros with chocolate | other | none | v
+Horchata | 7.00 | Rice cinnamon drink | other | none | vg gf
+Café de Olla | 6.00 | Cinnamon coffee | other | none | vg gf
+
+@ hanoi-house
+--
+Pho Ga | 20.00 | Chicken pho with rice noodles | soup | chicken | gf
+Bun Rieu | 22.00 | Crab and tomato noodle soup | soup | shrimp | gf
+Bun Bo Hue | 22.00 | Spicy lemongrass beef noodle soup | soup | beef | gf s2
+Lemongrass Chicken Banh Mi | 16.00 | Grilled chicken, pickles, cilantro on baguette
+Pork Banh Mi | 16.00 | Grilled pork, pâté, pickles on baguette
+Cha Ca La Vong | 32.00 | Turmeric dill fish, vermicelli, peanuts | other | fish | gf
+Grilled Pork Chop with Rice | 26.00 | Lemongrass pork chop, broken rice, egg | rice | pork | gf
+Ga Nuong | 26.00 | Grilled lemongrass chicken, rice | other | chicken | gf
+Papaya Salad | 14.00 | Green papaya, herbs, peanuts, fish sauce | salad | none | gf s1 nv
+Morning Glory | 14.00 | Stir-fried water spinach with garlic | other | none | vg gf
+Fried Tofu with Lemongrass | 14.00 | Crispy tofu, lemongrass, chili | other | tofu | vg gf s1
+Vietnamese Egg Coffee | 7.00 | Coffee with whipped egg yolk cream | other | egg | v gf
+Vietnamese Iced Coffee | 6.00 | Coffee with condensed milk | other | none | v gf
+Che Chuoi | 9.00 | Banana tapioca coconut pudding | other | none | vg gf
+
+@ fish-cheeks
+--
+Whole Branzino | 42.00 | Grilled branzino, garlic, lime, chili sauce | other | fish | gf s2
+Grilled Squid | 24.00 | Squid, seafood sauce, lime | other | shrimp | gf s2
+Pad See Ew Shrimp | 24.00 | Wide rice noodles, shrimp, Chinese broccoli | noodles | shrimp | gf
+Pad Kee Mao Beef | 26.00 | Drunken noodles, beef, basil, chili | noodles | beef | s2
+Crispy Whole Fish | 44.00 | Fried fish with sweet chili tamarind sauce | other | fish | gf s1
+Coconut Rice | 6.00 | Steamed coconut jasmine rice | rice | none | vg gf
+Jasmine Rice | 4.00 | Steamed rice | rice | none | vg gf
+Som Tum | 16.00 | Green papaya salad, dried shrimp, peanuts | salad | shrimp | gf s2
+Chicken Satay | 16.00 | Grilled chicken skewers, peanut sauce | other | chicken | gf
+Massaman Beef | 30.00 | Braised beef in massaman curry | curry | beef | gf s1
+Morning Glory | 18.00 | Stir-fried water spinach, garlic, chili | other | none | vg gf s1
+Panang Duck | 34.00 | Roasted duck in panang curry | curry | chicken | gf s2
+Mango Sticky Rice | 12.00 | Coconut sticky rice, mango | other | none | vg gf
+Thai Tea Cake | 12.00 | Thai tea layer cake | other | none | v
+Thai Iced Tea | 6.00 | Thai tea with milk | other | none | v gf
+
+@ sigiri
+--
+Mutton Curry | 22.00 | Sri Lankan goat curry, rice | curry | lamb | gf s3
+Chicken Curry | 18.00 | Sri Lankan black curry chicken, rice | curry | chicken | gf s2
+Fish Curry | 20.00 | Sri Lankan fish curry, rice | curry | fish | gf s2
+Vegetable Koththu | 16.00 | Chopped roti stir-fried with vegetables, egg | other | egg | v s2
+Beef Koththu Roti | 18.00 | Chopped roti with beef, egg, vegetables | other | beef | s2
+String Hoppers with Curry | 16.00 | Steamed rice noodle nests with dhal and coconut sambol | other | none | vg gf s1
+Egg Hoppers (2) | 8.00 | Crispy rice pancakes with egg | other | egg | v gf
+Fish Cutlets (3) | 8.00 | Fried spiced fish croquettes | other | fish | s1
+Pol Sambol | 5.00 | Coconut chili relish | other | none | vg gf s3
+Dhal Curry | 8.00 | Red lentil coconut curry | curry | none | vg gf s1
+Eggplant Moju | 8.00 | Sweet-sour pickled eggplant | other | none | vg gf s1
+Watalappan | 7.00 | Coconut jaggery custard | other | egg | v gf
+Ginger Beer | 4.00 | Sri Lankan ginger beer | other | none | vg gf
+Ceylon Tea | 3.00 | Ceylon black tea with milk | other | none | v gf
+
+# ---- cafés (ids from ramp_hq_cafes.json) ----
+
+@ joe-coffee-flatiron
+--
+Flat White | 5.00 | Double ristretto, velvety milk | other | none | v gf
+Cortado | 4.50 | Espresso, equal steamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.50 | Batch-brewed coffee | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk, ice | other | none | v gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Chai Latte | 5.25 | Spiced chai, steamed milk | other | none | v gf
+Hot Chocolate | 4.75 | Dark chocolate, steamed milk | other | none | v gf
+Mocha | 5.75 | Espresso, chocolate, steamed milk | other | none | v gf
+Almond Croissant | 5.25 | Almond cream croissant | other | none | v
+Blueberry Muffin | 4.50 | Blueberry muffin | other | none | v
+Banana Bread | 4.50 | Banana bread slice | other | none | v
+Egg & Cheese Sandwich | 8.50 | Egg, cheddar on a roll | sandwich | egg | v
+Avocado Toast | 9.50 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Greek Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+
+@ think-coffee-nomad
+--
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, steamed milk | other | none | v gf
+Hot Tea | 3.50 | Loose-leaf tea | other | none | vg gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Bagel with Cream Cheese | 5.50 | Toasted bagel, cream cheese | sandwich | none | v
+Turkey & Cheddar Sandwich | 11.00 | Turkey, cheddar, greens on multigrain
+Caprese Sandwich | 10.50 | Mozzarella, tomato, basil on ciabatta | sandwich | none | v
+Greek Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+Overnight Oats | 6.50 | Oats, almond milk, chia, berries | other | none | vg gf
+
+@ stumptown-coffee-ace-hotel
+--
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Flat White | 5.25 | Ristretto, velvety milk | other | none | v gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Pour Over | 5.50 | Single-origin pour over | other | none | vg gf
+Nitro Cold Brew | 6.00 | Nitrogen-infused cold brew | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Spiced chai, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Morning Bun | 5.00 | Cinnamon-orange morning bun | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Egg & Cheese Biscuit | 9.00 | Egg, cheddar on a buttermilk biscuit | sandwich | egg | v
+Yogurt Parfait | 7.50 | Yogurt, granola, fruit | other | none | v
+
+@ devocion-flatiron
+--
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Flat White | 5.25 | Ristretto, velvety milk | other | none | v gf
+Pour Over | 6.00 | Colombian single-origin pour over | other | none | vg gf
+Nitro Cold Brew | 6.00 | Nitro cold brew | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.25 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, steamed milk | other | none | v gf
+Hot Chocolate | 5.00 | Colombian chocolate, milk | other | none | v gf
+Drip Coffee | 3.75 | Batch brew | other | none | vg gf
+Almojábana | 4.50 | Colombian cheese bread | other | none | v
+Guava Pastry | 4.50 | Guava and cheese pastry | other | none | v
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Ham & Cheese Croissant | 7.50 | Ham, gruyère croissant
+Avocado Toast | 10.00 | Avocado, chili, lime on sourdough | sandwich | none | vg s1
+
+@ blue-bottle-gramercy-park
+--
+Cortado | 5.00 | Espresso, steamed milk | other | none | v gf
+Gibraltar | 5.25 | Espresso with steamed milk in a Gibraltar glass | other | none | v gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 4.25 | Single-origin drip | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Oat Milk Latte | 6.25 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.50 | Espresso, chocolate, milk | other | none | v gf
+Hot Chocolate | 5.25 | Chocolate, steamed milk | other | none | v gf
+Hojicha Latte | 6.00 | Roasted green tea, milk | other | none | v gf
+Chocolate Chip Cookie | 4.25 | Chocolate chip cookie | other | none | v
+Avocado Toast | 10.50 | Avocado, olive oil, salt on toast | sandwich | none | vg
+Granola with Yogurt | 8.00 | House granola, yogurt, fruit | other | none | v
+Saffron Snickerdoodle | 4.25 | Saffron cinnamon sugar cookie | other | none | v
+Egg & Cheese Sandwich | 9.50 | Egg, cheese on a roll | sandwich | egg | v
+
+@ gregorys-coffee-park-ave-south
+--
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Nitro Cold Brew | 5.75 | Nitro cold brew | other | none | vg gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Iced Tea | 3.75 | Iced black tea | other | none | vg gf
+Butter Croissant | 4.50 | Butter croissant | other | none | v
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Turkey Avocado Sandwich | 11.50 | Turkey, avocado, greens on multigrain
+Egg White Spinach Wrap | 9.50 | Egg whites, spinach, feta in a wrap | wrap | egg | v
+Overnight Oats | 6.50 | Oats, almond milk, chia | other | none | vg gf
+Acai Bowl | 10.50 | Açaí, granola, banana, berries | bowl | none | vg
+
+@ blank-street-coffee-23rd-lex
+--
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.25 | Batch brew | other | none | vg gf
+Iced Latte | 5.25 | Espresso, cold milk | other | none | v gf
+Iced Oat Latte | 5.75 | Espresso, oat milk, ice | other | none | vg gf
+Brown Sugar Oat Latte | 6.00 | Espresso, brown sugar, oat milk | other | none | vg gf
+Honey Lavender Latte | 6.00 | Espresso, honey lavender syrup, milk | other | none | v gf
+Matcha Latte | 5.75 | Ceremonial matcha, milk | other | none | v gf
+Strawberry Matcha | 6.25 | Matcha, strawberry, oat milk | other | none | vg gf
+Chai Latte | 5.25 | Spiced chai, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Banana Bread | 4.50 | Banana bread | other | none | v
+Egg & Cheese Croissant | 8.50 | Egg, cheddar on a croissant | sandwich | egg | v
+Yogurt Parfait | 6.50 | Yogurt, granola, berries | other | none | v
+
+@ felix-roasting-co-nomad
+--
+Deconstructed Espresso | 7.00 | Espresso, sparkling water, milk served separately | other | none | v gf
+Hickory Smoked S'mores Latte | 8.50 | Espresso, smoked marshmallow, chocolate, milk | other | none | v gf
+Cortado | 5.00 | Espresso, steamed milk | other | none | v gf
+Americano | 4.25 | Espresso, hot water | other | none | vg gf
+Pour Over | 6.50 | Single-origin pour over | other | none | vg gf
+Oat Milk Latte | 6.25 | Espresso, oat milk | other | none | vg gf
+Mocha | 6.75 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 6.00 | Chai, steamed milk | other | none | v gf
+Hot Chocolate | 5.75 | Chocolate, steamed milk | other | none | v gf
+Almond Croissant | 6.00 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Smoked Salmon Toast | 15.00 | Smoked salmon, cream cheese, dill on toast
+Egg & Cheese Croissant | 10.00 | Egg, gruyère on a croissant | sandwich | egg | v
+Yogurt Parfait | 8.00 | Yogurt, granola, berries | other | none | v
+
+@ irving-farm-gramercy
+--
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Pour Over | 5.50 | Single-origin pour over | other | none | vg gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Matcha Latte | 5.50 | Matcha, milk | other | none | v gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Blueberry Muffin | 4.50 | Blueberry muffin | other | none | v
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Turkey & Brie Sandwich | 11.50 | Turkey, brie, apple, greens on baguette
+Caprese Sandwich | 10.50 | Mozzarella, tomato, pesto on ciabatta | sandwich | none | v
+Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+
+@ birch-coffee-murray-hill
+--
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Drip Coffee | 3.50 | Brewed coffee | other | none | vg gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Hot Tea | 3.50 | Loose-leaf tea | other | none | vg gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Banana Bread | 4.50 | Banana bread | other | none | v
+Bagel with Cream Cheese | 5.50 | Bagel, cream cheese | sandwich | none | v
+Turkey Sandwich | 11.00 | Turkey, cheddar, greens on multigrain
+Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+
+@ cha-cha-matcha-flatiron
+--
+Matcha Lemonade | 7.00 | Matcha, lemonade | other | none | vg gf
+Coconut Matcha | 7.50 | Matcha, coconut milk | other | none | vg gf
+Strawberry Matcha Latte | 7.50 | Matcha, strawberry, oat milk | other | none | vg gf
+Blueberry Matcha Latte | 7.50 | Matcha, blueberry, oat milk | other | none | vg gf
+Vanilla Matcha Latte | 7.00 | Matcha, vanilla, milk | other | none | v gf
+Hojicha Latte | 6.50 | Roasted green tea, milk | other | none | v gf
+Matcha Espresso Fusion | 7.50 | Matcha latte with espresso shot | other | none | v gf
+Iced Hojicha | 5.50 | Iced roasted green tea | other | none | vg gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Cold Brew | 5.50 | Cold brew coffee | other | none | vg gf
+Matcha Cookie | 4.50 | White chocolate matcha cookie | other | none | v
+Matcha Cheesecake | 8.00 | Matcha cheesecake slice | other | none | v
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Matcha Overnight Oats | 7.00 | Oats, matcha, oat milk, chia | other | none | vg gf
+
+@ variety-coffee-roasters-chelsea
+--
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.25 | Chai, milk | other | none | v gf
+Matcha Latte | 5.50 | Matcha, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Hot Tea | 3.50 | Loose-leaf tea | other | none | vg gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Morning Bun | 5.00 | Cinnamon sugar morning bun | other | none | v
+Banana Bread | 4.50 | Banana bread | other | none | v
+Ham & Cheese Croissant | 7.50 | Ham, gruyère croissant
+Everything Bagel with Cream Cheese | 5.50 | Bagel, cream cheese | sandwich | none | v
+
+@ cafe-grumpy-nomad
+--
+Latte | 5.25 | Espresso, steamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Drip Coffee | 3.75 | Batch brew | other | none | vg gf
+Pour Over | 5.50 | Single-origin pour over | other | none | vg gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.25 | Chai, milk | other | none | v gf
+Matcha Latte | 5.50 | Matcha, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Morning Bun | 5.00 | Morning bun | other | none | v
+Banana Bread | 4.50 | Banana bread | other | none | v
+Egg & Cheese Sandwich | 8.50 | Egg, cheddar on a roll | sandwich | egg | v
+Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+
+@ starbucks-reserve-roastery-nyc
+--
+Reserve Espresso | 4.50 | Double reserve espresso | other | none | vg gf
+Reserve Cold Brew | 6.50 | Reserve cold brew | other | none | vg gf
+Nitro Cold Brew | 6.75 | Nitrogen-infused cold brew | other | none | vg gf
+Clover Brewed Coffee | 5.50 | Single-origin brewed coffee | other | none | vg gf
+Reserve Cappuccino | 6.00 | Espresso, foamed milk | other | none | v gf
+Oat Milk Latte | 6.75 | Espresso, oat milk | other | none | vg gf
+Reserve Mocha | 7.00 | Espresso, chocolate, milk | other | none | v gf
+Affogato | 8.50 | Vanilla gelato with espresso | other | none | v gf
+Cold Brew Float | 9.00 | Cold brew over vanilla gelato | other | none | v gf
+Princi Pizza al Taglio (Margherita) | 9.50 | Roman-style pizza slice, tomato, mozzarella | pizza | none | v
+Princi Prosciutto Sandwich | 13.00 | Prosciutto, mozzarella, arugula on focaccia
+Princi Caprese Sandwich | 12.00 | Mozzarella, tomato, basil on focaccia | sandwich | none | v
+Princi Croissant | 4.75 | Butter croissant | other | none | v
+Princi Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Princi Tiramisu | 8.00 | Tiramisu cup | other | none | v
+
+@ levain-bakery-flatiron
+--
+Oatmeal Raisin Cookie | 5.50 | Oatmeal raisin cookie | other | none | v
+Chocolate Chip Walnut Cookie (6-pack) | 32.00 | Six signature cookies | other | none | v
+Chocolate Chip Brioche | 6.00 | Brioche with chocolate chips | other | none | v
+Cinnamon Brioche | 6.00 | Cinnamon swirl brioche | other | none | v
+Blueberry Muffin | 5.50 | Blueberry muffin | other | none | v
+Pumpkin Ginger Muffin | 5.50 | Pumpkin ginger muffin | other | none | v
+Sour Cream Coffee Cake | 6.00 | Sour cream coffee cake slice | other | none | v
+Valrhona Chocolate Roll | 6.00 | Sticky bun with chocolate | other | none | v
+Sourdough Roll | 3.50 | Sourdough roll | other | none | vg
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Iced Tea | 4.00 | Iced black tea | other | none | vg gf
+
+@ caffe-vergnano-eataly-flatiron
+--
+Espresso Macchiato | 4.00 | Espresso with foamed milk | other | none | v gf
+Caffè Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Marocchino | 5.50 | Espresso, cocoa, milk foam | other | none | v gf
+Affogato | 8.00 | Gelato with espresso | other | none | v gf
+Latte Macchiato | 5.50 | Steamed milk with espresso | other | none | v gf
+Iced Caffè Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Oat Cappuccino | 5.75 | Espresso, oat milk foam | other | none | vg gf
+Sfogliatella | 5.00 | Ricotta-filled shell pastry | other | none | v
+Cannolo | 5.50 | Ricotta cannolo | other | none | v
+Bombolone | 4.50 | Filled Italian doughnut | other | none | v
+Cornetto Cioccolato | 4.50 | Chocolate-filled cornetto | other | none | v
+Tramezzino Prosciutto | 9.00 | Prosciutto and mozzarella tramezzino
+Tramezzino Caprese | 8.50 | Mozzarella, tomato tramezzino | sandwich | none | v
+Gelato (2 scoops) | 7.00 | Two scoops of gelato | other | none | v gf
+
+@ le-pain-quotidien-29th-7th
+--
+Cappuccino | 5.25 | Espresso, foamed milk | other | none | v gf
+Café au Lait | 5.00 | Coffee, steamed milk | other | none | v gf
+Cold Brew | 5.50 | Cold brew | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Matcha Latte | 6.00 | Matcha, milk | other | none | v gf
+Chai Latte | 5.75 | Chai, milk | other | none | v gf
+Smoked Salmon Tartine | 17.00 | Smoked salmon, dill cream on organic bread
+Chicken Curry Tartine | 16.00 | Curried chicken salad, harissa on bread | sandwich | chicken | s1
+Hummus Tartine | 14.00 | Hummus, roasted peppers, cucumber, za'atar | sandwich | none | vg
+Quiche Lorraine | 15.00 | Bacon, gruyère quiche with salad | other | egg
+Organic Soup of the Day | 10.00 | Daily organic soup with bread | soup | none | v
+Chicken Cobb Salad | 19.00 | Chicken, bacon, egg, avocado, blue cheese | salad | chicken | gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Pain au Chocolat | 5.00 | Chocolate croissant | other | none | v
+Organic Granola Parfait | 9.00 | Granola, yogurt, berries | other | none | v
+Belgian Brownie | 5.00 | Flourless chocolate brownie | other | egg | v gf
+
+@ magnolia-bakery-moynihan
+--
+Chocolate Banana Pudding | 8.50 | Banana pudding with chocolate wafers | other | none | v
+Chocolate Cupcake | 4.50 | Chocolate cupcake with buttercream | other | none | v
+Carrot Cupcake | 4.75 | Carrot cake cupcake with cream cheese frosting | other | none | v
+Lemon Cupcake | 4.50 | Lemon cupcake | other | none | v
+Chocolate Layer Cake Slice | 8.50 | Chocolate cake slice | other | none | v
+Red Velvet Cake Slice | 8.50 | Red velvet slice | other | none | v
+Carrot Cake Slice | 8.50 | Carrot cake slice | other | none | v
+Cheesecake Slice | 8.00 | Vanilla cheesecake | other | none | v
+Brownie | 4.50 | Fudge brownie | other | none | v
+Blondie | 4.50 | Butterscotch blondie | other | none | v
+Icebox Cake Slice | 8.00 | Chocolate wafer icebox cake | other | none | v
+Peanut Butter Cookie | 3.50 | Peanut butter cookie | other | none | v
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Iced Tea | 4.00 | Iced tea | other | none | vg gf
+
+@ fabrique-bakery-chelsea
+--
+Vanilla Bun | 5.50 | Swedish vanilla cream bun | other | none | v
+Chocolate Ball | 4.00 | Oat chocolate ball with coconut | other | none | v
+Rye Sandwich Bread | 9.00 | Swedish rye loaf | other | none | vg
+Levain Loaf | 9.00 | Sourdough loaf | other | none | vg
+Cheese & Ham Sandwich | 11.00 | Ham, cheese, butter on rye
+Egg & Shrimp Sandwich | 12.00 | Egg, shrimp, mayo on rye | sandwich | shrimp
+Avocado Sandwich | 10.00 | Avocado, tomato, greens on rye | sandwich | none | vg
+Pain au Chocolat | 5.00 | Chocolate croissant | other | none | v
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Blueberry Muffin | 4.50 | Blueberry muffin | other | none | v
+Flat White | 5.00 | Ristretto, velvety milk | other | none | v gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Filter Coffee | 3.75 | Batch-brewed coffee | other | none | vg gf
+
+@ dominique-ansel-workshop
+--
+DKA | 6.75 | Dominique's Kouign Amann, caramelized croissant-like pastry | other | none | v
+Cronut | 7.50 | Croissant-doughnut hybrid with rotating flavor | other | none | v
+Cookie Shot | 6.50 | Chocolate chip cookie cup with vanilla milk | other | none | v
+Frozen S'more | 8.00 | Vanilla ice cream, chocolate feuilletine, torched marshmallow | other | none | v
+Cannelé de Bordeaux | 4.50 | Caramelized custard pastry | other | egg | v
+Ham & Cheese Croissant | 8.50 | Ham, gruyère croissant
+Pistachio Croissant | 7.00 | Pistachio cream croissant | other | none | v
+Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Brown Sugar DKA | 7.00 | Brown sugar kouign amann | other | none | v
+Kale & Egg Toast | 14.00 | Kale, poached egg, ricotta on toast | sandwich | egg | v
+Quiche | 12.00 | Seasonal vegetable quiche | other | egg | v
+Hot Chocolate | 6.50 | Dark hot chocolate | other | none | v gf
+Oat Milk Latte | 6.25 | Espresso, oat milk | other | none | vg gf
+Iced Tea | 5.00 | Iced tea | other | none | vg gf
+
+@ paris-baguette-6th-ave
+--
+Cappuccino | 4.95 | Espresso, foamed milk | other | none | v gf
+Cold Brew | 5.25 | Cold brew | other | none | vg gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Chocolate Croissant | 4.25 | Chocolate croissant | other | none | v
+Almond Croissant | 4.75 | Almond croissant | other | none | v
+Sweet Red Bean Bun | 3.95 | Soft bun with red bean paste | other | none | v
+Milk Bread | 6.50 | Soft Korean milk bread loaf | other | none | v
+Blueberry Cream Cheese Pastry | 4.95 | Pastry with blueberry and cream cheese | other | none | v
+Ham & Cheese Pastry | 5.50 | Puff pastry with ham and cheese
+Bacon Egg & Cheese Croissant | 8.95 | Bacon, egg, cheese croissant
+Chicken Pesto Sandwich | 10.95 | Chicken, pesto, tomato on ciabatta
+Fruit Tart | 6.95 | Custard tart with fresh fruit | other | egg | v
+Chocolate Cake Slice | 7.50 | Chocolate layer cake | other | none | v
+Macaron | 3.25 | Assorted macaron | other | egg | v gf
+Strawberry Smoothie | 6.95 | Strawberry banana smoothie | other | none | v gf
+
+@ lady-m-nomad
+--
+Chocolate Mille Crêpes Slice | 11.00 | Chocolate crêpe layers with chocolate cream | other | egg | v
+Earl Grey Mille Crêpes Slice | 11.00 | Earl grey infused crêpe cake | other | egg | v
+Strawberry Mille Crêpes Slice | 12.00 | Crêpe cake with strawberries | other | egg | v
+Gâteau au Chocolat Slice | 10.00 | Flourless chocolate cake | other | egg | v gf
+Strawberry Shortcake Slice | 10.00 | Sponge, whipped cream, strawberries | other | egg | v
+Mont Blanc Slice | 11.00 | Chestnut cream cake | other | egg | v
+Tiramisu Slice | 10.00 | Mascarpone and espresso tiramisu | other | egg | v
+Matcha Mille-Feuille | 10.00 | Matcha pastry cream mille-feuille | other | egg | v
+Espresso | 4.00 | Double espresso | other | none | vg gf
+Iced Latte | 6.00 | Espresso, cold milk | other | none | v gf
+Iced Matcha Latte | 6.50 | Matcha, milk | other | none | v gf
+Earl Grey Tea | 5.00 | Earl grey tea pot | other | none | vg gf
+Cake Sampler (3 slices) | 30.00 | Three mini slices of signature cakes | other | egg | v
+
+@ aux-merveilleux-de-fred
+--
+L'Impensable | 6.00 | Coffee meringue with coffee whipped cream | other | egg | v gf
+Le Magnifique | 6.00 | Meringue with praline cream and almonds | other | egg | v gf
+Le Sans-Culotte | 6.00 | Meringue with caramel cream | other | egg | v gf
+L'Excentrique | 6.00 | Meringue with cherry cream | other | egg | v gf
+Brioche Nature | 6.00 | Plain brioche | other | egg | v
+Cramique Pépites de Chocolat | 7.00 | Brioche with chocolate chips | other | egg | v
+Cramique Sucre | 7.00 | Brioche with pearl sugar | other | egg | v
+Gaufre Fourrée | 3.50 | Filled waffle with vanilla | other | egg | v
+Mini Merveilleux (box of 8) | 24.00 | Assortment of mini meringue cakes | other | egg | v gf
+Café au Lait | 5.00 | Coffee with steamed milk | other | none | v gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Hot Tea | 4.00 | Loose-leaf tea | other | none | vg gf
+Fresh Orange Juice | 5.50 | Orange juice | other | none | vg gf
+
+@ gotham-coffee-roasters
+--
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.50 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Pour Over | 5.50 | Single-origin pour over | other | none | vg gf
+Matcha Latte | 5.50 | Matcha, milk | other | none | v gf
+Chai Latte | 5.25 | Chai, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Butter Croissant | 4.50 | Butter croissant | other | none | v
+Almond Croissant | 5.25 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Egg & Cheese Sandwich | 8.50 | Egg, cheddar on a roll | sandwich | egg | v
+Yogurt Parfait | 7.00 | Yogurt, granola, berries | other | none | v
+Turkey Sandwich | 11.00 | Turkey, cheddar, greens on multigrain
+
+@ three-coffee-flatiron
+--
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.25 | Double espresso | other | none | vg gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Chai Latte | 5.25 | Chai, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Mocha | 5.75 | Espresso, chocolate, milk | other | none | v gf
+Buñuelo | 4.00 | Colombian cheese fritter | other | none | v
+Empanada (2) | 8.00 | Colombian beef empanadas with ají | other | beef | gf s1
+Almojábana | 4.50 | Cheese bread | other | none | v
+Guava & Cheese Pastry | 4.50 | Pastry with guava and cheese | other | none | v
+Arepa con Queso | 7.00 | Griddled corn arepa with cheese | other | none | v gf
+Chocolate Chip Cookie | 3.50 | Chocolate chip cookie | other | none | v
+Ham & Cheese Arepa | 8.50 | Corn arepa with ham and cheese | sandwich | pork | gf
+
+@ sunday-morning-nomad
+--
+Maple Pecan Roll | 6.50 | Cinnamon roll with maple pecan glaze | other | none | v
+Chocolate Hazelnut Roll | 6.50 | Roll with chocolate hazelnut spread | other | none | v
+Cardamom Roll | 6.00 | Cardamom sugar roll | other | none | v
+Savory Cheese Roll | 6.50 | Roll with gruyère and herbs | other | none | v
+Mini Roll Box (6) | 24.00 | Six mini cinnamon rolls | other | none | v
+Cappuccino | 4.75 | Espresso, foamed milk | other | none | v gf
+Oat Milk Latte | 5.75 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.50 | Espresso, cold milk | other | none | v gf
+Chai Latte | 5.25 | Chai, milk | other | none | v gf
+Hot Chocolate | 4.75 | Chocolate, milk | other | none | v gf
+Matcha Latte | 5.50 | Matcha, milk | other | none | v gf
+Americano | 3.75 | Espresso, hot water | other | none | vg gf
+Cold Brew | 5.00 | Cold brew | other | none | vg gf
+Fresh Orange Juice | 5.50 | Orange juice | other | none | vg gf
+
+@ paper-coffee-nomad
+--
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Flat White | 5.25 | Ristretto, velvety milk | other | none | v gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Hot Tea | 4.00 | Loose-leaf tea | other | none | vg gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Avocado Toast | 11.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Egg & Cheese Sandwich | 9.00 | Egg, cheddar on a roll | sandwich | egg | v
+Yogurt Parfait | 7.50 | Yogurt, granola, berries | other | none | v
+
+@ reve-coffee-chelsea
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Avocado Toast | 11.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Yogurt Parfait | 7.50 | Yogurt, granola, berries | other | none | v
+
+@ foreigner-nyc
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Matcha Latte | 5.75 | Matcha, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Cold Brew | 5.25 | Cold brew | other | none | vg gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Ham & Cheese Croissant | 8.00 | Ham, gruyère croissant
+Avocado Toast | 11.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Yogurt Parfait | 7.50 | Yogurt, granola, berries | other | none | v
+
+@ remi-flower-coffee-nomad
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Honey Latte | 6.25 | Espresso, honey, milk | other | none | v gf
+Vanilla Latte | 6.25 | Espresso, vanilla, milk | other | none | v gf
+Matcha Latte | 6.00 | Matcha, milk | other | none | v gf
+Chai Latte | 5.75 | Chai, milk | other | none | v gf
+Hot Chocolate | 5.25 | Chocolate, milk | other | none | v gf
+Hibiscus Iced Tea | 5.00 | Hibiscus tea | other | none | vg gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Avocado Toast | 11.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+
+@ ninepin-cafe
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Cortado | 4.75 | Espresso, steamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Matcha Latte | 5.75 | Matcha, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, milk | other | none | v gf
+Turkey Bikini | 12.00 | Turkey, manchego, pressed on brioche
+Tomato Bikini | 11.00 | Tomato, mozzarella, pesto pressed on brioche | sandwich | none | v
+Granola Bowl | 9.00 | Granola, yogurt, berries | bowl | none | v
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Fresh Orange Juice | 6.00 | Orange juice | other | none | vg gf
+
+@ patent-coffee
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, milk | other | none | v gf
+Matcha Latte | 5.75 | Matcha, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Drip Coffee | 3.75 | Batch brew | other | none | vg gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Avocado Toast | 11.00 | Avocado, chili, lemon on sourdough | sandwich | none | vg s1
+Yogurt Parfait | 7.50 | Yogurt, granola, berries | other | none | v
+
+@ somedays-bakery-flatiron
+--
+Almond Croissant | 6.00 | Almond croissant | other | none | v
+Ham & Cheese Croissant | 8.50 | Ham, gruyère croissant
+Kouign Amann | 6.00 | Caramelized laminated pastry | other | none | v
+Morning Bun | 5.50 | Cinnamon orange morning bun | other | none | v
+Chocolate Chip Cookie | 4.50 | Chocolate chip cookie | other | none | v
+Canelé | 4.50 | Caramelized custard pastry | other | egg | v
+Sourdough Loaf | 10.00 | Sourdough loaf | other | none | vg
+Focaccia | 5.00 | Rosemary focaccia slice | other | none | vg
+Quiche | 11.00 | Seasonal quiche | other | egg | v
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Cold Brew | 5.25 | Cold brew | other | none | vg gf
+
+@ copper-mug-coffee
+--
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Americano | 4.00 | Espresso, hot water | other | none | vg gf
+Oat Milk Latte | 6.00 | Espresso, oat milk | other | none | vg gf
+Iced Latte | 5.75 | Espresso, cold milk | other | none | v gf
+Mocha | 6.00 | Espresso, chocolate, milk | other | none | v gf
+Chai Latte | 5.50 | Chai, milk | other | none | v gf
+Hot Chocolate | 5.00 | Chocolate, milk | other | none | v gf
+Almond Croissant | 5.50 | Almond croissant | other | none | v
+Chocolate Chip Cookie | 4.00 | Chocolate chip cookie | other | none | v
+Banana Bread | 4.75 | Banana bread | other | none | v
+Turkey Club Wrap | 12.00 | Turkey, bacon, lettuce, tomato in a wrap
+Egg & Cheese Sandwich | 9.00 | Egg, cheddar on a roll | sandwich | egg | v
+Yogurt Parfait | 7.50 | Yogurt, granola, berries | other | none | v
+Mango Smoothie | 8.00 | Mango, banana, orange juice | other | none | vg gf

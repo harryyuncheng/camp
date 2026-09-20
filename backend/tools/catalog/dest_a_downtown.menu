@@ -1,0 +1,649 @@
+# Destination-worthy picks south of Ramp HQ (East Village, LES, SoHo, West Village, Chinatown, Nolita).
+# Farther than the walking radius but inside the 6 km delivery/search radius; coordinates geocoded from address.
+# Ratings are approximate public Google-listing values; prices estimated from public menus.
+
+@ katz-s-delicatessen
+name: Katz's Delicatessen
+address: 205 E Houston St, New York, NY 10002
+hood: Lower East Side
+cuisine: sandwich
+detail: The 1888 pastrami temple; hand-carved sandwiches at the counter
+price: 3
+google: 4.5
+rec: The definitive NYC pastrami on rye; worth every minute of the line (Eater NY)
+hours: 08:00-22:45
+platforms: uber, doordash
+source: https://katzsdelicatessen.com/menu
+--
+*Pastrami on Rye | 27.95 | Hand-carved hot pastrami on rye with mustard | sandwich | beef
+*Corned Beef on Rye | 27.95 | Hand-carved corned beef on rye | sandwich | beef
+Reuben | 29.95 | Pastrami or corned beef, sauerkraut, swiss, Russian dressing grilled on rye | sandwich | beef
+Brisket Sandwich | 26.95 | Sliced brisket with gravy on rye | sandwich | beef
+Turkey Sandwich | 24.95 | Hand-carved roast turkey on rye | sandwich | chicken
+Katz's Combo | 32.95 | Pastrami and corned beef on rye | sandwich | beef
+Matzo Ball Soup | 9.95 | Chicken broth with a matzo ball | soup | chicken
+Hot Dog | 6.95 | All-beef frank | sandwich | beef
+Knoblewurst | 7.95 | Garlic beef sausage | sandwich | beef
+Potato Knish | 6.50 | Baked potato knish | other | none | vg
+Potato Latkes (2) | 9.95 | Fried potato pancakes, sour cream | other | egg | v gf
+Chopped Liver Sandwich | 19.95 | Chopped chicken liver on rye | sandwich | chicken
+Half Sour Pickles | 3.50 | Half sour pickles | other | none | vg gf
+Cheese Blintzes | 12.95 | Cheese blintzes with sour cream | other | egg | v
+Egg Cream | 5.50 | Chocolate syrup, milk, seltzer | other | none | v gf -egg i=chocolate,milk,seltzer
+Dr. Brown's Cel-Ray | 3.50 | Celery soda | other | none | vg gf
+
+@ russ-and-daughters-cafe
+name: Russ & Daughters Cafe
+address: 127 Orchard St, New York, NY 10002
+hood: Lower East Side
+cuisine: american
+detail: Sit-down café from the 1914 appetizing shop; bagels, smoked fish and latkes
+price: 3
+google: 4.6
+rec: The best smoked fish in the city, plated (Infatuation)
+hours: 08:30-16:00
+platforms: uber, doordash
+source: https://www.russanddaughterscafe.com/menu
+--
+*The Classic Board | 28.00 | Gaspé nova, cream cheese, tomato, onion, capers with a bagel | other | fish
+*Super Heebster Bagel | 24.00 | Whitefish and baked salmon salad, wasabi roe, horseradish dill cream cheese
+Latkes with Sour Cream & Applesauce | 14.00 | Potato pancakes | other | egg | v gf
+Eggs Benny | 26.00 | Poached eggs, smoked salmon, hollandaise on challah
+Kippered Salmon Salad Plate | 26.00 | Baked salmon salad, greens, bagel | salad | fish
+Pastrami Salmon Bagel | 24.00 | Pastrami-cured salmon, cream cheese, mustard on a bagel
+Sable Board | 34.00 | Smoked sable, cream cheese, bagel | other | fish
+Herring Trio | 18.00 | Three herring preparations | other | fish | gf
+Matzo Ball Soup | 12.00 | Chicken broth, matzo ball | soup | chicken
+Chopped Salad | 18.00 | Greens, chickpeas, cucumber, feta | salad | none | v gf
+Blintzes | 16.00 | Cheese blintzes, fruit compote | other | egg | v
+Caviar with Latkes | 95.00 | Caviar service with latkes and crème fraîche | other | fish | gf
+Babka French Toast | 18.00 | Chocolate babka French toast | other | egg | v
+Halvah Ice Cream | 10.00 | Halvah ice cream | other | none | v gf
+Egg Cream | 6.00 | Chocolate syrup, milk, seltzer | other | none | v gf -egg i=chocolate,milk,seltzer
+Fresh Orange Juice | 7.00 | Orange juice | other | none | vg gf
+
+@ superiority-burger
+name: Superiority Burger
+address: 119 Avenue A, New York, NY 10009
+hood: East Village
+cuisine: burger
+detail: Brooks Headley's vegetarian burger spot, now a full diner
+price: 2
+google: 4.5
+rec: The vegetarian burger that changed the conversation; the sides steal the show (NYT)
+hours: 12:00-22:00
+platforms: none
+--
+*Superiority Burger | 12.00 | Quinoa-based veggie patty, muenster, lettuce, tomato, pickles | burger | none | v
+*Burnt Broccoli Salad | 10.00 | Charred broccoli, crispy chickpeas, herbs | salad | none | vg gf
+Sloppy Dave | 12.00 | Vegetarian sloppy joe on a potato bun | sandwich | none | vg
+Yuba Verde | 13.00 | Marinated yuba, salsa verde, pickled onion on a roll | sandwich | tofu | vg
+Collards Sandwich | 12.00 | Braised collards, hot sauce, mayo on a roll | sandwich | none | vg s2
+Tahini Ranch Romaine | 10.00 | Romaine, tahini ranch, seeds | salad | none | vg gf
+Fried Tofu Sandwich | 13.00 | Fried tofu, slaw, hot sauce | sandwich | tofu | vg s2
+Crispy Fried Tofu | 11.00 | Fried tofu with dipping sauce | other | tofu | vg
+Koji Cauliflower | 11.00 | Roasted cauliflower, koji, herbs | other | none | vg gf
+Potato Salad | 8.00 | Potato salad with herbs | other | none | vg gf
+Gelato | 7.00 | Rotating gelato flavor | other | none | v gf
+Sorbet | 7.00 | Rotating sorbet flavor | other | none | vg gf
+Hot Fudge Sundae | 10.00 | Gelato, hot fudge, whipped cream | other | none | v gf
+Lemonade | 4.00 | House lemonade | other | none | vg gf
+
+@ ivan-ramen-clinton
+name: Ivan Ramen
+address: 25 Clinton St, New York, NY 10002
+hood: Lower East Side
+cuisine: japanese
+detail: Ivan Orkin's rye-noodle ramen and Japanese-American mash-ups
+price: 2
+google: 4.4
+rec: The shio ramen and chicken paitan are the way in (Infatuation)
+hours: 12:00-22:00
+platforms: uber, doordash
+source: https://www.ivanramen.com/menu
+--
+*Tokyo Shio Ramen | 20.00 | Sea salt dashi and chicken broth, rye noodles, pork belly chashu, egg | noodles | pork
+*Chicken Paitan Ramen | 21.00 | Creamy chicken broth, rye noodles, chicken chashu | noodles | chicken
+Tokyo Shoyu Ramen | 20.00 | Soy dashi broth, rye noodles, pork chashu | noodles | pork
+Spicy Red Chili Ramen | 21.00 | Spicy chili broth, ground pork, rye noodles | noodles | pork | s3
+Triple Garlic Mazemen | 20.00 | Brothless rye noodles, pork, garlic three ways | noodles | pork
+Vegetable Ramen | 19.00 | Vegetable dashi, roasted vegetables, rye noodles | noodles | none | vg
+Tsukemen | 22.00 | Dipping ramen with rich pork broth | noodles | pork
+Chashu Rice Bowl | 12.00 | Pork chashu over rice | rice | pork
+Fried Chicken Katsu Sando | 16.00 | Chicken katsu on milk bread with cabbage | sandwich | chicken
+Pork Buns (2) | 12.00 | Steamed buns with pork belly | other | pork
+Sweet Corn Tempura | 10.00 | Tempura corn with spicy mayo | other | egg | v s1
+Cucumber Salad | 8.00 | Cucumber with sesame dressing | salad | none | vg
+Ajitama Egg | 3.00 | Marinated soft egg | other | egg | v gf
+Soft Serve | 7.00 | Rotating soft serve | other | none | v gf
+
+@ mamoun-s-falafel-macdougal
+name: Mamoun's Falafel (MacDougal St)
+address: 119 MacDougal St, New York, NY 10012
+hood: Greenwich Village
+cuisine: mediterranean
+detail: NYC's oldest falafel joint (1971); cheap, fast, late
+price: 1
+google: 4.5
+hours: 11:00-02:00
+platforms: uber, doordash
+chain: yes
+halal: yes
+--
+*Falafel Sandwich | 5.50 | Falafel, salad, tahini in pita | sandwich | none | vg
+*Shawarma Sandwich | 9.00 | Lamb and beef shawarma, salad, tahini in pita | sandwich | lamb | h
+Chicken Kebab Sandwich | 9.00 | Grilled chicken, salad, tahini in pita | sandwich | chicken | h
+Falafel Platter | 12.00 | Falafel, hummus, salad, rice, pita | bowl | none | vg
+Shawarma Platter | 16.00 | Shawarma, rice, salad, hummus | bowl | lamb | h
+Chicken Kebab Platter | 16.00 | Grilled chicken, rice, salad | bowl | chicken | h gf
+Kefta Sandwich | 9.00 | Spiced ground beef kefta in pita | sandwich | beef | h
+Hummus Sandwich | 6.00 | Hummus, salad in pita | sandwich | none | vg
+Baba Ghanouj Sandwich | 6.00 | Eggplant dip, salad in pita | sandwich | none | vg
+Grape Leaves (4) | 5.00 | Stuffed grape leaves | other | none | vg gf
+Tabbouleh | 5.00 | Parsley, bulgur, tomato | salad | none | vg
+Lentil Soup | 5.00 | Lentil soup | soup | none | vg gf
+Baklava | 3.50 | Pistachio baklava | other | none | v
+Mamoun's Hot Sauce | 1.00 | Extra house hot sauce | other | none | vg gf s3
+Mint Tea | 3.00 | Hot mint tea | other | none | vg gf
+
+@ via-carota
+name: Via Carota
+address: 51 Grove St, New York, NY 10014
+hood: West Village
+cuisine: italian
+detail: Rita Sodi and Jody Williams' beloved trattoria; no reservations
+price: 3
+google: 4.6
+rec: The insalata verde and cacio e pepe are the most-copied dishes in NYC (Infatuation)
+hours: 10:00-23:00
+platforms: none
+--
+*Insalata Verde | 22.00 | Greens with shallot vinaigrette | salad | none | vg gf
+*Cacio e Pepe | 29.00 | Tonnarelli, pecorino, black pepper | noodles | none | v
+Svizzerina | 36.00 | Hand-chopped steak patty with rosemary and olive oil | other | beef | gf
+Carciofi alla Giudia | 20.00 | Fried artichokes | other | none | vg gf
+Pappardelle al Ragù | 32.00 | Pappardelle with beef and pork ragù | noodles | beef
+Tagliatelle Funghi | 30.00 | Tagliatelle, mushrooms, parmigiano | noodles | none | v
+Pollo Arrosto | 38.00 | Roast half chicken, herbs | other | chicken | gf
+Branzino al Forno | 44.00 | Roasted branzino, lemon | other | fish | gf
+Panzanella | 20.00 | Bread salad, tomato, cucumber, basil | salad | none | vg
+Burrata | 24.00 | Burrata, olive oil, grilled bread | other | none | v
+Polpette | 22.00 | Meatballs in tomato sauce | other | beef
+Fagioli all'Uccelletto | 16.00 | Stewed beans with sage and tomato | other | none | vg gf
+Torta di Nocciole | 14.00 | Hazelnut cake | other | egg | v
+Gelato | 10.00 | House gelato | other | none | v gf
+Affogato | 10.00 | Gelato with espresso | other | none | v gf
+
+@ i-sodi
+name: I Sodi
+address: 314 Bleecker St, New York, NY 10014
+hood: West Village
+cuisine: italian
+detail: Rita Sodi's Tuscan dining room; the lasagna is legendary
+price: 4
+google: 4.6
+rec: Tuscan cooking of rare precision; the 20-layer lasagna (NYT)
+hours: 17:30-22:30
+platforms: none
+--
+*Lasagna al Pepe Nero | 36.00 | Many-layered lasagna with black pepper béchamel | noodles | beef
+*Cacio e Pepe | 30.00 | Tonnarelli, pecorino, black pepper | noodles | none | v
+Pappardelle al Limone | 30.00 | Pappardelle, lemon, butter, parmigiano | noodles | none | v
+Bistecca alla Fiorentina (for two) | 140.00 | Porterhouse steak, rosemary, olive oil | other | beef | gf
+Pollo Fritto | 38.00 | Tuscan fried chicken, lemon | other | chicken
+Coniglio | 42.00 | Braised rabbit with olives | other | chicken | gf
+Carciofi Fritti | 22.00 | Fried artichokes | other | none | vg gf
+Insalata di Rucola | 20.00 | Arugula, parmigiano, lemon | salad | none | v gf
+Crostini Misti | 20.00 | Assorted Tuscan toasts | other | chicken
+Branzino | 46.00 | Roasted whole branzino | other | fish | gf
+Fagioli | 14.00 | Cannellini beans with olive oil | other | none | vg gf
+Spinaci Saltati | 14.00 | Sautéed spinach with garlic | other | none | vg gf
+Torta della Nonna | 14.00 | Custard tart with pine nuts | other | egg | v
+Panna Cotta | 14.00 | Vanilla panna cotta | other | none | v gf
+
+@ minetta-tavern
+name: Minetta Tavern
+address: 113 MacDougal St, New York, NY 10012
+hood: Greenwich Village
+cuisine: american
+detail: Keith McNally's Parisian-style steakhouse; home of the Black Label Burger
+price: 4
+google: 4.5
+rec: The Black Label Burger remains the best expensive burger in NYC (Eater NY)
+hours: 12:00-23:00
+platforms: none
+--
+*Black Label Burger | 38.00 | Dry-aged beef blend, caramelized onions, fries
+*Côte de Boeuf (for two) | 175.00 | Dry-aged bone-in ribeye, marrow, fries | other | beef | gf
+Minetta Burger | 28.00 | Beef patty, cheddar, fries
+Steak Frites | 52.00 | New York strip, fries, béarnaise | other | beef | gf
+Roasted Bone Marrow | 24.00 | Bone marrow, toast, herb salad | other | beef
+Escargots | 22.00 | Snails in garlic butter | other | shrimp
+Oysters (6) | 26.00 | Daily oysters, mignonette | other | shrimp | gf
+Roast Chicken | 42.00 | Half roast chicken, jus | other | chicken | gf
+Dover Sole | 68.00 | Pan-roasted Dover sole, lemon butter | other | fish | gf
+Trout Amandine | 42.00 | Trout with almonds and brown butter | other | fish | gf
+Little Gem Salad | 18.00 | Little gem, herbs, vinaigrette | salad | none | vg gf
+Pommes Aligot | 16.00 | Whipped potatoes with cheese | other | none | v gf
+Pommes Frites | 14.00 | French fries | other | none | vg gf
+Coconut Layer Cake | 16.00 | Coconut cake | other | egg | v
+Crème Brûlée | 14.00 | Vanilla crème brûlée | other | egg | v gf
+
+@ joe-s-pizza-carmine
+name: Joe's Pizza (Carmine St)
+address: 7 Carmine St, New York, NY 10014
+hood: Greenwich Village
+cuisine: pizza
+detail: The original 1975 Joe's; the benchmark New York slice
+price: 1
+google: 4.6
+rec: Still the gold standard plain slice (Eater NY)
+hours: 10:00-04:00
+platforms: uber, doordash
+chain: yes
+--
+*Cheese Slice | 4.00 | Classic New York cheese slice | pizza | none | v
+*Fresh Mozzarella Slice | 5.00 | Fresh mozzarella, tomato, basil slice | pizza | none | v
+Pepperoni Slice | 5.00 | Cheese slice with pepperoni | pizza | pork
+Sicilian Slice | 4.50 | Thick square slice | pizza | none | v
+Mushroom Slice | 4.75 | Cheese slice with mushrooms | pizza | none | v
+Sausage Slice | 5.00 | Cheese slice with sausage | pizza | pork
+Whole Cheese Pie | 26.00 | 18-inch cheese pie | pizza | none | v
+Whole Fresh Mozzarella Pie | 30.00 | 18-inch fresh mozzarella pie | pizza | none | v
+Whole Pepperoni Pie | 30.00 | 18-inch pepperoni pie | pizza | pork
+Whole Sicilian Pie | 32.00 | Square Sicilian pie | pizza | none | v
+Calzone | 9.00 | Ricotta and mozzarella calzone | other | none | v
+Canned Soda | 2.00 | Soft drink | other | none | vg gf
+Bottled Water | 2.00 | Water | other | none | vg gf
+
+@ prince-street-pizza
+name: Prince Street Pizza
+address: 27 Prince St, New York, NY 10012
+hood: Nolita
+cuisine: pizza
+detail: Spicy Spring pepperoni-cup square slices with a permanent line
+price: 1
+google: 4.5
+rec: The Spicy Spring square is the most Instagrammed slice in NYC for a reason (Infatuation)
+hours: 11:30-23:00
+platforms: uber, doordash
+chain: yes
+--
+*Spicy Spring Square | 6.50 | Square slice with pepperoni cups, spicy tomato sauce, fresh mozzarella | pizza | pork | s2
+*Soho Square | 5.50 | Square slice with fresh mozzarella and sauce | pizza | none | v
+Mercer Street | 5.00 | Classic round cheese slice | pizza | none | v
+Prince Perfection Square | 6.50 | Square slice with pepperoni, sausage, mozzarella | pizza | pork | s1
+Margherita Slice | 5.50 | Fresh mozzarella, basil, tomato | pizza | none | v
+Vegan Spicy Spring | 7.00 | Spicy Spring with vegan cheese and pepperoni | pizza | none | vg s2
+Whole Spicy Spring Pie | 45.00 | Whole Spicy Spring square pie | pizza | pork | s2
+Whole Soho Square Pie | 38.00 | Whole square cheese pie | pizza | none | v
+Whole Mercer Street Pie | 30.00 | Whole round cheese pie | pizza | none | v
+Chicken Parm Hero | 15.00 | Breaded chicken, marinara, mozzarella on a hero
+Rice Balls (2) | 8.00 | Fried rice balls with mozzarella | other | none | v
+Garlic Knots (6) | 5.00 | Garlic knots | other | none | v
+Canned Soda | 2.50 | Soft drink | other | none | vg gf
+
+@ lombardi-s-pizza
+name: Lombardi's Pizza
+address: 32 Spring St, New York, NY 10012
+hood: Nolita
+cuisine: pizza
+detail: America's first pizzeria (1905); coal-oven pies, no slices
+price: 2
+google: 4.4
+hours: 11:30-22:00
+platforms: none
+--
+*Original Margherita (Large) | 32.00 | Coal-oven pie with tomato, mozzarella, basil | pizza | none | v
+*Pepperoni Pie (Large) | 37.00 | Coal-oven pie with pepperoni | pizza | pork
+Original Margherita (Small) | 25.00 | Six-slice margherita | pizza | none | v
+White Pizza (Large) | 34.00 | Ricotta, mozzarella, garlic, no sauce | pizza | none | v
+Fresh Clam Pie (Large) | 42.00 | Clams, garlic, oregano, no cheese | pizza | shrimp
+Sausage Pie (Large) | 37.00 | Coal-oven pie with sweet Italian sausage | pizza | pork
+Meatball Pie (Large) | 37.00 | Coal-oven pie with sliced meatballs | pizza | beef
+Mushroom Pie (Large) | 36.00 | Coal-oven pie with mushrooms | pizza | none | v
+Calzone | 22.00 | Ricotta, mozzarella, tomato sauce | other | none | v
+Meatballs (3) | 14.00 | Beef meatballs in tomato sauce | other | beef
+Caesar Salad | 14.00 | Romaine, croutons, parmesan | salad | none | nv
+House Salad | 12.00 | Greens, tomato, onion | salad | none | vg gf
+Antipasto | 22.00 | Cured meats, cheese, olives, peppers | other | pork | gf
+Cannoli | 7.00 | Ricotta cannoli | other | none | v
+Italian Soda | 4.00 | Aranciata or limonata | other | none | vg gf
+
+@ rubirosa
+name: Rubirosa
+address: 235 Mulberry St, New York, NY 10012
+hood: Nolita
+cuisine: italian
+detail: Staten Island-style thin-crust pizza and red-sauce classics
+price: 3
+google: 4.6
+rec: The tie-dye pizza and vodka pie are iconic; always packed (Infatuation)
+hours: 11:30-23:00
+platforms: uber, doordash
+--
+*Tie-Dye Pizza | 30.00 | Thin crust with vodka sauce, tomato, pesto, fresh mozzarella | pizza | none | v
+*Vodka Pizza | 28.00 | Thin crust with vodka sauce and mozzarella | pizza | none | v
+Classic Pizza | 26.00 | Thin crust with tomato and mozzarella | pizza | none | v
+Gluten-Free Vodka Pizza | 32.00 | Gluten-free crust with vodka sauce and mozzarella | pizza | none | v gf
+Supreme Pizza | 32.00 | Sausage, pepperoni, mushroom, onion, peppers | pizza | pork
+Fresh Clam Pizza | 34.00 | Clams, garlic, parsley | pizza | shrimp
+Rigatoni alla Vodka | 26.00 | Rigatoni in vodka cream sauce | noodles | none | v
+Cavatelli with Sausage | 27.00 | Cavatelli, sausage, broccoli rabe | noodles | pork
+Chicken Parmigiana | 32.00 | Breaded chicken, tomato, mozzarella with spaghetti | other | chicken
+Meatballs | 18.00 | Beef and pork meatballs, ricotta | other | beef
+Eggplant Parmigiana | 26.00 | Layered eggplant, tomato, mozzarella | other | none | v
+Arancini | 14.00 | Fried risotto balls | other | none | v
+Caesar Salad | 16.00 | Romaine, parmesan, croutons | salad | none | nv
+Tricolore Salad | 16.00 | Arugula, endive, radicchio, parmigiano | salad | none | v gf
+Tiramisù | 12.00 | Classic tiramisù | other | none | v
+Cannoli | 10.00 | Ricotta cannoli | other | none | v
+
+@ balthazar
+name: Balthazar
+address: 80 Spring St, New York, NY 10012
+hood: SoHo
+cuisine: american
+detail: Keith McNally's grand SoHo brasserie; breakfast through late supper
+price: 4
+google: 4.5
+rec: The quintessential New York brasserie experience (Infatuation)
+hours: 08:00-23:00
+platforms: none
+source: https://balthazarny.com/menus
+--
+*Steak Frites | 48.00 | Hanger steak, fries, béarnaise | other | beef | gf
+*Onion Soup Gratinée | 20.00 | French onion soup with gruyère | soup | beef
+Balthazar Salad | 26.00 | Greens, haricots verts, beets, fennel, ricotta salata, truffle vinaigrette | salad | none | v gf
+Duck Shepherd's Pie | 42.00 | Duck confit under potato purée | other | chicken | gf
+Moules Frites | 32.00 | Mussels in white wine, fries | other | shrimp
+Roast Chicken (for two) | 78.00 | Whole roast chicken, potatoes | other | chicken | gf
+Grilled Branzino | 46.00 | Branzino, fennel, lemon | other | fish | gf
+Croque Madame | 28.00 | Ham, gruyère, béchamel, fried egg
+Escargots | 24.00 | Snails in garlic-parsley butter | other | shrimp
+Le Balthazar Seafood Platter | 165.00 | Oysters, clams, shrimp, lobster, crab | other | shrimp | gf
+Omelette with Herbs | 24.00 | Three-egg omelette, herbs, fries | other | egg | v
+Brioche French Toast | 24.00 | Brioche French toast, caramelized apple | other | egg | v
+Pommes Frites | 14.00 | French fries | other | none | vg gf
+Profiteroles | 16.00 | Ice cream-filled choux, chocolate sauce | other | egg | v
+Crème Brûlée | 15.00 | Vanilla crème brûlée | other | egg | v gf
+
+@ raoul-s
+name: Raoul's
+address: 180 Prince St, New York, NY 10012
+hood: SoHo
+cuisine: american
+detail: 1975 SoHo French bistro; the off-menu burger is a cult item
+price: 4
+google: 4.6
+rec: The bar burger is one of the best in the city, if you can get one (Infatuation)
+hours: 17:00-23:00
+platforms: none
+--
+*Steak au Poivre | 58.00 | Peppercorn-crusted steak, cognac cream, fries | other | beef | gf
+*Raoul's Burger | 32.00 | Beef patty, triple-cream cheese, watercress, fries
+Artichoke Vinaigrette | 18.00 | Whole artichoke with vinaigrette | other | none | vg gf
+Escargots | 22.00 | Snails in garlic butter | other | shrimp
+Duck Breast | 48.00 | Seared duck breast, cherries | other | chicken | gf
+Roast Chicken | 42.00 | Half roast chicken, jus | other | chicken | gf
+Grilled Salmon | 44.00 | Salmon, lentils, herbs | other | fish | gf
+Onion Soup | 18.00 | French onion soup | soup | beef
+Salade Verte | 16.00 | Greens, vinaigrette | salad | none | vg gf
+Endive Salad | 18.00 | Endive, roquefort, walnuts | salad | none | v gf
+Pommes Frites | 14.00 | French fries | other | none | vg gf
+Steak Tartare | 26.00 | Hand-cut raw beef, capers, toast | other | beef
+Crème Brûlée | 14.00 | Vanilla crème brûlée | other | egg | v gf
+Chocolate Mousse | 14.00 | Dark chocolate mousse | other | egg | v gf
+
+@ joe-s-shanghai-chinatown
+name: Joe's Shanghai (Chinatown)
+address: 46 Bowery, New York, NY 10013
+hood: Chinatown
+cuisine: chinese
+detail: The Chinatown soup dumpling institution
+price: 2
+google: 4.3
+hours: 11:00-22:00
+platforms: uber, doordash
+chain: yes
+--
+*Crab & Pork Soup Dumplings (8) | 13.95 | Xiao long bao with crab and pork | other | pork
+*Pork Soup Dumplings (8) | 11.95 | Pork xiao long bao | other | pork
+Scallion Pancake | 6.95 | Crispy scallion pancake | other | none | vg
+Shanghai Fried Noodles | 15.95 | Thick noodles with pork and cabbage | noodles | pork
+Shredded Pork with Dried Bean Curd | 16.95 | Pork, pressed tofu, peppers | other | pork
+Braised Pork Shoulder | 28.95 | Whole braised pork shoulder in brown sauce | other | pork | gf
+Sautéed String Beans | 14.95 | Dry-fried green beans | other | none | vg gf
+Ma Po Tofu | 14.95 | Tofu in spicy bean sauce | other | tofu | vg s2
+General Tso's Chicken | 18.95 | Crispy chicken in sweet chili glaze | other | chicken | s1
+Beef with Broccoli | 19.95 | Beef, broccoli, brown sauce | other | beef
+Salt & Pepper Shrimp | 24.95 | Fried shrimp with salt and pepper | other | shrimp
+Hot & Sour Soup | 5.95 | Tofu, egg, mushroom, vinegar | soup | egg | v s1
+Pork Fried Rice | 12.95 | Fried rice with pork and egg | rice | pork
+Vegetable Lo Mein | 12.95 | Egg noodles with vegetables | noodles | none | v
+Sesame Noodles | 9.95 | Cold noodles in sesame sauce | noodles | none | vg
+
+@ nom-wah-tea-parlor
+name: Nom Wah Tea Parlor
+address: 13 Doyers St, New York, NY 10013
+hood: Chinatown
+cuisine: chinese
+detail: Chinatown's oldest dim sum parlor (1920) on crooked Doyers Street
+price: 2
+google: 4.3
+rec: A time capsule; order the original egg roll and shrimp rice rolls (Eater NY)
+hours: 10:30-21:00
+platforms: uber, doordash
+source: https://nomwah.com/menu
+--
+*Original Egg Roll | 8.50 | Chicken, vegetables in an egg crepe, fried | other | chicken
+*Shrimp Rice Roll | 9.50 | Steamed rice noodle roll with shrimp | other | shrimp | gf
+Shrimp Dumplings (Har Gow, 4) | 8.50 | Steamed shrimp dumplings | other | shrimp | gf
+Pork Siu Mai (4) | 8.00 | Steamed pork and shrimp dumplings | other | pork
+Roast Pork Buns (3) | 8.00 | Steamed char siu buns | other | pork
+Pan-Fried Pork Dumplings (5) | 8.50 | Pan-fried pork dumplings | other | pork
+Turnip Cake | 7.50 | Pan-fried daikon cake | other | none | vg
+Fried Sesame Balls (3) | 6.50 | Sesame balls with red bean | other | none | vg gf
+Sticky Rice in Lotus Leaf | 9.00 | Glutinous rice with chicken and sausage | rice | chicken | gf
+Vegetable Dumplings (4) | 8.00 | Steamed vegetable dumplings | other | none | vg
+Chicken Feet | 7.50 | Braised chicken feet in black bean sauce | other | chicken | gf
+Beef Rice Roll | 9.50 | Rice noodle roll with beef | other | beef | gf
+Egg Custard Tart (2) | 5.50 | Dan tat | other | egg | v
+Congee with Pork & Egg | 9.00 | Rice porridge with pork and preserved egg | soup | pork | gf
+Hot Tea | 2.50 | Chrysanthemum or oolong | other | none | vg gf
+
+@ wo-hop
+name: Wo Hop
+address: 17 Mott St, New York, NY 10013
+hood: Chinatown
+cuisine: chinese
+detail: Basement Cantonese-American classics since 1938; open very late
+price: 1
+google: 4.3
+hours: 10:30-04:00
+platforms: uber, doordash
+--
+*Wonton Soup | 7.95 | Pork wontons in broth | soup | pork
+*Roast Pork Lo Mein | 12.95 | Egg noodles with roast pork | noodles | pork
+Chicken Chow Fun | 13.95 | Wide rice noodles with chicken | noodles | chicken | gf
+Beef Chow Fun | 14.95 | Wide rice noodles with beef | noodles | beef | gf
+Shrimp with Lobster Sauce | 17.95 | Shrimp in egg white sauce | other | shrimp
+General Tso's Chicken | 15.95 | Crispy chicken in sweet chili glaze | other | chicken | s1
+Fried Pork Dumplings (8) | 8.95 | Pan-fried pork dumplings | other | pork
+Egg Roll | 2.95 | Pork egg roll | other | pork
+Roast Pork Fried Rice | 11.95 | Fried rice with roast pork | rice | pork
+Chicken with Broccoli | 14.95 | Chicken, broccoli, brown sauce | other | chicken
+Sweet & Sour Pork | 14.95 | Fried pork in sweet and sour sauce | other | pork
+Salt & Pepper Squid | 16.95 | Fried squid with salt and pepper | other | shrimp
+Hot & Sour Soup | 5.95 | Tofu, egg, mushroom, vinegar | soup | egg | v s1
+Sautéed Chinese Broccoli | 11.95 | Gai lan with garlic | other | none | vg gf
+Egg Drop Soup | 4.95 | Egg drop soup | soup | egg | v gf
+
+@ great-ny-noodletown
+name: Great N.Y. Noodletown
+address: 28 Bowery, New York, NY 10013
+hood: Chinatown
+cuisine: chinese
+detail: Cantonese roast meats and salt-baked seafood until late
+price: 1
+google: 4.3
+rec: Roast duck over rice and salt-baked soft shell crab in season (Eater NY)
+hours: 10:30-03:00
+platforms: uber, doordash
+--
+*Roast Duck over Rice | 12.95 | Cantonese roast duck over rice | rice | chicken | gf
+*Wonton Noodle Soup | 9.95 | Shrimp wontons and egg noodles in broth | soup | shrimp
+Roast Pork over Rice | 10.95 | Char siu over rice | rice | pork | gf
+Soy Sauce Chicken over Rice | 11.95 | Poached soy chicken over rice | rice | chicken | gf
+Salt-Baked Shrimp | 22.95 | Salt-baked shrimp with garlic | other | shrimp | gf
+Salt-Baked Squid | 19.95 | Salt-baked squid | other | shrimp | gf
+Beef Chow Fun | 13.95 | Wide rice noodles with beef | noodles | beef | gf
+Ginger Scallion Lo Mein | 9.95 | Egg noodles with ginger and scallion | noodles | none | v
+Roast Duck Lo Mein | 13.95 | Egg noodles with roast duck | noodles | chicken
+Congee with Pork & Preserved Egg | 8.95 | Rice porridge | soup | pork | gf
+Sautéed Pea Shoots | 14.95 | Pea shoots with garlic | other | none | vg gf
+Shrimp Dumpling Soup | 9.95 | Shrimp dumplings in broth | soup | shrimp
+Pan-Fried Noodles with Seafood | 17.95 | Crispy noodles, shrimp, squid, vegetables | noodles | shrimp
+Salt-Baked Soft Shell Crab | 24.95 | Seasonal salt-baked soft shell crab | other | shrimp | gf
+Hot Tea | 1.50 | Chinese tea | other | none | vg gf
+
+@ thai-diner
+name: Thai Diner
+address: 186 Mott St, New York, NY 10012
+hood: Nolita
+cuisine: thai
+detail: Uncle Boons team's Thai-American diner; all-day breakfast and curries
+price: 2
+google: 4.6
+rec: Thai disco fries and the breakfast sandwich are non-negotiable (Infatuation)
+hours: 08:00-22:00
+platforms: uber, doordash
+source: https://www.thaidiner.com/menu
+--
+*Thai Disco Fries | 16.00 | Fries with massaman curry gravy and cheese | other | none | v s1
+*Thai Tea Babka French Toast | 18.00 | Thai tea babka French toast, condensed milk | other | egg | v
+Thai Diner Breakfast Sandwich | 16.00 | Egg, cheese, Thai sausage, chili on a roll | sandwich | pork | s2
+Khao Soi | 24.00 | Northern curry noodle soup with chicken | noodles | chicken | s2
+Massaman Curry Beef | 28.00 | Massaman curry with braised beef | curry | beef | gf s1
+Green Curry Chicken | 26.00 | Green curry with chicken, rice | curry | chicken | gf s2
+Pad Thai | 22.00 | Rice noodles, shrimp, egg, peanuts | noodles | shrimp | s1
+Crab Fried Rice | 26.00 | Fried rice with crab and egg | rice | shrimp | gf
+Coconut Pancakes | 16.00 | Coconut pancakes with fruit | other | egg | v
+Papaya Salad | 16.00 | Green papaya, peanuts, chili, lime | salad | none | gf s2 nv
+Lemongrass Pork Chop | 30.00 | Grilled pork chop, jasmine rice | other | pork | gf
+Larb Chicken Lettuce Wraps | 18.00 | Spicy chicken larb with lettuce | other | chicken | gf s2
+Tom Yum Soup | 12.00 | Spicy lemongrass soup with shrimp | soup | shrimp | gf s2
+Coconut Sundae | 12.00 | Coconut ice cream, peanuts, sticky rice | other | none | vg gf
+Thai Iced Tea | 6.00 | Thai tea with milk | other | none | v gf
+
+@ cafe-habana-nolita
+name: Cafe Habana
+address: 17 Prince St, New York, NY 10012
+hood: Nolita
+cuisine: mexican
+detail: Cuban-Mexican corner spot famous for grilled corn
+price: 2
+google: 4.4
+hours: 09:00-23:00
+platforms: uber, doordash
+chain: yes
+--
+*Grilled Corn Mexican Style | 8.00 | Grilled corn with cotija, chili, lime | other | none | v gf s1
+*Cuban Sandwich | 17.00 | Roast pork, ham, swiss, pickles, mustard pressed
+Cafe Habana Burger | 19.00 | Beef patty, chipotle mayo, fries
+Huevos Rancheros | 17.00 | Fried eggs, black beans, salsa, tortillas | other | egg | v gf s1
+Pollo Asado | 24.00 | Grilled chicken, rice, black beans, plantains | other | chicken | gf
+Camarones al Ajillo | 26.00 | Garlic shrimp, rice, beans | other | shrimp | gf
+Fish Tacos (3) | 20.00 | Grilled fish, cabbage, chipotle crema | taco | fish
+Chicken Tacos (3) | 18.00 | Grilled chicken tacos | taco | chicken | gf
+Ropa Vieja | 25.00 | Shredded beef, rice, beans | other | beef | gf
+Chicken Quesadilla | 16.00 | Chicken, cheese in a flour tortilla | other | chicken
+Chorizo Torta | 17.00 | Chorizo, avocado, beans on telera | sandwich | pork
+Rice & Beans | 7.00 | Rice with black beans | rice | none | vg gf
+Plantains | 7.00 | Sweet fried plantains | other | none | vg gf
+Tres Leches | 10.00 | Tres leches cake | other | egg | v
+Horchata | 5.00 | Rice cinnamon drink | other | none | vg gf
+
+@ emily-west-village
+name: Emily (West Village)
+address: 35 Downing St, New York, NY 10014
+hood: West Village
+cuisine: pizza
+detail: Wood-fired pizzas and the Emmy Burger
+price: 3
+google: 4.6
+rec: The Emmy Burger is one of NYC's great burgers, hidden in a pizzeria (Eater NY)
+hours: 17:00-22:30
+platforms: uber, doordash
+chain: yes
+--
+*Emmy Burger | 32.00 | Dry-aged beef, grafton cheddar, caramelized onion, Emmy sauce on a pretzel bun, fries
+*The Colony | 26.00 | Tomato, mozzarella, pepperoni, pickled chili, honey | pizza | pork | s2
+The Emily | 26.00 | Mozzarella, pistachio, truffle sott'olio, honey | pizza | none | v
+Margherita | 22.00 | Tomato, mozzarella, basil | pizza | none | v
+The Quinn | 25.00 | Tomato, mozzarella, sausage, onion | pizza | pork
+The Vodka | 24.00 | Vodka sauce, mozzarella, basil | pizza | none | v
+The Camp Randall | 26.00 | Mozzarella, fontina, sausage, cheddar, pepperoni | pizza | pork
+The Boca | 24.00 | Tomato, mozzarella, roasted garlic, basil | pizza | none | v
+Wings (8) | 18.00 | Wood-fired wings with hot sauce | other | chicken | gf s2
+Meatballs | 16.00 | Beef meatballs, tomato, ricotta | other | beef
+Kale Salad | 16.00 | Kale, parmesan, breadcrumbs | salad | none | v
+Burrata | 18.00 | Burrata, tomato, basil | other | none | v gf
+Fries | 9.00 | French fries | other | none | vg gf
+Chocolate Chip Cookie | 6.00 | Warm chocolate chip cookie | other | none | v
+
+@ mimi-cheng-s-dumplings-east-village
+name: Mimi Cheng's Dumplings (East Village)
+address: 179 2nd Ave, New York, NY 10003
+hood: East Village
+cuisine: chinese
+detail: Taiwanese family-recipe dumplings; monthly collaboration flavors
+price: 2
+google: 4.5
+hours: 11:30-21:30
+platforms: uber, doordash
+chain: yes
+source: https://www.mimichengs.com/menu
+--
+*Mimi's Chicken & Zucchini Dumplings (6) | 12.50 | Chicken and zucchini dumplings, pan-fried or steamed | other | chicken
+*Reinvented Classic Pork Dumplings (6) | 12.50 | Pork, cabbage, ginger dumplings | other | pork
+Vegetable Dumplings (6) | 12.50 | Bok choy, mushroom, tofu dumplings | other | tofu | vg
+Dumpling of the Month (6) | 13.50 | Rotating collaboration dumplings | other | none | nv
+Beef Dumplings (6) | 13.00 | Beef and scallion dumplings | other | beef
+Scallion Pancake | 7.00 | Crispy scallion pancake | other | none | vg
+Dan Dan Noodles | 13.00 | Noodles in sesame chili sauce with pork | noodles | pork | s2
+Cold Sesame Noodles | 11.00 | Noodles in sesame sauce | noodles | none | vg
+Spicy Cucumber Salad | 7.00 | Smashed cucumber with chili | salad | none | vg gf s2
+Braised Pork Rice Bowl | 14.00 | Minced pork over rice with egg | rice | pork
+Chicken Rice Bowl | 14.00 | Soy-braised chicken over rice | rice | chicken | gf
+Egg Drop Soup | 6.00 | Egg drop soup | soup | egg | v gf
+Miso Soup | 5.00 | Miso soup | soup | tofu | vg
+Jasmine Tea | 3.00 | Hot jasmine tea | other | none | vg gf
+
+@ veniero-s-pastry
+name: Veniero's Pasticceria
+address: 342 E 11th St, New York, NY 10003
+hood: East Village
+cuisine: bakery
+detail: Italian pastry shop since 1894; cannoli, cheesecake and cookies
+price: 2
+google: 4.6
+rec: The classic Italian-American pastry counter; the cheesecake is a sleeper (Eater NY)
+hours: 08:00-23:00
+platforms: uber, doordash
+categories: coffee
+--
+*Cannoli | 5.50 | Ricotta cannoli with pistachio | other | none | v
+*Italian Cheesecake | 7.50 | Ricotta cheesecake slice | other | egg | v
+New York Cheesecake | 7.50 | Cream cheese cheesecake slice | other | egg | v
+Sfogliatella | 5.00 | Layered ricotta pastry | other | egg | v
+Lobster Tail | 6.50 | Cream-filled flaky pastry (sfogliatella) | other | egg | v +egg -shellfish -fish
+Tiramisù | 8.00 | Classic tiramisù | other | none | v
+Napoleon | 6.50 | Layered puff pastry with cream | other | egg | v
+Rainbow Cookies (1/2 lb) | 12.00 | Almond layer cookies with chocolate | other | none | v
+Italian Butter Cookies (1/2 lb) | 12.00 | Assorted butter cookies | other | egg | v
+Pignoli Cookies (1/4 lb) | 10.00 | Pine nut almond cookies | other | egg | v gf
+Fruit Tart | 7.00 | Fresh fruit tart | other | egg | v
+Espresso | 3.50 | Double espresso | other | none | vg gf
+Cappuccino | 5.00 | Espresso, foamed milk | other | none | v gf
+Gelato | 6.00 | Two scoops gelato | other | none | v gf

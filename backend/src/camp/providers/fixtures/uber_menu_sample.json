@@ -398,6 +398,607 @@
    "quantity_info": {
     "in_stock": true
    }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d10",
+   "title": {
+    "translations": {
+     "en_us": "Chicken Parm Hero"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Breaded chicken cutlet, marinara, melted mozzarella on a semolina hero"
+    }
+   },
+   "price_info": {
+    "price": 1695
+   },
+   "ingredients": [
+    "chicken parm",
+    "chicken cutlet",
+    "marinara",
+    "mozzarella",
+    "semolina"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d11",
+   "title": {
+    "translations": {
+     "en_us": "Turkey & Brie Sandwich"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Roast turkey, brie, apple, honey mustard, arugula on multigrain"
+    }
+   },
+   "price_info": {
+    "price": 1595
+   },
+   "ingredients": [
+    "turkey",
+    "brie",
+    "apple",
+    "honey mustard",
+    "arugula"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d12",
+   "title": {
+    "translations": {
+     "en_us": "Roast Beef & Cheddar"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Rare roast beef, aged cheddar, horseradish cream, tomato, red onion on ciabatta"
+    }
+   },
+   "price_info": {
+    "price": 1650
+   },
+   "ingredients": [
+    "roast beef",
+    "cheddar",
+    "aged cheddar",
+    "cream",
+    "tomato",
+    "red onion",
+    "ciabatta"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d13",
+   "title": {
+    "translations": {
+     "en_us": "Grilled Vegetable Panini"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Zucchini, eggplant, roasted peppers, goat cheese, pesto on focaccia"
+    }
+   },
+   "price_info": {
+    "price": 1450
+   },
+   "ingredients": [
+    "zucchini",
+    "eggplant",
+    "roasted peppers",
+    "goat cheese",
+    "pesto",
+    "focaccia"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d14",
+   "title": {
+    "translations": {
+     "en_us": "Salmon Nicoise Salad"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Seared salmon, haricots verts, potatoes, olives, hard-boiled egg, cherry tomato"
+    }
+   },
+   "price_info": {
+    "price": 1895
+   },
+   "ingredients": [
+    "salmon",
+    "potatoes",
+    "olives",
+    "hard-boiled egg",
+    "cherry tomato"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d15",
+   "title": {
+    "translations": {
+     "en_us": "Greek Salad"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Romaine, feta, kalamata olives, cucumber, tomato, red onion, oregano vinaigrette"
+    }
+   },
+   "price_info": {
+    "price": 1450
+   },
+   "ingredients": [
+    "greek salad",
+    "romaine",
+    "feta",
+    "kalamata",
+    "olives",
+    "cucumber",
+    "tomato",
+    "red onion",
+    "oregano",
+    "vinaigrette"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d16",
+   "title": {
+    "translations": {
+     "en_us": "Salad Bar (per lb)"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Build-your-own from 40+ toppings: grains, roasted vegetables, proteins, greens"
+    }
+   },
+   "price_info": {
+    "price": 1499
+   },
+   "ingredients": [
+    "greens"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "VEGAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d17",
+   "title": {
+    "translations": {
+     "en_us": "Pinsa Margherita"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Roman-style pinsa, tomato, fresh mozzarella, basil"
+    }
+   },
+   "price_info": {
+    "price": 1500
+   },
+   "ingredients": [
+    "pinsa",
+    "tomato",
+    "fresh mozzarella",
+    "basil"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d18",
+   "title": {
+    "translations": {
+     "en_us": "Pinsa Prosciutto & Arugula"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Pinsa with mozzarella, prosciutto di Parma, arugula, shaved parmigiano"
+    }
+   },
+   "price_info": {
+    "price": 1700
+   },
+   "ingredients": [
+    "pinsa",
+    "prosciutto",
+    "arugula",
+    "mozzarella",
+    "parmigiano"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d19",
+   "title": {
+    "translations": {
+     "en_us": "Penne alla Vodka"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Penne, vodka-tomato cream sauce, parmigiano"
+    }
+   },
+   "price_info": {
+    "price": 1550
+   },
+   "ingredients": [
+    "penne",
+    "tomato",
+    "cream",
+    "parmigiano"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d20",
+   "title": {
+    "translations": {
+     "en_us": "Lasagna Bolognese"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Layered pasta, beef rag\u00f9, b\u00e9chamel, parmigiano"
+    }
+   },
+   "price_info": {
+    "price": 1650
+   },
+   "ingredients": [
+    "bolognese",
+    "beef",
+    "rag\u00f9",
+    "b\u00e9chamel",
+    "parmigiano"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": []
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d21",
+   "title": {
+    "translations": {
+     "en_us": "Chicken Marsala (hot)"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Chicken breast in marsala mushroom sauce with roasted potatoes"
+    }
+   },
+   "price_info": {
+    "price": 1750
+   },
+   "ingredients": [
+    "chicken",
+    "chicken breast",
+    "mushroom",
+    "roasted potatoes"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d22",
+   "title": {
+    "translations": {
+     "en_us": "Eggplant Parmigiana"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Breaded eggplant, marinara, mozzarella, parmigiano"
+    }
+   },
+   "price_info": {
+    "price": 1550
+   },
+   "ingredients": [
+    "eggplant",
+    "marinara",
+    "mozzarella",
+    "parmigiano"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d23",
+   "title": {
+    "translations": {
+     "en_us": "Minestrone Soup"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Vegetable and bean soup with ditalini"
+    }
+   },
+   "price_info": {
+    "price": 850
+   },
+   "ingredients": [
+    "bean"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "VEGAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d24",
+   "title": {
+    "translations": {
+     "en_us": "Tomato Basil Soup"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Cream of tomato soup, basil"
+    }
+   },
+   "price_info": {
+    "price": 850
+   },
+   "ingredients": [
+    "tomato",
+    "basil",
+    "cream"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d25",
+   "title": {
+    "translations": {
+     "en_us": "Tiramisu"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Espresso-soaked sponge, mascarpone cream, cocoa"
+    }
+   },
+   "price_info": {
+    "price": 750
+   },
+   "ingredients": [
+    "tiramisu",
+    "mascarpone",
+    "cream",
+    "cocoa"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
+  },
+  {
+   "id": "uber-mangia-23rd-st-d26",
+   "title": {
+    "translations": {
+     "en_us": "Fresh Squeezed Orange Juice"
+    }
+   },
+   "description": {
+    "translations": {
+     "en_us": "Oranges, juiced to order"
+    }
+   },
+   "price_info": {
+    "price": 650
+   },
+   "ingredients": [
+    "orange juice",
+    "orange"
+   ],
+   "modifier_group_ids": {
+    "ids": [
+     "uber-mangia-23rd-st-g0"
+    ]
+   },
+   "dietary_label_info": {
+    "labels": [
+     "VEGETARIAN",
+     "VEGAN",
+     "GLUTEN_FREE"
+    ]
+   },
+   "quantity_info": {
+    "in_stock": true
+   }
   }
  ],
  "modifier_groups": [
