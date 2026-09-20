@@ -31,8 +31,11 @@ public struct LunchCard<Actions: View>: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                CampLogo().fill(LunchStyle.lime).frame(width: 30, height: 18).accessibilityHidden(true)
-                Text("camp").font(.system(size: 22, weight: .bold, design: .rounded)).tracking(-0.8)
+                // The notch supplies its own persistent branded header.
+                if !embedded {
+                    CampLogo().fill(LunchStyle.lime).frame(width: 30, height: 18).accessibilityHidden(true)
+                    Text("camp").font(.system(size: 22, weight: .bold, design: .rounded)).tracking(-0.8)
+                }
                 Spacer(minLength: 4)
                 Text("DEMO").font(.system(size: 9, weight: .bold)).foregroundStyle(LunchStyle.muted)
                 if !expired && (session.phase == .choosing || session.phase == .reviewing) {

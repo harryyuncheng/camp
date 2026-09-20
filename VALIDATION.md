@@ -177,3 +177,9 @@ No real provider ordering, payment, backend notifications, or meal predictions w
 - Confirmed selected Xcode is 16.2 (16C5032a) at `/Applications/Xcode_16.2.app`.
 - Fixed iOS build helper to respect `xcode-select` instead of defaulting to the old Xcode.app. Explicit DEVELOPER_DIR overrides still work.
 - Retried iOS build: exit 69, Xcode license not accepted. No compilation or simulator run occurred. User must complete Xcode first-launch setup.
+
+
+## Notch branding fix — 2026-09-19
+
+- Cause: the expanded notch owns a camp header, while its embedded LunchCard also rendered one. Embedded cards now omit only their logo/name; demo status and countdown remain. Standalone phone/in-app cards retain branding.
+- Release Mac build succeeded. No automated tests or app restart performed; running app needs relaunch to display the change.
